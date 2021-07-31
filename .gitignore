@@ -91,3 +91,7 @@ crashlytics-build.properties
 *.css.map
 
 **/.enonic/
+**/node_modules/
+**/build/
+**/.next/
+
