@@ -14,12 +14,11 @@ type SeoProps = {
     author?: string,
     siteTitle?: string,
     keywords?: string[],
-    viewport: string | Element
+    viewport?: JSX.Element
 };
 
-const SEO: FunctionComponent<SeoProps> = ({ description, lang, meta, author, title, siteTitle, keywords, viewport }:SeoProps) => {
+const SEO: FunctionComponent<SeoProps> = ({ description, lang, meta, author, title, siteTitle, keywords, viewport }:SeoProps) => (
 
-    return (
     <Head>
         <title>{
             siteTitle && title
@@ -52,7 +51,6 @@ const SEO: FunctionComponent<SeoProps> = ({ description, lang, meta, author, tit
                 (item:Meta, idx) => <meta key={idx} name={item.name} content={item.content} /> )
         }
     </Head>
-  )
-};
+);
 
 export default SEO

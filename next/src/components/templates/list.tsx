@@ -1,28 +1,44 @@
 import React from "react"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import {Link} from "gatsby";
+import Layout from "../blocks/layout"
+import SEO from "../blocks/seo"
+import Link from "next/link";
 
-const ListPage = (args) => {
-    const { pageContext } = args
+type Node = {
+    id: string,
+    displayName: string
+};
+
+type ListPageProps = {
+    title: string,
+    nodes: Node[],
+    detailsPageUrl?: string
+    detailsPageKey: string,
+};
+
+const ListPage = ( {title, nodes, detailsPageKey, detailsPageUrl}:ListPageProps ) => {
     return (
-      <Layout>
-        <SEO title={pageContext.title || `List`} />
-        <h1>{pageContext.title}</h1>
-          {
-              pageContext.nodes.map(node => (
-                <div key={node.id}>
-                    {pageContext.detailsPageUrl &&
-                        <Link to={`${pageContext.detailsPageUrl}/${node[pageContext.detailsPageKey]}`}>
-                            {node.displayName}
-                        </Link>
-                    }
-                    {!pageContext.detailsPageUrl && <span>{node.displayName}</span>}
-                </div>
-          ))
-          }<br/>
-      </Layout>
+        <Layout>
+            <SEO title={title || `List`}/>
+            <h1>{title}</h1>
+            {
+                nodes.map((node: Node) => (
+                    <div key={node.id}>
+                        {
+                            detailsPageUrl
+                                ? (
+                                    // @ts-ignore
+                                    <Link href={`${detailsPageUrl}/${node[detailsPageKey]}`}>
+                                        <a>{node.displayName}</a>
+                                    </Link>
+                                ) : (
+                                    <span>{node.displayName}</span>
+                                )
+                        }
+                    </div>
+                ))
+            }<br/>
+        </Layout>
     )
-}
+};
 
 export default ListPage

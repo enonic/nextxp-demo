@@ -3,7 +3,7 @@ import React, {FunctionComponent} from "react"
 import Link from "next/link";
 
 type HeaderProps = {
-    siteTitle: string
+    siteTitle?: string
 }
 
 const Header: FunctionComponent<HeaderProps> = ({ siteTitle }: HeaderProps) => (

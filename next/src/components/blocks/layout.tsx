@@ -7,8 +7,8 @@ import Header from "./header"
 import "./layout.css"
 
 type LayoutProps = {
-    siteTitle: string,
-    children: JSX.Element | JSX.Element[]
+    siteTitle?: string
+    children: any
 };
 
 const Layout: FunctionComponent<LayoutProps> = ({ siteTitle, children }: LayoutProps) => {
@@ -28,7 +28,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ siteTitle, children }: LayoutP
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
-          <Link href="https://www.gatsbyjs.org"><a>Next.js</a></Link>
+          <Link href="https://nextjs.org"><a>Next.js</a></Link>
           {` `}
           Powered by
           {` `}
