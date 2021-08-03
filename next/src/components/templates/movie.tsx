@@ -42,8 +42,7 @@ type MoviePageProps = {
 };
 
 
-const getPageTitle = (pageContext: MoviePageContext) => {
-    const node = pageContext.node;
+const getPageTitle = ( {node, title}:MoviePageContext ) => {
 
     // @ts-ignore
     if (!!node && pageContext.title && (node[pageContext.title] || node.data[pageContext.title])) {
@@ -51,7 +50,7 @@ const getPageTitle = (pageContext: MoviePageContext) => {
         return node[pageContext.title] || node.data[pageContext.title];
     }
 
-    return pageContext.title || 'Person';
+    return title || 'Person';
 };
 
 

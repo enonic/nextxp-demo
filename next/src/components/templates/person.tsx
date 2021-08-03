@@ -33,8 +33,7 @@ type PersonPageProps = {
     pageContext: PersonPageContext
 }
 
-const getPageTitle = (pageContext: PersonPageContext) => {
-    const node = pageContext.node;
+const getPageTitle = ( {node, title}:PersonPageContext ) => {
 
     // @ts-ignore
     if (!!node && pageContext.title && (node[pageContext.title] || node.data[pageContext.title])) {
@@ -42,7 +41,7 @@ const getPageTitle = (pageContext: PersonPageContext) => {
         return node[pageContext.title] || node.data[pageContext.title];
     }
 
-    return pageContext.title || 'Person';
+    return title || 'Person';
 };
 
 const PersonPage = ({pageContext}: PersonPageProps) => {
