@@ -41,20 +41,20 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
     data: undefined,
   });
 
-    const getData = React.useMemo(() => () => {
-        setRemoteData({ status: "Loading", data: remoteData.data });
-        fetchData()
-            .then((data) => {
-                setRemoteData({ status: "Success", data });
-            })
-            .catch((err) => {
-                setRemoteData({
-                    status: "Error",
-                    message: err.message,
-                    data: remoteData.data,
-                });
-            });
-    }, [fetchData, remoteData.data]);
+  const getData = () => {
+    setRemoteData({ status: "Loading", data: remoteData.data });
+    fetchData()
+      .then((data) => {
+        setRemoteData({ status: "Success", data });
+      })
+      .catch((err) => {
+        setRemoteData({
+          status: "Error",
+          message: err.message,
+          data: remoteData.data,
+        });
+      });
+  };
 
   return (
     <section>
