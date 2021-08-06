@@ -35,7 +35,6 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
   fetchData,
   sectionName,
 }) => {
-  // const reducer = (state, action)
   const [remoteData, setRemoteData] = useState<RemoteData>({
     kind: "NotAsked",
     data: undefined,
