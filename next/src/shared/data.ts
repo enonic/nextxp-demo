@@ -1,14 +1,19 @@
 type RawData = {
   data: {
     guillotine: {
-      getChildren: Data[];
+      getChildren: Content[];
     };
   };
 };
 
-type Data = {
+export type Content = {
   displayName: string;
   _path: string;
+};
+
+export type DataList = {
+  contentList: Content[];
+  timestamp: string;
 };
 
 const fetchData = async (query: string) => {
@@ -18,11 +23,21 @@ const fetchData = async (query: string) => {
     method: "post",
     body: JSON.stringify({ query, variables: null }),
   })
-    .then((res: any) => res.json() as Promise<RawData>)
+    .then(async (res: Response) => {
+      if (!res.ok) {
+        throw new Error(`Data fetching failed. Error: ${await res.json()}`);
+      }
+      return (await res.json()) as RawData;
+    })
     .then((res) => res.data.guillotine.getChildren);
 };
 
-export const fetchMovies = async (): Promise<Data[]> => {
+const withTimestamp = async (data: Content[]) => ({
+  contentList: data,
+  timestamp: new Date().toISOString(),
+});
+
+export const fetchMovies = async (): Promise<DataList> => {
   const query = `
     {
       guillotine {
@@ -34,10 +49,10 @@ export const fetchMovies = async (): Promise<Data[]> => {
     }
   `;
 
-  return fetchData(query);
+  return fetchData(query).then((data) => withTimestamp(data));
 };
 
-export const fetchPeople = async (): Promise<Data[]> => {
+export const fetchPeople = async (): Promise<DataList> => {
   const query = `
     {
       guillotine {
@@ -49,5 +64,5 @@ export const fetchPeople = async (): Promise<Data[]> => {
     }
   `;
 
-  return fetchData(query);
+  return fetchData(query).then((data) => withTimestamp(data));
 };

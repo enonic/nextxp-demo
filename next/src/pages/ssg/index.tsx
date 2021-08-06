@@ -32,17 +32,12 @@ const Page: React.FC<Props> = ({ movies, timestamp }) => {
 
 export const getStaticProps: GetStaticProps = async (
   context
-): Promise<{ props: Props }> => {
-  const movies = await fetchMovies().then((people) =>
-    people.map((p) => p.displayName)
-  );
-
-  return {
+): Promise<{ props: Props }> =>
+  await fetchMovies().then((data) => ({
     props: {
-      movies,
-      timestamp: new Date().toISOString(),
+      timestamp: data.timestamp,
+      movies: data.contentList.map((p) => p.displayName),
     },
-  };
-};
+  }));
 
 export default Page;

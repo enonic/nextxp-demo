@@ -29,17 +29,12 @@ const Page: React.FC<Props> = ({ people, timestamp }) => {
 
 export const getServerSideProps: GetServerSideProps = async (
   context
-): Promise<{ props: Props }> => {
-  const people = await fetchPeople().then((people) =>
-    people.map((p) => p.displayName)
-  );
-
-  return {
+): Promise<{ props: Props }> =>
+  await fetchPeople().then((data) => ({
     props: {
-      people,
-      timestamp: new Date().toISOString(),
+      timestamp: data.timestamp,
+      people: data.contentList.map((p) => p.displayName),
     },
-  };
-};
+  }));
 
 export default Page;
