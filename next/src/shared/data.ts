@@ -49,7 +49,7 @@ export const fetchMovies = async (): Promise<DataList> => {
     }
   `;
 
-  return fetchData(query).then((data) => withTimestamp(data));
+  return fetchData(query).then(withTimestamp);
 };
 
 export const fetchPeople = async (): Promise<DataList> => {
@@ -64,5 +64,5 @@ export const fetchPeople = async (): Promise<DataList> => {
     }
   `;
 
-  return fetchData(query).then((data) => withTimestamp(data));
+  return fetchData(query).then(withTimestamp);
 };
