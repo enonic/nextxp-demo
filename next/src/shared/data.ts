@@ -25,7 +25,7 @@ const fetchData = async (query: string) => {
   })
     .then(async (res: Response) => {
       if (!res.ok) {
-        throw new Error(`Data fetching failed. Error: ${await res.json()}`);
+        throw new Error(`Data fetching failed. Error: ${JSON.stringify(await res.json())}`);
       }
       return (await res.json()) as RawData;
     })
