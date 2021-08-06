@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { Content, DataList, fetchMovies, fetchPeople } from "../../shared/data";
+import * as React from "react";
 
 const Page: React.FC = () => {
   return (
@@ -26,42 +27,42 @@ type DataDisplayProps = {
 };
 
 type RemoteData =
-  | { kind: "NotAsked"; data: undefined }
-  | { kind: "Loading"; data?: DataList }
-  | { kind: "Success"; data: DataList }
-  | { kind: "Error"; message: string; data?: DataList };
+  | { status: "NotAsked"; data: undefined }
+  | { status: "Loading"; data?: DataList }
+  | { status: "Success"; data: DataList }
+  | { status: "Error"; message: string; data?: DataList };
 
 const DataDisplay: React.FC<DataDisplayProps> = ({
   fetchData,
   sectionName,
 }) => {
   const [remoteData, setRemoteData] = useState<RemoteData>({
-    kind: "NotAsked",
+    status: "NotAsked",
     data: undefined,
   });
 
-  const getData = () => {
-    setRemoteData({ kind: "Loading", data: remoteData.data });
-    fetchData()
-      .then((data) => {
-        setRemoteData({ kind: "Success", data });
-      })
-      .catch((err) => {
-        setRemoteData({
-          kind: "Error",
-          message: err.message,
-          data: remoteData.data,
-        });
-      });
-  };
+    const getData = React.useMemo(() => () => {
+        setRemoteData({ status: "Loading", data: remoteData.data });
+        fetchData()
+            .then((data) => {
+                setRemoteData({ status: "Success", data });
+            })
+            .catch((err) => {
+                setRemoteData({
+                    status: "Error",
+                    message: err.message,
+                    data: remoteData.data,
+                });
+            });
+    }, [fetchData, remoteData.data]);
 
   return (
     <section>
       <h2>{sectionName}</h2>
-      <button onClick={getData} disabled={remoteData.kind === "Loading"}>
+      <button onClick={getData} disabled={remoteData.status === "Loading"}>
         Fetch data!
       </button>
-      {remoteData.kind === "Error" && (
+      {remoteData.status === "Error" && (
         <p>
           There was an error when fetching data, but there may still be some
           data displayed below. The error was: {remoteData.message}
