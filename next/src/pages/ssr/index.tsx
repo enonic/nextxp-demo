@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { fetchPeople } from "../../shared/data";
 
 type Props = {
   people: string[];
@@ -29,27 +30,13 @@ const Page: React.FC<Props> = ({ people, timestamp }) => {
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<{ props: Props }> => {
-  const query = `
-    {
-      guillotine {
-        getChildren(key: "\${site}/persons") {
-          displayName
-          _path
-        }
-      }
-    }
-  `;
-
-  const url = "http://localhost:8080/site/hmdb/draft/hmdb/api";
-
-  const data = await fetch(url, {
-    method: "post",
-    body: JSON.stringify({ query, variables: null }),
-  }).then((res: any) => res.json());
+  const people = await fetchPeople().then((people) =>
+    people.map((p) => p.displayName)
+  );
 
   return {
     props: {
-      people: data.data.guillotine.getChildren.map((p) => p.displayName),
+      people,
       timestamp: new Date().toISOString(),
     },
   };

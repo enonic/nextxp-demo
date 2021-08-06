@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import { fetchMovies } from "../../shared/data";
 
 type Props = {
   movies: string[];
@@ -32,27 +33,13 @@ const Page: React.FC<Props> = ({ movies, timestamp }) => {
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<{ props: Props }> => {
-  const query = `
-    {
-      guillotine {
-        getChildren(key: "\${site}/movies") {
-          displayName
-          _path
-        }
-      }
-    }
-  `;
-
-  const url = "http://localhost:8080/site/hmdb/draft/hmdb/api";
-
-  const data = await fetch(url, {
-    method: "post",
-    body: JSON.stringify({ query, variables: null }),
-  }).then((res: any) => res.json());
+  const movies = await fetchMovies().then((people) =>
+    people.map((p) => p.displayName)
+  );
 
   return {
     props: {
-      movies: data.data.guillotine.getChildren.map((p) => p.displayName),
+      movies,
       timestamp: new Date().toISOString(),
     },
   };
