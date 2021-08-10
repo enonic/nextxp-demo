@@ -1,5 +1,5 @@
 const httpClient = require('/lib/http-client');
-const { frontendOrigin } = "frontendOrigin=http://localhost:3000" // <- hardcode for poc
+const frontendOrigin = "frontendOrigin=http://localhost:3000" // <- hardcode for poc
 
 const loopbackCheckParam = 'fromXp';
 
@@ -24,7 +24,7 @@ const frontendProxy = (req) => {
             body: `<div><h1>Success!</h1><p>Triggered the frontend proxy!</p></div>`,
             status: 200,
         };
-
+/*
     const isLoopback = req.params[loopbackCheckParam];
     if (isLoopback) {
         log.info(`Loopback to XP detected from path ${req.rawPath}`);
@@ -73,7 +73,7 @@ const frontendProxy = (req) => {
         return response;
     } catch (e) {
         return errorResponse(frontendUrl, 500, `Exception: ${e}`);
-    }
+    }*/
 };
 
 exports.get = frontendProxy;

@@ -3,19 +3,19 @@
   <x-data name="SoMe" allowContentTypes="person|movie" />
   <form />
   <mappings>
-    <mapping controller="/lib/headless/controllers/admin-frontend-proxy.js">
+    <mapping controller="/lib/headless/controllers/frontend-proxy.js">
       <match>type:'portal:fragment'</match>
     </mapping>
     <mapping controller="/controllers/graphql.js" order="50">
       <pattern>/api</pattern>
     </mapping>
-    <mapping controller="/controllers/info.js" order="50">
+      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
       <match>type:'portal:site'</match>
     </mapping>
-    <mapping controller="/controllers/preview.js" order="50">
+      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
       <match>type:'.*:person'</match>
     </mapping>
-    <mapping controller="/controllers/preview.js" order="50">
+      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
       <match>type:'.*:movie'</match>
     </mapping>
   </mappings>
