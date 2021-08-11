@@ -60,17 +60,22 @@ import Head from "next/head";
 // };
 
 const Element: React.FC = () => {
-  // NOTE: This is a hack to make Next display content when being used as a router in dev mode.
+  // NOTE: This is a hack to make Next display content when being used as a
+  // router in dev mode.
   //
-  // Some relevant discussions on this topic are these two github issues:
+  // Some relevant discussions on this can be found in these two GitHub
+  // discussions/issues:
+  //
   // - https://github.com/vercel/next.js/discussions/16104
   // - https://github.com/vercel/next.js/issues/13058
   //
-  // In short: next adds a style tag to the HTML header when running in dev mode
-  // that sets the body's display to `none`. This is to avoid FOUC (flash of
+  // In short: Next adds a style tag to the HTML <head> tag when running in dev mode
+  // that sets the body's `display` to `none`. This is to avoid FOUC (flash of
   // unstyled content) issues. According to the discussions above, it should not
-  // come up in production. This is probably not the ideal way to fix it, and I
-  // would request that someone else (who has more time) looks into a cleaner
+  // come up in production.
+  //
+  // This workaround is probably not the ideal way to fix it, and I would
+  // request that someone else (who has more time) looks into a cleaner
   // way of doing it. However, it _does_ work and gets me past this hurdle for
   // now.
   const Style = () => (
