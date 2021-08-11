@@ -52,8 +52,9 @@ const frontendProxy = function(req) {
             contentType: 'text/html',
             connectionTimeout: 5000,
             headers: {
-                secret: app.config.serviceSecret,
+                secret: "it's not a secret anymore!"
             },
+            body: JSON.stringify({ variables: {} }),
             followRedirects: false,
         });
 
@@ -63,6 +64,8 @@ const frontendProxy = function(req) {
 
         const status = response.status;
         const message = response.message;
+
+        log.info(JSON.stringify(response))
 
         if (status >= 400) {
             log.info(`Error response from frontend for ${frontendUrl}: ${status} - ${message}`);
@@ -74,7 +77,7 @@ const frontendProxy = function(req) {
             return errorResponse(frontendUrl, status, 'Redirects are not supported in editor view');
         }
 
-        //return response;
+        return response;
     } catch (e) {
         log.error(e);
         //return errorResponse(frontendUrl, 500, `Exception: ${e}`);
