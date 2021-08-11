@@ -1,4 +1,5 @@
 const httpClient = require('/lib/http-client');
+const portalLib = require('/lib/xp/portal')
 const frontendOrigin = "http://localhost:3000" // <- hardcode for poc
 
 const loopbackCheckParam = 'fromXp';
@@ -34,17 +35,17 @@ const frontendProxy = function(req) {
     const pathStartIndex = req.rawPath.indexOf(req.branch) + req.branch.length;
 
     // this isn't likely to show up at when not working with Enonic's stuff.
-    const contentPath = req.rawPath; //.slice(pathStartIndex).replace('/www.nav.no', '');
+    // const contentPath = req.rawPath; //.slice(pathStartIndex).replace('/www.nav.no', '');
+
+    // NAV uses the content's rawPath. That may or may not be useful.
+    // For right now, I'll just use the id which makes querying
+    // simpler.
+    const content = portalLib.getContent();
+    const contentPath = "/" + content._id
 
     const frontendPath = req.branch === 'draft' ? `/draft${contentPath}` : contentPath;
     const frontendUrl = `${frontendOrigin}${frontendPath}?${loopbackCheckParam}=true`;
 
-    log.info("frontendUrl (" +
-        (Array.isArray(frontendUrl) ?
-            ("array[" + frontendUrl.length + "]") :
-            (typeof frontendUrl + (frontendUrl && typeof frontendUrl === 'object' ? (" with keys: " + JSON.stringify(Object.keys(frontendUrl))) : ""))
-        ) + "): " + JSON.stringify(frontendUrl, null, 2)
-    );
 
     try {
         const response = httpClient.request({
@@ -64,8 +65,6 @@ const frontendProxy = function(req) {
 
         const status = response.status;
         const message = response.message;
-
-        log.info(JSON.stringify(response))
 
         if (status >= 400) {
             log.info(`Error response from frontend for ${frontendUrl}: ${status} - ${message}`);
