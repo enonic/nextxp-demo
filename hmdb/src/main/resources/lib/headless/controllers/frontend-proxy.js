@@ -1,5 +1,4 @@
 const httpClient = require('/lib/http-client');
-const portalLib = require('/lib/xp/portal')
 const frontendOrigin = "http://localhost:3000" // <- hardcode for poc
 
 const loopbackCheckParam = 'fromXp';
@@ -42,7 +41,8 @@ const frontendProxy = function(req) {
     //
     // this way, we can more easily query for it with Guillotine
     const contentPath = req.rawPath.slice(pathStartIndex)
-    //.replace('/www.nav.no', ''); <- nav probably had some vhost mapping or similar to make this necessary.
+    //.replace('/www.nav.no', ''); <- nav probably had some vhost
+    //mapping or similar to make this necessary.
 
     const frontendPath = req.branch === 'draft' ? `/draft${contentPath}` : contentPath;
     const frontendUrl = `${frontendOrigin}${frontendPath}?${loopbackCheckParam}=true`;
