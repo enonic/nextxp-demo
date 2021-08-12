@@ -78,11 +78,11 @@ type GetQueryResult = {
   };
 };
 
-export const fetchContent = (id: string): Promise<Content | Error> => {
+export const fetchContent = (pathOrId: string): Promise<Content | Error> => {
   const query = `
     {
       guillotine {
-        get(key: "${id}") {
+        get(key: "${pathOrId}") {
           displayName
         }
       }

@@ -116,11 +116,11 @@ type Context = {
 // this function also needs some serious refactoring, but for a quick and dirty
 // proof of concept it does the job.
 export const getServerSideProps = async ({ params }: Context) => {
-  const [id, ..._] = params.draftrouter;
+  const path = "/" + params.draftrouter.join("/");
 
   const fallback = { displayName: "N/A", _path: "None" };
-  const content = id
-    ? await fetchContent(id).catch((err) => {
+  const content = path
+    ? await fetchContent(path).catch((err) => {
         console.error(err);
         return fallback;
       })

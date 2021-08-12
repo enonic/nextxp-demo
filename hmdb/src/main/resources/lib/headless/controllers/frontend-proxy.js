@@ -34,18 +34,18 @@ const frontendProxy = function(req) {
 
     const pathStartIndex = req.rawPath.indexOf(req.branch) + req.branch.length;
 
-    // this isn't likely to show up at when not working with Enonic's stuff.
-    // const contentPath = req.rawPath; //.slice(pathStartIndex).replace('/www.nav.no', '');
-
-    // NAV uses the content's rawPath. That may or may not be useful.
-    // For right now, I'll just use the id which makes querying
-    // simpler.
-    const content = portalLib.getContent();
-    const contentPath = "/" + content._id
+    // remove the paths of the raw path up until (and including) the branch name.
+    //
+    // for instance:
+    // "/admin/site/inline/hmdb/draft/hmdb/persons/john-travolta"
+    // becomes "/hmdb/persons/john-travolta".
+    //
+    // this way, we can more easily query for it with Guillotine
+    const contentPath = req.rawPath.slice(pathStartIndex)
+    //.replace('/www.nav.no', ''); <- nav probably had some vhost mapping or similar to make this necessary.
 
     const frontendPath = req.branch === 'draft' ? `/draft${contentPath}` : contentPath;
     const frontendUrl = `${frontendOrigin}${frontendPath}?${loopbackCheckParam}=true`;
-
 
     try {
         const response = httpClient.request({
