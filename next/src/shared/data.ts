@@ -16,21 +16,24 @@ export type DataList = {
   timestamp: string;
 };
 
-const fetchData = async (query: string) => {
-  const url = "http://localhost:8080/site/hmdb/draft/hmdb/api";
+const apiUrl = "http://localhost:8080/site/hmdb/draft/hmdb/api";
 
-  return await fetch(url, {
+const fetchData = async <T>(query: string) => {
+  return await fetch(apiUrl, {
     method: "post",
     body: JSON.stringify({ query, variables: null }),
-  })
-    .then(async (res: Response) => {
-      if (!res.ok) {
-        throw new Error(`Data fetching failed. Error: ${JSON.stringify(await res.json())}`);
-      }
-      return (await res.json()) as RawData;
-    })
-    .then((res) => res.data.guillotine.getChildren);
+  }).then(async (res: Response) => {
+    if (!res.ok) {
+      throw new Error(
+        `Data fetching failed. Error: ${JSON.stringify(await res.json())}`
+      );
+    }
+    return (await res.json()) as T;
+  });
 };
+
+const fetchChildren = (query: string) =>
+  fetchData<RawData>(query).then((res) => res.data.guillotine.getChildren);
 
 const withTimestamp = async (data: Content[]) => ({
   contentList: data,
@@ -49,7 +52,7 @@ export const fetchMovies = async (): Promise<DataList> => {
     }
   `;
 
-  return fetchData(query).then(withTimestamp);
+  return fetchChildren(query).then(withTimestamp);
 };
 
 export const fetchPeople = async (): Promise<DataList> => {
@@ -64,5 +67,27 @@ export const fetchPeople = async (): Promise<DataList> => {
     }
   `;
 
-  return fetchData(query).then(withTimestamp);
+  return fetchChildren(query).then(withTimestamp);
+};
+
+type GetQueryResult = {
+  data: {
+    guillotine: {
+      get: Content;
+    };
+  };
+};
+
+export const fetchContent = (pathOrId: string): Promise<Content | Error> => {
+  const query = `
+    {
+      guillotine {
+        get(key: "${pathOrId}") {
+          displayName
+        }
+      }
+    }`;
+  return fetchData<GetQueryResult>(query).then(
+    (res) => res.data.guillotine.get
+  );
 };
