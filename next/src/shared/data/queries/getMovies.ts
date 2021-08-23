@@ -1,14 +1,11 @@
+export default (underscoredAppName) => `
 {
   guillotine {
-    query(
-      contentTypes: "com.enonic.nextpoc.hmdb:movie",
-      query: "valid='true'",
-      sort: "displayName"
-    ) {
-      id: _id
-      displayName
-      name: _name
-      ... on com_enonic_nextpoc_hmdb_Movie {
+    getChildren(key: "\${site}/movies") {
+      ... on ${underscoredAppName}_Movie {
+        id: _id
+        displayName
+        name: _name
         data {
           subtitle
           abstract
@@ -26,7 +23,7 @@
               id: _id
               name: _name
               displayName
-              ... on com_enonic_nextpoc_hmdb_Person {
+              ... on ${underscoredAppName}_Person {
                 data {
                   photos {
                     ... on media_Image {
@@ -41,4 +38,4 @@
       }
     }
   }
-}
+}`;

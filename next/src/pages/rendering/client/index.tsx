@@ -1,7 +1,6 @@
-import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { Content, DataList, fetchMovies, fetchPeople } from "../../shared/data";
+import { Content, DataList, fetchMovies, fetchPersons } from "../../../shared/data";
 import * as React from "react";
 
 const Page: React.FC = () => {
@@ -15,7 +14,7 @@ const Page: React.FC = () => {
         This page contains dynamically rendered data. To fetch (or refetch)
         data, click the appropriate button below.
       </p>
-      <DataDisplay fetchData={fetchPeople} sectionName={"People"} />
+      <DataDisplay fetchData={fetchPersons} sectionName={"People"} />
       <DataDisplay fetchData={fetchMovies} sectionName={"Movies"} />
     </div>
   );

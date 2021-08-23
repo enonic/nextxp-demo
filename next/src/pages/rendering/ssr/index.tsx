@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { fetchPeople } from "../../shared/data";
+import { fetchPersons } from "../../../shared/data";
 
 type Props = {
   people: string[];
@@ -30,7 +30,7 @@ const Page: React.FC<Props> = ({ people, timestamp }) => {
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<{ props: Props }> =>
-  await fetchPeople().then((data) => ({
+  await fetchPersons().then( data => ({
     props: {
       timestamp: data.timestamp,
       people: data.contentList.map((p) => p.displayName),

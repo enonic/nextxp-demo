@@ -1,10 +1,11 @@
-const query = `{
+export default (underscoredAppName, movieSubPath) => `
+{
   guillotine {
-    query(contentTypes: "com.example.myproject:movie", query: "valid='true'", sort: "displayName") {
-      id: _id
-      displayName
-      name: _name
-      ... on com_example_myproject_Movie {
+    get(key: "\${site}/movies/${movieSubPath}") {
+      ... on ${underscoredAppName}_Movie {
+        id: _id
+        displayName
+        name: _name
         data {
           subtitle
           abstract
@@ -22,7 +23,7 @@ const query = `{
               id: _id
               name: _name
               displayName
-              ... on com_example_myproject_Person {
+              ... on ${underscoredAppName}_Person {
                 data {
                   photos {
                     ... on media_Image {
@@ -37,6 +38,4 @@ const query = `{
       }
     }
   }
-}`
-
-module.exports = query;
+}`;

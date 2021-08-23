@@ -1,10 +1,11 @@
-const query = `{
+export default (underscoredAppName) => `
+{
   guillotine {
-    query(contentTypes: "com.example.myproject:person", query: "valid='true'", sort: "displayName", first: 100) {
-      id: _id
-      displayName
-      name: _name
-      ... on com_example_myproject_Person {
+    getChildren(key: "\${site}/persons") {
+      ... on ${underscoredAppName}_Person {
+        id: _id
+        displayName
+        name: _name
         data {
           bio
           photos {
@@ -17,8 +18,7 @@ const query = `{
           }
         }
       }
+    }
   }
-  }
-}`
+}`;
 
-module.exports = query;

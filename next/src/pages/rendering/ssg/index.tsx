@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { fetchMovies } from "../../shared/data";
+import { fetchMovies } from "../../../shared/data";
 
 type Props = {
   movies: string[];
@@ -33,7 +33,7 @@ const Page: React.FC<Props> = ({ movies, timestamp }) => {
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<{ props: Props }> =>
-  await fetchMovies().then((data) => ({
+  await fetchMovies().then( data => ({
     props: {
       timestamp: data.timestamp,
       movies: data.contentList.map((p) => p.displayName),
