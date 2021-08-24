@@ -14,7 +14,7 @@ export default (underscoredAppName, personSubPath) => `
               imageUrl: imageUrl(type: absolute, scale: "width(500)")
               id: _id
               attachments {
-                altName: name
+                name
               }
             }
           }
@@ -24,10 +24,10 @@ export default (underscoredAppName, personSubPath) => `
   }
 }`;
 
-type Photo = {
+export type Photo = {
     id: string,
     attachments?: {
-        altName?: string
+        name?: string
     }[]
     imageUrl?: string,
 };

@@ -1,3 +1,6 @@
+import {BasePerson, Photo} from "./getPerson";
+import {ExportBatchSpecifierKind} from "ast-types/gen/kinds";
+
 export default (underscoredAppName, movieSubPath) => `
 {
   guillotine {
@@ -9,25 +12,29 @@ export default (underscoredAppName, movieSubPath) => `
         data {
           subtitle
           abstract
+          trailer
           photos {
             ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(300)")
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")
               attachments {
-                imageText: name
+                name
               }
             }
           }
           cast {
             character
             actor {
-              id: _id
-              name: _name
-              displayName
               ... on ${underscoredAppName}_Person {
+                id: _id
+                name: _name
+                displayName
                 data {
                   photos {
                     ... on media_Image {
                       imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
+                      attachments {
+                        name
+                      }
                     }
                   }
                 }
@@ -39,3 +46,29 @@ export default (underscoredAppName, movieSubPath) => `
     }
   }
 }`;
+
+
+export type CastItem = {
+    character?: string,
+    actor?: BasePerson,
+};
+
+export type BaseMovie = {
+    id: string,
+    displayName: string,
+    name: string,
+    data?: {
+        photos?: Photo | Photo[]
+    },
+};
+
+export type Movie = Omit<BaseMovie, 'data'> & {
+    data?: {
+        subtitle?: string,
+        abstract?: string,
+        trailer?: string,
+        release?: string,
+        photos?: Photo | Photo[],
+        cast?: CastItem | CastItem[]
+    }
+};

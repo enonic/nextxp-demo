@@ -1,3 +1,5 @@
+import {BaseMovie} from "./getMovie";
+
 export default (underscoredAppName) => `
 {
   guillotine {
@@ -7,30 +9,11 @@ export default (underscoredAppName) => `
         displayName
         name: _name
         data {
-          subtitle
-          abstract
           photos {
             ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(300)")
+              imageUrl: imageUrl(type: absolute, scale: "width(250)")
               attachments {
                 imageText: name
-              }
-            }
-          }
-          cast {
-            character
-            actor {
-              id: _id
-              name: _name
-              displayName
-              ... on ${underscoredAppName}_Person {
-                data {
-                  photos {
-                    ... on media_Image {
-                      imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
-                    }
-                  }
-                }
               }
             }
           }
@@ -39,3 +22,5 @@ export default (underscoredAppName) => `
     }
   }
 }`;
+
+export type MovieList = BaseMovie[];

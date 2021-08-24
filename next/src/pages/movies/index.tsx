@@ -1,15 +1,17 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import Head from "next/head";
-import {fetchMovies, fetchPersons} from "../../shared/data";
+import {fetchContentChildren, Timestamped} from "../../shared/data";
+import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
+import {appNameUnderscored} from "../../shared/data/config";
 
 type Props = {
-    movies: {}[];
+    movies: MovieList;
     timestamp: string;
 };
 
 
 
-const Page: React.FC<Props> = ({ movies, timestamp }) => {
+const Page: React.FC<Props> = ( {movies, timestamp}: Props ) => {
     return (
         <div>
             <Head>
@@ -34,6 +36,10 @@ export default Page;
 
 
 
+const moviesQuery = getMoviesQuery(appNameUnderscored);
+export const fetchMovies = async (): Promise<Timestamped<MovieList>> => fetchContentChildren(moviesQuery);
+
+
 // SSR
 export const getServerSideProps: GetServerSideProps = async (
     context
@@ -41,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (
     await fetchMovies().then( data => ({
         props: {
             timestamp: data.timestamp,
-            movies: data.contentList,
+            movies: data.content,
         },
     }));
 

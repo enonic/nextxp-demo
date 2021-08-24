@@ -63,9 +63,6 @@ export const fetchContentItem = async <T> (query: string): Promise<Timestamped<T
         .then(timestamp);
 
 
-const moviesQuery = getMoviesQuery(appNameUnderscored);
-export const fetchMovies = async (): Promise<DataList> => fetchContentChildren(moviesQuery);
-
 /*
 export const fetchPerson = async (personSubPath): Promise<DataItem> => {
     const personQuery = getPersonQuery(appNameUnderscored, personSubPath);
