@@ -17,7 +17,7 @@ type SeoProps = {
     viewport?: JSX.Element
 };
 
-const SEO: FunctionComponent<SeoProps> = ({ description, lang, meta, author, title, siteTitle, keywords, viewport }:SeoProps) => (
+const SEO: FunctionComponent<SeoProps> = ( {description, lang, meta, author, title, siteTitle, keywords, viewport}: SeoProps) => (
 
     <Head>
         <title>{

@@ -1,6 +1,4 @@
 import React from "react"
-import Layout from "../blocks/layout"
-import SEO from "../blocks/seo"
 import Link from "next/link";
 
 type Photo = {
@@ -33,7 +31,7 @@ type PersonPageProps = {
     pageContext: PersonPageContext
 }
 
-const getPageTitle = ( {node, title}:PersonPageContext ) => {
+const getPageTitle = ({node, title}: PersonPageContext) => {
 
     // @ts-ignore
     if (!!node && pageContext.title && (node[pageContext.title] || node.data[pageContext.title])) {
@@ -49,8 +47,7 @@ const PersonPage = ({pageContext}: PersonPageProps) => {
     const personMeta = person.data;
 
     return (
-        <Layout>
-            <SEO title={getPageTitle(pageContext)}/>
+        <>
             <div>
                 <div style={{
                     display: 'flex',
@@ -78,7 +75,7 @@ const PersonPage = ({pageContext}: PersonPageProps) => {
                     <a>Back to Persons</a>
                 </Link>
             </p>
-        </Layout>
+        </>
     )
 }
 

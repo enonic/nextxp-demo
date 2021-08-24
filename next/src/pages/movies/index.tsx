@@ -1,5 +1,4 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import Head from "next/head";
 import {fetchContentChildren, Timestamped} from "../../shared/data";
 import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
 import {appNameUnderscored} from "../../shared/data/config";
@@ -14,20 +13,15 @@ type Props = {
 const Page: React.FC<Props> = ( {movies, timestamp}: Props ) => {
     return (
         <div>
-            <Head>
-                <title>Movies</title>
-            </Head>
-
-            <h1>Movies</h1>
-            <p>
-                Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
-            </p>
-
             <ul>
                 {movies.map((movie, i) => (
                     <li key={i}>{JSON.stringify(movie)}</li>
                 ))}
             </ul>
+
+            <p>
+                Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
+            </p>
         </div>
     );
 };

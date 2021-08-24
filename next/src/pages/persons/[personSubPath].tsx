@@ -1,5 +1,4 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import Head from "next/head";
 import {fetchContentItem, Timestamped} from "../../shared/data";
 import getPersonQuery, {Person} from "../../shared/data/queries/getPerson";
 import {appNameUnderscored, appNameDashed} from "../../shared/data/config";
@@ -16,17 +15,12 @@ type Props = {
 const Page: React.FC<Props> = ( {person, timestamp}: Props ) => {
     return (
         <div>
-            <Head>
-                <title>Person</title>
-            </Head>
+            <h2>{person.displayName}</h2>
+            <p>{JSON.stringify(person)}</p>
 
-            <h1>Person</h1>
             <p>
                 Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
             </p>
-
-            <h2>{person.displayName}</h2>
-            <p>{JSON.stringify(person)}</p>
         </div>
     );
 };

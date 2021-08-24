@@ -1,6 +1,4 @@
 import React from "react"
-import Layout from "../blocks/layout"
-import SEO from "../blocks/seo"
 import Link from "next/link";
 
 import type { Photo } from './person';
@@ -59,8 +57,7 @@ const MoviePage = ({pageContext}: MoviePageProps) => {
     const movieMeta = movie.data;
 
     return (
-        <Layout>
-            <SEO title={getPageTitle(pageContext)}/>
+        <>
             <div>
                 <div style={{
                     display: 'flex',
@@ -145,8 +142,8 @@ const MoviePage = ({pageContext}: MoviePageProps) => {
                     <a>Back to Movies</a>
                 </Link>
             </p>
-        </Layout>
+        </>
     )
 }
 
-export default MoviePage
+export default MoviePage;

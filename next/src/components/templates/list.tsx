@@ -1,6 +1,4 @@
 import React from "react"
-import Layout from "../blocks/layout"
-import SEO from "../blocks/seo"
 import Link from "next/link";
 
 type Node = {
@@ -15,10 +13,9 @@ type ListPageProps = {
     detailsPageKey: string,
 };
 
-const ListPage = ( {title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps ) => {
+const ListPage = ({title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps) => {
     return (
-        <Layout>
-            <SEO title={title || `List`}/>
+        <>
             <h1>{title}</h1>
             {
                 nodes.map((node: Node) => (
@@ -36,8 +33,9 @@ const ListPage = ( {title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps
                         }
                     </div>
                 ))
-            }<br/>
-        </Layout>
+            }
+            <br/>
+        </>
     )
 };
 

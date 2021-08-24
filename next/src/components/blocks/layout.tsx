@@ -4,8 +4,6 @@ import Link from 'next/link';
 
 import Header from "./header"
 
-import "./layout.css"
-
 type LayoutProps = {
     siteTitle?: string
     children: any

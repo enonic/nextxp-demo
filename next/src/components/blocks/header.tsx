@@ -1,6 +1,9 @@
 import React, {FunctionComponent} from "react"
 
 import Link from "next/link";
+import Image from "next/image";
+
+import xpShield from '../../public/images/xp-shield.svg';
 
 type HeaderProps = {
     siteTitle?: string
@@ -34,7 +37,11 @@ const Header: FunctionComponent<HeaderProps> = ({ siteTitle }: HeaderProps) => (
           </a>
         </Link>
       </h1>
-        {/*<Image style={{width: `80px`}} />*/}
+      <Image src={xpShield}
+             width={33}
+             height={40}
+             alt={"Enonic XP logo"}
+      />
     </div>
   </header>
 )
