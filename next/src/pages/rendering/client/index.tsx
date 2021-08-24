@@ -1,7 +1,14 @@
 import Head from "next/head";
 import { useState } from "react";
-import { Content, DataList, fetchMovies, fetchPersons } from "../../../shared/data";
 import * as React from "react";
+
+import {PersonList} from "../../../shared/data/queries/getPersons";
+import {MovieList} from "../../../shared/data/queries/getMovies";
+import {fetchPersons} from "../../persons";
+import {fetchMovies} from "../../movies";
+import {Timestamped} from "../../../shared/data";
+
+
 
 const Page: React.FC = () => {
   return (
@@ -20,15 +27,17 @@ const Page: React.FC = () => {
   );
 };
 
+type DataList = PersonList | MovieList;
+
 type DataDisplayProps = {
-  fetchData: () => Promise<DataList>;
+  fetchData: () => Promise<Timestamped<DataList>>;
   sectionName: string;
 };
 
 type RemoteData =
   | { status: "NotAsked"; data: undefined }
   | { status: "Loading"; data?: DataList }
-  | { status: "Success"; data: DataList }
+  | { status: "Success"; data: DataList, timestamp: string }
   | { status: "Error"; message: string; data?: DataList };
 
 const DataDisplay: React.FC<DataDisplayProps> = ({
@@ -44,7 +53,7 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
     setRemoteData({ status: "Loading", data: remoteData.data });
     fetchData()
       .then((data) => {
-        setRemoteData({ status: "Success", data });
+        setRemoteData({ status: "Success", data: data.content, timestamp: data.timestamp });
       })
       .catch((err) => {
         setRemoteData({
@@ -73,12 +82,12 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
         <>
           <p>
             I got this data at{" "}
-            <time dateTime={remoteData.data.timestamp}>
-              {remoteData.data.timestamp}
+            <time dateTime={remoteData.timestamp}>
+              {remoteData.timestamp}
             </time>
           </p>
           <ul>
-            {remoteData.data.contentList.map((p) => (
+            {remoteData.data.map((p) => (
               <li key={p.displayName}>{p.displayName}</li>
             ))}
           </ul>
