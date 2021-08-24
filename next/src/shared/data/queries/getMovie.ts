@@ -42,6 +42,7 @@ export default (underscoredAppName, movieSubPath) => `
             }
           }
         }
+        xAsJson
       }
     }
   }
@@ -70,5 +71,10 @@ export type Movie = Omit<BaseMovie, 'data'> & {
         release?: string,
         photos?: Photo | Photo[],
         cast?: CastItem | CastItem[]
+    },
+    xAsJson?: {
+        [appNameDashed: string]: {
+            SoMe?: {}
+        }
     }
 };

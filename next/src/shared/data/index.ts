@@ -1,11 +1,4 @@
-import getMoviesQuery from './queries/getMovies';
-import getPersonsQuery from './queries/getPersons';
-import getMovieQuery from './queries/getMovie';
-import getPersonQuery, {BasePerson} from './queries/getPerson';
-
-//import makeGetContentQuery from './queries/getContent';
-
-import { apiUrl, appNameUnderscored } from './config';
+import { apiUrl } from './config';
 
 type QueryChildrenResult<T> = {
   data: {
@@ -61,20 +54,3 @@ export const fetchContentItem = async <T> (query: string): Promise<Timestamped<T
     fetchData<QueryGetResult<T>>(query)
         .then(res => res.data.guillotine.get)
         .then(timestamp);
-
-
-/*
-export const fetchPerson = async (personSubPath): Promise<DataItem> => {
-    const personQuery = getPersonQuery(appNameUnderscored, personSubPath);
-    return fetchDataItem(personQuery);
-}
-
-export const fetchMovie = async (personSubPath): Promise<DataItem> => {
-    const movieQuery = getMovieQuery(appNameUnderscored, personSubPath);
-    return fetchDataItem(movieQuery);
-}*/
-/*
-
-export const fetchContent = (pathOrId: string): Promise<Content | Error> => fetchData<GetQueryResult>(makeGetContentQuery(pathOrId))
-    .then((res) => res.data.guillotine.get);
-*/

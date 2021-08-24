@@ -19,6 +19,7 @@ export default (underscoredAppName, personSubPath) => `
             }
           }
         }
+        xAsJson
       }
     }
   }
@@ -46,5 +47,10 @@ export type Person = Omit<BasePerson, 'data'> & {
         bio?: string,
         dateofbirth?: string,
         photos?: Photo | Photo[]
+    },
+    xAsJson?: {
+        [appNameDashed: string]: {
+            SoMe?: {}
+        }
     }
 };
