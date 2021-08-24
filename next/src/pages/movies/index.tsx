@@ -4,8 +4,9 @@ import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
 import {appNameUnderscored} from "../../../enonic.connection.config";
 
 type Props = {
-    movies: MovieList;
-    timestamp: string;
+    movies: MovieList,
+    timestamp: string,
+    title: string
 };
 
 
@@ -42,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             timestamp: data.timestamp,
             movies: data.content,
+            title: "Movies"
         },
     }));
 

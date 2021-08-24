@@ -6,8 +6,9 @@ import {appNameUnderscored, appNameDashed} from "../../../enonic.connection.conf
 type Props = {
     person: Person & {
         soMe?: {}
-    };
-    timestamp: string;
+    },
+    timestamp: string,
+    title: string
 };
 
 
@@ -42,7 +43,8 @@ export const getServerSideProps: GetServerSideProps = async (
     return await fetchPerson(personSubPath).then( data => ({
         props: {
             timestamp: data.timestamp,
-            person: data.content
+            person: data.content,
+            title: data.content.displayName
         },
     }));
 }

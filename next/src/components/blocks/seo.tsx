@@ -22,7 +22,7 @@ const SEO: FunctionComponent<SeoProps> = ( {description, lang, meta, author, tit
     <Head>
         <title>{
             siteTitle && title
-                ? `${title} | ${siteTitle}`
+                ? `${title}  |  ${siteTitle}`
                 : title || siteTitle || ""
         }</title>
 

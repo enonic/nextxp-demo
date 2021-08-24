@@ -7,8 +7,9 @@ import {appNameDashed, appNameUnderscored} from "../../../enonic.connection.conf
 type Props = {
     movie: Movie & {
         soMe?: {}
-    };
-    timestamp: string;
+    },
+    timestamp: string,
+    title: string
 };
 
 
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             timestamp: data.timestamp,
             movie: data.content,
+            title: data.content.displayName
         },
     }));
 }

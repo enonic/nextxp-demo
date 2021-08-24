@@ -4,8 +4,9 @@ import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons"
 import { appNameUnderscored } from "../../../enonic.connection.config";
 
 type Props = {
-    persons: PersonList;
-    timestamp: string;
+    persons: PersonList,
+    timestamp: string,
+    title: string
 };
 
 const Page: React.FC<Props> = ( {persons, timestamp}: Props ) => {
@@ -41,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             timestamp: data.timestamp,
             persons: data.content,
+            title: "Persons"
         },
     }));
 
