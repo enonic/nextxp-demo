@@ -1,26 +1,25 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import {fetchContentItem, Timestamped} from "../../shared/data";
+import {fetchContentItem} from "../../shared/data";
 import getPersonQuery, {Person} from "../../shared/data/queries/getPerson";
-import {appNameUnderscored, appNameDashed} from "../../../enonic.connection.config";
+import {appNameUnderscored} from "../../../enonic.connection.config";
 import PersonPage from "../../components/templates/person";
 
 type Props = {
     person: Person & {
         soMe?: {}
     },
-    timestamp: string,
     title: string
 };
 
 
 
-const Page: React.FC<Props> = ( {person, timestamp}: Props ) => <PersonPage person={person} />
+const Page: React.FC<Props> = ( {person}: Props ) => <PersonPage person={person} />
 
 export default Page;
 
 
 
-export const fetchPerson = async (personSubPath): Promise<Timestamped<Person>> => {
+export const fetchPerson = async (personSubPath): Promise<Person> => {
     const personQuery = getPersonQuery(appNameUnderscored, personSubPath);
     return fetchContentItem(personQuery);
 }
@@ -30,14 +29,22 @@ export const getServerSideProps: GetServerSideProps = async (
     context
 ): Promise<{ props: Props }> => {
     const { personSubPath } = context.query;
-    return await fetchPerson(personSubPath).then( data => ({
+    return await fetchPerson(personSubPath).then( content => ({
         props: {
-            timestamp: data.timestamp,
-            person: data.content,
-            title: data.content.displayName
+            person: content,
+            title: content.displayName
         },
     }));
 }
 
 
+/*
+// SSG
+export const getStaticProps: GetStaticProps = async (
+    context
+): Promise<{ props: Props }> =>
 
+    ...etc...
+
+    }));
+*/

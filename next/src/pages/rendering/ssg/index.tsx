@@ -1,6 +1,6 @@
 import {GetStaticProps} from "next";
-import {fetchMovies} from "../../movies";
 import {MovieList} from "../../../shared/data/queries/getMovies";
+import {fetchStampedMovies} from "../client";
 
 type Props = {
     movies: MovieList,
@@ -31,10 +31,10 @@ const Page: React.FC<Props> = ({movies, timestamp, title}) => {
 export const getStaticProps: GetStaticProps = async (
     context
 ): Promise<{ props: Props }> =>
-    await fetchMovies().then(data => ({
+    await fetchStampedMovies().then(data => ({
         props: {
             timestamp: data.timestamp,
-            movies: data.content,
+            movies: data.data,
             title: "SSG: Next.js data poc"
         },
     }));

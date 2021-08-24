@@ -16,16 +16,6 @@ type QueryGetResult<T> = {
     };
 };
 
-export type Content = {
-  displayName: string;
-  _path: string;
-};
-
-export type Timestamped<T> = {
-    content: T;
-    timestamp: string;
-};
-
 const fetchData = async <T>(query: string) => {
   return await fetch(apiUrl, {
     method: "post",
@@ -40,17 +30,11 @@ const fetchData = async <T>(query: string) => {
   });
 };
 
-const timestamp = async <T> (data: T) => ({
-    content: data,
-    timestamp: new Date().toISOString(),
-});
 
-export const fetchContentChildren = async <T extends any[]> (query: string): Promise<Timestamped<T>> =>
+export const fetchContentChildren = async <T extends any[]> (query: string): Promise<T> =>
   fetchData<QueryChildrenResult<T>>(query)
-      .then(res => res.data.guillotine.getChildren)
-      .then(timestamp);
+      .then(res => res.data.guillotine.getChildren);
 
-export const fetchContentItem = async <T> (query: string): Promise<Timestamped<T>> =>
+export const fetchContentItem = async <T> (query: string): Promise<T> =>
     fetchData<QueryGetResult<T>>(query)
-        .then(res => res.data.guillotine.get)
-        .then(timestamp);
+        .then(res => res.data.guillotine.get);

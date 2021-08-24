@@ -6,9 +6,25 @@ import {PersonList} from "../../../shared/data/queries/getPersons";
 import {MovieList} from "../../../shared/data/queries/getMovies";
 import {fetchPersons} from "../../persons";
 import {fetchMovies} from "../../movies";
-import {Timestamped} from "../../../shared/data";
 
 
+export type Timestamped<T> = {
+    data: T
+    timestamp: string;
+};
+const timestamp = async <T> (data: T): Promise<Timestamped<T>> => ({
+    data,
+    timestamp: new Date().toISOString(),
+});
+
+export const fetchStampedPersons = async (): Promise<Timestamped<PersonList>> => {
+    const persons: PersonList = await fetchPersons();
+    return await timestamp(persons);
+}
+export const fetchStampedMovies = async (): Promise<Timestamped<MovieList>> => {
+    const movies: MovieList = await fetchMovies();
+    return await timestamp(movies);
+}
 
 const Page: React.FC = () => {
   return (
@@ -21,8 +37,8 @@ const Page: React.FC = () => {
         This page contains dynamically rendered data. To fetch (or refetch)
         data, click the appropriate button below.
       </p>
-      <DataDisplay fetchData={fetchPersons} sectionName={"People"} />
-      <DataDisplay fetchData={fetchMovies} sectionName={"Movies"} />
+      <DataDisplay fetchData={fetchStampedPersons} sectionName={"People"} />
+      <DataDisplay fetchData={fetchStampedMovies} sectionName={"Movies"} />
     </div>
   );
 };
@@ -35,10 +51,10 @@ type DataDisplayProps = {
 };
 
 type RemoteData =
-  | { status: "NotAsked"; data: undefined }
-  | { status: "Loading"; data?: DataList }
+  | { status: "NotAsked"; data: undefined, timestamp: undefined }
+  | { status: "Loading"; data?: DataList, timestamp: undefined }
   | { status: "Success"; data: DataList, timestamp: string }
-  | { status: "Error"; message: string; data?: DataList };
+  | { status: "Error"; message: string; data?: DataList, timestamp: undefined };
 
 const DataDisplay: React.FC<DataDisplayProps> = ({
   fetchData,
@@ -47,19 +63,21 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
   const [remoteData, setRemoteData] = useState<RemoteData>({
     status: "NotAsked",
     data: undefined,
+    timestamp: undefined
   });
 
   const getData = () => {
-    setRemoteData({ status: "Loading", data: remoteData.data });
+    setRemoteData({ status: "Loading", data: remoteData.data, timestamp: undefined});
     fetchData()
       .then((data) => {
-        setRemoteData({ status: "Success", data: data.content, timestamp: data.timestamp });
+        setRemoteData({ status: "Success", data: data.data, timestamp: data.timestamp });
       })
       .catch((err) => {
         setRemoteData({
           status: "Error",
           message: err.message,
           data: remoteData.data,
+          timestamp: undefined
         });
       });
   };
@@ -80,12 +98,15 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
         <p>There is no data available right now. How about fetching some?</p>
       ) : (
         <>
-          <p>
-            I got this data at{" "}
-            <time dateTime={remoteData.timestamp}>
-              {remoteData.timestamp}
-            </time>
-          </p>
+            {
+                remoteData.timestamp &&
+                <p>
+                    I got this data at{" "}
+                    <time dateTime={remoteData.timestamp}>
+                        {remoteData.timestamp}
+                    </time>
+                </p>
+            }
           <ul>
             {remoteData.data.map((p) => (
               <li key={p.displayName}>{p.displayName}</li>

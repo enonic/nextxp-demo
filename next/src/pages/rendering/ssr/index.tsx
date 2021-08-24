@@ -1,6 +1,6 @@
 import {GetServerSideProps} from "next";
-import {fetchPersons} from "../../persons";
 import {PersonList} from "../../../shared/data/queries/getPersons";
+import {fetchStampedPersons} from "../client";
 
 type Props = {
     persons: PersonList,
@@ -29,10 +29,10 @@ const Page: React.FC<Props> = ({persons, timestamp, title}: Props) => {
 export const getServerSideProps: GetServerSideProps = async (
     context
 ): Promise<{ props: Props }> =>
-    await fetchPersons().then(data => ({
+    await fetchStampedPersons().then(data => ({
         props: {
             timestamp: data.timestamp,
-            persons: data.content,
+            persons: data.data,
             title: "SSR: Next.js data poc"
         },
     }));
