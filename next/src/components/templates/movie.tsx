@@ -1,60 +1,24 @@
 import React from "react"
 import Link from "next/link";
+import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 
-import type { Photo } from './person';
+import { getPhoto} from "../../shared/images";
 
-type MovieCast = {
-    character: string,
-    actor: {
-        id: string,
-        displayName: string,
-        name: string,
-        data: {
-            photos: {
-                imageUrl: string
-            }[]
-        }
-    }
-};
-
-
-type Movie = {
-    displayName: string,
-    data: {
-        release?: string,
-        subtitle: string,
-        abstract: string,
-        cast?: MovieCast[],
-        photos: Photo[],
-    }
-};
-
-type MoviePageContext = {
-    node: Movie,
-    listPageUrl: string,
-    title?: string,
+type Props = {
+    movie: Movie,
 }
 
-type MoviePageProps = {
-    pageContext: MoviePageContext
-};
+const getCast = (cast): CastItem[] | undefined => !cast
+    ? undefined
+    : (Array.isArray(cast))
+        ? cast
+        : [cast];
 
+const MoviePage = ({movie}: Props) => {
+    const movieMeta = movie.data || {};
 
-const getPageTitle = ( {node, title}:MoviePageContext ) => {
-
-    // @ts-ignore
-    if (!!node && pageContext.title && (node[pageContext.title] || node.data[pageContext.title])) {
-        // @ts-ignore
-        return node[pageContext.title] || node.data[pageContext.title];
-    }
-
-    return title || 'Person';
-};
-
-
-const MoviePage = ({pageContext}: MoviePageProps) => {
-    const movie = pageContext.node;
-    const movieMeta = movie.data;
+    const moviePhoto = getPhoto(movieMeta.photos);
+    const movieCast = getCast(movieMeta.cast);
 
     return (
         <>
@@ -78,13 +42,17 @@ const MoviePage = ({pageContext}: MoviePageProps) => {
                 <div style={{
                     display: `flex`
                 }}>
-                    <img
-                        style={{
-                            maxWidth: '400px',
-                            width: '50%'
-                        }}
-                        src={movieMeta.photos[0].imageUrl} title={movieMeta.subtitle}
-                        alt={movieMeta.photos[0].attachments[0].imageText}/>
+                    {
+                        moviePhoto &&
+                        <img
+                            style={{
+                                maxWidth: '400px',
+                                width: '50%'
+                            }}
+                            src={moviePhoto.imageUrl}
+                            title={movieMeta.subtitle}
+                            alt={moviePhoto.alt} />
+                    }
                     <div style={{
                         margin: `0 20px`
                     }}>
@@ -97,39 +65,51 @@ const MoviePage = ({pageContext}: MoviePageProps) => {
                                     padding: '0 15px'
                                 }}>
                                     {
-                                        movieMeta.cast.map(cast => (
-                                            <div
-                                                key={cast.actor.id}
-                                                style={{
-                                                    flex: '1 1 0px',
-                                                    display: `flex`,
-                                                    flexDirection: `column`
-                                                }}
-                                            >
-                                                <img
-                                                    style={{
-                                                        width: '50%',
-                                                        marginBottom: '0.5rem'
-                                                    }}
-                                                    src={cast.actor.data.photos[0].imageUrl}
-                                                    title={`${cast.actor.displayName} as ${cast.character}`}
-                                                    alt={cast.character}/>
+                                        movieCast &&
+                                        movieCast.map(cast => {
+                                            if (!cast.actor) {
+                                                return undefined
+                                            }
+                                            const actorData = cast.actor.data || {};
+                                            const actorPhoto = getPhoto(actorData.photos);
+                                            return (
                                                 <div
+                                                    key={cast.actor.id}
                                                     style={{
+                                                        flex: '1 1 0px',
                                                         display: `flex`,
                                                         flexDirection: `column`
-                                                    }}>
-                                                    <i style={{fontSize: '14px'}}>
-                                                        {cast.character}
-                                                    </i>
-                                                    <Link href={`persons/${cast.actor.name}`}>
-                                                        <a style={{fontSize: '14px'}}>
-                                                            {cast.actor.displayName}
-                                                        </a>
-                                                    </Link>
+                                                    }}
+                                                >
+                                                    {
+                                                        actorPhoto &&
+                                                        <img
+                                                            style={{
+                                                                width: '50%',
+                                                                marginBottom: '0.5rem'
+                                                            }}
+                                                            src={actorPhoto.imageUrl}
+                                                            title={`${cast.actor.displayName} as ${cast.character}`}
+                                                            alt={cast.character}
+                                                        />
+                                                    }
+                                                    <div
+                                                        style={{
+                                                            display: `flex`,
+                                                            flexDirection: `column`
+                                                        }}>
+                                                        <i style={{fontSize: '14px'}}>
+                                                            {cast.character}
+                                                        </i>
+                                                        <Link href={`/persons/${cast.actor.name}`}>
+                                                            <a style={{fontSize: '14px'}}>
+                                                                {cast.actor.displayName}
+                                                            </a>
+                                                        </Link>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))
+                                            );
+                                        })
                                     }
                                 </div>
                             </>
@@ -138,7 +118,7 @@ const MoviePage = ({pageContext}: MoviePageProps) => {
                 </div>
             </div>
             <p>
-                <Link href={`${pageContext.listPageUrl}`}>
+                <Link href='.'>
                     <a>Back to Movies</a>
                 </Link>
             </p>

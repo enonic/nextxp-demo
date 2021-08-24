@@ -3,17 +3,17 @@ import Link from "next/link";
 
 type Node = {
     id: string,
-    displayName: string
+    displayName: string,
+    name: string
 };
 
-type ListPageProps = {
+type Props = {
     title: string,
     nodes: Node[],
-    detailsPageUrl?: string
-    detailsPageKey: string,
+    itemPageRoot?: string
 };
 
-const ListPage = ({title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps) => {
+const ListPage = ( {title, nodes, itemPageRoot}: Props) => {
     return (
         <>
             <h1>{title}</h1>
@@ -21,10 +21,10 @@ const ListPage = ({title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps)
                 nodes.map((node: Node) => (
                     <div key={node.id}>
                         {
-                            detailsPageUrl
+                            itemPageRoot
                                 ? (
                                     // @ts-ignore
-                                    <Link href={`${detailsPageUrl}/${node[detailsPageKey]}`}>
+                                    <Link href={`${itemPageRoot}/${node.name}`}>
                                         <a>{node.displayName}</a>
                                     </Link>
                                 ) : (

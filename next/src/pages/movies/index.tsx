@@ -2,6 +2,7 @@ import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentChildren, Timestamped} from "../../shared/data";
 import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
 import {appNameUnderscored} from "../../../enonic.connection.config";
+import ListPage from "../../components/templates/list";
 
 type Props = {
     movies: MovieList,
@@ -10,22 +11,7 @@ type Props = {
 };
 
 
-
-const Page: React.FC<Props> = ( {movies, timestamp}: Props ) => {
-    return (
-        <div>
-            <ul>
-                {movies.map((movie, i) => (
-                    <li key={i}>{JSON.stringify(movie)}</li>
-                ))}
-            </ul>
-
-            <p>
-                Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
-            </p>
-        </div>
-    );
-};
+const Page: React.FC<Props> = ( {title, movies, timestamp}: Props ) => <ListPage title={title} itemPageRoot="/movies" nodes={movies} />;
 
 export default Page;
 

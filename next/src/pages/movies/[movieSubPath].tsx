@@ -2,6 +2,7 @@ import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentItem, Timestamped} from "../../shared/data";
 import getMovieQuery, {Movie} from "../../shared/data/queries/getMovie";
 import {appNameDashed, appNameUnderscored} from "../../../enonic.connection.config";
+import MoviePage from "../../components/templates/movie";
 
 
 type Props = {
@@ -14,18 +15,7 @@ type Props = {
 
 
 
-const Page: React.FC<Props> = ( {movie, timestamp}: Props ) => {
-    return (
-        <div>
-            <h2>{movie.displayName}</h2>
-            <p>{JSON.stringify(movie)}</p>
-
-            <p>
-                Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
-            </p>
-        </div>
-    );
-};
+const Page: React.FC<Props> = ( {movie, timestamp}: Props ) => <MoviePage movie={movie} />
 
 export default Page;
 

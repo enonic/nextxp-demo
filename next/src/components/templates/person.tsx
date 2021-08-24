@@ -1,51 +1,17 @@
 import React from "react"
 import Link from "next/link";
+import { Person } from "../../shared/data/queries/getPerson";
 
-type Photo = {
-    imageUrl: string,
-    attachments: {
-        imageText?: string
-        altImageText?: string
-    }[]
-};
-
-export type {Photo};
-
-type PersonData = {
-    bio: string,
-    photos: Photo[]
-};
-
-type Person = {
-    displayName: string,
-    data: PersonData
-}
-
-type PersonPageContext = {
-    title: string,
-    listPageUrl: string,
-    node: Person
-}
+import { getPhoto} from "../../shared/images";
 
 type PersonPageProps = {
-    pageContext: PersonPageContext
-}
-
-const getPageTitle = ({node, title}: PersonPageContext) => {
-
-    // @ts-ignore
-    if (!!node && pageContext.title && (node[pageContext.title] || node.data[pageContext.title])) {
-        // @ts-ignore
-        return node[pageContext.title] || node.data[pageContext.title];
-    }
-
-    return title || 'Person';
+    person: Person
 };
 
-const PersonPage = ({pageContext}: PersonPageProps) => {
-    const person = pageContext.node;
-    const personMeta = person.data;
 
+const PersonPage = ({person}: PersonPageProps) => {
+    const personMeta = person.data || {};
+    const personPhoto = getPhoto(personMeta.photos);
     return (
         <>
             <div>
@@ -58,20 +24,20 @@ const PersonPage = ({pageContext}: PersonPageProps) => {
                 <div style={{
                     display: `flex`
                 }}>
-                    <img
-                        style={{
-                            maxWidth: '400px',
-                            width: '50%'
-                        }}
-                        src={personMeta.photos[0].imageUrl} title={person.displayName}
-                        alt={personMeta.photos[0].attachments[0].altImageText}/>
+                    {
+                        personPhoto &&
+                        <img style={{ maxWidth: '400px', width: '50%' }}
+                               src={personPhoto.imageUrl}
+                               title={person.displayName}
+                               alt={personPhoto.alt} />
+                    }
                     <p style={{
                         margin: `0 20px`
                     }}><i>{personMeta.bio}</i></p>
                 </div>
             </div>
             <p>
-                <Link href={`${pageContext.listPageUrl}`}>
+                <Link href={`.`}>
                     <a>Back to Persons</a>
                 </Link>
             </p>

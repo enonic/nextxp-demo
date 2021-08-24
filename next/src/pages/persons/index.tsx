@@ -3,27 +3,15 @@ import {fetchContentChildren, Timestamped} from "../../shared/data";
 import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons";
 import { appNameUnderscored } from "../../../enonic.connection.config";
 
+import ListPage from '../../components/templates/list';
+
 type Props = {
     persons: PersonList,
     timestamp: string,
     title: string
 };
 
-const Page: React.FC<Props> = ( {persons, timestamp}: Props ) => {
-    return (
-        <div>
-            <ul>
-                {persons.map((person, i) => (
-                    <li key={person.id}>{person.displayName}</li>
-                ))}
-            </ul>
-
-            <p>
-                Data timestamp: <time dateTime={timestamp}>{timestamp}</time>.
-            </p>
-        </div>
-    );
-};
+const Page: React.FC<Props> = ( {title, persons, timestamp}: Props ) => <ListPage title={title} itemPageRoot="/persons" nodes={persons} />;
 
 export default Page;
 
