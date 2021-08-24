@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import {fetchContentChildren, Timestamped} from "../../../shared/data";
 import getPersonsQuery, {PersonList} from "../../../shared/data/queries/getPersons";
-import {appNameUnderscored} from "../../../shared/data/config";
+import {appNameUnderscored} from "../../../../enonic.connection.config";
 
 type Props = {
   persons: string[];

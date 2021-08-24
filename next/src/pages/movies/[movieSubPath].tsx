@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentItem, Timestamped} from "../../shared/data";
 import getMovieQuery, {Movie} from "../../shared/data/queries/getMovie";
-import {appNameDashed, appNameUnderscored} from "../../shared/data/config";
+import {appNameDashed, appNameUnderscored} from "../../../enonic.connection.config";
 
 
 type Props = {

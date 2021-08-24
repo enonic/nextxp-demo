@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentChildren, Timestamped} from "../../shared/data";
 import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons";
-import { appNameUnderscored } from "../../shared/data/config";
+import { appNameUnderscored } from "../../../enonic.connection.config";
 
 type Props = {
     persons: PersonList;

@@ -1,4 +1,4 @@
-import { apiUrl } from './config';
+import { apiUrl } from '../../../enonic.connection.config';
 
 type QueryChildrenResult<T> = {
   data: {
