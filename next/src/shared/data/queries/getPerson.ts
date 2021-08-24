@@ -8,9 +8,11 @@ export default (underscoredAppName, personSubPath) => `
         name: _name
         data {
           bio
+          dateofbirth
           photos {
             ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(300)")
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")
+              id: _id
               attachments {
                 altName: name
               }
@@ -21,3 +23,28 @@ export default (underscoredAppName, personSubPath) => `
     }
   }
 }`;
+
+type Photo = {
+    id: string,
+    attachments?: {
+        altName?: string
+    }[]
+    imageUrl?: string,
+};
+
+export type BasePerson = {
+    id: string,
+    displayName: string,
+    name: string,
+    data?: {
+        photos?: Photo | Photo[]
+    },
+};
+
+export type Person = Omit<BasePerson, 'data'> & {
+    data?: {
+        bio?: string,
+        dateofbirth?: string,
+        photos?: Photo | Photo[]
+    }
+};

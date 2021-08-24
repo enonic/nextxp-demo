@@ -7,10 +7,10 @@ export default (underscoredAppName) => `
         displayName
         name: _name
         data {
-          bio
           photos {
             ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(300)")
+              imageUrl: imageUrl(type: absolute, scale: "width(250)")
+              id: _id
               attachments {
                 altName: name
               }
@@ -22,3 +22,6 @@ export default (underscoredAppName) => `
   }
 }`;
 
+import { BasePerson } from "./getPerson";
+
+export type PersonList = BasePerson[];

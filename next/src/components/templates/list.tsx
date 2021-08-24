@@ -15,7 +15,7 @@ type ListPageProps = {
     detailsPageKey: string,
 };
 
-const ListPage = ( {title, nodes, detailsPageKey, detailsPageUrl}:ListPageProps ) => {
+const ListPage = ( {title, nodes, detailsPageKey, detailsPageUrl}: ListPageProps ) => {
     return (
         <Layout>
             <SEO title={title || `List`}/>

@@ -1,39 +1,35 @@
 import getMoviesQuery from './queries/getMovies';
 import getPersonsQuery from './queries/getPersons';
 import getMovieQuery from './queries/getMovie';
-import getPersonQuery from './queries/getPerson';
+import getPersonQuery, {BasePerson} from './queries/getPerson';
 
 //import makeGetContentQuery from './queries/getContent';
 
 import { apiUrl, appNameUnderscored } from './config';
 
-type RawData = {
+type QueryChildrenResult<T> = {
   data: {
     guillotine: {
-      getChildren: Content[];
+      getChildren: T;
     };
   };
 };
 
-type GetQueryResult = {
+type QueryGetResult<T> = {
     data: {
         guillotine: {
-            get: Content;
+            get: T;
         };
     };
 };
 
 export type Content = {
   displayName: string;
-  _path: string;s
+  _path: string;
 };
 
-export type DataList = {
-  contentList: Content[];
-  timestamp: string;
-};
-export type DataItem = {
-    content: Content;
+export type Timestamped<T> = {
+    content: T;
     timestamp: string;
 };
 
@@ -51,41 +47,35 @@ const fetchData = async <T>(query: string) => {
   });
 };
 
-const timestampList = async (data: Content[]) => ({
-    contentList: data,
-    timestamp: new Date().toISOString(),
-});
-const timestampItem = async (data: Content) => ({
+const timestamp = async <T> (data: T) => ({
     content: data,
     timestamp: new Date().toISOString(),
 });
 
-const fetchTimestampedChildren = async (query: string): Promise<DataList> =>
-  fetchData<RawData>(query)
+export const fetchContentChildren = async <T extends any[]> (query: string): Promise<Timestamped<T>> =>
+  fetchData<QueryChildrenResult<T>>(query)
       .then(res => res.data.guillotine.getChildren)
-      .then(timestampList);
+      .then(timestamp);
 
-const fetchTimestampedItem = async (query: string): Promise<DataItem> =>
-    fetchData<GetQueryResult>(query)
+export const fetchContentItem = async <T> (query: string): Promise<Timestamped<T>> =>
+    fetchData<QueryGetResult<T>>(query)
         .then(res => res.data.guillotine.get)
-        .then(timestampItem);
+        .then(timestamp);
 
 
 const moviesQuery = getMoviesQuery(appNameUnderscored);
-export const fetchMovies = async (): Promise<DataList> => fetchTimestampedChildren(moviesQuery);
+export const fetchMovies = async (): Promise<DataList> => fetchContentChildren(moviesQuery);
 
-const personsQuery = getPersonsQuery(appNameUnderscored);
-export const fetchPersons = async (): Promise<DataList> => fetchTimestampedChildren(personsQuery);
-
+/*
 export const fetchPerson = async (personSubPath): Promise<DataItem> => {
     const personQuery = getPersonQuery(appNameUnderscored, personSubPath);
-    return fetchTimestampedItem(personQuery);
+    return fetchDataItem(personQuery);
 }
 
 export const fetchMovie = async (personSubPath): Promise<DataItem> => {
     const movieQuery = getMovieQuery(appNameUnderscored, personSubPath);
-    return fetchTimestampedItem(movieQuery);
-}
+    return fetchDataItem(movieQuery);
+}*/
 /*
 
 export const fetchContent = (pathOrId: string): Promise<Content | Error> => fetchData<GetQueryResult>(makeGetContentQuery(pathOrId))
