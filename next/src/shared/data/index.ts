@@ -1,4 +1,5 @@
-import { apiUrl } from '../../../enonic.connection.config';
+import { apiUrlDraft, apiUrlMaster } from '../../../enonic.connection.config';
+
 
 type QueryChildrenResult<T> = {
   data: {
@@ -16,7 +17,8 @@ type QueryGetResult<T> = {
     };
 };
 
-const fetchData = async <T>(query: string) => {
+const fetchData = async <T>(query: string, isDraft?: boolean) => {
+  const apiUrl = isDraft ? apiUrlDraft : apiUrlMaster;
   return await fetch(apiUrl, {
     method: "post",
     body: JSON.stringify({ query, variables: null }),
@@ -31,10 +33,10 @@ const fetchData = async <T>(query: string) => {
 };
 
 
-export const fetchContentChildren = async <T extends any[]> (query: string): Promise<T> =>
-  fetchData<QueryChildrenResult<T>>(query)
+export const fetchContentChildren = async <T extends any[]> (query: string, isDraft?: boolean): Promise<T> =>
+  fetchData<QueryChildrenResult<T>>(query, isDraft)
       .then(res => res.data.guillotine.getChildren);
 
-export const fetchContentItem = async <T> (query: string): Promise<T> =>
-    fetchData<QueryGetResult<T>>(query)
+export const fetchContentItem = async <T> (query: string, isDraft?: boolean): Promise<T> =>
+    fetchData<QueryGetResult<T>>(query, isDraft)
         .then(res => res.data.guillotine.get);

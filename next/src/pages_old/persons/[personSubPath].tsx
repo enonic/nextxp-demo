@@ -1,5 +1,5 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import {fetchContentItem} from "../../shared/data";
+import {fetchContentGet} from "../../shared/data";
 import getPersonQuery, {Person} from "../../shared/data/queries/getPerson";
 import {appNameUnderscored} from "../../../enonic.connection.config";
 import PersonPage from "../../components/templates/person";
@@ -21,7 +21,7 @@ export default Page;
 
 export const fetchPerson = async (personSubPath): Promise<Person> => {
     const personQuery = getPersonQuery(appNameUnderscored, personSubPath);
-    return fetchContentItem(personQuery);
+    return fetchContentGet(personQuery);
 }
 
 // SSR

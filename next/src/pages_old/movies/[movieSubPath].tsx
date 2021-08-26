@@ -1,5 +1,5 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import {fetchContentItem} from "../../shared/data";
+import {fetchContentGet} from "../../shared/data";
 import getMovieQuery, {Movie} from "../../shared/data/queries/getMovie";
 import {appNameUnderscored} from "../../../enonic.connection.config";
 import MoviePage from "../../components/templates/movie";
@@ -22,7 +22,7 @@ export default Page;
 
 export const fetchMovie = async (personSubPath): Promise<Movie> => {
     const movieQuery = getMovieQuery(appNameUnderscored, personSubPath);
-    return fetchContentItem(movieQuery);
+    return fetchContentGet(movieQuery);
 }
 
 // SSR
