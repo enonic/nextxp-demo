@@ -35,6 +35,29 @@ const queryFragments = [
     // sectionPage.fragment
 ].join('\n');
 
+
+
+
+export const queryGeneralByRef = `query($ref:ID!){
+guillotine {
+    get(key:$ref) {
+            displayName
+            _id
+            _name
+            _path
+            type
+            dataAsJson
+            xAsJson
+            pageAsJson(resolveTemplate: true, resolveFragment: false)
+            ...on base_Folder {
+                children(first:100) {
+                    ${queryFragments}
+                }
+            }
+        }
+    }
+}`
+
 export const queryGetContentByRef = `query($ref:ID!){
     guillotine {
         get(key:$ref) {

@@ -1,5 +1,10 @@
-export const apiUrlDraft = "http://localhost:8080/site/hmdb/draft/hmdb/api";
-export const apiUrlMaster = "http://localhost:8080/site/hmdb/master/hmdb/api";
-export const appName = "com.enonic.nextpoc.hmdb";                             // <-- appName in hmdb/gradle.properties
+export const appName = "com.enonic.nextpoc.hmdb";                            // <-- appName in hmdb/gradle.properties
 export const appNameUnderscored = appName.replace(/\./g, '_');
 export const appNameDashed = appName.replace(/\./g, '-');
+
+export const apiDomain = "http://localhost:8080";
+
+export const apiServiceRoot = `_/service`;
+export const apiServiceName = 'sitecontent';
+
+export const apiUrl = `${apiDomain}/${apiServiceRoot}/${appName}/${apiServiceName}`;

@@ -151,7 +151,8 @@ const partsFragment = `
 
 const layoutsFragment = `
     config {
-        ${appNameUnderscored} {
+        ${appNameUnderscored} {` +
+            /* EXAMPLE
             section_with_header {
                 anchorId
                 icon {
@@ -161,18 +162,20 @@ const layoutsFragment = `
                         ${imageFragment}
                     }
                 }
-            }
+            }*/
+            `
         }
     }
 `;
 
 const pagesFragment = `
     config {
-        ${appNameUnderscored} {
-            page_with_side_menus {
+        ${appNameUnderscored} {`+
+        /*    page_with_side_menus {
                ${pageNavigationMenuMixinFragment}
             }
-        }
+*/
+        `}
     }
 `;
 

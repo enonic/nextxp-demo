@@ -1,7 +1,10 @@
 const { guillotineQuery } = require('./queries/query');
 const deepJsonParser = require('../processing/deep-json-parser');
 const { mergeComponentsIntoPage } = require('../processing/process-components');
-const { queryGetContentByRef } = require('./queries/fragments/fragments')
+
+const { queryGetContentByRef, queryGeneralByRef } = require('./queries/fragments/fragments');
+
+log.info ("\n\n\n-----------------------\nActive sitecontent query:\n" + queryGeneralByRef);
                                                                                                                         // const { getPortalFragmentContent } = require('/lib/headless/process-components');
                                                                                                                         // const { runInBranchContext } = require('/lib/headless/branch-context');
                                                                                                                         // const menuUtils = require('/lib/menu-utils');
@@ -11,9 +14,11 @@ const { queryGetContentByRef } = require('./queries/fragments/fragments')
 
 const isMedia = (content) => content.__typename?.startsWith('media_');
 
+
 const getContent = (idOrPath, branch) => {
     const response = guillotineQuery(
-        queryGetContentByRef,
+        queryGeneralByRef,
+        //queryGetContentByRef,
         {
             ref: idOrPath,
         },
@@ -150,4 +155,4 @@ const getSiteContent = (idOrPath, branch = 'master') => {
     return content || null;                                                                                             // return { ...content, ...(notifications && { notifications }) };
 };
 
-module.exports = { getSiteContent, getContent };
+module.exports = { getSiteContent, getContent, query: queryGeneralByRef };

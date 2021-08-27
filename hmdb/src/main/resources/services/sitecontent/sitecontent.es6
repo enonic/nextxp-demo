@@ -1,5 +1,5 @@
-const { isValidBranch } = require('/lib/headless/branch-context');
-const { getSiteContent } = require('/lib/headless/guillotine/queries/sitecontent');
+const { isValidBranch } = require('../../lib/headless/branch-context');
+const { getSiteContent } = require('../../lib/headless/guillotine/sitecontent');
 
 const handleGet = (req) => {
     // id can be a content UUID, or a content path, ie. /www.nav.no/no/person

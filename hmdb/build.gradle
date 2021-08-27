@@ -2,6 +2,7 @@ plugins {
     id 'maven-publish'
     id 'com.enonic.xp.app' version '3.0.0'
     id 'com.enonic.defaults' version '2.0.1'
+    id "com.github.node-gradle.node" version "3.1.0"
 }
 
 app {
@@ -33,3 +34,13 @@ repositories {
     jcenter()
     xp.enonicRepo( 'dev' )
 }
+
+task compileXP(type: NodeTask) {
+    script = file('node_modules/@babel/cli/bin/babel.js')
+    args = ["src/main/resources", "--out-dir", "build/resources/main"]
+
+    inputs.dir 'src/main/resources'
+    outputs.dir("build/resources/main")
+}
+compileXP.dependsOn += npmInstall
+jar.dependsOn += 'compileXP'

@@ -1,3 +1,8 @@
+const appNameDashed = app.name.replace(/\./g, '-');
+const appNameUnderscored = app.name.replace(/\./g, '_');
+
+
+
 // Component config in the components-array is stored in a <app-name>.<region-name> sub-object
 // Move this data down to the base config object, to match the XP page-object structure
 const destructureConfig = (component) => {
@@ -17,8 +22,8 @@ const destructureConfig = (component) => {
     const regionNameUnderscore = regionNameDash.replace(/-/g, '_');
 
     return {
-        ...(config['no-nav-navno'] && config['no-nav-navno'][regionNameDash]),
-        ...(config['no_nav_navno'] && config['no_nav_navno'][regionNameUnderscore]),
+        ...(config[appNameDashed] && config[appNameDashed][regionNameDash]),
+        ...(config[appNameUnderscored] && config[appNameUnderscored][regionNameUnderscore]),
     };
 };
 
