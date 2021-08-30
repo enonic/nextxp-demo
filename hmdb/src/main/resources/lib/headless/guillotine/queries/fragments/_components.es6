@@ -144,8 +144,9 @@ const partsFragment = `
                                                                                                                             margin
                                                                                                                         }
                                                                                                                         */
-        +
-        `}
+
+            `
+        }
     }
 `;
 

@@ -6,7 +6,7 @@ const rootSubscriptionLib = require('/lib/guillotine/subscription/root-subscript
 
 
 const schemaContextOptions = {
-    creationCallbacks: {
+    //creationCallbacks: {
         // ADD SPECIFYING OR EXPANDING SCHEMA FOR CONTENT TYPES ETC, FOR EXAMPLE:
         // my_example_app_MyContentType: (context, params) => {
         //      params.fields.newHelloField = {
@@ -15,9 +15,9 @@ const schemaContextOptions = {
         //              return "Hello";
         //          }
         //      };
-    },
+    //},
 
-    // applications: [app.name, LIST TO INCLUDE OTHER EXTERNAL APPS BY NAME ],
+    applications: [app.name, "com.enonic.app.hmdb"] //, LIST TO INCLUDE OTHER EXTERNAL APPS BY NAME ],
 };
 
 const initAndCreateSchema = () => {

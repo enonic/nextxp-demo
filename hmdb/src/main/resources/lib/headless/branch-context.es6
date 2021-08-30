@@ -12,9 +12,11 @@ const runInBranchContext = (func, branch = 'master') => {
         return null;
     }
 
+    //const repo = contextLib.get().repository;
+
     return contextLib.run(
         {
-            repository: 'com.enonic.cms.default',
+            repository: "com.enonic.cms.hmdb",
             branch: branch,
             user: {
                 login: 'su',
