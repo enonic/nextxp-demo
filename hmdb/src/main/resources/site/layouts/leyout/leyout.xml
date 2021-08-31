@@ -1,0 +1,15 @@
+<layout>
+    <display-name>Test layout</display-name>
+
+    <form>
+        <input type="TextLine" name="leyout">
+            <label>Text</label>
+            <default>Yo soy la yout</default>
+        </input>
+    </form>
+
+    <regions>
+        <region name="ledroit" />
+        <region name="lagauche" />
+    </regions>
+</layout>

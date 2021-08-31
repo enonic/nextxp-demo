@@ -1,7 +1,7 @@
 const guillotineLib = require('/lib/guillotine');
 const graphqlPlaygroundLib = require('/lib/graphql-playground');
 const libGraphQl = require('/lib/graphql');
-const schema = require('../../lib/headless/guillotine/schema/schema');
+const schema = require('../guillotine/schema/schema');
 
 //──────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -43,14 +43,17 @@ exports.get = function (req) {
 
 
 exports.post = function (req) {
-    //log.info(JSON.stringify(req, null, 2));
 
     let input = JSON.parse(req.body);
+
+    //log.info("--------------> Query:\n" + input.query);
+    const result = libGraphQl.execute(schema, input.query, input.variables);
+    // log.info("<-------------- Result:{\n" + JSON.stringify(result, null, 2));
 
     return {
         contentType: 'application/json',
         headers: CORS_HEADERS,
-        body: libGraphQl.execute(schema, input.query, input.variables)
+        body: result
     };
 };
 

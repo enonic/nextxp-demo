@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="urn:enonic:xp:model:1.0">
-  <x-data name="SoMe" allowContentTypes="person|movie" />
-  <form />
-  <mappings>
-    <mapping controller="/lib/headless/controllers/frontend-proxy.js">
-      <match>type:'portal:fragment'</match>
-    </mapping>
-    <mapping controller="/controllers/graphql.js" order="50">
-      <pattern>/api</pattern>
-    </mapping>
-      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
-      <match>type:'portal:site'</match>
-    </mapping>
-      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
-      <match>type:'.*:person'</match>
-    </mapping>
-      <mapping controller="/lib/headless/controllers/frontend-proxy.js">
-      <match>type:'.*:movie'</match>
-    </mapping>
-  </mappings>
+    <x-data name="SoMe" allowContentTypes="person|movie"/>
+    <form/>
+    <mappings>
+        <mapping controller="/lib/headless/controllers/frontend-proxy.js">
+            <match>type:'portal:fragment'</match>
+        </mapping>
+        <mapping controller="/lib/headless/controllers/graphqlplayground.js" order="50">
+            <pattern>/graphql</pattern>
+        </mapping>
+        <!--mapping controller="/lib/headless/controllers/frontend-proxy.js">
+            <match>type:'portal:site'</match>
+        </mapping-->
+        <mapping controller="/lib/headless/controllers/frontend-proxy.js">
+            <match>type:'base:folder'</match>
+        </mapping>
+        <mapping controller="/lib/headless/controllers/frontend-proxy.js">
+            <!-- Keep up to date with appname in gradle.properties -->
+            <match>type:'com.enonic.nextpoc.hmdb:.*'</match>
+        </mapping>
+    </mappings>
 </site>
