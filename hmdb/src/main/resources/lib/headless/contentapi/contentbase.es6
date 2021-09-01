@@ -4,7 +4,7 @@ const { executeResult } = require("./execute");
 const { getContentBaseQuery } = require('../guillotine/queries/fragments/contentbase');
 
 
-// TODO: insert a placeholder for app names ag '${app}' to use in custom queries?
+// TODO: insert a placeholder replacement for app names as '${app}' to use in custom queries?
 // const underscoredAppName = app.name.replace(/\./g, '_');
 
 
@@ -16,7 +16,7 @@ const { getContentBaseQuery } = require('../guillotine/queries/fragments/content
 // maxChildren: set max number of children to list below folders. 0 turns off the search for children. Default is 1000.
 exports.getContentBase = (siteId, branch, idOrPath, query, variables = {}, maxChildren) => {
 
-    // A supplied idOrPath overrides one in variables:
+    // Supplied idOrPath overrides it in variables:
     if (idOrPath) {
         variables.idOrPath = idOrPath;
     }

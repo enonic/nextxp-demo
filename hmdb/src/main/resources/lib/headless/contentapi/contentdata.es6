@@ -3,7 +3,7 @@ const { executeResult } = require("./execute");
 
 const { getContentDataQuery } = require("../guillotine/queries/fragments/contentdata");
 
-// TODO: insert a placeholder for app names ag '${app}' to use in custom queries?
+// TODO: insert a placeholder replacement for app names as '${app}' to use in custom queries?
 // const underscoredAppName = app.name.replace(/\./g, '_');
 
 

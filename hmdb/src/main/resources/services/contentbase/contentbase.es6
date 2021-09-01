@@ -1,3 +1,7 @@
+/** Query for basic data from a content item (most importantly: content type, but auxilliary data are displayName), by UUID or content path.
+ *  Also available as a mapped controller: <site>/_content, which doesn't need siteId or branch.
+ */
+
 const { getContentBase } = require('../../lib/headless/contentapi/contentbase');
 
 const handleGet = (req) => {

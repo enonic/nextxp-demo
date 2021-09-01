@@ -1,3 +1,7 @@
+/** Query for full data from a content item, by UUID or content path.
+ *  Also available as a service: content, but there you must also supply siteId and branch as params.
+ */
+
 const portalLib = require('/lib/xp/portal');
 const { getContentData } = require('../contentapi/contentdata');
 

@@ -1,3 +1,7 @@
+/** Query for basic data from a content item (most importantly: content type, but auxilliary data are displayName), by UUID or content path.
+ *  Also available as a service: contentbase, but there you must also supply siteId and branch as params.
+ */
+
 const portalLib = require('/lib/xp/portal');
 const { getContentBase } = require('../contentapi/contentbase');
 

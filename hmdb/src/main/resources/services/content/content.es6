@@ -1,3 +1,7 @@
+/** Query for full data from a content item, by UUID or content path.
+ *  Also available as a mapped controller: <site>/_content, which doesn't need siteId or branch.
+ */
+
 const { getContentData } = require('../../lib/headless/contentapi/contentdata');
 
 const handlePost = (req) => {
