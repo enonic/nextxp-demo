@@ -1,13 +1,12 @@
-const { getContentBase } = require('../../lib/headless/contentapi/contentbase');
+const { getContentData } = require('../../lib/headless/contentapi/contentdata');
 
-const handleGet = (req) => {
+const handlePost = (req) => {
+    // query: HIGHLY RECOMMENDED: supply a query to replace the fallback catch-all query with a BETTER SCALING, content-type-specific one
     // siteId (manatory): the valid UUID for the root site
     // branch (manatory): branch to fetch from, master or draft
     // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
     // variables: optional additional variables for a supplied query, or just idOrPath.
-    // query: optional override for the DEFAULT_BASE_QUERY.
-    const {idOrPath, branch, siteId, query, variables} = req.params;
-
+    const {query, idOrPath, branch, siteId, variables} = req.params;
 
     /* TODO: secret?
         const { secret } = req.headers;
@@ -35,7 +34,7 @@ const handleGet = (req) => {
         };
     }
 
-    return getContentBase(siteId, branch, idOrPath, query, variables);
+    return getContentData(siteId, branch, idOrPath, query, variables);
 };
 
-exports.get = handleGet;
+exports.post = handlePost;

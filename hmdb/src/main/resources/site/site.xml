@@ -6,9 +6,6 @@
         <mapping controller="/lib/headless/controllers/frontend-proxy.js">
             <match>type:'portal:fragment'</match>
         </mapping>
-        <mapping controller="/lib/headless/controllers/graphqlplayground.js" order="50">
-            <pattern>/graphql</pattern>
-        </mapping>
         <!--mapping controller="/lib/headless/controllers/frontend-proxy.js">
             <match>type:'portal:site'</match>
         </mapping-->
@@ -18,6 +15,15 @@
         <mapping controller="/lib/headless/controllers/frontend-proxy.js">
             <!-- Keep up to date with appname in gradle.properties -->
             <match>type:'com.enonic.nextpoc.hmdb:.*'</match>
+        </mapping>
+        <mapping controller="/lib/headless/controllers/_graphql.js" order="50">
+            <pattern>/_graphql</pattern>
+        </mapping>
+        <mapping controller="/lib/headless/controllers/_contentbase.js" order="50">
+            <pattern>/_contentbase</pattern>
+        </mapping>
+        <mapping controller="/lib/headless/controllers/_content.js" order="50">
+            <pattern>/_content</pattern>
         </mapping>
     </mappings>
 </site>
