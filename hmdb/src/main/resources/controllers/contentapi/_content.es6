@@ -4,6 +4,14 @@
 
 const portalLib = require('/lib/xp/portal');
 const { getContentData } = require('../../lib/headless/contentapi/contentdata');
+const { CORS_HEADERS } = require("../../lib/headless/cors-headers");
+
+exports.options = function () {
+    return {
+        contentType: 'text/plain;charset=utf-8',
+        headers: CORS_HEADERS
+    };
+};
 
 const handlePost = (req) => {
     // query: HIGHLY RECOMMENDED: supply a query to override the fallback catch-all query with a BETTER SCALING, content-type-specific one.
@@ -33,4 +41,4 @@ const handlePost = (req) => {
 exports.post = handlePost;
 
 // FIXME: only for testing, remove.
-                                                                                                                        exports.get = handlePost;
+                                                                                                                        //exports.get = handlePost;

@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentChildren} from "../../shared/data";
 import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
-import {appNameUnderscored} from "../../../enonic.connection.config";
+import {appKeyUnderscored} from "../../../enonic.connection.config";
 import ListPage from "../../components/templates/list";
 
 type Props = {
@@ -16,7 +16,7 @@ export default Page;
 
 
 
-const moviesQuery = getMoviesQuery(appNameUnderscored);
+const moviesQuery = getMoviesQuery(appKeyUnderscored);
 export const fetchMovies = async (): Promise<MovieList> => fetchContentChildren(moviesQuery);
 
 

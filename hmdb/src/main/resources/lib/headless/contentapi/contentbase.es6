@@ -32,6 +32,6 @@ exports.getContentBase = (siteId, branch, idOrPath, query, variables = {}, maxCh
     }
 
     return branchInvalidError400(branch) ||
-        idOrPathOrQueryInvalidError400(variables, query, 'No query was provided, and no id or path (iOrPath)') ||
+        idOrPathOrQueryInvalidError400(variables, query, 'No query was provided, and no id or path (idOrPath)') ||
         executeResult(siteId, branch, query || getContentBaseQuery(variables.maxChildren), variables);
 };

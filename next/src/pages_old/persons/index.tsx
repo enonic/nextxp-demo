@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentChildren} from "../../shared/data";
 import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons";
-import {appNameUnderscored} from "../../../enonic.connection.config";
+import {appKeyUnderscored} from "../../../enonic.connection.config";
 
 import ListPage from '../../components/templates/list';
 
@@ -17,7 +17,7 @@ export default Page;
 
 
 
-const personsQuery = getPersonsQuery(appNameUnderscored);
+const personsQuery = getPersonsQuery(appKeyUnderscored);
 export const fetchPersons = async (): Promise<PersonList> => fetchContentChildren(personsQuery);
 
 

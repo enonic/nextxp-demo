@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentGet} from "../../shared/data";
 import getMovieQuery, {Movie} from "../../shared/data/queries/getMovie";
-import {appNameUnderscored} from "../../../enonic.connection.config";
+import {appKeyUnderscored} from "../../../enonic.connection.config";
 import MoviePage from "../../components/templates/movie";
 
 
@@ -21,7 +21,7 @@ export default Page;
 
 
 export const fetchMovie = async (personSubPath): Promise<Movie> => {
-    const movieQuery = getMovieQuery(appNameUnderscored, personSubPath);
+    const movieQuery = getMovieQuery(appKeyUnderscored, personSubPath);
     return fetchContentGet(movieQuery);
 }
 

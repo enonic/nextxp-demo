@@ -2,6 +2,7 @@ import {fetchContent} from "../shared/data";
 import {contentApiUrlGetters} from "../../enonic.connection.config";
 import Custom500 from './500';
 import Custom404 from './404';
+import React, { useState, useEffect } from 'react';
 
 const {
     full: getContentFullUrl,
@@ -28,59 +29,80 @@ type ContentApiBaseBody = {
 };
 
 
-const Page = ({error, contentBase}) => {
-    if (error) {
+const Page = ({error, contentBase, freshen}) => {
+    /*if (error) {
         switch (error.code) {
             case 404:
-                return <Custom404 />
+                return <Custom404/>
             case 500:
-                return <Custom500 message={error.message} />;
+                return <Custom500 message={error.message}/>;
         }
-    }
+    }*/
 
     // TODO: general fallback page. Resolve specific pages above
-    return <p>{JSON.stringify(contentBase)}</p>;
+    return <div onClick={freshen}>
+        <p>ContentBase: {JSON.stringify(contentBase)}</p>
+        <p>Error: {JSON.stringify(error)}</p>
+    </div>;
 };
 
+const Main = () => {
+    const [props, setProps] = useState({error: {}, contentBase: {}});
+
+    const freshen = async () => {
+        const p = await fetchContentBase(['hmdb', 'persons', 'keanu-reeves']);
+
+        console.log("p:", p);
+
+        // @ts-ignore
+        setProps(() => p);
+    };
+
+    return <Page error={props.error} contentBase={props.contentBase} freshen={freshen} />;
+}
 
 // this function also needs some serious refactoring, but for a quick and dirty
 // proof of concept it does the job.
-export const getServerSideProps = async ({params}: Context) => {
-    const idOrPath = "/" + params.contentPath.join("/");
+/*
 
-    const appName = params.contentPath[0];
-    const contentFullUrl = getContentFullUrl(appName);
+export const getServerSideProps = async ({params}: Context) => ({
+        props: await fetchContentBase(params.contentPath)
+});
+*/
+
+export const fetchContentBase = async (contentPath: string[]) => {
+    const idOrPath = "/" + contentPath.join("/");
+    const appName = contentPath[0];
+    //const contentFullUrl = getContentFullUrl(appName);
     const contentBaseUrl = getContentBaseUrl(appName);
 
     const body: ContentApiBaseBody = {idOrPath};
 
-    const contentBase = await fetchContent(
+    const result = await fetchContent(
         contentBaseUrl,
         body
     )
         .then(json => {
-            if (!(json?.data?.guillotine || {}).get) {
+            if (!json?.data?.guillotine?.get) {
                 console.error('Data fetched from contentBase API:', json);
-                return { props: { error: { code: 404} } };
+                return { error: { code: 404 }};
             }
         })
+        .then(validJson => ({
+            // @ts-ignore
+            contentBase: validJson.data.guillotine.get
+        }))
         .catch((err) => {
             return {
-                props: {
-                    error: {
-                        code: 500,
-                        message: err.message
-                    }
+                error: {
+                    code: 500,
+                    message: err.message
                 }
             };
         });
 
-
-    return {
-        props: {
-            contentBase,
-        },
-    };
+    return result;
 };
 
-export default Page;
+export default Main;
+

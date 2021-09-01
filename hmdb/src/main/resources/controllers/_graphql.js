@@ -1,16 +1,7 @@
 const guillotineLib = require('/lib/guillotine');
 const graphqlPlaygroundLib = require('/lib/graphql-playground');
-const libGraphQl = require('/lib/graphql');
-const schema = require('../guillotine/schema/schema');
+const { CORS_HEADERS } = require("../lib/headless/cors-headers");
 
-//──────────────────────────────────────────────────────────────────────────────
-// Constants
-//──────────────────────────────────────────────────────────────────────────────
-const CORS_HEADERS = {
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Origin': '*'
-};
 
 //──────────────────────────────────────────────────────────────────────────────
 // Methods
@@ -39,21 +30,20 @@ exports.get = function (req) {
     };
 };
 
-//const schema = guillotineLib.createSchema();
 
 
 exports.post = function (req) {
-
     let input = JSON.parse(req.body);
 
-    //log.info("--------------> Query:\n" + input.query);
-    const result = libGraphQl.execute(schema, input.query, input.variables);
-    // log.info("<-------------- Result:{\n" + JSON.stringify(result, null, 2));
+    let params = {
+        query: input.query,
+        variables: input.variables
+    };
 
     return {
         contentType: 'application/json',
         headers: CORS_HEADERS,
-        body: result
+        body: guillotineLib.execute(params)
     };
 };
 
