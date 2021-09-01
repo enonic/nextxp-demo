@@ -27,6 +27,16 @@ exports.idOrPathOrQueryInvalidError400 = (variables, query, message) => {
 }
 
 exports.contentNotFoundError404 = (content, variables, query) => {
+
+    // TODO: move to next site - it must parse the result and handle deeper 404 itself:
+    /*
+        // The content data on a found content will be under data.guillotine[key] - where key is determined by the query and therefore unpredictable.
+        // Not-found content will still yield data.guillotine, but the value under [key] will be null.
+        // So to detect content not found, look for null value under that key, or a result not on that shape.
+        const output = content?.data.guillotine || {};
+        const key = Object.keys(output)[0];
+    */
+
     if (!content) {
         if (!query) {
             log.warning(`Content not found at idOrPath = ${JSON.stringify(variables.idOrPath)}`);

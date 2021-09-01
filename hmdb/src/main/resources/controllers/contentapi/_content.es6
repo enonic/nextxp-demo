@@ -3,7 +3,7 @@
  */
 
 const portalLib = require('/lib/xp/portal');
-const { getContentData } = require('../contentapi/contentdata');
+const { getContentData } = require('../../lib/headless/contentapi/contentdata');
 
 const handlePost = (req) => {
     // query: HIGHLY RECOMMENDED: supply a query to override the fallback catch-all query with a BETTER SCALING, content-type-specific one.
@@ -31,3 +31,6 @@ const handlePost = (req) => {
 };
 
 exports.post = handlePost;
+
+// FIXME: only for testing, remove.
+                                                                                                                        exports.get = handlePost;

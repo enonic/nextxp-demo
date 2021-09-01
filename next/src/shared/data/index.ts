@@ -1,21 +1,11 @@
-import { apiUrl } from '../../../enonic.connection.config';
-
-
-
-const fetchContent = async<T> (
-    idOrPath: string,
-    branch?: string,
-    overrideQuery?: string,
-    variables?: string
+export const fetchContent = async<T> (
+    apiUrl: string,
+    body: {}
 ): Promise<T> => {
+
     return await fetch(apiUrl, {
         method: "post",
-        body: JSON.stringify({
-            idOrPath,
-            branch,
-            overrideQuery: overrideQuery || null,
-            variables: variables || null
-        }),
+        body: JSON.stringify(body),
     })
         .then(async (res: Response) => {
             if (!res.ok) {
