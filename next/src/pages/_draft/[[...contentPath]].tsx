@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {useRouter} from 'next/router';
-import { fetchData } from "../../shared/data/fetching";
-import BasePage from "../../components/BasePage";
+import React from 'react';
+
+import {fetchData} from "../../shared/data/fetching";
+
+import BasePage, {clientSideBasePageBuilder} from "../../components/BasePage";
 
 const BRANCH = 'draft';
 
@@ -19,7 +20,7 @@ type Context = {
 
 export const getServerSideProps = async ({params}: Context) => {
     return {
-        props: await fetchContentMeta(params.contentPath)
+        props: await fetchData(BRANCH, params.contentPath)
     };
 };
 
@@ -31,34 +32,6 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
-const ClientSideFetch = () => {
+const ClientSideFetchBasePage = clientSideBasePageBuilder(BRANCH);
 
-    const [props, setProps] = useState({error: null, content: null});
-
-    const router = useRouter();
-    const contentPath = router.query.contentPath;
-
-    useEffect(
-        () => {
-
-            const refresh = async (contentPath) => {
-                const contentResult = await fetchData(BRANCH, contentPath);
-
-                setTimeout(() => {
-                        // @ts-ignore
-                        setProps(() => contentResult);
-                    },
-                    750);
-            };
-
-            if (contentPath !== undefined) {
-                refresh(contentPath);
-            }
-        },
-        [contentPath]
-    );
-
-    return <BasePage error={props.error} content={props.content}/>;
-}
-
-export default ClientSideFetch;
+export default ClientSideFetchBasePage;
