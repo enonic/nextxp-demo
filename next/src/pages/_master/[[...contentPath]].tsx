@@ -1,10 +1,11 @@
-import {fetchContent} from "../shared/data";
-import {contentApiUrlGetters} from "../enonic.connection.config";
-import Custom500 from '../components/errors/500';
-import Custom404 from '../components/errors/404';
-import CustomError from '../components/errors/error';
 import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
+
+import {fetchContent} from "../../shared/data";
+import {contentApiUrlGetters} from "../../enonic.connection.config";
+import Custom500 from '../../components/errors/500';
+import Custom404 from '../../components/errors/404';
+import CustomError from '../../components/errors/error';
 
 const {
     full: getContentFullUrl,
@@ -55,17 +56,21 @@ const BasePage = ({error, contentBase}) => {
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
+/*
 
-// To server-side render, export BasePage instead of ClientSideFetch below:
 export default BasePage;
 
-export const getServerSideProps = async ({params}: Context) => ({
-    props: await fetchContentBase(params.contentPath)
-});
+export const getServerSideProps = async ({params}: Context) => {
+    return {
+        props: await fetchContentBase(params.contentPath)
+    };
+};
+*/
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
 const ClientSideFetch = () => {
 
@@ -77,7 +82,7 @@ const ClientSideFetch = () => {
     useEffect(
         () => {
 
-            const refresh = async () => {
+            const refresh = async (contentPath) => {
                 const newProps = await fetchContentBase(contentPath);
 
                 setTimeout(() => {
@@ -88,7 +93,7 @@ const ClientSideFetch = () => {
             };
 
             if (contentPath !== undefined) {
-                refresh();
+                refresh(contentPath);
             }
         },
         [contentPath]
@@ -97,7 +102,7 @@ const ClientSideFetch = () => {
     return <BasePage error={props.error} contentBase={props.contentBase}/>;
 }
 
-//export default ClientSideFetch;
+export default ClientSideFetch;
 
 
 

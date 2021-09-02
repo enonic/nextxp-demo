@@ -19,8 +19,8 @@ const contentApiUrlGetters = {
         full: (appName) => `${siteRootUrlMaster}/${appName}/${apiContentFull}`
     },
     draft: {
-        base: (appName) => `${siteRootUrlDraft}/draft/${appName}/${apiContentBase}`,
-        full: (appName) => `${siteRootUrlDraft}/draft/${appName}/${apiContentFull}`
+        base: (appName) => `${siteRootUrlDraft}/${appName}/${apiContentBase}`,
+        full: (appName) => `${siteRootUrlDraft}/${appName}/${apiContentFull}`
     }
 };
 
