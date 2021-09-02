@@ -2,8 +2,8 @@
  *  Also available as a mapped controller: <site>/_content, which doesn't need siteId or branch.
  */
 
-const { getContentBase } = require('../../lib/headless/contentapi/contentbase');
-const {siteIdMissing400} = require("../../lib/headless/contentapi/errors");
+const { getContentMeta } = require('../../lib/headless/contentapi/contentmeta');
+const { siteIdMissing400 } = require("../../lib/headless/contentapi/errors");
 
 const handleGet = (req) => {
     // siteId (manatory): the valid UUID for the root site
@@ -31,7 +31,7 @@ const handleGet = (req) => {
     // TODO: siteIdOrPath? Optionally make a call that fetches siteId from site _name?
 
     return siteIdMissing400(siteId) ||
-        getContentBase(siteId, branch, idOrPath, query, variables, maxChildren);
+        getContentMeta(siteId, branch, idOrPath, query, variables, maxChildren);
 };
 
 exports.get = handleGet;

@@ -2,8 +2,8 @@
  *  Also available as a mapped controller: <site>/_content, which doesn't need siteId or branch.
  */
 
-const {getContentData} = require('../../lib/headless/contentapi/contentdata');
-const {error500, siteIdMissing400} = require("../../lib/headless/contentapi/errors");
+const { getContentData } = require('../../lib/headless/contentapi/contentdata');
+const { error500, siteIdMissing400 } = require("../../lib/headless/contentapi/errors");
 
 const handlePost = (req) => {
     try {

@@ -1,7 +1,7 @@
-const {branchInvalidError400, idOrPathOrQueryInvalidError400} = require("./errors");
+const { branchInvalidError400, idOrPathOrQueryInvalidError400 } = require("./errors");
 const { executeResult } = require("./execute");
 
-const { getContentBaseQuery } = require('../guillotine/queries/fragments/contentbase');
+const { getContentMetaQuery } = require('../guillotine/queries/fragments/contentmeta');
 
 
 // TODO: insert a placeholder replacement for app names as '${app}' to use in custom queries?
@@ -14,7 +14,7 @@ const { getContentBaseQuery } = require('../guillotine/queries/fragments/content
 // variables: optional additional variables for a supplied query, or just idOrPath.
 // query: optional override for the DEFAULT_BASE_QUERY.
 // maxChildren: set max number of children to list below folders. 0 turns off the search for children. Default is 1000.
-exports.getContentBase = (siteId, branch, idOrPath, query, variables = {}, maxChildren) => {
+exports.getContentMeta = (siteId, branch, idOrPath, query, variables = {}, maxChildren) => {
 
     // Supplied idOrPath overrides it in variables:
     if (idOrPath) {
@@ -33,5 +33,5 @@ exports.getContentBase = (siteId, branch, idOrPath, query, variables = {}, maxCh
 
     return branchInvalidError400(branch) ||
         idOrPathOrQueryInvalidError400(variables, query, 'No query was provided, and no id or path (idOrPath)') ||
-        executeResult(siteId, branch, query || getContentBaseQuery(variables.maxChildren), variables);
+        executeResult(siteId, branch, query || getContentMetaQuery(variables.maxChildren), variables);
 };

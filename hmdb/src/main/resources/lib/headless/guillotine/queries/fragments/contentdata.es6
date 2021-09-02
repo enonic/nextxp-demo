@@ -1,6 +1,8 @@
 // Catch-all fallback query for the second, get-all-data call for a content item.
 // THIS SCALES BADLY and is not supposed to be used in production
 
+// TODO: worth moving to the nextJS side? Consequences for error handling, and common code with contentMeta, might be a big refactor. Worth it?
+
 // TODO: add component data structure (from CS page-builder) into this query
 
 const DEFAULT_GENERAL_QUERY = `

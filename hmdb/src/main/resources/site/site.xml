@@ -19,8 +19,8 @@
         <mapping controller="/controllers/_graphql.js" order="50">
             <pattern>/_graphql</pattern>
         </mapping>
-        <mapping controller="/controllers/contentapi/_contentbase.js" order="50">
-            <pattern>/_contentbase</pattern>
+        <mapping controller="/controllers/contentapi/_contentmeta.js" order="50">
+            <pattern>/_contentmeta</pattern>
         </mapping>
         <mapping controller="/controllers/contentapi/_content.js" order="50">
             <pattern>/_content</pattern>

@@ -34,6 +34,6 @@ query($idOrPath:ID!, $maxChildren:Int!){
   }
 }`;
 
-exports.getContentBaseQuery = (maxChildren) => (maxChildren > 0)
+exports.getContentMetaQuery = (maxChildren) => (maxChildren > 0)
     ? DEFAULT_BASE_QUERY
     : DEFAULT_BASE_QUERY_CHILDLESS

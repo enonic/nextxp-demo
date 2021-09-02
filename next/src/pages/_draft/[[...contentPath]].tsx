@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 
-import {fetchContent} from "../../shared/data";
-import {contentApiUrlGetters} from "../../enonic.connection.config";
 import Custom500 from '../../components/errors/500';
 import Custom404 from '../../components/errors/404';
 import CustomError from '../../components/errors/error';
+import { fetchData } from "../../shared/data";
 
-const {
-    full: getContentFullUrl,
-    base: getContentBaseUrl
-} = contentApiUrlGetters.draft;
+const BRANCH = 'draft';
 
 // this type is purposefully naive. Please make sure to update this with a more
 // accurate model before using it.
@@ -19,20 +15,9 @@ type Context = {
 };
 
 
-// Shape of content base-data API body
-type ContentApiBaseBody = {
-    idOrPath: string,           // Full content item _path
-    maxChildren?: number,       // On the default query, can set between 0 and 1000 to limit or disable the children below folder content items
-    query?: string,             // Override the default base-data query
-    variables?: string,         // GraphQL variables inserted into the query
-
-    // Not needed when the API is a mapped controller below a site, as is default here. But needed if using the service API:
-    branch?: string,            // master or draft.
-    siteId?: string             // UUID for the site to fetch content below.
-};
 
 
-const BasePage = ({error, contentBase}) => {
+const BasePage = ({error, content}) => {
     if (error) {
         switch (error.code) {
             case 404:
@@ -43,13 +28,13 @@ const BasePage = ({error, contentBase}) => {
         return <CustomError code={error.code} message={error.message}/>;
     }
 
-    if (!contentBase) {
+    if (!content) {
         return <p>Fetching data...</p>
     }
 
     // TODO: general fallback page. Resolve specific pages above
     return <div>
-        <p>ContentBase: {JSON.stringify(contentBase)}</p>
+        <p>content: {JSON.stringify(content)}</p>
     </div>;
 };
 
@@ -63,7 +48,7 @@ export default BasePage;
 
 export const getServerSideProps = async ({params}: Context) => {
     return {
-        props: await fetchContentBase(params.contentPath)
+        props: await fetchContentMeta(params.contentPath)
     };
 };
 */
@@ -74,7 +59,7 @@ export const getServerSideProps = async ({params}: Context) => {
 
 const ClientSideFetch = () => {
 
-    const [props, setProps] = useState({error: null, contentBase: null});
+    const [props, setProps] = useState({error: null, content: null});
 
     const router = useRouter();
     const contentPath = router.query.contentPath;
@@ -83,11 +68,11 @@ const ClientSideFetch = () => {
         () => {
 
             const refresh = async (contentPath) => {
-                const newProps = await fetchContentBase(contentPath);
+                const contentResult = await fetchData(BRANCH, contentPath);
 
                 setTimeout(() => {
                         // @ts-ignore
-                        setProps(() => newProps);
+                        setProps(() => contentResult);
                     },
                     750);
             };
@@ -99,30 +84,7 @@ const ClientSideFetch = () => {
         [contentPath]
     );
 
-    return <BasePage error={props.error} contentBase={props.contentBase}/>;
+    return <BasePage error={props.error} content={props.content}/>;
 }
 
 export default ClientSideFetch;
-
-
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-const fetchContentBase = async (contentPath) => {
-    const idOrPath = "/" + contentPath.join("/");
-    const appName = contentPath[0];
-
-    //const contentFullUrl = getContentFullUrl(appName);
-    const contentBaseUrl = getContentBaseUrl(appName);
-
-    const body: ContentApiBaseBody = {idOrPath};
-
-    return await fetchContent(contentBaseUrl, body);
-};
-

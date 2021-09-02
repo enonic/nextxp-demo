@@ -6,21 +6,22 @@ const appKeyDashed = appKey.replace(/\./g, '-');
 
 const apiDomain = "http://localhost:8080";
 
-const apiContentBase = '_contentbase';
-const apiContentFull = '_content';
+const apiContentMeta = '_contentmeta';
+const apiContent = '_content';
 
 const siteRootUrlMaster = `${apiDomain}/site/${project}/master`;
 const siteRootUrlDraft = `${apiDomain}/site/${project}/draft`;
 
+
 // appName is the content _name of the root site content-item:
 const contentApiUrlGetters = {
     master: {
-        base: (appName) => `${siteRootUrlMaster}/${appName}/${apiContentBase}`,
-        full: (appName) => `${siteRootUrlMaster}/${appName}/${apiContentFull}`
+        getMetaUrl: (appName) => `${siteRootUrlMaster}/${appName}/${apiContentMeta}`,
+        getContentUrl: (appName) => `${siteRootUrlMaster}/${appName}/${apiContent}`
     },
     draft: {
-        base: (appName) => `${siteRootUrlDraft}/${appName}/${apiContentBase}`,
-        full: (appName) => `${siteRootUrlDraft}/${appName}/${apiContentFull}`
+        getMetaUrl: (appName) => `${siteRootUrlDraft}/${appName}/${apiContentMeta}`,
+        getContentUrl: (appName) => `${siteRootUrlDraft}/${appName}/${apiContent}`
     }
 };
 
@@ -30,8 +31,8 @@ module.exports = {
     appKeyUnderscored,
     appKeyDashed,
     apiDomain,
-    apiContentBase,
-    apiContentFull,
+    apiContentMeta,
+    apiContent,
     siteRootUrlDraft,
     siteRootUrlMaster,
     contentApiUrlGetters

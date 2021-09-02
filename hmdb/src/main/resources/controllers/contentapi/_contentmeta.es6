@@ -1,9 +1,9 @@
 /** Query for basic data from a content item (most importantly: content type, but auxilliary data are displayName), by UUID or content path.
- *  Also available as a service: contentbase, but there you must also supply siteId and branch as params.
+ *  Also available as a service: contentmeta, but there you must also supply siteId and branch as params.
  */
 
 const portalLib = require('/lib/xp/portal');
-const {getContentBase} = require('../../lib/headless/contentapi/contentbase');
+const {getContentMeta} = require('../../lib/headless/contentapi/contentmeta');
 const {error500} = require("../../lib/headless/contentapi/errors");
 const {CORS_HEADERS} = require("../../lib/headless/cors-headers");
 
@@ -38,7 +38,7 @@ const handlePost = (req) => {
             }
         */
 
-        return getContentBase(siteId, branch, idOrPath, query, variables, maxChildren);
+        return getContentMeta(siteId, branch, idOrPath, query, variables, maxChildren);
 
     } catch (e) {
         return error500(e);
