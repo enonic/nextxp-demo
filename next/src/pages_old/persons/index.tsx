@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 import {fetchContentChildren} from "../../shared/data";
 import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons";
-import {appKeyUnderscored} from "../../enonic.connection.config";
+import {appKeyUnderscored} from "../../enonic-connection-config";
 
 import ListPage from '../../components/templates/list';
 
