@@ -1,5 +1,5 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import {fetchContentChildren} from "../../shared/data";
+import {fetchContentChildren} from "../../shared/data/fetching";
 import getPersonsQuery, {PersonList} from "../../shared/data/queries/getPersons";
 import {appKeyUnderscored} from "../../enonic-connection-config";
 

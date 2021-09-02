@@ -1,5 +1,5 @@
 import {GetServerSideProps, GetStaticProps} from "next";
-import {fetchContentChildren} from "../../shared/data";
+import {fetchContentChildren} from "../../shared/data/fetching";
 import getMoviesQuery, {MovieList} from "../../shared/data/queries/getMovies";
 import {appKeyUnderscored} from "../../enonic-connection-config";
 import ListPage from "../../components/templates/list";
