@@ -1,4 +1,19 @@
 const { isValidBranch } = require("../branch-context");
+const {CORS_HEADERS} = require("../cors-headers");
+
+exports.siteIdMissing400 = (siteId) => {
+    if (!siteId) {
+        log.warning(`Missing siteId: ${JSON.stringify(siteId)}`);
+        return {
+            status: 400,
+            body: {
+                message: 'Missing siteId',
+            },
+            contentType: 'application/json',
+            headers: CORS_HEADERS
+        };
+    }
+}
 
 exports.branchInvalidError400 = (branch) => {
     if (branch && !isValidBranch(branch)) {
@@ -9,6 +24,7 @@ exports.branchInvalidError400 = (branch) => {
                 message: 'Invalid branch specified',
             },
             contentType: 'application/json',
+            headers: CORS_HEADERS
         };
     }
 }
@@ -22,6 +38,7 @@ exports.idOrPathOrQueryInvalidError400 = (variables, query, message) => {
                 message,
             },
             contentType: 'application/json',
+            headers: CORS_HEADERS
         };
     }
 }
@@ -54,6 +71,18 @@ exports.contentNotFoundError404 = (content, variables, query) => {
                 message: 'Content not found',
             },
             contentType: 'application/json',
+            headers: CORS_HEADERS
         };
+    }
+}
+
+
+exports.error500 = (e) => {
+    log.error(JSON.stringify(e), e);
+    return {
+        status: 500,
+        body: "There was an error. See XP server log for details.",
+        contentType: 'text/plain',
+        headers: CORS_HEADERS
     }
 }

@@ -1,4 +1,4 @@
-const { branchInvalidError400, idOrPathOrQueryInvalidError400} = require("./validation");
+const { branchInvalidError400, idOrPathOrQueryInvalidError400} = require("./errors");
 const { executeResult } = require("./execute");
 
 const { getContentDataQuery } = require("../guillotine/queries/fragments/contentdata");

@@ -40,8 +40,8 @@ const Page: React.FC = () => {
         This page contains dynamically rendered data. To fetch (or refetch)
         data, click the appropriate button below.
       </p>
-      <DataDisplay fetchData={()=>fetchContentBase(['/hmdb/persons/keanu-reeves'])} sectionName={"People"} />
-      <DataDisplay fetchData={()=>fetchContentBase(['/hmdb/movies/the-matrix'])} sectionName={"Movies"} />
+      <DataDisplay fetchData={()=>fetchContentBase(['hmdb', 'persons', 'keanu-reeves'])} sectionName={"People"} />
+      <DataDisplay fetchData={()=>fetchContentBase(['hmdb', 'movies', 'the-matrix'])} sectionName={"Movies"} />
     </div>
   );
 };

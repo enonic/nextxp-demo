@@ -1,5 +1,5 @@
 import {fetchContent} from "../shared/data";
-import {contentApiUrlGetters} from "../../enonic.connection.config";
+import {contentApiUrlGetters} from "../enonic.connection.config";
 import Custom500 from './500';
 import Custom404 from './404';
 import React, { useState, useEffect } from 'react';
@@ -50,6 +50,7 @@ const Main = () => {
     const [props, setProps] = useState({error: {}, contentBase: {}});
 
     const freshen = async () => {
+        console.log("Freshen!");
         const p = await fetchContentBase(['hmdb', 'persons', 'keanu-reeves']);
 
         console.log("p:", p);
@@ -70,11 +71,29 @@ export const getServerSideProps = async ({params}: Context) => ({
 });
 */
 
-export const fetchContentBase = async (contentPath: string[]) => {
+export const fetchContentBase = async (contentPath) => {
+    console.log("contentPath: ", contentPath);
+
     const idOrPath = "/" + contentPath.join("/");
+
+    console.log("idOrPath (" +
+    	(Array.isArray(idOrPath) ?
+    		("array[" + idOrPath.length + "]") :
+    		(typeof idOrPath + (idOrPath && typeof idOrPath === 'object' ? (" with keys: " + JSON.stringify(Object.keys(idOrPath))) : ""))
+    	) + "): " + JSON.stringify(idOrPath, null, 2)
+    );
+
     const appName = contentPath[0];
+
     //const contentFullUrl = getContentFullUrl(appName);
     const contentBaseUrl = getContentBaseUrl(appName);
+
+    console.log("contentBaseUrl (" +
+    	(Array.isArray(contentBaseUrl) ?
+    		("array[" + contentBaseUrl.length + "]") :
+    		(typeof contentBaseUrl + (contentBaseUrl && typeof contentBaseUrl === 'object' ? (" with keys: " + JSON.stringify(Object.keys(contentBaseUrl))) : ""))
+    	) + "): " + JSON.stringify(contentBaseUrl, null, 2)
+    );
 
     const body: ContentApiBaseBody = {idOrPath};
 

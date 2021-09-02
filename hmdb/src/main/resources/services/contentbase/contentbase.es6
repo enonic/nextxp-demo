@@ -3,6 +3,7 @@
  */
 
 const { getContentBase } = require('../../lib/headless/contentapi/contentbase');
+const {siteIdMissing400} = require("../../lib/headless/contentapi/errors");
 
 const handleGet = (req) => {
     // siteId (manatory): the valid UUID for the root site
@@ -26,20 +27,11 @@ const handleGet = (req) => {
         }
     */
 
-    if (!siteId) {
-        // TODO: siteIdOrPath? Optionally make a call that fetches siteId from site _name?
 
-        log.warning(`Missing siteId: ${JSON.stringify(siteId)}`);
-        return {
-            status: 400,
-            body: {
-                message: 'Missing siteId',
-            },
-            contentType: 'application/json',
-        };
-    }
+    // TODO: siteIdOrPath? Optionally make a call that fetches siteId from site _name?
 
-    return getContentBase(siteId, branch, idOrPath, query, variables, maxChildren);
+    return siteIdMissing400(siteId) ||
+        getContentBase(siteId, branch, idOrPath, query, variables, maxChildren);
 };
 
 exports.get = handleGet;

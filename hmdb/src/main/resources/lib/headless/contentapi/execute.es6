@@ -1,4 +1,4 @@
-const {contentNotFoundError404} = require('validation');
+const {contentNotFoundError404} = require('./errors');
 const guillotineLib = require('/lib/guillotine');
 const {CORS_HEADERS} = require("../cors-headers");
 
