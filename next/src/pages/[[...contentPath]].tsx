@@ -57,7 +57,7 @@ const Main = () => {
     useEffect(
         () => {
             const refresh = async () => {
-                const newProps = await fetchContentBase(['hmdb', 'persons', 'keanu-reeves']);
+                const newProps = await fetchContentBase(['hmdb'/*, 'persons', 'keanu-reeves'*/]);
 
                 setTimeout(() => {
                         // @ts-ignore
@@ -85,28 +85,11 @@ export const getServerSideProps = async ({params}: Context) => ({
 */
 
 export const fetchContentBase = async (contentPath) => {
-    console.log("contentPath: ", contentPath);
-
     const idOrPath = "/" + contentPath.join("/");
-
-    console.log("idOrPath (" +
-        (Array.isArray(idOrPath) ?
-                ("array[" + idOrPath.length + "]") :
-                (typeof idOrPath + (idOrPath && typeof idOrPath === 'object' ? (" with keys: " + JSON.stringify(Object.keys(idOrPath))) : ""))
-        ) + "): " + JSON.stringify(idOrPath, null, 2)
-    );
-
     const appName = contentPath[0];
 
     //const contentFullUrl = getContentFullUrl(appName);
     const contentBaseUrl = getContentBaseUrl(appName);
-
-    console.log("contentBaseUrl (" +
-        (Array.isArray(contentBaseUrl) ?
-                ("array[" + contentBaseUrl.length + "]") :
-                (typeof contentBaseUrl + (contentBaseUrl && typeof contentBaseUrl === 'object' ? (" with keys: " + JSON.stringify(Object.keys(contentBaseUrl))) : ""))
-        ) + "): " + JSON.stringify(contentBaseUrl, null, 2)
-    );
 
     const body: ContentApiBaseBody = {idOrPath};
 
@@ -115,18 +98,25 @@ export const fetchContentBase = async (contentPath) => {
         body
     )
         .then(json => {
-            if (!json?.data?.guillotine?.get) {
-                //console.error('Data fetched from contentBase API:', json);
-                return {error: {code: 404}};
+            if (!(((json || {}).data || {}).guillotine || {}).get) {
+                console.error('404 - not found. From contentBase API:', json);
+                return {error: {code: 404, message: "Not found"}};
             }
+
+            return {
+                contentBase: json.data.guillotine.get
+            };
         })
-        .then(validJson => ({
-            // @ts-ignore
-            contentBase: validJson.data.guillotine.get
-        }))
         .catch((err) => {
-            return {error: JSON.parse(err.message)};
+            console.error(err);
+            try {
+                return {error: JSON.parse(err.message)};
+            } catch (e2) {
+                return {error: {code: "Local error", message: err.message}}
+            }
         });
+
+    // console.log("Contentbase result: ", result);
 
     return result;
 };

@@ -2,11 +2,16 @@ export const fetchContent = async <T>(
     apiUrl: string,
     body: {}
 ): Promise<T> => {
-
-    return await fetch(apiUrl, {
-        method: "post",
+    const options = {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(body),
-    })
+    };
+
+    return await fetch(apiUrl, options)
         .then(async (res: Response) => {
             if (!res.ok) {
                 throw new Error(JSON.stringify({

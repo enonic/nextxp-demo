@@ -12,7 +12,7 @@ const handleGet = (req) => {
     // variables: optional additional variables for a supplied query, or just idOrPath.
     // query: optional override for the DEFAULT_BASE_QUERY.
     // maxChildren: set max number of children to list below folders. 0 turns off the search for children. Default is 1000.
-    const {idOrPath, branch, siteId, query, variables, maxChildren} = req.params;
+    const {idOrPath, branch, siteId, query, variables, maxChildren} = JSON.parse(req.body)
 
     /* TODO: secret?
         const { secret } = req.headers;

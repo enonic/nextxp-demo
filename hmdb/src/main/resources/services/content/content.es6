@@ -13,7 +13,7 @@ const handlePost = (req) => {
         // branch (manatory): branch to fetch from, master or draft
         // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
         // variables: optional additional variables for a supplied query, or just idOrPath.
-        const {query, idOrPath, branch, siteId, variables} = req.params;
+        const {query, idOrPath, branch, siteId, variables} = JSON.parse(req.body)
 
         /* TODO: secret?
             const { secret } = req.headers;

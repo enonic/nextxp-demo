@@ -16,11 +16,10 @@ exports.options = function () {
 
 const handlePost = (req) => {
     try {
-
         // query: HIGHLY RECOMMENDED: supply a query to override the fallback catch-all query with a BETTER SCALING, content-type-specific one.
         // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
         // variables: optional additional variables for a supplied query, or just idOrPath.
-        const {query, idOrPath, variables} = req.params;
+        const {query, idOrPath, variables} = JSON.parse(req.body);
 
         var branch = req.branch;
         var siteId = portalLib.getSite()._id;
