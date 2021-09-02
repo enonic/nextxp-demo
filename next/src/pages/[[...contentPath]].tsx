@@ -1,7 +1,8 @@
 import {fetchContent} from "../shared/data";
 import {contentApiUrlGetters} from "../enonic.connection.config";
-import Custom500 from './500';
-import Custom404 from './404';
+import Custom500 from '../components/errors/500';
+import Custom404 from '../components/errors/404';
+import CustomError from '../components/errors/error';
 import React, { useState, useEffect } from 'react';
 
 const {
@@ -29,37 +30,36 @@ type ContentApiBaseBody = {
 };
 
 
-const Page = ({error, contentBase, freshen}) => {
-    /*if (error) {
+const Page = ({error, contentBase, refresh}) => {
+    if (error) {
         switch (error.code) {
             case 404:
                 return <Custom404/>
             case 500:
                 return <Custom500 message={error.message}/>;
         }
-    }*/
+        return <CustomError code={error.code} message={error.message} />;
+    }
 
     // TODO: general fallback page. Resolve specific pages above
-    return <div onClick={freshen}>
+    return <div onClick={refresh}>
         <p>ContentBase: {JSON.stringify(contentBase)}</p>
-        <p>Error: {JSON.stringify(error)}</p>
     </div>;
 };
 
 const Main = () => {
-    const [props, setProps] = useState({error: {}, contentBase: {}});
+    const [props, setProps] = useState({error: null, contentBase: null});
 
-    const freshen = async () => {
-        console.log("Freshen!");
-        const p = await fetchContentBase(['hmdb', 'persons', 'keanu-reeves']);
-
-        console.log("p:", p);
+    const refresh = async () => {
+        console.log("Refresh!");
+        const newProps = await fetchContentBase(['hmdb', 'persons', 'keanu-reeves']);
+        console.log("fetched new props:", newProps);
 
         // @ts-ignore
-        setProps(() => p);
-    };
+        setProps(() => newProps);
+    }
 
-    return <Page error={props.error} contentBase={props.contentBase} freshen={freshen} />;
+    return <Page error={props.error} contentBase={props.contentBase} refresh={refresh} />;
 }
 
 // this function also needs some serious refactoring, but for a quick and dirty
@@ -103,7 +103,7 @@ export const fetchContentBase = async (contentPath) => {
     )
         .then(json => {
             if (!json?.data?.guillotine?.get) {
-                console.error('Data fetched from contentBase API:', json);
+                //console.error('Data fetched from contentBase API:', json);
                 return { error: { code: 404 }};
             }
         })
@@ -112,12 +112,7 @@ export const fetchContentBase = async (contentPath) => {
             contentBase: validJson.data.guillotine.get
         }))
         .catch((err) => {
-            return {
-                error: {
-                    code: 500,
-                    message: err.message
-                }
-            };
+            return { error:  JSON.parse(err.message) };
         });
 
     return result;

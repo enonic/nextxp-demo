@@ -1,4 +1,4 @@
-export const fetchContent = async<T> (
+export const fetchContent = async <T>(
     apiUrl: string,
     body: {}
 ): Promise<T> => {
@@ -9,17 +9,19 @@ export const fetchContent = async<T> (
     })
         .then(async (res: Response) => {
             if (!res.ok) {
-                throw new Error(
-                    `Data fetching failed. Error: ${JSON.stringify(await res.json())}`
-                );
+                throw new Error(JSON.stringify({
+                    code: res.status,
+                    message: `Data fetching failed (message: '${res.statusText}')`
+                }));
             }
             return (await res.json());
         })
         .then(async (json) => {
             if (!json) {
-                throw new Error(
-                    `Data fetching failed. No data: ${JSON.stringify(json)}`
-                );
+                throw new Error(JSON.stringify({
+                    code: 404,
+                    message: `API call completed but with empty data: ${JSON.stringify(json)}`
+                }));
             }
             return json as T;
         });
