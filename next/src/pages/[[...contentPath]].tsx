@@ -4,6 +4,7 @@ import Custom500 from '../components/errors/500';
 import Custom404 from '../components/errors/404';
 import CustomError from '../components/errors/error';
 import React, {useState, useEffect} from 'react';
+import {useRouter} from 'next/router';
 
 const {
     full: getContentFullUrl,
@@ -30,7 +31,7 @@ type ContentApiBaseBody = {
 };
 
 
-const Page = ({error, contentBase}) => {
+const BasePage = ({error, contentBase}) => {
     if (error) {
         switch (error.code) {
             case 404:
@@ -51,29 +52,41 @@ const Page = ({error, contentBase}) => {
     </div>;
 };
 
-const Main = () => {
+const ClientSideFetch = () => {
+
     const [props, setProps] = useState({error: null, contentBase: null});
+
+    const router = useRouter();
+    const contentPath = router.query.contentPath;
 
     useEffect(
         () => {
+
             const refresh = async () => {
-                const newProps = await fetchContentBase(['hmdb'/*, 'persons', 'keanu-reeves'*/]);
+                const newProps = await fetchContentBase(contentPath);
 
                 setTimeout(() => {
                         // @ts-ignore
                         setProps(() => newProps);
                     },
                     750);
-
             };
 
-            refresh()
+            if (contentPath !== undefined) {
+                refresh();
+            }
         },
-        []
+        [contentPath]
     );
 
-    return <Page error={props.error} contentBase={props.contentBase}/>;
+    return <BasePage error={props.error} contentBase={props.contentBase}/>;
 }
+
+export default ClientSideFetch;
+
+
+
+
 
 // this function also needs some serious refactoring, but for a quick and dirty
 // proof of concept it does the job.
@@ -93,33 +106,6 @@ export const fetchContentBase = async (contentPath) => {
 
     const body: ContentApiBaseBody = {idOrPath};
 
-    const result = await fetchContent(
-        contentBaseUrl,
-        body
-    )
-        .then(json => {
-            if (!(((json || {}).data || {}).guillotine || {}).get) {
-                console.error('404 - not found. From contentBase API:', json);
-                return {error: {code: 404, message: "Not found"}};
-            }
-
-            return {
-                contentBase: json.data.guillotine.get
-            };
-        })
-        .catch((err) => {
-            console.error(err);
-            try {
-                return {error: JSON.parse(err.message)};
-            } catch (e2) {
-                return {error: {code: "Local error", message: err.message}}
-            }
-        });
-
-    // console.log("Contentbase result: ", result);
-
-    return result;
+    return await fetchContent(contentBaseUrl, body);
 };
-
-export default Main;
 
