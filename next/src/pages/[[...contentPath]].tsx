@@ -52,6 +52,21 @@ const BasePage = ({error, contentBase}) => {
     </div>;
 };
 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// To server-side render, export BasePage instead of ClientSideFetch below:
+export default BasePage;
+
+export const getServerSideProps = async ({params}: Context) => ({
+    props: await fetchContentBase(params.contentPath)
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 const ClientSideFetch = () => {
 
     const [props, setProps] = useState({error: null, contentBase: null});
@@ -82,22 +97,19 @@ const ClientSideFetch = () => {
     return <BasePage error={props.error} contentBase={props.contentBase}/>;
 }
 
-export default ClientSideFetch;
+//export default ClientSideFetch;
 
 
 
 
 
-// this function also needs some serious refactoring, but for a quick and dirty
-// proof of concept it does the job.
-/*
 
-export const getServerSideProps = async ({params}: Context) => ({
-        props: await fetchContentBase(params.contentPath)
-});
-*/
 
-export const fetchContentBase = async (contentPath) => {
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const fetchContentBase = async (contentPath) => {
     const idOrPath = "/" + contentPath.join("/");
     const appName = contentPath[0];
 
