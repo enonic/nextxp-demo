@@ -4,7 +4,7 @@
 
 // TODO: move this to next side, for consistency
 
-exports.DEFAULT_META_QUERY = `
+const RICH_META_QUERY = `
 query($idOrPath:ID!){
   guillotine {
     get(key:$idOrPath) {
@@ -15,3 +15,14 @@ query($idOrPath:ID!){
     }
   }
 }`;
+
+const LEAN_META_QUERY = `
+query($idOrPath:ID!){
+  guillotine {
+    get(key:$idOrPath) {
+      type
+    }
+  }
+}`;
+
+exports.META_QUERY = LEAN_META_QUERY;

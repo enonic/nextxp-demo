@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {fetchData} from "../../shared/data/fetching";
+import {fetchContent} from "../../shared/data/fetchContent";
 
 import BasePage, {clientSideBasePageBuilder} from "../../components/BasePage";
 
@@ -20,7 +20,7 @@ type Context = {
 
 export const getServerSideProps = async ({params}: Context) => {
     return {
-        props: await fetchData(BRANCH, params.contentPath)
+        props: await fetchContent(BRANCH, params.contentPath)
     };
 };
 

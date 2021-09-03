@@ -3,15 +3,19 @@
  */
 
 const { getContentMeta } = require('../../lib/headless/contentapi/contentmeta');
-const { siteIdMissing400 } = require("../../lib/headless/contentapi/errors");
+const { siteIdMissingError400 } = require("../../lib/headless/contentapi/errors");
+
+/* TODO: move to nextjs side:
+    variables: optional additional variables for a supplied query, or just idOrPath.
+    query: optional override for the DEFAULT_BASE_QUERY.
+ */
+
 
 const handleGet = (req) => {
     // siteId (manatory): the valid UUID for the root site
     // branch (manatory): branch to fetch from, master or draft
     // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
-    // variables: optional additional variables for a supplied query, or just idOrPath.
-    // query: optional override for the DEFAULT_BASE_QUERY.
-    const {idOrPath, branch, siteId, query, variables} = JSON.parse(req.body)
+    const  {siteId, branch, idOrPath } = JSON.parse(req.body)
 
     /* TODO: secret?
         const { secret } = req.headers;
@@ -29,8 +33,8 @@ const handleGet = (req) => {
 
     // TODO: siteIdOrPath? Optionally make a call that fetches siteId from site _name?
 
-    return siteIdMissing400(siteId) ||
-        getContentMeta(siteId, branch, idOrPath, query, variables);
+    return siteIdMissingError400(siteId) ||
+        getContentMeta(siteId, branch, idOrPath);
 };
 
 exports.get = handleGet;

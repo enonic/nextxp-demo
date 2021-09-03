@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
-import {fetchData} from "../shared/data/fetching";
+import {fetchContent} from "../shared/data/fetchContent";
 
 import Custom500 from './errors/500';
 import Custom404 from './errors/404';
@@ -48,7 +48,7 @@ export const clientSideBasePageBuilder = branch => {
             () => {
 
                 const refresh = async (contentPath) => {
-                    const contentResult = await fetchData(branch, contentPath);
+                    const contentResult = await fetchContent(branch, contentPath);
 
                     setTimeout(() => {
                             // @ts-ignore

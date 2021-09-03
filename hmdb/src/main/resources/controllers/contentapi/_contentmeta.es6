@@ -17,9 +17,7 @@ exports.options = function () {
 const handlePost = (req) => {
     try {
         // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
-        // variables: optional additional variables for a supplied query, or just idOrPath.
-        // query: optional override for the DEFAULT_BASE_QUERY.
-        const {idOrPath, query, variables} = JSON.parse(req.body)
+        const {idOrPath} = JSON.parse(req.body)
 
         var branch = req.branch;
         var siteId = portalLib.getSite()._id;
@@ -37,7 +35,14 @@ const handlePost = (req) => {
             }
         */
 
-        return getContentMeta(siteId, branch, idOrPath, query, variables);
+        log.info("{branch, siteId} (" +
+        	(Array.isArray({branch, siteId}) ?
+        		("array[" + {branch, siteId}.length + "]") :
+        		(typeof {branch, siteId} + ({branch, siteId} && typeof {branch, siteId} === 'object' ? (" with keys: " + JSON.stringify(Object.keys({branch, siteId}))) : ""))
+        	) + "): " + JSON.stringify({branch, siteId}, null, 2)
+        );
+
+        return getContentMeta(siteId, branch, idOrPath);
 
     } catch (e) {
         return error500(e);
