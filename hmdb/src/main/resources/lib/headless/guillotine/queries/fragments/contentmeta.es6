@@ -2,7 +2,9 @@
 
 // TODO: add component data structure (from CS page-builder) into this query?
 
-const DEFAULT_BASE_QUERY_CHILDLESS = `
+// TODO: move this to next side, for consistency
+
+exports.DEFAULT_META_QUERY = `
 query($idOrPath:ID!){
   guillotine {
     get(key:$idOrPath) {
@@ -13,27 +15,3 @@ query($idOrPath:ID!){
     }
   }
 }`;
-
-const DEFAULT_BASE_QUERY = `
-query($idOrPath:ID!, $maxChildren:Int!){
-  guillotine {
-    get(key:$idOrPath) {
-      _id
-      _path
-      displayName
-      type
-      ...on base_Folder {
-        children(first:$maxChildren) {
-            _id
-            displayName
-            _path
-            type
-        }
-      }
-    }
-  }
-}`;
-
-exports.getContentMetaQuery = (maxChildren) => (maxChildren > 0)
-    ? DEFAULT_BASE_QUERY
-    : DEFAULT_BASE_QUERY_CHILDLESS

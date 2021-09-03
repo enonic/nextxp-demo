@@ -19,8 +19,7 @@ const handlePost = (req) => {
         // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
         // variables: optional additional variables for a supplied query, or just idOrPath.
         // query: optional override for the DEFAULT_BASE_QUERY.
-        // maxChildren: set max number of children to list below folders. 0 turns off the search for children. Default is 1000.
-        const {idOrPath, query, variables, maxChildren} = JSON.parse(req.body)
+        const {idOrPath, query, variables} = JSON.parse(req.body)
 
         var branch = req.branch;
         var siteId = portalLib.getSite()._id;
@@ -38,7 +37,7 @@ const handlePost = (req) => {
             }
         */
 
-        return getContentMeta(siteId, branch, idOrPath, query, variables, maxChildren);
+        return getContentMeta(siteId, branch, idOrPath, query, variables);
 
     } catch (e) {
         return error500(e);

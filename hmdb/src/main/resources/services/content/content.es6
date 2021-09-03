@@ -13,7 +13,8 @@ const handlePost = (req) => {
         // branch (manatory): branch to fetch from, master or draft
         // idOrPath (mandatory if no override query is used): used in the default query. Can be a valid content UUID, or a (full) content path, eg. /mysite/persons/someone. Can be supplied direct param as here, or as part of the variables param (direct param has prescendence)
         // variables: optional additional variables for a supplied query, or just idOrPath.
-        const {query, idOrPath, branch, siteId, variables} = JSON.parse(req.body)
+        // maxChildren: set max number of children to list below folders. 0 turns off the search for children. Default is 1000.
+        const {query, idOrPath, branch, siteId, variables, maxChildren} = JSON.parse(req.body)
 
         /* TODO: secret?
             const { secret } = req.headers;
@@ -31,7 +32,7 @@ const handlePost = (req) => {
         // TODO: siteIdOrPath? Optionally make a call that fetches siteId from site _name?
 
         return siteIdMissing400(siteId) ||
-            getContentData(siteId, branch, idOrPath, query, variables);
+            getContentData(siteId, branch, idOrPath, query, variables, maxChildren);
 
     } catch (e) {
         return error500(e);

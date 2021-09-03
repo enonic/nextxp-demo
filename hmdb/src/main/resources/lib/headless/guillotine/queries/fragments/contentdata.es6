@@ -5,7 +5,7 @@
 
 // TODO: add component data structure (from CS page-builder) into this query
 
-const DEFAULT_GENERAL_QUERY = `
+const GENERAL_QUERY_CHILDLESS = `
 query($idOrPath:ID!){
   guillotine {
     get(key:$idOrPath) {
@@ -19,8 +19,32 @@ query($idOrPath:ID!){
   }
 }`;
 
-exports.getContentDataQuery = () => {
-    // TODO: only warn in production only
+const GENERAL_QUERY_WITH_CHILDREN = `
+query($idOrPath:ID!, $maxChildren:Int!){
+  guillotine {
+    get(key:$idOrPath) {
+      _id
+      _path
+      displayName
+      type
+      dataAsJson
+      xAsJson
+      ...on base_Folder {
+        children(first:$maxChildren) {
+            _id
+            displayName
+            _path
+            type
+        }
+      }
+    }
+  }
+}`;
+
+exports.getContentDataQuery = (maxChildren) => {
+    // TODO: only warn in dev mode? Or only once?
     log.warning(`No query was provided, so a catch-all fallback query will be used. This WILL NOT SCALE WELL, so in production it's highly recommended to supply a guillotine query tailored for your content type!`);
-    return DEFAULT_GENERAL_QUERY;
+    return (maxChildren > 0)
+        ? GENERAL_QUERY_WITH_CHILDREN
+        : GENERAL_QUERY_CHILDLESS
 }

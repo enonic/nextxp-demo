@@ -55,6 +55,26 @@ export const fetchContent = async (apiUrl, body, key, methodKeyFromQuery = 'get'
         body
     )
         .then(json => {
+            /*
+            TODO: catch and handle guillotine errors, shaped like this:
+                 {
+                    "errors": [
+                        {
+                            "errorType": "ValidationError",
+                            "message": "Validation error of type UnusedVariable: Unused variable maxChildren",
+                            "locations": [
+                                {
+                                    "line": 2,
+                                    "column": 22
+                                }
+                            ],
+                            "validationErrorType": "UnusedVariable"
+                        }
+                    ]
+                }
+             */
+
+
             if (!(((json || {}).data || {}).guillotine || {})[methodKeyFromQuery]) {
                 console.error('404 - not found.\nResponse from _contentMeta API:\n', json);
                 return {error: {code: 404, message: "Not found"}};
