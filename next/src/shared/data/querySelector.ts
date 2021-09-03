@@ -21,7 +21,7 @@ const contentTypeSpecificQueries = {
 // Content types mapped to a getVariables function that will return appropriate variables for the corresponding query.
 // If type is not found here, the lowPerformingDefaultGetVariables function is used.
 const contentTypeSpecificGetVariables = {
-    // 'my.example.app:content-type':
+    // 'my.example.app:content-type': (idOrPath) => ({ custom: variables etc })
 };
 
 
@@ -30,7 +30,7 @@ const contentTypeSpecificGetVariables = {
 
 const LOW_PERFORMING_DEFAULT_QUERY = getContentDataQuery(DEFAULT_MAX_CHILDREN);
 
-const lowPerformingDefaultGetVariables = (DEFAULT_MAX_CHILDREN > 0)
+const defaultGetVariables = (DEFAULT_MAX_CHILDREN > 0)
     ? (idOrPath) => ({
         idOrPath,
         maxChildren: DEFAULT_MAX_CHILDREN
@@ -48,7 +48,7 @@ export default function getQueryAndVariables(type, idOrPath) {
     // Default query and variables if no content-type-specific query was found for the type
     if (!query) {
         query = LOW_PERFORMING_DEFAULT_QUERY;
-        getVariables = lowPerformingDefaultGetVariables;
+        getVariables = defaultGetVariables;
     }
 
     return {
