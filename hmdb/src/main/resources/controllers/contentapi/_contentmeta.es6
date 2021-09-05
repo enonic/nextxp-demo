@@ -35,13 +35,6 @@ const handlePost = (req) => {
             }
         */
 
-        log.info("{branch, siteId} (" +
-        	(Array.isArray({branch, siteId}) ?
-        		("array[" + {branch, siteId}.length + "]") :
-        		(typeof {branch, siteId} + ({branch, siteId} && typeof {branch, siteId} === 'object' ? (" with keys: " + JSON.stringify(Object.keys({branch, siteId}))) : ""))
-        	) + "): " + JSON.stringify({branch, siteId}, null, 2)
-        );
-
         return getContentMeta(siteId, branch, idOrPath);
 
     } catch (e) {
