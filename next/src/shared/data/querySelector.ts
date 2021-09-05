@@ -1,5 +1,5 @@
 import { getContentDataQuery } from "./queries/_defaultGetData";
-
+import { appKey } from '../../enonic-connection-config';
 
 
 // Content types mapped to full guillotine query strings.
@@ -45,7 +45,7 @@ const defaultGetVariables = (DEFAULT_MAX_CHILDREN > 0)
 
 export default function getQueryAndVariables(type, idOrPath) {
     let query = contentTypeSpecificQueries[type];
-    let getVariables = contentTypeSpecificGetVariables[type];
+    let getVariables = contentTypeSpecificGetVariables[type] || defaultGetVariables;
 
     // Default query and variables if no content-type-specific query was found for the type
     if (!query) {
