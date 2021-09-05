@@ -1,10 +1,4 @@
-import {getContentDataQuery} from "./queries/_defaultGetData";
-
-
-
-// Enables maxChildren with the _defaultGetData call: fetching basic data of child items below folder contents.
-// Set to 0 or something falsy to disable.
-const DEFAULT_MAX_CHILDREN = 1000;
+import { getContentDataQuery } from "./queries/_defaultGetData";
 
 
 
@@ -23,6 +17,14 @@ const contentTypeSpecificQueries = {
 const contentTypeSpecificGetVariables = {
     // 'my.example.app:content-type': (idOrPath) => ({ custom: variables etc })
 };
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+// Enables maxChildren with the _defaultGetData call: fetching basic data of child items below folder contents.
+// Set to 0 or something falsy to disable.
+const DEFAULT_MAX_CHILDREN = 1000;
 
 
 

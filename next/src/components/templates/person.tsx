@@ -4,12 +4,8 @@ import { Person } from "../../shared/data/queries/getPerson";
 
 import { getPhoto} from "../../shared/images";
 
-type PersonPageProps = {
-    person: Person
-};
 
-
-const PersonPage = ({person}: PersonPageProps) => {
+const PersonPage = (person: Person) => {
     const personMeta = person.data || {};
     const personPhoto = getPhoto(personMeta.photos);
     return (

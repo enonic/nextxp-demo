@@ -12,8 +12,8 @@ const { executeResult } = require("./execute");
 // branch (manatory): branch to fetch from: master or draft
 // query (mandatory): guillotine query to run
 // variables (mandatory if query has any placeholders): optional additional variables for a supplied query.
-exports.getContentData = (siteId, branch, query, variables = {}) => {
-    return branchInvalidError400(branch) ||
-        queryInvalidError400(query) ||
-        executeResult(siteId, branch, query, variables);
-};
+exports.getContentData = (siteId, branch, query, variables = {}) =>
+    branchInvalidError400(branch) ||
+    queryInvalidError400(query) ||
+    executeResult(siteId, branch, query, variables);
+

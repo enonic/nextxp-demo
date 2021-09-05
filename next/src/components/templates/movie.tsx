@@ -4,9 +4,6 @@ import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 
 import { getPhoto} from "../../shared/images";
 
-type Props = {
-    movie: Movie,
-}
 
 const getCast = (cast): CastItem[] | undefined => !cast
     ? undefined
@@ -14,7 +11,7 @@ const getCast = (cast): CastItem[] | undefined => !cast
         ? cast
         : [cast];
 
-const MoviePage = ({movie}: Props) => {
+const MoviePage = (movie: Movie) => {
     const movieMeta = movie.data || {};
 
     const moviePhoto = getPhoto(movieMeta.photos);

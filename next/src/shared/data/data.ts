@@ -82,7 +82,5 @@ export const fetchGuillotine = async (apiUrl, body, key, methodKeyFromQuery = 'g
             }
         });
 
-    // console.log("fetchGuillotine result:", result);
-
     return result;
 };

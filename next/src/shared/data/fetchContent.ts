@@ -63,8 +63,6 @@ export const fetchContent = async (branch: string, contentPath: string[]): Promi
 
     // TODO: On 200, verify that contentData.content.type is equal to type above (from content-meta). If not, or on other status, invalidate that path in the cache above.
 
-    console.log("content: ", contentResult);
-
     return contentResult;
 }
 

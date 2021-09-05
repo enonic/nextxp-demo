@@ -17,11 +17,9 @@ type Context = {
     params: { contentPath: string[] };
 };
 
-export const getServerSideProps = async ({params}: Context) => {
-    return {
-        props: await fetchContent(BRANCH, params.contentPath)
-    };
-};
+export const getServerSideProps = async ({params}: Context) => ({
+    props: await fetchContent(BRANCH, params.contentPath)
+});
 
 export default BasePage;
 
