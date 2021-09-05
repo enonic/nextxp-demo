@@ -1,10 +1,16 @@
 import { getContentDataQuery } from "./queries/_defaultGetData";
 import { appKey } from '../../enonic-connection-config';
 
+import LIST_QUERY from './queries/getList';
+import MOVIE_QUERY from './queries/getMovie';
+import PERSON_QUERY from './queries/getPerson';
 
 // Content types mapped to full guillotine query strings.
 // If type is not found here, a LOW-PERFORMING default query is selected from getContentDataQuery.
 const contentTypeSpecificQueries = {
+    'base:folder': LIST_QUERY,
+    [`${appKey}:movie`]: MOVIE_QUERY,
+    [`${appKey}:person`]: PERSON_QUERY,
     // 'my.example.app:content-type': '{ guillotine { get { custom query string etc } } }'
 };
 
