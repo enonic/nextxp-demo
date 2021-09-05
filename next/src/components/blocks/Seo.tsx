@@ -17,7 +17,7 @@ type SeoProps = {
     viewport?: JSX.Element
 };
 
-const SEO: FunctionComponent<SeoProps> = ( {description, lang, meta, author, title, siteTitle, keywords, viewport}: SeoProps) => (
+const Seo: FunctionComponent<SeoProps> = ({description, lang, meta, author, title, siteTitle, keywords, viewport}: SeoProps) => (
 
     <Head>
         <title>{
@@ -53,4 +53,4 @@ const SEO: FunctionComponent<SeoProps> = ( {description, lang, meta, author, tit
     </Head>
 );
 
-export default SEO
+export default Seo

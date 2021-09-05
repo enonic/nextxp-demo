@@ -1,14 +1,13 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
-import Layout from '../components/blocks/layout'
-import SEO from '../components/blocks/seo'
+import Seo from '../components/blocks/seo'
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <Layout siteTitle="Enonic ❤ Next.js">
-            <SEO title={pageProps.title} siteTitle="NextXP Poc" />
+        <>
+            <Seo title="Poc" siteTitle="NextXP" />
             <Component {...pageProps} />
-        </Layout>
+        </>
     );
 }
 
