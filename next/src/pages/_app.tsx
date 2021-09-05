@@ -5,7 +5,7 @@ import SEO from '../components/blocks/seo'
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <Layout siteTitle="Enonic ❤ NextJS">
+        <Layout siteTitle="Enonic ❤ Next.js">
             <SEO title={pageProps.title} siteTitle="NextXP Poc" />
             <Component {...pageProps} />
         </Layout>
