@@ -7,7 +7,7 @@ type Props = {
 const DefaultPage = (props: Props) => {
     return (
         <>
-            <p>Item:</p>
+            <p>Content item:</p>
             <h2>{props.displayName}</h2>
             <pre>{JSON.stringify(props, null, 2)}</pre>
         </>

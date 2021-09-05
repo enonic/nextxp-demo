@@ -53,11 +53,16 @@ export const clientSideBasePageBuilder = branch => {
                     setProps(props => ({...props, fetching: true}));
                     const contentResult = await fetchContent(branch, contentPath);
 
-                    setTimeout(() => {
+
+                    // @ts-ignore
+                    setProps(() => contentResult);
+
+                    // Simulate server delay: comment out the setProps line above, and activate this:
+                    /*setTimeout(() => {
                             // @ts-ignore
                             setProps(() => contentResult);
                         },
-                        750);
+                        750);*/
                 };
 
                 if (contentPath !== undefined) {
