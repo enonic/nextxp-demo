@@ -2,12 +2,8 @@ export default `
 query($idOrPath:ID!, $maxChildren:Int!){
   guillotine {
     get(key:$idOrPath) {
-      _id
-      _path
       displayName
       type
-      dataAsJson
-      xAsJson
       ...on base_Folder {
         children(first:$maxChildren) {
             _id
@@ -19,3 +15,15 @@ query($idOrPath:ID!, $maxChildren:Int!){
     }
   }
 }`;
+
+export type ChildContent = {
+    displayName: string,
+    _path: string,
+    _id: string,
+    type: string
+};
+
+export type Folder = {
+    displayName: string,
+    children: ChildContent[],
+};

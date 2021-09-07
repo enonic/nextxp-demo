@@ -7,7 +7,7 @@ function MyApp({Component, pageProps}: AppProps) {
     return (
         <>
             {/*<Layout siteTitle="Enonic ❤ Next.js">*/}
-                <SEO title={pageProps.title} siteTitle="NextXP Poc"/>
+                {/*<SEO title={pageProps.displayName} siteTitle="NextXP Poc"/>*/}
                 <Component {...pageProps} />
             {/*</Layout>*/}
         </>

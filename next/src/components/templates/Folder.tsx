@@ -1,30 +1,22 @@
 import React from "react"
 import Link from "next/link";
 
-type ChildContent = {
-    displayName: string,
-    _path: string,
-    _id: string
-};
+import { Folder } from "../../shared/data/queries/getFolder";
 
-type Props = {
-    displayName: string,
-    children: ChildContent[],
-};
 
-const FolderPage = ( props: Props) => {
+const FolderPage = ( folder: Folder) => {
     return (
         <>
             <p>Folder:</p>
-            <h2>{props.displayName}</h2>
+            <h2>{folder.displayName}</h2>
             <ul>
-                {props.children.map(child => (
+                {folder.children.map(child => (
                     <li key={child._id}>
                         <Link href={child._path.substring(1)}><a>{child.displayName}</a></Link>
                     </li>)
                 )}
             </ul>
-            <pre>{JSON.stringify(props, null, 2)}</pre>
+            <pre>{JSON.stringify(folder, null, 2)}</pre>
         </>
     )
 };
