@@ -1,6 +1,7 @@
-import { getContentDataQuery } from "./queries/_defaultGetData";
 import { appKey } from '../../enonic-connection-config';
 
+import LOW_PERFORMING_DEFAULT_QUERY from "./queries/_getDefaultData";
+import FOLDER_QUERY from "./queries/getFolder";
 import LIST_QUERY from './queries/getList';
 import MOVIE_QUERY from './queries/getMovie';
 import PERSON_QUERY from './queries/getPerson';
@@ -8,9 +9,12 @@ import PERSON_QUERY from './queries/getPerson';
 // Content types mapped to full guillotine query strings.
 // If type is not found here, a LOW-PERFORMING default query is selected from getContentDataQuery.
 const contentTypeSpecificQueries = {
-    'base:folder': LIST_QUERY,
-    [`${appKey}:movie`]: MOVIE_QUERY,
-    [`${appKey}:person`]: PERSON_QUERY,
+    //'base:folder': FOLDER_QUERY,
+
+    //'base:folder': LIST_QUERY,
+    //[`${appKey}:movie`]: MOVIE_QUERY,
+    //[`${appKey}:person`]: PERSON_QUERY,
+
     // 'my.example.app:content-type': '{ guillotine { get { custom query string etc } } }'
 };
 
@@ -21,32 +25,17 @@ const contentTypeSpecificQueries = {
 // Content types mapped to a getVariables function that will return appropriate variables for the corresponding query.
 // If type is not found here, the lowPerformingDefaultGetVariables function is used.
 const contentTypeSpecificGetVariables = {
+    //'base:folder': (idOrPath) => ({ idOrPath, maxChildren: 1000 })
+
     // 'my.example.app:content-type': (idOrPath) => ({ custom: variables etc })
 };
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-// Enables maxChildren with the _defaultGetData call: fetching basic data of child items below folder contents.
-// Set to 0 or something falsy to disable.
-const DEFAULT_MAX_CHILDREN = 1000;
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const LOW_PERFORMING_DEFAULT_QUERY = getContentDataQuery(DEFAULT_MAX_CHILDREN);
-
-const defaultGetVariables = (DEFAULT_MAX_CHILDREN > 0)
-    ? (idOrPath) => ({
-        idOrPath,
-        maxChildren: DEFAULT_MAX_CHILDREN
-    })
-    : (idOrPath) => ({ idOrPath });
-
-
-
+const defaultGetVariables = (idOrPath) => ({ idOrPath });
 
 
 export default function getQueryAndVariables(type, idOrPath) {
