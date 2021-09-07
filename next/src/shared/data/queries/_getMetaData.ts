@@ -1,9 +1,3 @@
-// Query for the first, get-basic-info call that mainly determinines content type of a content item
-
-// TODO: add component data structure (from CS page-builder) into this query?
-
-// TODO: move this to next side, for consistency
-
 const RICH_META_QUERY = `
 query($idOrPath:ID!){
   guillotine {
@@ -16,6 +10,15 @@ query($idOrPath:ID!){
   }
 }`;
 
+type RichMeta = {
+    _id: string,
+    _path: string,
+    displayName: string,
+    type: string
+};
+
+
+
 const LEAN_META_QUERY = `
 query($idOrPath:ID!){
   guillotine {
@@ -25,4 +28,11 @@ query($idOrPath:ID!){
   }
 }`;
 
-exports.META_QUERY = LEAN_META_QUERY;
+type LeanMeta = {
+    type: string
+};
+
+
+
+export default LEAN_META_QUERY;
+export type Meta = LeanMeta;

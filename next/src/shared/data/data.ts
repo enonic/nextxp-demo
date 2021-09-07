@@ -1,10 +1,10 @@
 
 
-const fetchFromApi = async <T>(
+const fetchFromApi = async (
     apiUrl: string,
     body: {},
     method = "POST"
-): Promise<T> => {
+) => {
     const options = {
         method,
         headers: {
@@ -40,12 +40,12 @@ const fetchFromApi = async <T>(
                 }));
             }
 
-            return json as T;
+            return json;
         });
 };
 
 
-export const fetchGuillotine = async (apiUrl, body, key, methodKeyFromQuery = 'get') => {
+export const fetchGuillotine = async<T> (apiUrl, body, key, idOrPath, methodKeyFromQuery):Promise<T> => {
     const result = await fetchFromApi(
         apiUrl,
         body
@@ -57,15 +57,23 @@ export const fetchGuillotine = async (apiUrl, body, key, methodKeyFromQuery = 'g
                 if (!Array.isArray(errors)){
                     errors = [errors];
                 }
+                console.warn(`${errors.length} error(s) when trying to fetch data (idOrPath = ${JSON.stringify(idOrPath)}):`);
                 errors.forEach(error => {
                     console.error(error);
                 });
 
-                return {error: {code: 500, message: `Server responded with ${errors.length} error(s), probably from guillotine - see message(s) above and server log.`}};
+                return {error: {code: 500, message: `Server responded with ${errors.length} error(s), probably from guillotine - see log.`}};
             }
 
+            console.log(methodKeyFromQuery);
+            console.log(json);
+            console.log(json.data);
+            console.log(json);
+            console.log(json.data.guillotine);
+            console.log(json.data.guillotine[methodKeyFromQuery]);
+
             if (!(((json || {}).data || {}).guillotine || {})[methodKeyFromQuery]) {
-                console.error('404 - not found.\nResponse from _contentMeta API:\n', json);
+                console.warn(`Empty or unexpected data when trying to fetch data (idOrPath = ${JSON.stringify(idOrPath)}).\nResponse from _contentMeta API:\n`, json);
                 return {error: {code: 404, message: "Not found"}};
             }
 
@@ -74,13 +82,13 @@ export const fetchGuillotine = async (apiUrl, body, key, methodKeyFromQuery = 'g
             };
         })
         .catch((err) => {
-            console.error(err);
+            console.warn(`Client-side error when trying to fetch data (idOrPath = ${JSON.stringify(idOrPath)})`, err);
             try {
                 return {error: JSON.parse(err.message)};
             } catch (e2) {
-                return {error: {code: "Local error", message: err.message}}
+                return {error: {code: "Client-side error", message: err.message}}
             }
         });
 
-    return result;
+    return result as T;
 };

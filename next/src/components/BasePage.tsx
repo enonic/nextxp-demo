@@ -7,6 +7,7 @@ import {getTemplate} from "./templateSelector";
 import Custom500 from './errors/500';
 import Custom404 from './errors/404';
 import CustomError from './errors/error';
+import {g} from "../enonic-connection-config";
 
 const BasePage = ({error, content, fetching}) => {
     if (error) {
@@ -38,7 +39,7 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////
 
-export const clientSideBasePageBuilder = branch => {
+export const buildClientSideBasePage = (getContentUrl: Function) => {
     const ClientSideFetchingBasePage = () => {
 
         const [props, setProps] = useState({error: null, content: null, fetching: false});
@@ -49,10 +50,10 @@ export const clientSideBasePageBuilder = branch => {
         useEffect(
             () => {
 
-                const refresh = async (contentPath) => {
+                const refresh = async (contentPath: string|string[]) => {
                     setProps(props => ({...props, fetching: true}));
-                    const contentResult = await fetchContent(branch, contentPath);
 
+                    const contentResult = await fetchContent(contentPath, getContentUrl);
 
                     // @ts-ignore
                     setProps(() => contentResult);

@@ -2,10 +2,10 @@ import React from 'react';
 
 import {fetchContent} from "../../shared/data/fetchContent";
 
-import BasePage, {clientSideBasePageBuilder} from "../../components/BasePage";
+import BasePage, {buildClientSideBasePage} from "../../components/BasePage";
 
-const BRANCH = 'draft';
 
+import { getGuillotineUrlDraft } from '../../enonic-connection-config';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
@@ -20,7 +20,7 @@ type Context = {
 
 export const getServerSideProps = async ({params}: Context) => {
     return {
-        props: await fetchContent(BRANCH, params.contentPath)
+        props: await fetchContent(params.contentPath, getGuillotineUrlDraft)
     };
 };
 
@@ -32,6 +32,6 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
-const ClientSideFetchBasePage = clientSideBasePageBuilder(BRANCH);
+const ClientSideFetchBasePage = buildClientSideBasePage(getGuillotineUrlDraft);
 
 export default ClientSideFetchBasePage;
