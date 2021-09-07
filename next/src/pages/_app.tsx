@@ -6,10 +6,10 @@ import SEO from '../components/blocks/seo'
 function MyApp({Component, pageProps}: AppProps) {
     return (
         <>
-            {/*<Layout siteTitle="Enonic ❤ Next.js">*/}
-                {/*<SEO title={pageProps.displayName} siteTitle="NextXP Poc"/>*/}
+            <Layout siteTitle="Enonic ❤ Next.js">
+                <SEO title={pageProps.displayName} siteTitle="NextXP Poc"/>
                 <Component {...pageProps} />
-            {/*</Layout>*/}
+            </Layout>
         </>
     );
 }

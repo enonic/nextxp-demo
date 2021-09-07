@@ -26,4 +26,5 @@ export type ChildContent = {
 export type Folder = {
     displayName: string,
     children: ChildContent[],
+    type: string
 };

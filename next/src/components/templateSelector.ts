@@ -13,9 +13,9 @@ import PersonPage from "./templates/Person";
 const contentTypeSpecificTemplate = {
     //'base:folder': FolderPage
 
-    //'base:folder': ListPage,
-    //[`${appKey}:person`]: PersonPage,
-    //[`${appKey}:movie`]: MoviePage
+   'base:folder': ListPage,
+    [`${appKey}:person`]: PersonPage,
+    [`${appKey}:movie`]: MoviePage
 };
 
 export const getTemplate = (contentType) => contentTypeSpecificTemplate[contentType] || DefaultPage;

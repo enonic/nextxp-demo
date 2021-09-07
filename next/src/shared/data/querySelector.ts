@@ -11,9 +11,9 @@ import PERSON_QUERY from './queries/getPerson';
 const contentTypeSpecificQueries = {
     //'base:folder': FOLDER_QUERY,
 
-    //'base:folder': LIST_QUERY,
-    //[`${appKey}:movie`]: MOVIE_QUERY,
-    //[`${appKey}:person`]: PERSON_QUERY,
+    'base:folder': LIST_QUERY,
+    [`${appKey}:movie`]: MOVIE_QUERY,
+    [`${appKey}:person`]: PERSON_QUERY,
 
     // 'my.example.app:content-type': '{ guillotine { get { custom query string etc } } }'
 };
