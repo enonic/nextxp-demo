@@ -15,7 +15,7 @@ export const buildClientSideBasePage = (branch: Branch, fetchContent) => {
         useEffect(
             () => {
 
-                const refresh = async (contentPath: string | string[]) => {
+                const refresh = async (contentPath) => {
                     setProps(props => ({...props, fetching: true}));
 
                     const contentResult = await fetchContent(contentPath, branch);
@@ -38,7 +38,8 @@ export const buildClientSideBasePage = (branch: Branch, fetchContent) => {
             [contentPath]
         );
 
-        return <BasePage error={props.error} content = {props.content} fetching = {props.fetching} />;
+        // @ts-ignore
+        return <BasePage error={props.error} content = {props.data} fetching = {props.fetching} />;
     };
     return ClientSideFetchingBasePage;
 };

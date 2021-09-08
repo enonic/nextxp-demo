@@ -44,7 +44,10 @@ atlassian-ide-plugin.xml
 *.ipr
 *.iws
 
+## Plugin-specific files:
 
+# IntelliJ
+out/
 
 
 # Crashlytics plugin (for Android Studio and IntelliJ)

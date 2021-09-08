@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Custom500 from './errors/500';
 import Custom404 from './errors/404';
 import CustomError from './errors/Error';
