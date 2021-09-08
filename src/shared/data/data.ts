@@ -53,7 +53,7 @@ const fetchFromApi = async (
     return json;
 };
 
-export const fetchGuillotine = async <T>(apiUrl, body, key, idOrPath, methodKeyFromQuery): Promise<T> => {
+export const fetchGuillotine = async <T>(apiUrl, body, key, idOrPath, requiredMethodKeyFromQuery): Promise<T> => {
     if (typeof body.query !== 'string' || !body.query.trim()) {
         return await {
             error: {
@@ -87,13 +87,18 @@ export const fetchGuillotine = async <T>(apiUrl, body, key, idOrPath, methodKeyF
             }
 
             // @ts-ignore
-            if (!(((json || {}).data || {}).guillotine || {})[methodKeyFromQuery]) {
+            const guillotineData = ((json || {}).data || {}).guillotine || {};
+            if (Object.keys(guillotineData).length === 0) {
+                console.warn(`Empty/unexpected data from guillotine API (idOrPath = ${JSON.stringify(idOrPath)}).\nResponse:\n`, json);
+                return {error: {code: 404, message: "Not found"}};
+            }
+            if (requiredMethodKeyFromQuery && !guillotineData[requiredMethodKeyFromQuery]) {
                 console.warn(`Empty/unexpected data from guillotine API (idOrPath = ${JSON.stringify(idOrPath)}).\nResponse:\n`, json);
                 return {error: {code: 404, message: "Not found"}};
             }
 
             return {
-                [key]: json.data.guillotine[methodKeyFromQuery]
+                [key]: json.data.guillotine
             };
         })
         .catch((err) => {

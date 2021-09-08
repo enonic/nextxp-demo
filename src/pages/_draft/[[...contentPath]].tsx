@@ -1,8 +1,17 @@
 import React from 'react';
 
-import {fetchContent} from "../../shared/data/fetchContent";
+import buildContentFetcher from "../../shared/data/fetchContent";
+import { querySelector, variablesGetterSelector} from "../../shared/querySelector";
 
-import BasePage, {buildClientSideBasePage} from "../../components/BasePage";
+const fetchContent = buildContentFetcher({
+    querySelector,
+    variablesGetterSelector,
+    firstMethodKey: true
+});
+
+
+import BasePage from "../../components/BasePage";
+import {buildClientSideBasePage} from "../../shared/clientSideBasePage";
 
 const BRANCH = 'draft';
 
@@ -30,6 +39,6 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
-const ClientSideFetchBasePage = buildClientSideBasePage(BRANCH);
+const ClientSideFetchBasePage = buildClientSideBasePage(BRANCH, fetchContent);
 
 export default ClientSideFetchBasePage;
