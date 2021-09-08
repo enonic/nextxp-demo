@@ -12,7 +12,7 @@ const siteRootUrlDraft = `${apiDomain}/site/${project}/draft`;
 
 // appName is the content _name of the root site content-item:
 const getGuillotineUrlMaster = (appName) => `${siteRootUrlMaster}/${appName}/_graphql`;
-const getGuillotineUrlDraft = (appName) => `${siteRootUrlMaster}/${appName}/_graphql`;
+const getGuillotineUrlDraft = (appName) => `${siteRootUrlDraft}/${appName}/_graphql`;
 
 module.exports = {
     project,
