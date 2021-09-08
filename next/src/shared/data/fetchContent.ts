@@ -1,12 +1,11 @@
-import {contentApiUrlGetters} from "../../enonic-connection-config";
+import {getGuillotineUrlDraft, getGuillotineUrlMaster} from "../../enonic-connection-config";
 
 import {fetchGuillotine} from "./data";
 
 import getQueryAndVariables from "./querySelector";
 import getQueryMethodKey from './queryKey';
 
-import META_QUERY, { Meta } from "./queries/_getMetaData";
-
+import META_QUERY, {Meta} from "./queries/_getMetaData";
 
 // Shape of content base-data API body
 type ContentApiBaseBody = {
@@ -22,10 +21,11 @@ type ContentApiBaseBody = {
     siteId?: string                 // UUID for the site to fetch content below.
 };
 
-
-
 type Result = {
-    error?: {}
+    error?: {
+        code: string,
+        message: string
+    }
 }
 type ContentResult<T> = Result & {
     content?: T
@@ -34,71 +34,14 @@ type MetaResult = Result & {
     meta?: Meta
 };
 
-export const fetchContent = async<T> (contentPath: string | string[], getContentUrl:Function): Promise<ContentResult<T>> => {
-    // TODO: Handle bad / insufficient contentPath (return a 400)
-
-    const idOrPath = "/" + contentPath
-        .filter(p => !!(p || '').trim())    // Remove empty items
-        .join("/");
-
-    // idOrPathInvalidError400(idOrPath) ||
-    // branchInvalid400(branch)
+type Branch = 'master' | 'draft';
 
 
-    const appName = contentPath[0];
-
-    const contentUrl = getContentUrl(appName);
-
-    const metaResult = await fetchMeta(contentUrl, idOrPath);
-
-    if (metaResult.error) {
-        return {
-            error: metaResult.error
-        };
-    }
-
-    const {
-        type
-        // , displayName, _id, _path      // <-- if using RICH_META_QUERY in queries/_getMetaData.es6
-    } = metaResult.meta || {};
-
-    if (!type) {
-        return {
-            error: {
-                code: 500,
-                message: "Server responded with incomplete meta data: missing content 'type' attribute."
-            }
-        }
-    }
-
-    const {query, variables} = getQueryAndVariables(type, idOrPath);
-    // checkQuery400
-    const methodKeyFromQuery = getQueryMethodKey(type, query);
-    const contentResult = await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
-
-    // TODO: On 200, verify that contentData.content.type is equal to type above (from content-meta). If not, or on other status, invalidate that path in the cache above.
-
-    return contentResult;
-}
 
 
-/////////////////////////////////////////////////////////////////////////////////////// Fetch-wrappers for the two calls
+///////////////////////////////////////////////////////////////////////////////// Specific fetch:
 
-/*
-const fetchMeta = async (branch: string, appName: string, idOrPath: string): Promise<{error?: {}, contentMeta?: {}}> => {
-
-    const getContentMetaUrl = contentApiUrlGetters[branch].getMetaUrl;
-    const contentMetaUrl = getContentMetaUrl(appName);
-
-    // TODO: other things to wrap into the body: query (override), variables, remember to pass the key from the query into fetchGuillotine below as methodKeyFromQuery
-    const body: ContentApiBaseBody = {idOrPath};
-
-    return await fetchGuillotine(contentMetaUrl, body, 'contentMeta');
-};
-*/
-
-
-const fetchMeta = async (contentUrl: string, /* branch: string, appName: string, */ idOrPath: string): Promise<MetaResult> => {
+const fetchMetaData = async (contentUrl: string, idOrPath: string): Promise<MetaResult> => {
     const body: ContentApiBaseBody = {
         query: META_QUERY,
         variables: {
@@ -106,61 +49,136 @@ const fetchMeta = async (contentUrl: string, /* branch: string, appName: string,
         }
     };
     return await fetchGuillotine<MetaResult>(contentUrl, body, 'meta', idOrPath, 'get');
-
-
-    // contentNotFoundError404(content, variables, query) ||
-
 }
 
 
-///////////////////////////////////////////////////
 
-
-
-const fetchContentFull = async<T> (
+const fetchContentFull = async <T>(
     contentUrl: string,
     /* branch: string, appName: string, */
     idOrPath: string,
     query: string,
     methodKeyFromQuery: string,
-    variables?: {} ): Promise<ContentResult<T>> => {
-
-    // queryInvalidError400(query) ||
+    variables?: {}): Promise<ContentResult<T>> => {
 
     // TODO: When passing in override query, remember to also pass the key from the query into fetchGuillotine (methodKeyFromQuery), eg. 'get', 'query', 'getChildren' etc
-    const body: ContentApiBaseBody = { query };
+    const body: ContentApiBaseBody = {query};
     if (variables && Object.keys(variables).length > 0) {
         body.variables = variables;
     }
     return await fetchGuillotine<ContentResult<T>>(contentUrl, body, 'content', idOrPath, methodKeyFromQuery);
-
-    // contentNotFoundError404(content, variables, query) ||
-
-    //     } catch (e) {
-    //         return error500(e);
-    //     }
 };
 
 
-/*
-contentNotFoundError404 = (content, variables, query) => {
-    if (!content) {
-        if (!query) {
-            log.warning(`Content not found at idOrPath = ${JSON.stringify(variables.idOrPath)}`);
-        } else {
-            log.warning('Content not found, at:');
-            log.warning('    query: ' + query);
-            if (variables) {
-                log.warning('    variables: ' + JSON.stringify(variables));
+
+///////////////////////////////////////////////////////////////////////////////// Error checking:
+
+const getCleanContentPathArrayOrError400 = (contentPath: string | string[]): string[] => {
+    const isArray = Array.isArray(contentPath);
+
+    if (typeof contentPath !== 'string' && !isArray) {
+        throw Error(JSON.stringify({
+            code: 400,
+            message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath (${typeof contentPath}) = "${JSON.stringify(contentPath)})`
+        }));
+    }
+
+    let contentPathArray = (!isArray)
+        ? (contentPath as string).split('/')
+        : contentPath as string[];
+
+    contentPathArray = contentPathArray.filter(p => {
+        // Check items, remove empty ones
+        if (typeof p !== 'string') {
+            Error(JSON.stringify({
+                code: 400,
+                message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath (${typeof contentPath}) = "${JSON.stringify(contentPath)})`
+            }));
+        }
+        return p.trim()
+    });
+
+    // By now, contentPathArray is verified to have the shape we want: a clean string array with no empty items.
+    return contentPathArray;
+}
+
+const verifyBranchOrError400 = (branch) => {
+    if (['draft', 'master'].indexOf(branch) === -1) {
+        throw Error(JSON.stringify({
+            code: 400,
+            message: `Invalid branch - must be 'master' or 'draft' (branch = ${JSON.stringify(branch)}})`
+        }))
+    }
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////// Entry:
+
+const contentUrlGetters = {
+    draft: getGuillotineUrlDraft,
+    master: getGuillotineUrlMaster
+}
+
+export const fetchContent = async <T>(contentPath: string | string[], branch: Branch): Promise<ContentResult<T>> => {
+    try {
+
+
+        verifyBranchOrError400(branch);
+        const contentPathArray = getCleanContentPathArrayOrError400(contentPath);
+
+        const idOrPath = "/" + contentPathArray.join("/");
+
+        // The first item is interpreted to be the _name of the app.
+        const appName = contentPathArray[0];
+        const getContentUrl = contentUrlGetters[branch];
+        const contentUrl = getContentUrl(appName);
+
+        const metaResult = await fetchMetaData(contentUrl, idOrPath);
+
+        if (metaResult.error) {
+            return {
+                error: metaResult.error
+            };
+        }
+
+        const {
+            type
+            // , displayName, _id, _path      // <-- if using RICH_META_QUERY in queries/_getMetaData.es6
+        } = metaResult.meta || {};
+
+        if (!type) {
+            return await {
+                error: {
+                    code: 500,
+                    message: "Server responded with incomplete meta data: missing content 'type' attribute."
+                }
             }
         }
 
-        return {
-            status: 404,
-            body: 'Content not found',
-            contentType: 'text/plain',
-            headers: CORS_HEADERS
-        };
+        const {query, variables} = getQueryAndVariables(type, idOrPath);
+        // checkQuery400
+        const methodKeyFromQuery = getQueryMethodKey(type, query);
+        const contentResult = await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
+
+        // TODO: On 200, verify that contentData.content.type is equal to type above (from content-meta). If not, or on other status, invalidate that path in the cache above.
+
+
+        return contentResult;
+
+    } catch (e) {
+        console.error(e);
+        let error;
+        try {
+            error = JSON.parse(e.message);
+        } catch (e2) {
+            error = {
+                code: "Local",
+                message: e.message
+            }
+        }
+        return await { error };
     }
 }
- */
+
+

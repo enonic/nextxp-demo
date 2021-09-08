@@ -2,9 +2,7 @@ const PATTERN = /\{\s*guillotine\s*\{\s*(.+?)\s*[{(]/;
 
 const getQueryKey = (query) => {
     try {
-        console.log(query);
         const mainQueryKey = query.match(PATTERN)[1];
-        console.log("mainQueryKey:", mainQueryKey)
         if (!mainQueryKey) {
             throw Error("Regex match group 1 is empty.")
         }

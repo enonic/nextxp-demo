@@ -39,7 +39,7 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////
 
-export const buildClientSideBasePage = (getContentUrl: Function) => {
+export const buildClientSideBasePage = (branch: string) => {
     const ClientSideFetchingBasePage = () => {
 
         const [props, setProps] = useState({error: null, content: null, fetching: false});
@@ -53,7 +53,7 @@ export const buildClientSideBasePage = (getContentUrl: Function) => {
                 const refresh = async (contentPath: string|string[]) => {
                     setProps(props => ({...props, fetching: true}));
 
-                    const contentResult = await fetchContent(contentPath, getContentUrl);
+                    const contentResult = await fetchContent(contentPath, branch);
 
                     // @ts-ignore
                     setProps(() => contentResult);

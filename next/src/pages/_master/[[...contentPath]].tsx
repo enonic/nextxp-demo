@@ -4,8 +4,7 @@ import {fetchContent} from "../../shared/data/fetchContent";
 
 import BasePage, { buildClientSideBasePage } from "../../components/BasePage";
 
-import { getGuillotineUrlMaster } from '../../enonic-connection-config';
-
+const BRANCH = 'master';
 
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
 
@@ -17,7 +16,7 @@ type Context = {
 };
 
 export const getServerSideProps = async ({params}: Context) => ({
-    props: await fetchContent(params.contentPath, getGuillotineUrlMaster)
+    props: await fetchContent(params.contentPath, BRANCH)
 });
 
 export default BasePage;
@@ -27,7 +26,7 @@ export default BasePage;
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 /*
 
-const ClientSideFetchBasePage = buildClientSideBasePage(getGuillotineUrlMaster);
+const ClientSideFetchBasePage = buildClientSideBasePage(BRANCH);
 
 export default ClientSideFetchBasePage;
 */
