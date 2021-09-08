@@ -1,9 +1,0 @@
-<part>
-    <display-name>Test part</display-name>
-    <form>
-        <input type="TextLine" name="lepart">
-            <label>Text</label>
-            <default>Je suis part</default>
-        </input>
-    </form>
-</part>
