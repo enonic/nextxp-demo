@@ -6,7 +6,7 @@ import {getTemplate} from "./templateSelector";
 
 import Custom500 from './errors/500';
 import Custom404 from './errors/404';
-import CustomError from './errors/error';
+import CustomError from './errors/Error';
 import {g} from "../enonic-connection-config";
 
 const BasePage = ({error, content, fetching}) => {

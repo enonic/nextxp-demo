@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
 import Layout from '../components/blocks/layout'
-import SEO from '../components/blocks/seo'
+import SEO from '../components/blocks/Seo'
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
