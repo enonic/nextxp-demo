@@ -5,20 +5,14 @@ import {fetchGuillotine} from "./data";
 import getQueryMethodKey from './queryKey';
 
 import META_QUERY, {Meta} from "./queries/_getMetaData";
-import LOW_PERFORMING_DEFAULT_QUERY from "./queries/_getDefaultData";
+import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
 
 // Shape of content base-data API body
 type ContentApiBaseBody = {
     query?: string,                 // Override the default base-data query
     variables?: {                   // GraphQL variables inserted into the query
-        idOrPath?: string,           // Full content item _path.
-        maxChildren?: number,       // On the default query, can set between 0 and 1000 to limit or disable the children below folder content items.
-                                    // ...add other variables depending on placeholders in custom query
-    },
-
-    // Not needed when the API is a mapped controller below a site, as is default here. But needed if using the service API:
-    branch?: string,                // master or draft.
-    siteId?: string                 // UUID for the site to fetch content below.
+        idOrPath?: string,          // Full content item _path
+    }
 };
 
 type Result = {
@@ -171,7 +165,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
         // Default query and variables if no content-type-specific query was found for the type
         if (!query) {
             // TODO: Only log this warning in dev mode?
-            console.warn(`No query has been assigned (idOrPath=${JSON.stringify(idOrPath)}, contentType=${JSON.stringify(type)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well inproduction! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in contentTypeSelectors.ts`);
+            console.warn(`No query has been assigned (idOrPath=${JSON.stringify(idOrPath)}, contentType=${JSON.stringify(type)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well in production! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts`);
             query = LOW_PERFORMING_DEFAULT_QUERY;
             getVariables = defaultGetVariables;
         }
@@ -241,13 +235,9 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 ? getQueryMethodKey(type, query)
                 : undefined;
 
-            const contentResult = await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
+            return await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
 
-            // TODO: On 200, verify that contentData.content.type is equal to type above (from content-meta). If not, or on other status, invalidate that path in the cache above.
-
-            return firstMethodKey
-                ? contentResult[methodKeyFromQuery]
-                : contentResult;
+            // TODO: On 200, verify that contentData.data.type is equal to type above (from meta). If not, or on other status, invalidate that path in the cache above, and redo this function from the top. Beware of recursive loop though!
 
 
         } catch (e) {

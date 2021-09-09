@@ -97,9 +97,14 @@ export const fetchGuillotine = async <T>(apiUrl, body, key, idOrPath, requiredMe
                 return {error: {code: 404, message: "Not found"}};
             }
 
+            const data = requiredMethodKeyFromQuery
+                ? json.data.guillotine[requiredMethodKeyFromQuery]
+                : json.data.guillotine;
+
             return {
-                [key]: json.data.guillotine
+                [key]: data
             };
+
         })
         .catch((err) => {
             console.warn(`Client-side error when trying to fetch data (idOrPath = ${JSON.stringify(idOrPath)})`, err);

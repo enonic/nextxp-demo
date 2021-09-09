@@ -4,8 +4,8 @@ import Custom500 from './errors/500';
 import Custom404 from './errors/404';
 import CustomError from './errors/Error';
 
-import DefaultPage from "../components/templates/Default";
-import { pageSelector} from "../shared/pageSelector";
+import DefaultPage from "../components/pagetypes/Default";
+import { pageSelector} from "../selectors/pageSelector";
 
 const selectPage = (contentType) => pageSelector[contentType] || DefaultPage;
 

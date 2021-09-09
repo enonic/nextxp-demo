@@ -1,7 +1,7 @@
 import React from 'react';
 
 import buildContentFetcher from "../../shared/data/fetchContent";
-import { querySelector, variablesGetterSelector} from "../../shared/querySelector";
+import { querySelector, variablesGetterSelector} from "../../selectors/querySelector";
 
 const fetchContent = buildContentFetcher({
     querySelector,
@@ -10,14 +10,13 @@ const fetchContent = buildContentFetcher({
 });
 
 
-import BasePage from "../../components/BasePage";
-import {buildClientSideBasePage} from "../../shared/clientSideBasePage";
 
 const BRANCH = 'draft';
 
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
 /*
 
+import BasePage from "../../components/BasePage";
 
 type Context = {
     // this type is purposefully naive. Please make sure to update this with a more
@@ -39,6 +38,7 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
-const ClientSideFetchBasePage = buildClientSideBasePage(BRANCH, fetchContent);
+import ClientSideBasePage from "../../components/ClientSideBasePage";
 
-export default ClientSideFetchBasePage;
+const ClientSidePage = () => <ClientSideBasePage branch={BRANCH} fetchContent={fetchContent} />;
+export default ClientSidePage;
