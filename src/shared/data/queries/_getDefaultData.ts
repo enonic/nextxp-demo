@@ -4,13 +4,12 @@
 // Data calls, including added overrides, should always return type for verification and cache invalidation.
 
 export const LOW_PERFORMING_DEFAULT_QUERY = `
-query($idOrPath:ID!){
+query($path:ID!){
   guillotine {
-    get(key:$idOrPath) {
-      _id
-      _path
-      displayName
+    get(key:$path) {
       type
+      _id
+      displayName
       dataAsJson
       xAsJson
     }

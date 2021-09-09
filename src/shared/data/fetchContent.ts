@@ -11,7 +11,7 @@ import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
 type ContentApiBaseBody = {
     query?: string,                 // Override the default base-data query
     variables?: {                   // GraphQL variables inserted into the query
-        idOrPath?: string,          // Full content item _path
+        path?: string,          // Full content item _path
     }
 };
 
@@ -36,14 +36,14 @@ export type Branch = 'master' | 'draft';
 
 ///////////////////////////////////////////////////////////////////////////////// Specific fetch:
 
-const fetchMetaData = async (contentUrl: string, idOrPath: string): Promise<MetaResult> => {
+const fetchMetaData = async (contentUrl: string, path: string): Promise<MetaResult> => {
     const body: ContentApiBaseBody = {
         query: META_QUERY,
         variables: {
-            idOrPath
+            path
         }
     };
-    return await fetchGuillotine<MetaResult>(contentUrl, body, 'meta', idOrPath, 'get');
+    return await fetchGuillotine<MetaResult>(contentUrl, body, 'meta', path, 'get');
 }
 
 
@@ -51,7 +51,7 @@ const fetchMetaData = async (contentUrl: string, idOrPath: string): Promise<Meta
 const fetchContentFull = async <T>(
     contentUrl: string,
     /* branch: string, appName: string, */
-    idOrPath: string,
+    path: string,
     query: string,
     methodKeyFromQuery?: string,
     variables?: {}
@@ -61,7 +61,7 @@ const fetchContentFull = async <T>(
     if (variables && Object.keys(variables).length > 0) {
         body.variables = variables;
     }
-    return await fetchGuillotine<ContentResult<T>>(contentUrl, body, 'data', idOrPath, methodKeyFromQuery);
+    return await fetchGuillotine<ContentResult<T>>(contentUrl, body, 'data', path, methodKeyFromQuery);
 };
 
 
@@ -110,7 +110,7 @@ const verifyBranchOrError400 = (branch) => {
 
 ///////////////////////////////////////////////////////////////////////////////// Entry:
 
-type VariablesGetterFunc = (idOrPath:string) => {idOrPath: string};
+type VariablesGetterFunc = (path:string) => {path: string};
 
 type FetcherConfig = {
     querySelector?: {
@@ -134,9 +134,9 @@ type FetcherConfig = {
 /**
  *
  * @param querySelector Object where keys are content type strings (eg. 'my.app:content-type') and values are guillotine queries to use to fetch data for that content type.
- * @param variablesGetterSelector Object where keys are content types and values are functions. These functions take an idOrPath string as an argument and return a guillotine variables object, where 'idOrPath' is a mandatory attribute.
+ * @param variablesGetterSelector Object where keys are content types and values are functions. These functions take an path string as an argument and return a guillotine variables object, where 'path' is a mandatory attribute.
  * @param firstMethodKey boolean, default is true.
- *          - firstMethodKey=true: can simplify usage a bit, but ONLY use if all query strings use only one guillotine method call - no queries have more than one (eg. 'get' in the query string 'query($idOrPath:ID!){ guillotine { get(key:$idOrPath) { type }}}'). The (first) guillotine method call is autodetected from each query string ('get', 'getChildren', 'query' etc), and that string is used in two ways. The response under that key is checked for non-null content (returns 404 error if null), and the returned content is the object below that method-named key (which in turn is under the 'guillotine' key in the response from the guillotine API (in this example: the value of reponseData.guillotine['get']).
+ *          - firstMethodKey=true: can simplify usage a bit, but ONLY use if all query strings use only one guillotine method call - no queries have more than one (eg. 'get' in the query string 'query($path:ID!){ guillotine { get(key:$path) { type }}}'). The (first) guillotine method call is autodetected from each query string ('get', 'getChildren', 'query' etc), and that string is used in two ways. The response under that key is checked for non-null content (returns 404 error if null), and the returned content is the object below that method-named key (which in turn is under the 'guillotine' key in the response from the guillotine API (in this example: the value of reponseData.guillotine['get']).
  *          - firstMethodKey=false: this disables the autodetection, a 404 error is only returned if no (or empty) object under the 'guillotine' key was found. Otherwise, the entire data object under 'guillotine' is returned, with all method-named keys from the query - not just the data under the method-named key from the query.
  */
 const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig) => {
@@ -154,9 +154,9 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
     querySelector = querySelector || {};
     variablesGetterSelector = variablesGetterSelector || {};
 
-    const defaultGetVariables: VariablesGetterFunc = (idOrPath) => ({ idOrPath });
+    const defaultGetVariables: VariablesGetterFunc = (path) => ({ path });
 
-    const getQueryAndVariables = (type, idOrPath) => {
+    const getQueryAndVariables = (type, path) => {
         // @ts-ignore
         let query = querySelector[type];
         // @ts-ignore
@@ -164,14 +164,14 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
         // Default query and variables if no content-type-specific query was found for the type
         if (!query) {
-            console.warn(`No query has been assigned for this content type (contentType=${JSON.stringify(type)}, idOrPath=${JSON.stringify(idOrPath)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well in production! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts`);
+            console.warn(`${JSON.stringify(path)}: no query has been assigned for the content type ${JSON.stringify(type)}.\n\nThe default data query (_getDefaultData.ts) will be used, but note that this is a development tool and won't scale well in production. It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts!`);
             query = LOW_PERFORMING_DEFAULT_QUERY;
             getVariables = defaultGetVariables;
         }
 
         return {
             query,
-            variables: getVariables(idOrPath)
+            variables: getVariables(path)
         }
     };
 
@@ -191,14 +191,14 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
             verifyBranchOrError400(branch);
             const contentPathArray = getCleanContentPathArrayOrError400(contentPath);
 
-            const idOrPath = "/" + contentPathArray.join("/");
+            const path = "/" + contentPathArray.join("/");
 
             // The first item is interpreted to be the _name of the app.
             const appName = contentPathArray[0];
             const getContentUrl = contentUrlGetters[branch];
             const contentUrl = getContentUrl(appName);
 
-            const metaResult = await fetchMetaData(contentUrl, idOrPath);
+            const metaResult = await fetchMetaData(contentUrl, path);
 
             if (metaResult.error) {
                 return {
@@ -220,7 +220,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 }
             }
 
-            const {query, variables} = getQueryAndVariables(type, idOrPath);
+            const {query, variables} = getQueryAndVariables(type, path);
             if (!query.trim()) {
                 return await {
                     error: {
@@ -235,7 +235,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 : undefined;
 
             return await {
-                ...await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables),
+                ...await fetchContentFull(contentUrl, path, query, methodKeyFromQuery, variables),
                 type
             };
 

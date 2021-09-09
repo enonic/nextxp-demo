@@ -1,7 +1,7 @@
 const RICH_META_QUERY = `
-query($idOrPath:ID!){
+query($path:ID!){
   guillotine {
-    get(key:$idOrPath) {
+    get(key:$path) {
       _id
       _path
       displayName
@@ -20,9 +20,9 @@ type RichMeta = {
 
 
 const LEAN_META_QUERY = `
-query($idOrPath:ID!){
+query($path:ID!){
   guillotine {
-    get(key:$idOrPath) {
+    get(key:$path) {
       type
     }
   }
