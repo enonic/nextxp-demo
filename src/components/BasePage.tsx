@@ -13,6 +13,7 @@ export type BasePageProps = {
         code: string,
         message: string
     },
+    type?: string,
     data?: {
         type: string
     }
@@ -25,10 +26,10 @@ const errorPageSelector = {
     500: Custom500
 }
 
-const BasePage = ({error, data, fetching}: BasePageProps) => {
+const BasePage = ({type, data, fetching, error}: BasePageProps) => {
     if (error) {
         const ErrorPage = errorPageSelector[error.code] || CustomError;
-        return <ErrorPage code={error.code} message={error.message}/>;
+        return <ErrorPage {...error}/>;
     }
 
     if (fetching) {
@@ -42,15 +43,14 @@ const BasePage = ({error, data, fetching}: BasePageProps) => {
         return null;
     }
 
-    if (!data.type) {
-        console.warn("A 'type' attribute is missing from the data. Most likely, a query is added without a type attribute at the content top level.");
-        /// ...but still render the SelectedPage, which will dump the data.
+    if (!type) {
+        console.warn("BasePage props are missing 'type'. Falling back to default page type.");
 
-    } else if (data.type.startsWith('media:')) {
+    } else if (type.startsWith('media:')) {
         return null;
     }
 
-    const SelectedPage = pageSelector[data.type] || DefaultPage;
+    const SelectedPage = pageSelector[type] || DefaultPage;
     return <SelectedPage {...data} />;
 };
 

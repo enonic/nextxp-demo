@@ -22,6 +22,7 @@ type Result = {
     }
 }
 export type ContentResult<T> = Result & {
+    type?: string,
     data?: T
 };
 type MetaResult = Result & {
@@ -163,7 +164,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
         // Default query and variables if no content-type-specific query was found for the type
         if (!query) {
-            console.warn(`No query has been assigned (idOrPath=${JSON.stringify(idOrPath)}, contentType=${JSON.stringify(type)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well in production! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts`);
+            console.warn(`No query has been assigned for this content type (contentType=${JSON.stringify(type)}, idOrPath=${JSON.stringify(idOrPath)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well in production! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts`);
             query = LOW_PERFORMING_DEFAULT_QUERY;
             getVariables = defaultGetVariables;
         }
@@ -233,7 +234,10 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 ? getQueryMethodKey(type, query)
                 : undefined;
 
-            return await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
+            return await {
+                ...await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables),
+                type
+            };
 
         } catch (e) {
             console.error(e);

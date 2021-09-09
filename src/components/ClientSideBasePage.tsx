@@ -24,6 +24,8 @@ const ClientSideBasePage = ({branch, fetchContent}: Props) => {
 
                 const contentResult: BasePageProps = await fetchContent(contentPath, branch);
 
+                //console.log("Fetched content result:", contentResult);
+
                 // @ts-ignore
                 setProps(() => contentResult);
 
