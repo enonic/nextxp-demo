@@ -5,9 +5,8 @@ import Custom404 from './errors/404';
 import CustomError from './errors/Error';
 
 import DefaultPage from "../components/pagetypes/_Default";
-import { pageSelector} from "../selectors/pageSelector";
+import {pageSelector} from "../selectors/pageSelector";
 
-const selectPage = (contentType) => pageSelector[contentType] || DefaultPage;
 
 export type BasePageProps = {
     error?: {
@@ -20,27 +19,41 @@ export type BasePageProps = {
     fetching?: boolean
 }
 
+
+const errorPageSelector = {
+    404: Custom404,
+    500: Custom500
+}
+
 const BasePage = ({error, data, fetching}: BasePageProps) => {
     if (error) {
-        switch (error.code) {
-            case 404:
-                return <Custom404/>
-            case 500:
-                return <Custom500 message={error.message}/>;
-        }
-        return <CustomError code={error.code} message={error.message}/>;
+        const ErrorPage = errorPageSelector[error.code] || CustomError;
+        return <ErrorPage code={error.code} message={error.message}/>;
     }
 
     if (fetching) {
         return <p className="spinner">Fetching data...</p>
     }
 
-    if (data) {
-        const SelectedPage = selectPage(data.type);
-        return <SelectedPage {...data} />
+    if (!data) {
+        if (!fetching) {
+            console.warn("No 'data' in props");
+        }
+        return null;
     }
 
-    return null;
+    if (!data.type) {
+        // TODO: enforce at querySelector level?
+        console.warn("A 'type' attribute is missing from the data. Most likely, a query is added without a type attribute at the content top level.");
+        /// ...but still render the SelectedPage, which will dump the data.
+
+    } else if (data.type.startsWith('media:')) {
+        return null;
+    }
+
+// TODO: Only use the data-dumping DefaultPage in dev mode / draft?
+    const SelectedPage = pageSelector[data.type] || DefaultPage;
+    return <SelectedPage {...data} />;
 };
 
 export default BasePage;
