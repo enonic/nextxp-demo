@@ -56,7 +56,6 @@ const fetchContentFull = async <T>(
     variables?: {}
 ): Promise<ContentResult<T>> => {
 
-    // TODO: When passing in override query, remember to also pass the key from the query into fetchGuillotine (methodKeyFromQuery), eg. 'get', 'query', 'getChildren' etc
     const body: ContentApiBaseBody = {query};
     if (variables && Object.keys(variables).length > 0) {
         body.variables = variables;
@@ -164,7 +163,6 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
         // Default query and variables if no content-type-specific query was found for the type
         if (!query) {
-            // TODO: Only log this warning in dev mode?
             console.warn(`No query has been assigned (idOrPath=${JSON.stringify(idOrPath)}, contentType=${JSON.stringify(type)}). The default data query (_getdefaultData.ts) will be used, but note that this is a development tool and won't scale well in production! It's HIGHLY RECOMMENDED to write a content-type-specialized guillotine query, and add that to querySelector in querySelector.ts`);
             query = LOW_PERFORMING_DEFAULT_QUERY;
             getVariables = defaultGetVariables;
@@ -236,9 +234,6 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 : undefined;
 
             return await fetchContentFull(contentUrl, idOrPath, query, methodKeyFromQuery, variables);
-
-            // TODO: On 200, verify that contentData.data.type is equal to type above (from meta). If not, or on other status, invalidate that path in the cache above, and redo this function from the top. Beware of recursive loop though!
-
 
         } catch (e) {
             console.error(e);

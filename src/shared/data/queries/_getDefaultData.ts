@@ -3,8 +3,6 @@
 //
 // Data calls, including added overrides, should always return type for verification and cache invalidation.
 
-// TODO: add component data structure (from CS page-builder) into this query
-
 export const LOW_PERFORMING_DEFAULT_QUERY = `
 query($idOrPath:ID!){
   guillotine {

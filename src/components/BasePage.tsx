@@ -43,7 +43,6 @@ const BasePage = ({error, data, fetching}: BasePageProps) => {
     }
 
     if (!data.type) {
-        // TODO: enforce at querySelector level?
         console.warn("A 'type' attribute is missing from the data. Most likely, a query is added without a type attribute at the content top level.");
         /// ...but still render the SelectedPage, which will dump the data.
 
@@ -51,7 +50,6 @@ const BasePage = ({error, data, fetching}: BasePageProps) => {
         return null;
     }
 
-// TODO: Only use the data-dumping DefaultPage in dev mode / draft?
     const SelectedPage = pageSelector[data.type] || DefaultPage;
     return <SelectedPage {...data} />;
 };
