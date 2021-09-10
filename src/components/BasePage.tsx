@@ -26,20 +26,14 @@ const errorPageSelector = {
     500: Custom500
 }
 
-const BasePage = ({type, data, fetching, error}: BasePageProps) => {
+const BasePage = ({type, data, error}: BasePageProps) => {
     if (error) {
         const ErrorPage = errorPageSelector[error.code] || CustomError;
         return <ErrorPage {...error}/>;
     }
 
-    if (fetching) {
-        return <p className="spinner">Fetching data...</p>
-    }
-
     if (!data) {
-        if (!fetching) {
-            console.warn("No 'data' in props");
-        }
+        console.warn("No 'data' in props");
         return null;
     }
 

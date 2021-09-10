@@ -44,6 +44,9 @@ const ClientSideBasePage = ({branch, fetchContent}: Props) => {
         [contentPath]
     );
 
+    if (props.fetching) {
+        return <p className="spinner">Fetching data...</p>
+    }
     return <BasePage {...props} />;
 };
 export default ClientSideBasePage;
