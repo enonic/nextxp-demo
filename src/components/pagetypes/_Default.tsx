@@ -9,7 +9,8 @@ const DefaultPage = (props: Props) => {
         <div style={{padding: "10px"}}>
             <h2>{props.displayName}</h2>
             <h5>Props:</h5>
-            <pre>{JSON.stringify(props, null, 2)}</pre>
+            <pre style={{width:"100%", whiteSpace:"pre-wrap", wordWrap: "break-word"}}>{JSON.stringify(props, null, 2)}</pre>
+            <br />
             <hr />
             <p style={{fontSize: ".7em", color: "#bbb"}}>Renderer: _Default.tsx</p>
         </div>
