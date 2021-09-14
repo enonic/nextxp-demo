@@ -26,7 +26,7 @@ export default function Home() {
                         this app. Go to the <pre style={{display: 'inline'}}>_path</pre> of a content item:
                     </p>
                     <p>/_draft/<em>&lt;site/path/to/item&gt;</em></p>
-                    <p>Of course, just replace '_draft' with '_master' to view published content.</p>
+                    <p>Of course, just replace `&apos;_draft`&apos; with `&apos;_master`&apos; to view published content.</p>
                 </section>
 
                 <section>

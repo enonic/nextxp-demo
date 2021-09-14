@@ -1,19 +1,13 @@
 import { getGuillotineUrlDraft, getGuillotineUrlMaster } from "../../enonic-connection-config";
 
-import {fetchGuillotine} from "./data";
+import {ContentApiBaseBody, fetchGuillotine} from "./data";
 
 import getQueryMethodKey from './queryKey';
 
 import META_QUERY, {Meta} from "./queries/_getMetaData";
 import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
 
-// Shape of content base-data API body
-type ContentApiBaseBody = {
-    query?: string,                 // Override the default base-data query
-    variables?: {                   // GraphQL variables inserted into the query
-        path?: string,          // Full content item _path
-    }
-};
+
 
 type Result = {
     error?: {
@@ -97,7 +91,7 @@ const getCleanContentPathArrayOrError400 = (contentPath: string | string[]): str
     return contentPathArray;
 }
 
-const verifyBranchOrError400 = (branch) => {
+const verifyBranchOrError400 = (branch: Branch) => {
     if (['draft', 'master'].indexOf(branch) === -1) {
         throw Error(JSON.stringify({
             code: 400,
@@ -156,7 +150,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
     const defaultGetVariables: VariablesGetterFunc = (path) => ({ path });
 
-    const getQueryAndVariables = (type, path) => {
+    const getQueryAndVariables = (type: string, path: string) => {
         // @ts-ignore
         let query = querySelector[type];
         // @ts-ignore
@@ -212,6 +206,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
             } = metaResult.meta || {};
 
             if (!type) {
+                // @ts-ignore
                 return await {
                     error: {
                         code: 500,
@@ -222,6 +217,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
             const {query, variables} = getQueryAndVariables(type, path);
             if (!query.trim()) {
+                // @ts-ignore
                 return await {
                     error: {
                         code: 400,

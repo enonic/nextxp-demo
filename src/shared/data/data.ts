@@ -1,5 +1,12 @@
 import queryKey from "./queryKey";
 
+// Shape of content base-data API body
+export type ContentApiBaseBody = {
+    query?: string,                 // Override the default base-data query
+    variables?: {                   // GraphQL variables inserted into the query
+        path?: string,              // Full content item _path
+    }
+};
 
 const fetchFromApi = async (
     apiUrl: string,
@@ -53,21 +60,29 @@ const fetchFromApi = async (
     return json;
 };
 
-export const fetchGuillotine = async <T>(apiUrl, body, key, path, requiredMethodKeyFromQuery): Promise<T> => {
+export const fetchGuillotine = async <T>(
+    apiUrl: string,
+    body: ContentApiBaseBody,
+    key: string,
+    path: string,
+    requiredMethodKeyFromQuery?: string
+): Promise<T> => {
     if (typeof body.query !== 'string' || !body.query.trim()) {
+        // @ts-ignore
         return await {
             error: {
                 code: 400,
                 message: `Invalid or missing query. JSON.stringify(query) = ${JSON.stringify(body.query)}`
             }
-        }
+        };
     }
+
     const result = await fetchFromApi(
         apiUrl,
         body
     )
         .then(json => {
-            let errors = (json || {}).errors;
+            let errors: any[] = (json || {}).errors;
 
             if (errors) {
                 if (!Array.isArray(errors)) {
@@ -78,6 +93,7 @@ export const fetchGuillotine = async <T>(apiUrl, body, key, path, requiredMethod
                     console.error(error);
                 });
 
+                // @ts-ignore
                 return {
                     error: {
                         code: 500,

@@ -11,7 +11,7 @@ type Props = {
 
 const ClientSideBasePage = ({branch, fetchContent}: Props) => {
 
-    const [props, setProps] = useState({error: null, content: {}, fetching: true});
+    const [props, setProps] = useState({error: undefined, content: {}, fetching: true});
 
     const router = useRouter();
     const contentPath = router.query.contentPath;
@@ -19,6 +19,7 @@ const ClientSideBasePage = ({branch, fetchContent}: Props) => {
     useEffect(
         () => {
 
+            // @ts-ignore
             const refresh = async (contentPath) => {
                 setProps(props => ({...props, fetching: true}));
 

@@ -22,12 +22,13 @@ export type BasePageProps = {
 
 
 const errorPageSelector = {
-    404: Custom404,
-    500: Custom500
+    '404': Custom404,
+    '500': Custom500
 }
 
 const BasePage = ({type, data, error}: BasePageProps) => {
     if (error) {
+        // @ts-ignore
         const ErrorPage = errorPageSelector[error.code] || CustomError;
         return <ErrorPage {...error}/>;
     }
@@ -44,6 +45,7 @@ const BasePage = ({type, data, error}: BasePageProps) => {
         return null;
     }
 
+    // @ts-ignore
     const SelectedPage = pageSelector[type] || DefaultPage;
     return <SelectedPage {...data} />;
 };

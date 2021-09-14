@@ -1,7 +1,8 @@
 const PATTERN = /\{\s*guillotine\s*\{\s*(.+?)\s*[{(]/;
 
-const getQueryKey = (query) => {
+const getQueryKey = (query: string): string => {
     try {
+        // @ts-ignore
         const mainQueryKey = query.match(PATTERN)[1];
         if (!mainQueryKey) {
             throw Error("Regex match group 1 is empty.")
@@ -13,10 +14,10 @@ const getQueryKey = (query) => {
     }
 }
 
-const queryMethodKeyCache = {};
+const queryMethodKeyCache: {[key: string]: string} = {};
 
-const getQueryMethodKey = (contentType, query) => {
-    let methodKeyFromQuery = queryMethodKeyCache[contentType];
+const getQueryMethodKey = (contentType: string, query: string) => {
+    let methodKeyFromQuery: string = queryMethodKeyCache[contentType];
     if (!methodKeyFromQuery) {
         methodKeyFromQuery = getQueryKey(query);
         if (methodKeyFromQuery) {
