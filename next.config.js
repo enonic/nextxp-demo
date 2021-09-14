@@ -1,4 +1,4 @@
-var apiDomain = require('./src/enonic-connection-config').apiDomain;
+var { apiDomain, nextDomain } = require('./src/enonic-connection-config');
 
 module.exports = {
     reactStrictMode: true,
@@ -22,5 +22,6 @@ module.exports = {
                 ],
             },
         ]
-    }
+    },
+    assetPrefix: nextDomain
 }

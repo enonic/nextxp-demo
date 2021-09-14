@@ -38,6 +38,7 @@ export default BasePage;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// CLIENT: uncomment this instead of SSR above
 
+
 import ClientSideBasePage from "../../components/ClientSideBasePage";
 
 const ClientSidePage = () => <ClientSideBasePage branch={BRANCH} fetchContent={fetchContent} />;
