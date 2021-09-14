@@ -6,11 +6,13 @@ type Props = {
 
 const DefaultPage = (props: Props) => {
     return (
-        <>
-            <p>Content item:</p>
+        <div style={{padding: "10px"}}>
             <h2>{props.displayName}</h2>
+            <h5>Props:</h5>
             <pre>{JSON.stringify(props, null, 2)}</pre>
-        </>
+            <hr />
+            <p style={{fontSize: ".7em", color: "#bbb"}}>Renderer: _Default.tsx</p>
+        </div>
     )
 }
 
