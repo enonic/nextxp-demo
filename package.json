@@ -10,6 +10,7 @@
     "lint": "node_modules/.bin/next lint"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "next": "^11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"

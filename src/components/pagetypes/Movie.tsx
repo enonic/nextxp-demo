@@ -1,11 +1,14 @@
 import React from "react"
 import Link from "next/link";
+import Image from "next/image";
 import {CastItem, Movie} from "../../shared/data/queries/getMovie";
+
+import styles from "../../styles/Home.module.css";
 
 import { getFirstPhotoData} from "../../shared/images";
 
 
-const getCast = (cast): CastItem[] | undefined => !cast
+const getCast = (cast: CastItem|CastItem[] | undefined): CastItem[] | undefined => !cast
     ? undefined
     : (Array.isArray(cast))
         ? cast
@@ -40,13 +43,10 @@ const MoviePage = (movie: Movie) => {
                     display: `flex`
                 }}>
                     {
-                        moviePhoto &&
+                        moviePhoto && moviePhoto.imageUrl &&
                         <img
-                            style={{
-                                maxWidth: '400px',
-                                width: '50%'
-                            }}
                             src={moviePhoto.imageUrl}
+                            className={styles.mainPhoto}
                             title={movieMeta.subtitle}
                             alt={moviePhoto.alt} />
                     }
@@ -79,13 +79,10 @@ const MoviePage = (movie: Movie) => {
                                                     }}
                                                 >
                                                     {
-                                                        actorPhoto &&
+                                                        actorPhoto && actorPhoto.imageUrl &&
                                                         <img
-                                                            style={{
-                                                                width: '50%',
-                                                                marginBottom: '0.5rem'
-                                                            }}
                                                             src={actorPhoto.imageUrl}
+                                                            className={styles.castPhoto}
                                                             title={`${cast.actor.displayName} as ${cast.character}`}
                                                             alt={cast.character}
                                                         />

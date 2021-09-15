@@ -15,6 +15,7 @@ const BRANCH = 'master';
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
 
 import BasePage from "../../components/BasePage";
+import {fetchRandom} from "../../components/blocks/header";
 
 type Context = {
     // this type is purposefully naive. Please make sure to update this with a more
@@ -34,7 +35,10 @@ type Context = {
 
 export const getServerSideProps = async (context: Context) => {
     return {
-        props: await fetchContent(context.params.contentPath, BRANCH)
+        props: {
+            ...await fetchContent(context.params.contentPath, BRANCH),
+            staticRandom: await fetchRandom()
+        }
     }
 };
 

@@ -1,6 +1,8 @@
 import React from "react"
-import Link from "next/link";
+import Image from "next/image";
 import {Person} from "../../shared/data/queries/getPerson";
+
+import styles from "../../styles/Home.module.css";
 
 import {getFirstPhotoData} from "../../shared/images";
 
@@ -21,10 +23,12 @@ const PersonPage = (person: Person) => {
                     display: `flex`
                 }}>
                     {
-                        personFirstPhoto &&
-                        <img style={{maxWidth: '400px', width: '50%'}}
+                        // @ts-ignore
+                        personFirstPhoto && personFirstPhoto.imageUrl &&
+                        <img
+                             className={styles.mainPhoto}
                              src={personFirstPhoto.imageUrl}
-                             title={person.displayName}/>
+                             alt={person.displayName}/>
                     }
                     <p style={{
                         margin: `0 20px`

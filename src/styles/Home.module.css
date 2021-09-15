@@ -113,6 +113,16 @@
   margin-left: 0.5rem;
 }
 
+.mainPhoto {
+    max-width: 400px !important;
+    width: 50% !important;
+}
+
+.castPhoto {
+    width: 50% !important;
+    marginBottom: 0.5rem !important;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

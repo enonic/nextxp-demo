@@ -23,5 +23,9 @@ module.exports = {
             },
         ]
     },
-    assetPrefix: nextDomain
+    images:{
+        domains: [apiDomain.replace(/^https?:\/\//i, '').replace(/:\d+/i, '')],
+    },
 }
+
+console.log("NextJS config: " + JSON.stringify(module.exports, null, 4))
