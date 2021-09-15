@@ -3,9 +3,9 @@ import {Person, Photo} from "./getPerson";
 import {appKeyUnderscored, appKeyDashed} from '../../../enonic-connection-config'
 
 export default `
-query($idOrPath:ID!){
+query($path:ID!){
   guillotine {
-    get(key:$idOrPath) {
+    get(key:$path) {
       type
       displayName
       ... on ${appKeyUnderscored}_Movie {

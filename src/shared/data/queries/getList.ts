@@ -1,7 +1,7 @@
 export default `
-query($idOrPath:ID!){
+query($path:ID!){
   guillotine {
-    get(key:$idOrPath) {
+    get(key:$path) {
       type
       displayName
       ...on base_Folder {
