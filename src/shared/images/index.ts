@@ -1,3 +1,5 @@
+import {apiDomain} from '../../enonic-connection-config'
+
 import {Photo} from "../data/queries/getPhoto";
 
 type DisplayablePhoto = {
@@ -5,7 +7,7 @@ type DisplayablePhoto = {
     alt?: string,
     width?: number,
     height?: number,
-    aspect?: number
+    aspect: number
 };
 
 const parseImageDimension = (imageDimension: number|string|undefined) => {
@@ -36,11 +38,11 @@ export const getFirstPhotoData = (photos: Photo|Photo[]|undefined): DisplayableP
     // @ts-ignore
     const height = parseImageDimension(photo.xAsJson?.media?.imageInfo?.imageHeight);
 
-    const aspect = (width && height) ? width/height : undefined;
+    const aspect = (width && height) ? width/height : 1;
 
     // @ts-ignore
     return {
-        imageUrl: photo.imageUrl,
+        imageUrl: apiDomain + photo.imageUrl,
         alt, width, height, aspect
     };
 }

@@ -1,6 +1,7 @@
-import {Person, Photo} from "./getPerson";
+import {Person} from "./getPerson";
+import {Photo} from "./getPhoto";
 
-import {appKeyUnderscored, appKeyDashed} from '../../../enonic-connection-config'
+import {appKeyUnderscored} from '../../../enonic-connection-config'
 
 import getPhoto from "./getPhoto";
 

@@ -5,7 +5,7 @@ import Layout from '../components/blocks/layout'
 
 
 function MyApp({Component, pageProps}: AppProps) {
-    console.log("pageProps: ", pageProps);
+    //console.log("pageProps: ", pageProps);
     return (
         <Layout siteTitle="Next.js PoC" random={pageProps.staticRandom}>
             <Seo title="Poc" siteTitle="NextXP" />
