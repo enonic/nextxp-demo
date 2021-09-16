@@ -10,6 +10,7 @@ import {getFirstPhotoData} from "../../shared/images";
 const PersonPage = (person: Person) => {
     const personMeta = person.data || {};
     const personFirstPhoto = getFirstPhotoData(personMeta.photos);
+
     return (
         <>
             <div>
@@ -25,10 +26,13 @@ const PersonPage = (person: Person) => {
                     {
                         // @ts-ignore
                         personFirstPhoto && personFirstPhoto.imageUrl &&
-                        <img
-                             className={styles.mainPhoto}
-                             src={personFirstPhoto.imageUrl}
-                             alt={person.displayName}/>
+
+                        <div className={`${styles.photoContainer} ${styles.mainPhoto}`}>
+                            <Image src={personFirstPhoto.imageUrl}
+                                   alt={person.displayName}
+                                   width={500}
+                                   height={500/personFirstPhoto.aspect} />
+                        </div>
                     }
                     <p style={{
                         margin: `0 20px`

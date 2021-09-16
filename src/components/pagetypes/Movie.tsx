@@ -5,10 +5,10 @@ import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 
 import styles from "../../styles/Home.module.css";
 
-import { getFirstPhotoData} from "../../shared/images";
+import {getFirstPhotoData} from "../../shared/images";
 
 
-const getCast = (cast: CastItem|CastItem[] | undefined): CastItem[] | undefined => !cast
+const getCast = (cast: CastItem | CastItem[] | undefined): CastItem[] | undefined => !cast
     ? undefined
     : (Array.isArray(cast))
         ? cast
@@ -44,11 +44,12 @@ const MoviePage = (movie: Movie) => {
                 }}>
                     {
                         moviePhoto && moviePhoto.imageUrl &&
-                        <img
-                            src={moviePhoto.imageUrl}
-                            className={styles.mainPhoto}
-                            title={movieMeta.subtitle}
-                            alt={moviePhoto.alt} />
+                        <Image src={moviePhoto.imageUrl}
+                               title={movieMeta.subtitle}
+                               alt={moviePhoto.alt}
+                               className={styles.mainPhoto}
+                               width={500}
+                               height={500 / moviePhoto.aspect}/>
                     }
                     <div style={{
                         margin: `0 20px`
@@ -80,12 +81,12 @@ const MoviePage = (movie: Movie) => {
                                                 >
                                                     {
                                                         actorPhoto && actorPhoto.imageUrl &&
-                                                        <img
-                                                            src={actorPhoto.imageUrl}
-                                                            className={styles.castPhoto}
-                                                            title={`${cast.actor.displayName} as ${cast.character}`}
-                                                            alt={cast.character}
-                                                        />
+                                                        <Image src={actorPhoto.imageUrl}
+                                                               title={`${cast.actor.displayName} as ${cast.character}`}
+                                                               alt={cast.character}
+                                                               className={styles.castPhoto}
+                                                               width={100}
+                                                               height={100 / actorPhoto.aspect}/>
                                                     }
                                                     <div
                                                         style={{
