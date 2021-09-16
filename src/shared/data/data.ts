@@ -92,6 +92,8 @@ export const fetchGuillotine = async <T>(
                 errors.forEach(error => {
                     console.error(error);
                 });
+                console.warn(`Query:\n${body.query}`);
+                console.warn(`Variables: ${JSON.stringify(body.variables, null, 2)}`);
 
                 // @ts-ignore
                 return {

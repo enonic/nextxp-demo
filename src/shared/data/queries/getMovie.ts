@@ -2,6 +2,8 @@ import {Person, Photo} from "./getPerson";
 
 import {appKeyUnderscored, appKeyDashed} from '../../../enonic-connection-config'
 
+import getPhoto from "./getPhoto";
+
 export default `
 query($path:ID!){
   guillotine {
@@ -15,12 +17,7 @@ query($path:ID!){
           trailer
           release
           photos {
-            ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")
-              attachments {
-                name
-              }
-            }
+            ${getPhoto('width(500)')}
           }
           cast {
             character
@@ -30,12 +27,7 @@ query($path:ID!){
                 displayName
                 data {
                   photos {
-                    ... on media_Image {
-                      imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
-                      attachments {
-                        name
-                      }
-                    }
+                    ${getPhoto('block(100,100)')}
                   }
                 }
               }

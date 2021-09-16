@@ -1,10 +1,21 @@
-import {Photo} from "../data/queries/getPerson";
+import {Photo} from "../data/queries/getPhoto";
 
 type DisplayablePhoto = {
     imageUrl?: string,
-    alt?: string
+    alt?: string,
+    width?: number,
+    height?: number,
+    aspect?: number
 };
 
+const parseImageDimension = (imageDimension: number|string|undefined) => {
+    switch (typeof imageDimension) {
+        case 'number':
+            return imageDimension;
+        case 'string':
+            return parseInt(imageDimension, 10);
+    }
+}
 
 export const getFirstPhotoData = (photos: Photo|Photo[]|undefined): DisplayablePhoto | undefined => {
     // @ts-ignore
@@ -21,8 +32,15 @@ export const getFirstPhotoData = (photos: Photo|Photo[]|undefined): DisplayableP
         : "";
 
     // @ts-ignore
+    const width = parseImageDimension(photo.xAsJson?.media?.imageInfo?.imageWidth);
+    // @ts-ignore
+    const height = parseImageDimension(photo.xAsJson?.media?.imageInfo?.imageHeight);
+
+    const aspect = (width && height) ? width/height : undefined;
+
+    // @ts-ignore
     return {
         imageUrl: photo.imageUrl,
-        alt
+        alt, width, height, aspect
     };
 }

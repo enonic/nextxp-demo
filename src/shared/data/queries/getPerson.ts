@@ -1,5 +1,7 @@
 import {appKeyUnderscored, appKeyDashed} from '../../../enonic-connection-config'
 
+import getPhoto, {Photo} from "./getPhoto";
+
 export default `
 query($path:ID!){
   guillotine {
@@ -12,12 +14,7 @@ query($path:ID!){
           bio
           dateofbirth
           photos {
-            ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")
-              attachments {
-                name
-              }
-            }
+            ${getPhoto('width(500)')}
           }
         }
         xAsJson
@@ -26,13 +23,6 @@ query($path:ID!){
   }
 }`;
 
-export type Photo = {
-    // _id: string,
-    attachments?: {
-        name?: string
-    }[]
-    imageUrl?: string,
-};
 
 export type Person = {
     type: string,
