@@ -60,13 +60,21 @@ const fetchFromApi = async (
     return json;
 };
 
-export const fetchGuillotine = async <T>(
+type GuillotineResponse = {
+    error?: {
+        code: number,
+        message: string
+    },
+    [dataKey: string]: {}
+}
+
+export const fetchGuillotine = async (
     apiUrl: string,
     body: ContentApiBaseBody,
     key: string,
     path: string,
     requiredMethodKeyFromQuery?: string
-): Promise<T> => {
+): Promise<GuillotineResponse> => {
     if (typeof body.query !== 'string' || !body.query.trim()) {
         // @ts-ignore
         return await {
@@ -133,5 +141,5 @@ export const fetchGuillotine = async <T>(
             }
         });
 
-    return result as T;
+    return result as GuillotineResponse;
 };

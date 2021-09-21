@@ -12,3 +12,5 @@ export const pageSelector = {
     [`${appKey}:movie`]: MoviePage,
     'base:folder': ListPage
 };
+
+export type PageSelector = { [fullContentType:string]: JSX.Element };

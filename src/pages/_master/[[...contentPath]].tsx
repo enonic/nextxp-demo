@@ -1,9 +1,9 @@
 import React from 'react';
 
-import buildContentFetcher from "../../shared/data/fetchContent";
+import buildContentFetcher, {ContentFetcher} from "../../shared/data/fetchContent";
 import {querySelector, variablesGetterSelector} from "../../selectors/querySelector";
 
-const fetchContent = buildContentFetcher({
+const fetchContent: ContentFetcher = buildContentFetcher({
     querySelector,
     variablesGetterSelector,
     firstMethodKey: true

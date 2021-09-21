@@ -1,4 +1,4 @@
-import { getGuillotineUrlDraft, getGuillotineUrlMaster } from "../../enonic-connection-config";
+import { getContentApiUrl, getFullContentPath, siteName } from "../../enonic-connection-config";
 
 import {ContentApiBaseBody, fetchGuillotine} from "./data";
 
@@ -6,6 +6,7 @@ import getQueryMethodKey from './queryKey';
 
 import META_QUERY, {Meta} from "./queries/_getMetaData";
 import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
+import {QuerySelector, VariablesGetterFunc, VariablesGetterSelector} from "../../selectors/querySelector";
 
 
 
@@ -15,9 +16,9 @@ type Result = {
         message: string
     }
 }
-export type ContentResult<T> = Result & {
+export type ContentResult = Result & {
     type?: string,
-    data?: T
+    data?: any
 };
 type MetaResult = Result & {
     meta?: Meta
@@ -37,7 +38,7 @@ const fetchMetaData = async (contentUrl: string, path: string): Promise<MetaResu
             path
         }
     };
-    return await fetchGuillotine<MetaResult>(contentUrl, body, 'meta', path, 'get');
+    return await fetchGuillotine(contentUrl, body, 'meta', path, 'get') as MetaResult;
 }
 
 
@@ -49,27 +50,33 @@ const fetchContentFull = async <T>(
     query: string,
     methodKeyFromQuery?: string,
     variables?: {}
-): Promise<ContentResult<T>> => {
+): Promise<ContentResult> => {
 
     const body: ContentApiBaseBody = {query};
     if (variables && Object.keys(variables).length > 0) {
         body.variables = variables;
     }
-    return await fetchGuillotine<ContentResult<T>>(contentUrl, body, 'data', path, methodKeyFromQuery);
+    return await fetchGuillotine(contentUrl, body, 'data', path, methodKeyFromQuery) as ContentResult;
 };
 
 
 
 ///////////////////////////////////////////////////////////////////////////////// Error checking:
 
-const getCleanContentPathArrayOrError400 = (contentPath: string | string[]): string[] => {
+const getCleanContentPathArrayOrThrow400 = (contentPath: string | string[]): string[] => {
     const isArray = Array.isArray(contentPath);
 
     if (typeof contentPath !== 'string' && !isArray) {
-        throw Error(JSON.stringify({
-            code: 400,
-            message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath (${typeof contentPath}) = "${JSON.stringify(contentPath)})`
-        }));
+        if (!siteName) {
+            throw Error(JSON.stringify({
+                code: 400,
+                message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath=${JSON.stringify(contentPath)})`
+            }));
+
+        } else {
+            return [];
+        }
+
     }
 
     let contentPathArray = (!isArray)
@@ -81,7 +88,7 @@ const getCleanContentPathArrayOrError400 = (contentPath: string | string[]): str
         if (typeof p !== 'string') {
             Error(JSON.stringify({
                 code: 400,
-                message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath (${typeof contentPath}) = "${JSON.stringify(contentPath)})`
+                message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath=${JSON.stringify(contentPath)})`
             }));
         }
         return p.trim()
@@ -91,7 +98,7 @@ const getCleanContentPathArrayOrError400 = (contentPath: string | string[]): str
     return contentPathArray;
 }
 
-const verifyBranchOrError400 = (branch: Branch) => {
+const verifyBranchOrThrow400 = (branch: Branch) => {
     if (['draft', 'master'].indexOf(branch) === -1) {
         throw Error(JSON.stringify({
             code: 400,
@@ -104,15 +111,9 @@ const verifyBranchOrError400 = (branch: Branch) => {
 
 ///////////////////////////////////////////////////////////////////////////////// Entry:
 
-type VariablesGetterFunc = (path:string) => {path: string};
-
 type FetcherConfig = {
-    querySelector?: {
-        [contentType: string]: string
-    },
-    variablesGetterSelector?: {
-        [contentType: string]: VariablesGetterFunc
-    },
+    querySelector?: QuerySelector,
+    variablesGetterSelector?: VariablesGetterSelector,
     firstMethodKey?: boolean,
     /*
     apiConfig?: {
@@ -124,6 +125,18 @@ type FetcherConfig = {
 // type ApiGetterFunc = (appName:string) => string;
 
 
+/**
+ * Sends one query to the guillotine API and asks for content type, then uses the type to select a second query and variables, which is sent to the API and fetches content data.
+ * @param contentPath string or string array: pre-split or slash-delimited _path to a content available on the API
+ * @param branch 'draft' or 'master'
+ * @returns ContentResult object: {data?: T, error?: {code, message}}
+ */
+export type ContentFetcher = (
+    contentPath: string | string[],
+    branch: Branch
+) => Promise<ContentResult>
+
+
 
 /**
  *
@@ -133,28 +146,18 @@ type FetcherConfig = {
  *          - firstMethodKey=true: can simplify usage a bit, but ONLY use if all query strings use only one guillotine method call - no queries have more than one (eg. 'get' in the query string 'query($path:ID!){ guillotine { get(key:$path) { type }}}'). The (first) guillotine method call is autodetected from each query string ('get', 'getChildren', 'query' etc), and that string is used in two ways. The response under that key is checked for non-null content (returns 404 error if null), and the returned content is the object below that method-named key (which in turn is under the 'guillotine' key in the response from the guillotine API (in this example: the value of reponseData.guillotine['get']).
  *          - firstMethodKey=false: this disables the autodetection, a 404 error is only returned if no (or empty) object under the 'guillotine' key was found. Otherwise, the entire data object under 'guillotine' is returned, with all method-named keys from the query - not just the data under the method-named key from the query.
  */
-const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig) => {
-    /*
-    const contentUrlGetters = {
-        draft: (apiConfig || {}).getGuillotineUrlDraft || getGuillotineUrlDraft,
-        master: (apiConfig || {}).getGuillotineUrlMaster || getGuillotineUrlMaster
-    };
-    */
-    const contentUrlGetters = {
-        draft: getGuillotineUrlDraft,
-        master: getGuillotineUrlMaster
-    };
+const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig): ContentFetcher => {
 
-    querySelector = querySelector || {};
-    variablesGetterSelector = variablesGetterSelector || {};
+    const theQuerySelector = querySelector || {};
+    const theVariablesGetterSelector = variablesGetterSelector || {};
 
     const defaultGetVariables: VariablesGetterFunc = (path) => ({ path });
 
     const getQueryAndVariables = (type: string, path: string) => {
         // @ts-ignore
-        let query = querySelector[type];
+        let query = theQuerySelector[type];
         // @ts-ignore
-        let getVariables = variablesGetterSelector[type] || defaultGetVariables;
+        let getVariables = theVariablesGetterSelector[type] || defaultGetVariables;
 
         // Default query and variables if no content-type-specific query was found for the type
         if (!query) {
@@ -176,23 +179,21 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
      * @param branch 'draft' or 'master'
      * @returns ContentResult object: {data?: T, error?: {code, message}}
      */
-    const fetchContent = async <T>(
+    const fetchContent: ContentFetcher = async (
         contentPath: string | string[],
         branch: Branch
-    ): Promise<ContentResult<T>> => {
+    ): Promise<ContentResult> => {
 
         try {
-            verifyBranchOrError400(branch);
-            const contentPathArray = getCleanContentPathArrayOrError400(contentPath);
+            verifyBranchOrThrow400(branch);
 
-            const path = "/" + contentPathArray.join("/");
+            const contentPathArray = getCleanContentPathArrayOrThrow400(contentPath);
 
-            // The first item is interpreted to be the _name of the app.
-            const appName = contentPathArray[0];
-            const getContentUrl = contentUrlGetters[branch];
-            const contentUrl = getContentUrl(appName);
+            const contentApiUrl = getContentApiUrl(branch, contentPathArray);
+            const fullContentPath = getFullContentPath(contentPathArray);
 
-            const metaResult = await fetchMetaData(contentUrl, path);
+
+            const metaResult = await fetchMetaData(contentApiUrl, fullContentPath);
 
             if (metaResult.error) {
                 return {
@@ -200,10 +201,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 };
             }
 
-            const {
-                type
-                // , displayName, _id, _path      // <-- if using RICH_META_QUERY in queries/_getMetaData.es6
-            } = metaResult.meta || {};
+            const { type } = metaResult.meta || {};
 
             if (!type) {
                 // @ts-ignore
@@ -215,7 +213,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 }
             }
 
-            const {query, variables} = getQueryAndVariables(type, path);
+            const {query, variables} = getQueryAndVariables(type, fullContentPath);
             if (!query.trim()) {
                 // @ts-ignore
                 return await {
@@ -231,12 +229,13 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 : undefined;
 
             return await {
-                ...await fetchContentFull(contentUrl, path, query, methodKeyFromQuery, variables),
+                ...await fetchContentFull(contentApiUrl, fullContentPath, query, methodKeyFromQuery, variables),
                 type
             };
 
         } catch (e) {
             console.error(e);
+
             let error;
             try {
                 error = JSON.parse(e.message);
