@@ -26,13 +26,18 @@ const PersonPage = (person: Person) => {
                     {
                         // @ts-ignore
                         personFirstPhoto && personFirstPhoto.imageUrl &&
-
-                        <div className={`${styles.photoContainer} ${styles.mainPhoto}`}>
+                        <>
                             <Image src={personFirstPhoto.imageUrl}
                                    alt={person.displayName}
+                                   className={styles.mainPhoto}
                                    width={500}
-                                   height={500/personFirstPhoto.aspect} />
-                        </div>
+                                   height={500 / personFirstPhoto.aspect}/>
+                            <img src={personFirstPhoto.imageUrl}
+                                 alt={person.displayName}
+                                 className={styles.mainPhoto}
+                                 width={500}
+                                 height={500 / personFirstPhoto.aspect}/>
+                        </>
                     }
                     <p style={{
                         margin: `0 20px`
