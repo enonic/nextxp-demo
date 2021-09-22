@@ -9,6 +9,12 @@ import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
 import {QuerySelector, VariablesGetterFunc, VariablesGetterSelector} from "../../selectors/querySelector";
 
 
+export type Branch = 'master' | 'draft';
+
+export type ResultMeta = Meta & {
+    path: string,
+    branch: Branch
+}
 
 type Result = {
     error?: {
@@ -17,14 +23,40 @@ type Result = {
     }
 }
 export type ContentResult = Result & {
-    type?: string,
-    data?: any
+    data?: any,
+    meta: ResultMeta
 };
 type MetaResult = Result & {
     meta?: Meta
 };
 
-export type Branch = 'master' | 'draft';
+
+
+type FetcherConfig = {
+    querySelector?: QuerySelector,
+    variablesGetterSelector?: VariablesGetterSelector,
+    firstMethodKey?: boolean,
+    /*
+    apiConfig?: {
+        getGuillotineUrlDraft?: ApiGetterFunc,
+        getGuillotineUrlMaster?: ApiGetterFunc
+    },
+    */
+}
+// type ApiGetterFunc = (appName:string) => string;
+
+
+/**
+ * Sends one query to the guillotine API and asks for content type, then uses the type to select a second query and variables, which is sent to the API and fetches content data.
+ * @param contentPath string or string array: pre-split or slash-delimited _path to a content available on the API
+ * @param branch 'draft' or 'master'
+ * @returns ContentResult object: {data?: T, error?: {code, message}}
+ */
+export type ContentFetcher = (
+    contentPath: string | string[],
+    branch: Branch
+) => Promise<ContentResult>
+
 
 
 
@@ -111,31 +143,6 @@ const verifyBranchOrThrow400 = (branch: Branch) => {
 
 ///////////////////////////////////////////////////////////////////////////////// Entry:
 
-type FetcherConfig = {
-    querySelector?: QuerySelector,
-    variablesGetterSelector?: VariablesGetterSelector,
-    firstMethodKey?: boolean,
-    /*
-    apiConfig?: {
-        getGuillotineUrlDraft?: ApiGetterFunc,
-        getGuillotineUrlMaster?: ApiGetterFunc
-    },
-    */
-}
-// type ApiGetterFunc = (appName:string) => string;
-
-
-/**
- * Sends one query to the guillotine API and asks for content type, then uses the type to select a second query and variables, which is sent to the API and fetches content data.
- * @param contentPath string or string array: pre-split or slash-delimited _path to a content available on the API
- * @param branch 'draft' or 'master'
- * @returns ContentResult object: {data?: T, error?: {code, message}}
- */
-export type ContentFetcher = (
-    contentPath: string | string[],
-    branch: Branch
-) => Promise<ContentResult>
-
 
 
 /**
@@ -188,15 +195,15 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
             verifyBranchOrThrow400(branch);
 
             const contentPathArray = getCleanContentPathArrayOrThrow400(contentPath);
-
             const contentApiUrl = getContentApiUrl(branch, contentPathArray);
-            const fullContentPath = getFullContentPath(contentPathArray);
+            const contentPathString = contentPathArray.join("/");
+            const fullContentPath = getFullContentPath(contentPathString);
 
 
             const metaResult = await fetchMetaData(contentApiUrl, fullContentPath);
 
             if (metaResult.error) {
-                return {
+                return await {
                     error: metaResult.error
                 };
             }
@@ -230,7 +237,11 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
 
             return await {
                 ...await fetchContentFull(contentApiUrl, fullContentPath, query, methodKeyFromQuery, variables),
-                type
+                meta: {
+                    path: contentPathString,
+                    type,
+                    branch
+                }
             };
 
         } catch (e) {

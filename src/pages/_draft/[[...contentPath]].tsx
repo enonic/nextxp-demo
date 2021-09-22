@@ -37,7 +37,6 @@ export const getServerSideProps = async (context: Context) => {
     return {
         props: {
             ...await fetchContent(context.params.contentPath, BRANCH),
-            staticRandom: await fetchRandom()
         }
     }
 };

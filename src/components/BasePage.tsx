@@ -7,16 +7,16 @@ import CustomError from './errors/Error';
 import DefaultPage from "../components/pagetypes/_Default";
 import {pageSelector} from "../selectors/pageSelector";
 
+import {ResultMeta} from "../shared/data/fetchContent";
+
 
 export type BasePageProps = {
     error?: {
         code: string,
         message: string
     },
-    type?: string,
-    data?: {
-        type: string
-    }
+    meta?: ResultMeta,
+    data?: any
     fetching?: boolean
 }
 
@@ -26,7 +26,7 @@ const errorPageSelector = {
     '500': Custom500
 }
 
-const BasePage = ({type, data, error}: BasePageProps) => {
+const BasePage = ({meta, data, error}: BasePageProps) => {
     if (error) {
         // @ts-ignore
         const ErrorPage = errorPageSelector[error.code] || CustomError;
@@ -38,16 +38,17 @@ const BasePage = ({type, data, error}: BasePageProps) => {
         return null;
     }
 
-    if (!type) {
-        console.warn("BasePage props are missing 'type'. Falling back to default page type.");
+    if (!meta || !meta.type) {
+        console.warn("BasePage props are missing 'meta.type'. Falling back to default page type.");
 
-    } else if (type.startsWith('media:')) {
+    } else if (meta.type.startsWith('media:')) {
         return null;
     }
 
     // @ts-ignore
-    const SelectedPage = pageSelector[type] || DefaultPage;
+    const SelectedPage = pageSelector[meta.type] || DefaultPage;
     return <SelectedPage {...data} />;
 };
 
 export default BasePage;
+

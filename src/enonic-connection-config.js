@@ -35,14 +35,13 @@ const getContentApiUrl = (branch, contentPathArray) => {
 
 /**
  *
- * @param contentPathArray
+ * @param contentPathString {string}
  * @return {string}
  */
-const getFullContentPath = (contentPathArray) => {
-    console.log(contentPathArray)
+const getFullContentPath = (contentPathString) => {
     return (CONNECTION_CONFIG.siteName)
-        ? `/${CONNECTION_CONFIG.siteName}/${contentPathArray.join("/")}`
-        : `/${contentPathArray.join("/")}`
+        ? `/${CONNECTION_CONFIG.siteName}/${contentPathString}`
+        : `/${contentPathString}`
 };
 
 module.exports = {
