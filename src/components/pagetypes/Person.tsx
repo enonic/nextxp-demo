@@ -1,5 +1,4 @@
 import React from "react"
-import Image from "next/image";
 import {Person} from "../../shared/data/queries/getPerson";
 
 import styles from "../../styles/Home.module.css";
@@ -27,16 +26,9 @@ const PersonPage = (person: Person) => {
                         // @ts-ignore
                         personFirstPhoto && personFirstPhoto.imageUrl &&
                         <>
-                            <Image src={personFirstPhoto.imageUrl}
-                                   alt={person.displayName}
-                                   className={styles.mainPhoto}
-                                   width={500}
-                                   height={500 / personFirstPhoto.aspect}/>
                             <img src={personFirstPhoto.imageUrl}
                                  alt={person.displayName}
-                                 className={styles.mainPhoto}
-                                 width={500}
-                                 height={500 / personFirstPhoto.aspect}/>
+                                 className={styles.mainPhoto}/>
                         </>
                     }
                     <p style={{
@@ -45,7 +37,7 @@ const PersonPage = (person: Person) => {
                 </div>
             </div>
             <p>
-                <a href='../persons'>Back to Persons</a>
+                <a href='..'>Back to Persons</a>
             </p>
         </>
     )

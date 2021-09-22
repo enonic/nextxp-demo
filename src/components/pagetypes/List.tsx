@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "next/link";
 
 import { List } from "../../shared/data/queries/getList";
 
@@ -10,9 +9,9 @@ const ListPage = ( {displayName, children}: List) => {
             {
                 children.map((child, i) => (
                     <div key={i}>
-                        <Link href={child._path.substring(1)}>
-                            <a>{child.displayName}</a>
-                        </Link>
+                        <a href={child._name}>
+                            {child.displayName}
+                        </a>
                     </div>
                 ))
             }

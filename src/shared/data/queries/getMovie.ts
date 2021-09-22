@@ -25,6 +25,7 @@ query($path:ID!){
             actor {
               ... on ${appKeyUnderscored}_Person {
                 _path
+                _name
                 displayName
                 data {
                   photos {
@@ -44,7 +45,7 @@ query($path:ID!){
 
 export type CastItem = {
     character?: string,
-    actor?: Person & { _path: string }
+    actor?: Person & { _path: string, _name: string }
 };
 
 export type Movie = {

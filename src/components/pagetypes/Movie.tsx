@@ -1,6 +1,4 @@
 import React from "react"
-import Link from "next/link";
-import Image from "next/image";
 import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 
 import styles from "../../styles/Home.module.css";
@@ -44,12 +42,10 @@ const MoviePage = (movie: Movie) => {
                 }}>
                     {
                         moviePhoto && moviePhoto.imageUrl &&
-                        <Image src={moviePhoto.imageUrl}
+                        <img src={moviePhoto.imageUrl}
                                title={movieMeta.subtitle}
                                alt={moviePhoto.alt}
-                               className={styles.mainPhoto}
-                               width={500}
-                               height={500 / moviePhoto.aspect}/>
+                               className={styles.mainPhoto}/>
                     }
                     <div style={{
                         margin: `0 20px`
@@ -81,12 +77,10 @@ const MoviePage = (movie: Movie) => {
                                                 >
                                                     {
                                                         actorPhoto && actorPhoto.imageUrl &&
-                                                        <Image src={actorPhoto.imageUrl}
-                                                               title={`${cast.actor.displayName} as ${cast.character}`}
-                                                               alt={cast.character}
-                                                               className={styles.castPhoto}
-                                                               width={100}
-                                                               height={100 / actorPhoto.aspect}/>
+                                                        <img src={actorPhoto.imageUrl}
+                                                             title={`${cast.actor.displayName} as ${cast.character}`}
+                                                             alt={cast.character}
+                                                             className={styles.castPhoto} />
                                                     }
                                                     <div
                                                         style={{
@@ -96,11 +90,9 @@ const MoviePage = (movie: Movie) => {
                                                         <i style={{fontSize: '14px'}}>
                                                             {cast.character}
                                                         </i>
-                                                        <Link href={cast.actor._path.substring(1)}>
-                                                            <a style={{fontSize: '14px'}}>
+                                                        <a href={cast.actor._name} style={{fontSize: '14px'}}>
                                                                 {cast.actor.displayName}
                                                             </a>
-                                                        </Link>
                                                     </div>
                                                 </div>
                                             );
@@ -113,7 +105,7 @@ const MoviePage = (movie: Movie) => {
                 </div>
             </div>
             <p>
-                <a href='../movies'>Back to Movies</a>
+                <a href='..'>Back to Movies</a>
             </p>
         </>
     )
