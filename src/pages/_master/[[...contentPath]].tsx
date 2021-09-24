@@ -32,14 +32,15 @@ type Context = {
     }*/
 };
 
-
 export const getServerSideProps = async (context: Context) => {
+    const pageProps = await fetchContent(context.params.contentPath, BRANCH);
     return {
         props: {
-            ...await fetchContent(context.params.contentPath, BRANCH),
+            ...pageProps,
             staticRandom: await fetchRandom()
         }
     }
 };
+
 
 export default BasePage;

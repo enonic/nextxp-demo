@@ -10,7 +10,7 @@ function MyApp({Component, pageProps}: AppProps) {
             {
                 pageProps.meta &&
                 <Head>
-                    <base href={`/_${pageProps.meta.branch}/${pageProps.meta.path}/`} />
+                    <base href={pageProps.meta.baseUrl} />
                 </Head>
             }
             <Component {...pageProps} />

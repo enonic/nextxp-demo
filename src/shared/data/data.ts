@@ -61,6 +61,7 @@ const fetchFromApi = async (
 };
 
 type GuillotineResponse = {
+    // @ts-ignore
     error?: {
         code: number,
         message: string

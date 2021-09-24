@@ -13,7 +13,8 @@ export type Branch = 'master' | 'draft';
 
 export type ResultMeta = Meta & {
     path: string,
-    branch: Branch
+    branch: Branch,
+    baseUrl: string
 }
 
 type Result = {
@@ -203,6 +204,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
             const metaResult = await fetchMetaData(contentApiUrl, fullContentPath);
 
             if (metaResult.error) {
+                // @ts-ignore
                 return await {
                     error: metaResult.error
                 };
@@ -240,7 +242,8 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 meta: {
                     path: contentPathString,
                     type,
-                    branch
+                    branch,
+                    baseUrl: `/_${branch}/${contentPathString}/`
                 }
             };
 
@@ -256,6 +259,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                     message: e.message
                 }
             }
+            // @ts-ignore
             return await {error};
         }
     };

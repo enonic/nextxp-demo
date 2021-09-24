@@ -28,4 +28,3 @@ module.exports = {
     },
 }
 
-console.log("NextJS config: " + JSON.stringify(module.exports, null, 4))
