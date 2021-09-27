@@ -1,4 +1,4 @@
-import { getContentApiUrl, getFullContentPath, siteName } from "../../enonic-connection-config";
+import { contentApiUrl, getFullContentPath, branch } from "../../enonic-connection-config";
 
 import {ContentApiBaseBody, fetchGuillotine} from "./data";
 
@@ -54,8 +54,7 @@ type FetcherConfig = {
  * @returns ContentResult object: {data?: T, error?: {code, message}}
  */
 export type ContentFetcher = (
-    contentPath: string | string[],
-    branch: Branch
+    contentPath: string | string[]
 ) => Promise<ContentResult>
 
 
@@ -96,49 +95,28 @@ const fetchContentFull = async <T>(
 
 ///////////////////////////////////////////////////////////////////////////////// Error checking:
 
-const getCleanContentPathArrayOrThrow400 = (contentPath: string | string[]): string[] => {
+/** Checks a site-relative contentPath as a slash-delimited string or a string array, and returns a pure site-relative path string (no double slashes, starts with a slash, does not end with one). */
+const getCleanContentPathArrayOrThrow400 = (contentPath: string | string[] | undefined): string => {
+    if (contentPath === undefined) {
+        return ''
+    }
     const isArray = Array.isArray(contentPath);
 
-    if (typeof contentPath !== 'string' && !isArray) {
-        if (!siteName) {
+    if (!isArray) {
+        if (typeof contentPath !== 'string') {
             throw Error(JSON.stringify({
                 code: 400,
                 message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath=${JSON.stringify(contentPath)})`
             }));
-
-        } else {
-            return [];
         }
 
-    }
+        return contentPath;
 
-    let contentPathArray = (!isArray)
-        ? (contentPath as string).split('/')
-        : contentPath as string[];
-
-    contentPathArray = contentPathArray.filter(p => {
-        // Check items, remove empty ones
-        if (typeof p !== 'string') {
-            Error(JSON.stringify({
-                code: 400,
-                message: `Unexpected target content _path: contentPath must be a string or pure string array (contentPath=${JSON.stringify(contentPath)})`
-            }));
-        }
-        return p.trim()
-    });
-
-    // By now, contentPathArray is verified to have the shape we want: a clean string array with no empty items.
-    return contentPathArray;
-}
-
-const verifyBranchOrThrow400 = (branch: Branch) => {
-    if (['draft', 'master'].indexOf(branch) === -1) {
-        throw Error(JSON.stringify({
-            code: 400,
-            message: `Invalid branch - must be 'master' or 'draft' (branch = ${JSON.stringify(branch)}})`
-        }))
+    } else {
+        return (contentPath as string[]).join('/');
     }
 }
+
 
 
 
@@ -188,18 +166,15 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
      * @returns ContentResult object: {data?: T, error?: {code, message}}
      */
     const fetchContent: ContentFetcher = async (
-        contentPath: string | string[],
-        branch: Branch
+        contentPath: string | string[]
     ): Promise<ContentResult> => {
 
         try {
-            verifyBranchOrThrow400(branch);
-
-            const contentPathArray = getCleanContentPathArrayOrThrow400(contentPath);
-            const contentApiUrl = getContentApiUrl(branch, contentPathArray);
-            const contentPathString = contentPathArray.join("/");
+            const contentPathString = getCleanContentPathArrayOrThrow400(contentPath);
             const fullContentPath = getFullContentPath(contentPathString);
 
+            console.log("contentPathString", contentPathString);
+            console.log("fullContentPath", fullContentPath);
 
             const metaResult = await fetchMetaData(contentApiUrl, fullContentPath);
 
@@ -242,7 +217,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                 meta: {
                     path: contentPathString,
                     type,
-                    branch,
+                    branch: branch as Branch,
                     baseUrl: `/_${branch}/${contentPathString}/`
                 }
             };

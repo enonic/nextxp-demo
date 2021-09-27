@@ -1,5 +1,3 @@
-import queryKey from "./queryKey";
-
 // Shape of content base-data API body
 export type ContentApiBaseBody = {
     query?: string,                 // Override the default base-data query

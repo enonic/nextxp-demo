@@ -7,8 +7,11 @@ import {getFirstPhotoData} from "../../shared/images";
 
 
 const PersonPage = (person: Person) => {
+    console.log("Person:", person);
+
     const personMeta = person.data || {};
     const personFirstPhoto = getFirstPhotoData(personMeta.photos);
+    console.log("-personFirstPhoto:", personFirstPhoto);
 
     return (
         <>

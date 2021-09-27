@@ -1,7 +1,7 @@
 import React from 'react';
 
-import buildContentFetcher, { ContentFetcher } from "../../shared/data/fetchContent";
-import { querySelector, variablesGetterSelector} from "../../selectors/querySelector";
+import buildContentFetcher, { ContentFetcher } from "../shared/data/fetchContent";
+import { querySelector, variablesGetterSelector} from "../selectors/querySelector";
 
 const fetchContent: ContentFetcher = buildContentFetcher({
     querySelector,
@@ -10,13 +10,10 @@ const fetchContent: ContentFetcher = buildContentFetcher({
 });
 
 
-
-const BRANCH = 'draft';
-
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
 
-import BasePage from "../../components/BasePage";
-import {fetchRandom} from "../../components/blocks/header";
+import BasePage from "../components/BasePage";
+import {fetchRandom} from "../components/blocks/header";
 
 type Context = {
     // this type is purposefully naive. Please make sure to update this with a more
@@ -34,7 +31,7 @@ type Context = {
 };
 
 export const getServerSideProps = async (context: Context) => {
-    const pageProps = await fetchContent(context.params.contentPath, BRANCH);
+    const pageProps = await fetchContent(context.params.contentPath);
     return {
         props: {
             ...pageProps,

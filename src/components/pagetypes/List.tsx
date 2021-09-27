@@ -9,7 +9,7 @@ const ListPage = ( {displayName, children}: List) => {
             {
                 children.map((child, i) => (
                     <div key={i}>
-                        <a href={child._name}>
+                        <a href={child._path}>
                             {child.displayName}
                         </a>
                     </div>

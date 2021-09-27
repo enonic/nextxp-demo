@@ -7,12 +7,12 @@ function MyApp({Component, pageProps}: AppProps) {
     console.log("pageProps: ", pageProps);
     return (
         <>
-            {
+            {/*
                 pageProps.meta &&
                 <Head>
                     <base href={pageProps.meta.baseUrl} />
                 </Head>
-            }
+            */}
             <Component {...pageProps} />
         </>
     );
