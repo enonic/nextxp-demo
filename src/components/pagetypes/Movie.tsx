@@ -3,7 +3,8 @@ import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 
 import styles from "../../styles/Home.module.css";
 
-import {getFirstPhotoData} from "../../shared/images";
+import {getFirstPhotoData} from "../../shared/images/images";
+import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
 
 
 const getCast = (cast: CastItem | CastItem[] | undefined): CastItem[] | undefined => !cast
@@ -70,7 +71,6 @@ const MoviePage = (movie: Movie) => {
                                                 <div
                                                     key={i}
                                                     style={{
-                                                        flex: '1 1 0px',
                                                         display: `flex`,
                                                         flexDirection: `column`
                                                     }}
@@ -90,7 +90,7 @@ const MoviePage = (movie: Movie) => {
                                                         <i style={{fontSize: '14px'}}>
                                                             {cast.character}
                                                         </i>
-                                                        <a href={cast.actor._name} style={{fontSize: '14px'}}>
+                                                        <a href={getSiteRelativePath(cast.actor._path)} style={{fontSize: '14px'}}>
                                                                 {cast.actor.displayName}
                                                             </a>
                                                     </div>
@@ -105,7 +105,7 @@ const MoviePage = (movie: Movie) => {
                 </div>
             </div>
             <p>
-                <a href='..'>Back to Movies</a>
+                <a href={getSiteRelativePath(movie.parent._path)}>Back to Movies</a>
             </p>
         </>
     )

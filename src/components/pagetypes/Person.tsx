@@ -3,7 +3,8 @@ import {Person} from "../../shared/data/queries/getPerson";
 
 import styles from "../../styles/Home.module.css";
 
-import {getFirstPhotoData} from "../../shared/images";
+import {getFirstPhotoData} from "../../shared/images/images";
+import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
 
 
 const PersonPage = (person: Person) => {
@@ -40,7 +41,7 @@ const PersonPage = (person: Person) => {
                 </div>
             </div>
             <p>
-                <a href='..'>Back to Persons</a>
+                <a href={getSiteRelativePath(person.parent._path)}>Back to Persons</a>
             </p>
         </>
     )

@@ -8,7 +8,6 @@ query($path:ID!){
         children(first:1000) {
             displayName
             _path
-            _name
         }
       }
     }
@@ -18,7 +17,6 @@ query($path:ID!){
 export type Child = {
     displayName: string,
     _path: string,
-    _name: string
 }
 
 export type List = {

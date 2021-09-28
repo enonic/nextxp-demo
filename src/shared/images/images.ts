@@ -1,4 +1,5 @@
-import {apiDomain} from '../../enonic-connection-config'
+import {getImageUrl} from '../../enonic-connection-config'
+import {getSiteRelativeImageUrl} from '../siteRelative/siteRelative'
 
 import {Photo} from "../data/queries/getPhoto";
 
@@ -42,7 +43,7 @@ export const getFirstPhotoData = (photos: Photo|Photo[]|undefined): DisplayableP
 
     // @ts-ignore
     return {
-        imageUrl: apiDomain + photo.imageUrl,
+        imageUrl: getImageUrl(getSiteRelativeImageUrl(photo.imageUrl)),
         alt, width, height, aspect
     };
 }

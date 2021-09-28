@@ -1,6 +1,7 @@
 import React from "react"
 
 import { List } from "../../shared/data/queries/getList";
+import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
 
 const ListPage = ( {displayName, children}: List) => {
     return (
@@ -9,7 +10,7 @@ const ListPage = ( {displayName, children}: List) => {
             {
                 children.map((child, i) => (
                     <div key={i}>
-                        <a href={child._path}>
+                        <a href={getSiteRelativePath(child._path)}>
                             {child.displayName}
                         </a>
                     </div>

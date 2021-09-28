@@ -25,7 +25,6 @@ query($path:ID!){
             actor {
               ... on ${appKeyUnderscored}_Person {
                 _path
-                _name
                 displayName
                 data {
                   photos {
@@ -36,6 +35,9 @@ query($path:ID!){
             }
           }
         }
+        parent {
+            _path
+        }
         xAsJson
       }
     }
@@ -45,7 +47,7 @@ query($path:ID!){
 
 export type CastItem = {
     character?: string,
-    actor?: Person & { _path: string, _name: string }
+    actor?: Person & { _path: string }
 };
 
 export type Movie = {
@@ -59,9 +61,6 @@ export type Movie = {
         photos?: Photo | Photo[],
         cast?: CastItem | CastItem[]
     },
-    xAsJson?: {
-        [appKeyDashed: string]: {
-            SoMe?: {}
-        }
-    }
+    parent: any,
+    xAsJson?: {},
 };

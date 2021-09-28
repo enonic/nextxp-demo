@@ -25,29 +25,28 @@ const siteUrl = `${apiDomain}/${siteRoot}`;
 const contentApiUrl = `${siteUrl}/${apiPostfix}`;
 
 
-/**
- * Returns the full XP _path value to a content item, from it's site-relative content path.
- * Eg., if a content item is accessed at the next.js side with localhost:3000/sub/path, then the site-relative content path is '/sub/path/',
- * and the full _path returned is the string '/mysite/sub/path'.
- */
-const getFullContentPath = (siteRelativeContentPath) => `/${siteName}/${siteRelativeContentPath}`;
-
-
-/** Convert an image URL from site-relative imageUrl (from guillotine) to full image url (where a browser can access an image from XP). */
-const getImageUrl = (guillotineUrl) => `${siteRoot}/${guillotineUrl}`;
 
 
 module.exports = {
     nextDomain,
     apiDomain,
     branch,
+    siteName,
+    siteRoot,
     contentApiUrl,
     appKey,
     appKeyUnderscored: appKey.replace(/\./g, '_'),
     appKeyDashed: appKey.replace(/\./g, '-'),
 
-    getFullContentPath,
-    getImageUrl
+    /**
+     * Returns the full XP _path value to a content item, from it's site-relative content path.
+     * Eg., if a content item is accessed at the next.js side with localhost:3000/sub/path, then the site-relative content path is '/sub/path/',
+     * and the full _path returned is the string '/mysite/sub/path'.
+     */
+    getFullContentPath: (siteRelativeContentPath) => `/${siteName}/${siteRelativeContentPath}`,
+
+    /** Convert an image URL from site-relative imageUrl (from guillotine) to full image url (where a browser can access an image from XP). */
+    getImageUrl: (siteRelativeImageUrl) => `${apiDomain}/${siteRoot}${siteRelativeImageUrl}`,
 };
 
 

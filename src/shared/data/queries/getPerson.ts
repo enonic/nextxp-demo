@@ -17,6 +17,9 @@ query($path:ID!){
             ${getPhoto('width(500)')}
           }
         }
+        parent {
+            _path
+        }
         xAsJson
       }
     }
@@ -32,9 +35,6 @@ export type Person = {
         dateofbirth?: string,
         photos?: Photo | Photo[]
     },
-    xAsJson?: {
-        [appKeyDashed: string]: {
-            SoMe?: {}
-        }
-    }
+    parent: any,
+    xAsJson?: {}
 };
