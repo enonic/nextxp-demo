@@ -218,7 +218,7 @@ const buildContentFetcher = ({querySelector, variablesGetterSelector, firstMetho
                     path: contentPathString,
                     type,
                     branch: branch as Branch,
-                    baseUrl: `/_${branch}/${contentPathString}/`
+                    baseUrl: null
                 }
             };
 

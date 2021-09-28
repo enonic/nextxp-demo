@@ -4,15 +4,15 @@ import Head from 'next/head';
 
 
 function MyApp({Component, pageProps}: AppProps) {
-    console.log("pageProps: ", pageProps);
+                                                                                                                        console.log("pageProps: ", pageProps);
     return (
         <>
-            {/*
-                pageProps.meta &&
+            {
+                pageProps?.meta?.baseUrl &&
                 <Head>
                     <base href={pageProps.meta.baseUrl} />
                 </Head>
-            */}
+            }
             <Component {...pageProps} />
         </>
     );
