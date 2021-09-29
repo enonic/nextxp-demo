@@ -3,6 +3,8 @@ import {Person} from "../../shared/data/queries/getPerson";
 
 import styles from "../../styles/Home.module.css";
 
+import Link from 'next/link'
+
 import {getFirstPhotoData} from "../../shared/images/images";
 import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
 
@@ -41,7 +43,29 @@ const PersonPage = (person: Person) => {
                 </div>
             </div>
             <p>
-                <a href={getSiteRelativePath(person.parent._path)}>Back to Persons</a>
+                <a href={getSiteRelativePath(person.parent._path)}>Directly back to Persons</a>
+            </p>
+            <p>
+                <Link href={`${getSiteRelativePath(person.parent._path)}/keanu-reeves`}><a>Back to Persons via Link</a></Link>
+            </p>
+            <p>
+                <Link href='persons'><a>Back to Persons via hardcode</a></Link>
+            </p>
+            <br />
+
+            <p>
+                <a href='www.aftenposten.no'>Aftenposten direkte www</a>
+            </p>
+            <p>
+                <a href='https://www.aftenposten.no'>Aftenposten direkte full</a>
+            </p>
+            <br />
+
+            <p>
+                <Link href='www.aftenposten.no'><a>Aftenposten Link www</a></Link>
+            </p>
+            <p>
+                <Link href='https://www.aftenposten.no'><a>Aftenposten Link full</a></Link>
             </p>
         </>
     )

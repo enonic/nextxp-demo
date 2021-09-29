@@ -1,4 +1,5 @@
 import React from "react"
+import Link from 'next/link'
 
 import { List } from "../../shared/data/queries/getList";
 import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
@@ -17,6 +18,7 @@ const ListPage = ( {displayName, children}: List) => {
                 ))
             }
             <br/>
+            <Link href="/"><a>Top</a></Link>
         </>
     )
 };
