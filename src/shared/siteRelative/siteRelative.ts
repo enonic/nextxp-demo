@@ -1,6 +1,6 @@
 import { siteName, siteRoot } from '../../enonic-connection-config';
 
-const siteNamePattern = new RegExp('^/' + siteName);
+const siteNamePattern = new RegExp('^/' + siteName + "/");
 const siteRootPattern = new RegExp('^/' + siteRoot);
 
 export const getSiteRelativePath = _path => _path.replace(siteNamePattern, '')
