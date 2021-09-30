@@ -28,11 +28,11 @@ type MetaResult = Result & {
 
 
 
-type FetcherConfig = {
-    enonicConnectionConfig: {
-        contentApiUrl: string,
-        getXpPath: (string)=>string
-    }
+type FetcherConfig<T extends {
+    contentApiUrl: string,
+    getXpPath: (string)=>string
+}> = {
+    enonicConnectionConfig: T,
     querySelector?: QuerySelector,
     variablesGetterSelector?: VariablesGetterSelector,
     firstMethodKey?: boolean,
@@ -122,7 +122,7 @@ const getCleanContentPathArrayOrThrow400 = (contentPath: string | string[] | und
  *          - firstMethodKey=true: can simplify usage a bit, but ONLY use if all query strings use only one guillotine method call - no queries have more than one (eg. 'get' in the query string 'query($path:ID!){ guillotine { get(key:$path) { type }}}'). The (first) guillotine method call is autodetected from each query string ('get', 'getChildren', 'query' etc), and that string is used in two ways. The response under that key is checked for non-null content (returns 404 error if null), and the returned content is the object below that method-named key (which in turn is under the 'guillotine' key in the response from the guillotine API (in this example: the value of reponseData.guillotine['get']).
  *          - firstMethodKey=false: this disables the autodetection, a 404 error is only returned if no (or empty) object under the 'guillotine' key was found. Otherwise, the entire data object under 'guillotine' is returned, with all method-named keys from the query - not just the data under the method-named key from the query.
  */
-const buildContentFetcher = ({enonicConnectionConfig, querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig): ContentFetcher => {
+const buildContentFetcher = <T>({enonicConnectionConfig, querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig<T>): ContentFetcher => {
 
     const { contentApiUrl, getXpPath } = enonicConnectionConfig;
 

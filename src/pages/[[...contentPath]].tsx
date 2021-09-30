@@ -4,9 +4,13 @@ import buildContentFetcher, { ContentFetcher } from "../shared/data/fetchContent
 import { querySelector, variablesGetterSelector} from "../selectors/querySelector";
 import enonicConnectionConfig from "../enonic-connection-config";
 
+type EnonicConnectionConfig = {
+    contentApiUrl: string,
+    getXpPath: (string)=>string
+};
 
-const fetchContent: ContentFetcher = buildContentFetcher({
-    enonicConnectionConfig,
+const fetchContent: ContentFetcher = buildContentFetcher<EnonicConnectionConfig>({
+    enonicConnectionConfig: enonicConnectionConfig,
     querySelector,
     variablesGetterSelector,
     firstMethodKey: true
