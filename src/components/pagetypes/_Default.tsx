@@ -11,7 +11,6 @@ const DefaultPage = (props: Props) => {
             <h5>Props:</h5>
             <pre style={{width:"100%", whiteSpace:"pre-wrap", wordWrap: "break-word"}}>{JSON.stringify(props, null, 2)}</pre>
             <br />
-            <hr />
             <p style={{fontSize: ".7em", color: "#bbb"}}>Renderer: _Default.tsx</p>
         </div>
     )
