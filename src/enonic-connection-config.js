@@ -52,10 +52,14 @@ module.exports = {
      */
     getXpPath: (siteRelativeContentPath) => `/${siteName}/${siteRelativeContentPath}`,
 
+
+    /** Takes an XP _path string and returns a Next.js-server-ready URL for the corresponding content for that _path */
     getPageUrlFromXpPath: (mode === PRODUCTION)
         ? xpPath => xpPath.replace(siteNamePattern, '/')
         : xpPath => xpPath.replace(siteNamePattern, `${nextDomain}/`),
 
+
+    /** Takes a Next.js-asset relative URL and returns an absolute URL if mode is not production */
     getPublicAssetUrl: (mode === PRODUCTION)
         ? serverRelativeAssetPath => serverRelativeAssetPath.replace(publicPattern, '/')
         : serverRelativeAssetPath => serverRelativeAssetPath.replace(publicPattern, `${nextDomain}/`)

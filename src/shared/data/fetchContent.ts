@@ -115,12 +115,14 @@ const getCleanContentPathArrayOrThrow400 = (contentPath: string | string[] | und
 
 
 /**
- *
- * @param querySelector Object where keys are content type strings (eg. 'my.app:content-type') and values are guillotine queries to use to fetch data for that content type.
- * @param variablesGetterSelector Object where keys are content types and values are functions. These functions take an path string as an argument and return a guillotine variables object, where 'path' is a mandatory attribute.
+ * Builds and returns a contentFetcher function.
+ * @param enonicConnectionConfig {object} enonicConnectionConfig must contain a 'contentApiUrl' string (url to a guillotine endpoint) and a 'getXpPath' function. The responsibility of getXpPath is to take the (slash-delimited and stringified version of the) next.js-slug contentPath and return the corresponding _path value (including site name) for the XP content pointed to.
+ * @param querySelector {QuerySelector} Imported querySelector object (eg.: from src/selectors/queries), where keys are full XP content type strings (eg. 'my.app:content-type') and values are guillotine queries to use to fetch data for that content type.
+ * @param variablesGetterSelector {VariablesGetterSelector} Imported variablesGetterSelector object (eg.: from src/selectors/queries), where keys are full XP content type strings and values are functions. These functions take an path string as an argument and return a guillotine variables object, where 'path' is a mandatory attribute.
  * @param firstMethodKey boolean, default is true.
  *          - firstMethodKey=true: can simplify usage a bit, but ONLY use if all query strings use only one guillotine method call - no queries have more than one (eg. 'get' in the query string 'query($path:ID!){ guillotine { get(key:$path) { type }}}'). The (first) guillotine method call is autodetected from each query string ('get', 'getChildren', 'query' etc), and that string is used in two ways. The response under that key is checked for non-null content (returns 404 error if null), and the returned content is the object below that method-named key (which in turn is under the 'guillotine' key in the response from the guillotine API (in this example: the value of reponseData.guillotine['get']).
  *          - firstMethodKey=false: this disables the autodetection, a 404 error is only returned if no (or empty) object under the 'guillotine' key was found. Otherwise, the entire data object under 'guillotine' is returned, with all method-named keys from the query - not just the data under the method-named key from the query.
+ * @returns Returns a ContentFetcher function.
  */
 const buildContentFetcher = <T>({enonicConnectionConfig, querySelector, variablesGetterSelector, firstMethodKey}: FetcherConfig<T>): ContentFetcher => {
 
