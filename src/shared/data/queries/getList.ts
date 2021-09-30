@@ -16,7 +16,7 @@ query($path:ID!){
 
 export type Child = {
     displayName: string,
-    _path: string,
+    _path: string
 }
 
 export type List = {

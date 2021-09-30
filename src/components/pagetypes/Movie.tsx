@@ -4,7 +4,7 @@ import {CastItem, Movie} from "../../shared/data/queries/getMovie";
 import styles from "../../styles/Home.module.css";
 
 import {getFirstPhotoData} from "../../shared/images/images";
-import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
+import {getPageUrlFromXpPath} from "../../enonic-connection-config";
 
 
 const getCast = (cast: CastItem | CastItem[] | undefined): CastItem[] | undefined => !cast
@@ -14,6 +14,8 @@ const getCast = (cast: CastItem | CastItem[] | undefined): CastItem[] | undefine
         : [cast];
 
 const MoviePage = (movie: Movie) => {
+    console.log("\n\nMovie props:", movie);
+
     const movieMeta = movie.data || {};
 
     const moviePhoto = getFirstPhotoData(movieMeta.photos);
@@ -90,7 +92,7 @@ const MoviePage = (movie: Movie) => {
                                                         <i style={{fontSize: '14px'}}>
                                                             {cast.character}
                                                         </i>
-                                                        <a href={getSiteRelativePath(cast.actor._path)} style={{fontSize: '14px'}}>
+                                                        <a href={getPageUrlFromXpPath(cast.actor._path)} style={{fontSize: '14px'}}>
                                                                 {cast.actor.displayName}
                                                             </a>
                                                     </div>
@@ -105,7 +107,7 @@ const MoviePage = (movie: Movie) => {
                 </div>
             </div>
             <p>
-                <a href={getSiteRelativePath(movie.parent._path)}>Back to Movies</a>
+                <a href={getPageUrlFromXpPath(movie.parent._path)}>Back to Movies</a>
             </p>
         </>
     )

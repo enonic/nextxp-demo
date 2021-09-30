@@ -1,9 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from "react"
-
+import { getPublicAssetUrl } from '../../enonic-connection-config';
 import Link from "next/link";
-import Image from "next/image";
-
-import xpShield from '../../public/images/xp-shield.svg';
 
 type HeaderProps = {
     siteTitle?: string
@@ -39,7 +36,7 @@ const Header: FunctionComponent<HeaderProps> = ({ siteTitle }: HeaderProps) => {
                         </a>
                     </Link>
                 </h1>
-                <Image src={xpShield}
+                <img src={getPublicAssetUrl('images/xp-shield.svg')}
                        width={33}
                        height={40}
                        alt={"Enonic XP logo"}

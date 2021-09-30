@@ -1,4 +1,4 @@
-var { apiDomain, nextDomain } = require('./src/enonic-connection-config');
+var { xpPreviewOrigin } = require('./src/enonic-connection-config');
 
 module.exports = {
     reactStrictMode: true,
@@ -17,7 +17,7 @@ module.exports = {
                     },
                     {
                         key: 'Access-Control-Allow-Origin',
-                        value: apiDomain,
+                        value: xpPreviewOrigin,
                     },
                 ],
             },

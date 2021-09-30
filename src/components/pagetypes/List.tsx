@@ -1,21 +1,19 @@
 import React from "react"
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { List } from "../../shared/data/queries/getList";
-import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
-
-import xpShield from '../../public/images/xp-shield.svg';
+import {getPageUrlFromXpPath, getPublicAssetUrl} from "../../enonic-connection-config";
 
 const ListPage = ( {displayName, children}: List) => {
+    console.log("\n\nChildren props:", children);
     return (
         <>
-            <Image src={xpShield} height={200} width={130} alt="XP shield"/>
+            <img src={getPublicAssetUrl("images/xp-shield.svg")} height={200} width={130} alt="XP shield"/>
             <h1>{displayName}</h1>
             {
                 children.map((child, i) => (
                     <div key={i}>
-                        <a href={getSiteRelativePath(child._path)}>
+                        <a href={getPageUrlFromXpPath(child._path)}>
                             {child.displayName}
                         </a>
                     </div>

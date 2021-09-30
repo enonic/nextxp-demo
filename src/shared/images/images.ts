@@ -1,6 +1,3 @@
-import {getImageUrl} from '../../enonic-connection-config'
-import {getSiteRelativeImageUrl} from '../siteRelative/siteRelative'
-
 import {Photo} from "../data/queries/getPhoto";
 
 type DisplayablePhoto = {
@@ -43,7 +40,7 @@ export const getFirstPhotoData = (photos: Photo|Photo[]|undefined): DisplayableP
 
     // @ts-ignore
     return {
-        imageUrl: getImageUrl(getSiteRelativeImageUrl(photo.imageUrl)),
+        imageUrl: photo.imageUrl,
         alt, width, height, aspect
     };
 }

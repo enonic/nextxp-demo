@@ -1,6 +1,6 @@
 export default (scale:string) => (
 `                   ... on media_Image {
-                      imageUrl: imageUrl(type: server, scale: "${scale}")
+                      imageUrl: imageUrl(type: absolute, scale: "${scale}")
                       attachments {
                         name
                       }

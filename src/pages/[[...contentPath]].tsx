@@ -2,8 +2,11 @@ import React from 'react';
 
 import buildContentFetcher, { ContentFetcher } from "../shared/data/fetchContent";
 import { querySelector, variablesGetterSelector} from "../selectors/querySelector";
+import enonicConnectionConfig from "../enonic-connection-config";
+
 
 const fetchContent: ContentFetcher = buildContentFetcher({
+    enonicConnectionConfig,
     querySelector,
     variablesGetterSelector,
     firstMethodKey: true

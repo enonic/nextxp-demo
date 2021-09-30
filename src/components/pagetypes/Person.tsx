@@ -6,11 +6,11 @@ import styles from "../../styles/Home.module.css";
 import Link from 'next/link'
 
 import {getFirstPhotoData} from "../../shared/images/images";
-import {getSiteRelativePath} from "../../shared/siteRelative/siteRelative";
+import {getPageUrlFromXpPath} from "../../enonic-connection-config";
 
 
 const PersonPage = (person: Person) => {
-    console.log("Person:", person);
+    console.log("\n\nPerson props:", person);
 
     const personMeta = person.data || {};
     const personFirstPhoto = getFirstPhotoData(personMeta.photos);
@@ -43,10 +43,10 @@ const PersonPage = (person: Person) => {
                 </div>
             </div>
             <p>
-                <a href={getSiteRelativePath(person.parent._path)}>Directly back to Persons</a>
+                <a href={getPageUrlFromXpPath(person.parent._path)}>Directly back to Persons</a>
             </p>
             <p>
-                <Link href={`${getSiteRelativePath(person.parent._path)}/keanu-reeves`}><a>Back to Persons via Link</a></Link>
+                <Link href={`${getPageUrlFromXpPath(person.parent._path)}/keanu-reeves`}><a>Keanu hardcoded via Link</a></Link>
             </p>
             <p>
                 <Link href='persons'><a>Back to Persons via hardcode</a></Link>
