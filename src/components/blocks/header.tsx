@@ -7,48 +7,12 @@ import xpShield from '../../public/images/xp-shield.svg';
 
 type HeaderProps = {
     siteTitle?: string
-    random: number
 }
 
-export const fetchRandom = async() => {
-    const options = {
-        method: 'get',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-    };
-
-    try {
-        const res = await fetch('http://localhost:3000/api/random', options);
-        const json = await res.json();
-        return json.value;
-
-    } catch (e) {
-        console.error(e);
-        return -1
-    }
-}
-
-const Header: FunctionComponent<HeaderProps> = ({ siteTitle, random }: HeaderProps) => {
-    const [count, setCount] = useState(0);
-    const [rand, setRandom] = useState(0);
-
-    useEffect(() => {
-        const updateRandom = async () => {
-            const rnd = await fetchRandom();
-            setRandom(() => rnd)
-        };
-
-        setInterval(()=>{
-            updateRandom();
-        },
-            2000)
-    }, [])
+const Header: FunctionComponent<HeaderProps> = ({ siteTitle }: HeaderProps) => {
 
     return (
         <header
-            onClick={() => setCount(prev => prev+1)}
             style={{
                 background: `rebeccapurple`,
                 marginBottom: `1.45rem`,
@@ -75,9 +39,6 @@ const Header: FunctionComponent<HeaderProps> = ({ siteTitle, random }: HeaderPro
                         </a>
                     </Link>
                 </h1>
-                <p>Clicks: {count}</p>
-                <p>DynamicRandom: {rand}</p>
-                <p>StaticRandom: {random}</p>
                 <Image src={xpShield}
                        width={33}
                        height={40}

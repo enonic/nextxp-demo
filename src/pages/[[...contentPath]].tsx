@@ -13,7 +13,6 @@ const fetchContent: ContentFetcher = buildContentFetcher({
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR: uncomment this instead of CLIENT below
 
 import BasePage from "../components/BasePage";
-import {fetchRandom} from "../components/blocks/header";
 
 type Context = {
     // this type is purposefully naive. Please make sure to update this with a more
@@ -34,8 +33,7 @@ export const getServerSideProps = async (context: Context) => {
     const pageProps = await fetchContent(context.params.contentPath);
     return {
         props: {
-            ...pageProps,
-            staticRandom: await fetchRandom()
+            ...pageProps
         }
     }
 };

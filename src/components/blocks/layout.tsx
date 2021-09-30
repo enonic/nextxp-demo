@@ -5,16 +5,15 @@ import Link from 'next/link';
 import Header from "./header"
 
 type LayoutProps = {
-    siteTitle?: string,
-    random: number,
+    siteTitle?: string
     children: any
 };
 
-const Layout: FunctionComponent<LayoutProps> = ({siteTitle, random, children}: LayoutProps) => {
+const Layout: FunctionComponent<LayoutProps> = ({siteTitle, children}: LayoutProps) => {
 
     return (
         <>
-            <Header siteTitle={siteTitle} random={random} />
+            <Header siteTitle={siteTitle} />
             <div
                 style={{
                     margin: `0 auto`,
