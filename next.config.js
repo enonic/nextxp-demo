@@ -22,9 +22,6 @@ module.exports = {
                 ],
             },
         ]
-    },
-    images:{
-        domains: [apiDomain.replace(/^https?:\/\//i, '').replace(/:\d+/i, '')],
-    },
+    }
 }
 
