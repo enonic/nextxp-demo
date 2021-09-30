@@ -5,7 +5,7 @@ import getQueryMethodKey from './queryKey';
 import META_QUERY, {Meta} from "./queries/_getMetaData";
 import { LOW_PERFORMING_DEFAULT_QUERY } from "./queries/_getDefaultData";
 
-import type {QuerySelector, VariablesGetterFunc, VariablesGetterSelector} from "../../selectors/querySelector";
+import type {QuerySelector, VariablesGetterFunc, VariablesGetterSelector} from "../../selectors/queries";
 
 
 export type ResultMeta = Meta & {

@@ -5,7 +5,7 @@ import Custom404 from './errors/404';
 import CustomError from './errors/Error';
 
 import DefaultPage from "../components/pagetypes/_Default";
-import {pageSelector} from "../selectors/pageSelector";
+import { pageSelector } from "../selectors/pages";
 
 import {ResultMeta} from "../shared/data/fetchContent";
 

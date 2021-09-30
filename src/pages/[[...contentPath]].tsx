@@ -1,7 +1,7 @@
 import React from 'react';
 
 import buildContentFetcher, { ContentFetcher } from "../shared/data/fetchContent";
-import { querySelector, variablesGetterSelector} from "../selectors/querySelector";
+import { querySelector, variablesGetterSelector } from "../selectors/queries";
 import enonicConnectionConfig from "../enonic-connection-config";
 
 type EnonicConnectionConfig = {
@@ -10,7 +10,7 @@ type EnonicConnectionConfig = {
 };
 
 const fetchContent: ContentFetcher = buildContentFetcher<EnonicConnectionConfig>({
-    enonicConnectionConfig: enonicConnectionConfig,
+    enonicConnectionConfig,
     querySelector,
     variablesGetterSelector,
     firstMethodKey: true
