@@ -164,9 +164,6 @@ const buildContentFetcher = <T>({enonicConnectionConfig, querySelector, variable
             const siteRelativeContentPath = getCleanContentPathArrayOrThrow400(contentPath);
             const xpContentPath = getXpPath(siteRelativeContentPath);
 
-            console.log("siteRelativeContentPath", siteRelativeContentPath);
-            console.log("xpContentPath", xpContentPath);
-
             const metaResult = await fetchMetaData(contentApiUrl, xpContentPath);
 
             if (metaResult.error) {
