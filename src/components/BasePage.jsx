@@ -45,7 +45,7 @@ const ErrorPage = (errorProps) => {
 
 ////////////// Main entry: select view by error state / content type
 
-const BasePage = ({content, meta, error}) => {
+const BasePage = ({content, meta={}, error}) => {
     if (error) {
         return <ErrorPage {...error}/>;
     }
@@ -55,11 +55,12 @@ const BasePage = ({content, meta, error}) => {
         return null;
     }
 
-    if (!meta || !meta.type) {
-        console.warn("BasePage props are missing 'meta.type'. Falling back to DefaultPage component.");
+    const {type} = meta;
+    if (!type) {
+        console.debug("BasePage props are missing 'meta.type'. Falling back to DefaultPage component.");
     }
 
-    const typeSelection = (typeSelector || {})[meta.type]
+    const typeSelection = typeSelector[type]
     const SelectedPage = typeSelection?.page || DefaultPage;
 
     return <SelectedPage {...content} />;
