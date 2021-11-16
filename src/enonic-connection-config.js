@@ -23,7 +23,7 @@ const nextDomain = "http://localhost:3000";
 const xpPreviewOrigin = apiDomain;
 
 // URI parameter marking that a request is for a preview for CS. MUST MATCH FROM_XP_PARAM on XP side.
-const FROM_XP_PARAM = '__fromXp__';
+const FROM_XP_PARAM = '__fromxp__';
 
 
 
