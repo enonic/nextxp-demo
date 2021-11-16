@@ -23,7 +23,7 @@ const nextDomain = "http://localhost:3000";
 const xpPreviewOrigin = apiDomain;
 
 // URI parameter marking that a request is for a preview for CS. MUST MATCH FROM_XP_PARAM on XP side.
-const FROM_XP_PARAM = '__fromXp__';
+const FROM_XP_PARAM = '__fromxp__';
 
 
 
@@ -37,7 +37,9 @@ const FROM_XP_PARAM = '__fromXp__';
 
 /** Returns true if the context object (from next.js in [[...contentPath]].jsx ) stems from a request that comes from XP in a CS-preview, i.e. has the URI param FROM_XP_PARAM (defined as '__fromXp__' above).
  *  False if no context, query or FROM_XP_PARAM param */
-const requestIsFromXp = (context) => !!((context?.query || {})[FROM_XP_PARAM])
+const requestIsFromXp = (context) => {
+    return !!((context?.query || {})[FROM_XP_PARAM]) || !!((context?.req?.headers || {})[FROM_XP_PARAM])
+}
 
 const siteNamePattern = new RegExp('^/' + siteName + "/");
 const publicPattern = new RegExp('^/*');
