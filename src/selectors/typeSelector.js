@@ -1,5 +1,5 @@
 // Used to fully qualify content type strings in the connected XP app:
-import {appName} from "../enonic-connection-config";
+import {APP_NAME} from "../enonic-connection-config";
 
 
 /////////////////////////////////////////////////////////////////////////  TypeSelector:
@@ -22,7 +22,7 @@ const typeSelector = {
 
     // ...or...
 
-    [`${appName}:anotherContentType`]: {
+    [`${APP_NAME}:anotherContentType`]: {
         query: [
             'I am a guillotine query string specialized in fetching data for anotherContentType',
             (xpContentPath, contextFromNext) => guillotineVariables

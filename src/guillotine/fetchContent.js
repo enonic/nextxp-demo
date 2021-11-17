@@ -243,8 +243,7 @@ const getCleanContentPathArrayOrThrow400 = (contentPath) => {
  */
 const firstMethodKey = true;
 
-// enonicConnectionConfig is the imported object from enonic-connecion-config.js: important attributes are the method getXpPath, and the string contentApiUrl.
-const { contentApiUrl, getXpPath } = enonicConnectionConfig;
+const { CONTENT_API_URL, getXpPath } = enonicConnectionConfig;
 
 const defaultGetVariables = (path) => ({ path });
 
@@ -314,7 +313,7 @@ export const fetchContent = async (contentPath, context) => {
 
 
         //////////// FIRST GUILLOTINE CALL FOR METADATA - MAINLY XP CONTENT TYPE:
-        const metaResult = await fetchMetaData(contentApiUrl, xpContentPath);
+        const metaResult = await fetchMetaData(CONTENT_API_URL, xpContentPath);
         ///////////
 
 
@@ -364,7 +363,7 @@ export const fetchContent = async (contentPath, context) => {
 
 
         //////////// SECOND GUILLOTINE CALL FOR DATA:
-        const guillotineResponse = await fetchContentData(contentApiUrl, xpContentPath, query, methodKeyFromQuery, variables);
+        const guillotineResponse = await fetchContentData(CONTENT_API_URL, xpContentPath, query, methodKeyFromQuery, variables);
         //////////////////
 
 
