@@ -1,38 +1,45 @@
 import React from 'react';
 
-import {fetchContent} from "../xpAdapter/guillotine/fetchContent";
+import {fetchContent, PageData, ResultMeta} from "../xpAdapter/guillotine/fetchContent";
 
 import MainXpView from "../xpAdapter/views/_MainXpView";
 import {getPublicAssetUrl} from "../xpAdapter/enonic-connection-config";
+import {getTypeSelection} from '../customXp/contentSelector';
+import {GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult} from 'next';
+import {ParsedUrlQuery} from 'node:querystring';
 
-export type Context = {
-    params: {
+export interface ServerSideParams
+    extends ParsedUrlQuery {
+    // String array catching a sub-path assumed to match the site-relative path of an XP content.
+    contentPath?: string[];
+}
 
-        // String array catching a sub-path assumed to match the site-relative path of an XP content.
-        contentPath: string[]
-    },
-    query: {
-        [key: string]: string | boolean
-    },
-    req: {
-        mode: string,
+export interface ServerSideProps {
+    content: Record<string, any>,
+    meta: ResultMeta | null,
+    page: PageData | null,
+    error: {
+        code: string,
+        message: string
+    } | null,
+}
 
-        // The XP preview proxy injects some parameters. They are used here on the Next.js
-        // to make some adaptations in the rendered and returned code, adapting to some postprocessing needed for the CS preview to work.
-        headers?: { [key: string]: string }
-    }
-};
-
+export type Context = GetServerSidePropsContext<ServerSideParams>;
 
 ////////////////////////////////////////////////////////////////////////////////////////////// SSR:
 
-export const getServerSideProps = async (context: Context) => {
+export const getServerSideProps: GetServerSideProps = async (context: Context): Promise<GetServerSidePropsResult<ServerSideProps>> => {
     const {
-        content = null,
+        content,
         meta = null,
         error = null,
         page = null,
-    } = await fetchContent(context.params.contentPath, context);
+    } = await fetchContent(context.params?.contentPath || [], context);
+
+    // return 404 if not able to render
+    if (meta && !meta.hasController && !getTypeSelection(content.type)) {
+        context.res.statusCode = 501;
+    }
 
     return {
         props: {
@@ -49,7 +56,6 @@ export const getServerSideProps = async (context: Context) => {
             meta,
             error,
             page,
-
         }
     }
 };

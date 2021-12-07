@@ -1,5 +1,5 @@
 import React from "react"
-import { PORTAL_REGION_ATTRIBUTE } from '../enonic-connection-config';
+import {PORTAL_REGION_ATTRIBUTE} from '../enonic-connection-config';
 
 import Component from "./_BaseComponent";
 import {PageData} from "../guillotine/fetchContent";
@@ -13,7 +13,7 @@ interface RegionProps {
 }
 
 type Props = {
-    page: PageData;
+    page?: PageData;
     selected?: string;
 
     content?: any;                  // Content is passed down for optional consumption in componentviews. TODO: Use a react contextprovider instead?

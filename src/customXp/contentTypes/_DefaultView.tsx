@@ -1,6 +1,6 @@
 import React from "react"
 
-import Region  from "../../xpAdapter/views/_Region";
+import Region from "../../xpAdapter/views/_Region";
 import {PageData} from "../../xpAdapter/guillotine/fetchContent";
 
 type ContentProps = {
@@ -9,7 +9,7 @@ type ContentProps = {
 
 type Props = {
     content: ContentProps,
-    page: PageData
+    page?: PageData
 }
 
 

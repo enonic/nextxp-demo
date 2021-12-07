@@ -3,7 +3,7 @@ import {LOW_PERFORMING_DEFAULT_QUERY} from "../../customXp/queries/_getDefaultDa
 
 import {Context} from "../../pages/[[...contentPath]]";
 
-import typeSelector, {ContentSelector} from "../../customXp/contentSelector";
+import {getTypeSelection} from "../../customXp/contentSelector";
 import enonicConnectionConfig, {
     AppName,
     AppNameDashed,
@@ -12,7 +12,7 @@ import enonicConnectionConfig, {
     XP_RENDER_MODE,
     XpComponentType,
 } from "../enonic-connection-config";
-import {SelectedQueryMaybeVariablesFunc, VariablesGetter} from "../../customXp/_selectorTypes";
+import {SelectedQueryMaybeVariablesFunc, TypeSelection, VariablesGetter} from "../../customXp/_selectorTypes";
 
 
 export type EnonicConnectionConfigRequiredFields = {
@@ -22,7 +22,7 @@ export type EnonicConnectionConfigRequiredFields = {
     getXpPath: (siteRelativeContentPath: string) => string,
     fromXpRequestType: (context?: Context) => XpComponentType | boolean
     getRenderMode: (context?: Context) => XP_RENDER_MODE,
-    getSingleCompRequest: (context?: Context) => string|undefined
+    getSingleCompRequest: (context?: Context) => string | undefined
 };
 
 
@@ -31,6 +31,7 @@ export type ResultMeta = Meta & {
     xpRequestType?: XpComponentType | boolean,
     requestedComponent?: string
     renderMode: XP_RENDER_MODE,
+    hasController: boolean,
 }
 
 type Result = {
@@ -58,7 +59,7 @@ export type FetchContentResult = Result & {
 
 type FetcherConfig<T extends EnonicConnectionConfigRequiredFields> = {
     enonicConnectionConfig: T,
-    typeSelector?: ContentSelector,
+    getTypeSelection: (type: string) => TypeSelection | undefined,
     firstMethodKey?: boolean,
 }
 
@@ -202,8 +203,8 @@ const fetchGuillotine = async (
             }
 
             const data = requiredMethodKeyFromQuery
-                ? json.data.guillotine[requiredMethodKeyFromQuery]
-                : json.data.guillotine;
+                         ? json.data.guillotine[requiredMethodKeyFromQuery]
+                         : json.data.guillotine;
 
             return {
                 [key]: data
@@ -262,7 +263,8 @@ const NO_PROPS_PROCESSOR = (props: any) => props;
 
 ///////////////////////////////////////////////////////////////////////////////// Specific fetch wrappers:
 
-const fetchMetaData = async (contentApiUrl: string, xpContentPath: string, xpRequestType: string | boolean, isEditMode: boolean): Promise<MetaResult> => {
+const fetchMetaData = async (contentApiUrl: string, xpContentPath: string, xpRequestType: string | boolean,
+                             isEditMode: boolean): Promise<MetaResult> => {
     const body: ContentApiBaseBody = {
         query: getMetaQuery(isEditMode, /* xpRequestType == "view" ? */ PAGE_FRAGMENT /* : undefined */),
         variables: {
@@ -407,7 +409,7 @@ function buildRegionTree(
 export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFields>(
     {
         enonicConnectionConfig,
-        typeSelector,
+        getTypeSelection,
         firstMethodKey
     }: FetcherConfig<T>
 ): ContentFetcher => {
@@ -419,7 +421,8 @@ export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFiel
         getXpPath,
         fromXpRequestType,
         getRenderMode,
-        getSingleCompRequest } = enonicConnectionConfig;
+        getSingleCompRequest
+    } = enonicConnectionConfig;
 
     const defaultGetVariables: VariablesGetter = (path) => ({path});
 
@@ -517,7 +520,7 @@ export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFiel
 
             ////////////////////////////////////////////////////  Content type established. Proceed to data call:
 
-            const typeSelection = (typeSelector || {})[type];
+            const typeSelection = getTypeSelection(type);
 
             const {query, variables} = getQueryAndVariables(type, xpContentPath, context, typeSelection?.query);
             if (!query.trim()) {
@@ -531,8 +534,8 @@ export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFiel
             }
 
             const methodKeyFromQuery = firstMethodKey
-                ? getQueryMethodKey(type, query)
-                : undefined;
+                                       ? getQueryMethodKey(type, query)
+                                       : undefined;
 
 
             ////////////////////////////////////////////// SECOND GUILLOTINE CALL FOR DATA:
@@ -567,6 +570,7 @@ export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFiel
                 }
             }
             response.meta!.renderMode = renderMode;
+            response.meta!.hasController = Object.keys(response.page?.regions || {}).length > 0;
 
             return response;
 
@@ -599,7 +603,7 @@ export const buildContentFetcher = <T extends EnonicConnectionConfigRequiredFiel
 // Config and prepare a default fetchContent function, with params from imports:
 export const fetchContent: ContentFetcher = buildContentFetcher<EnonicConnectionConfigRequiredFields>({
     enonicConnectionConfig,
-    typeSelector,
+    getTypeSelection,
 
     // TODO: We should find a different approach
     firstMethodKey: true

@@ -1,23 +1,14 @@
-import {Context} from "../pages/[[...contentPath]]";
-
-// APP_NAME helps to fully qualify content type strings in the connected XP app:
-import {APP_NAME} from "../xpAdapter/enonic-connection-config";
-
-import getList, {LIST_CONTENTTYPE_NAME, getListVariables, processListPropsExample } from "./contentTypes/list/getList";
+import getList, {getListVariables, LIST_CONTENTTYPE_NAME, processListPropsExample} from "./contentTypes/list/getList";
 import ListView from "./contentTypes/list/List";
-
-import getPerson, {PERSON_CONTENTTYPE_NAME} from "./contentTypes/person/getPerson";
-import PersonView from "./contentTypes/person/Person";
 
 import getMovie, {MOVIE_CONTENTTYPE_NAME} from "./contentTypes/movie/getMovie";
 import MovieView from "./contentTypes/movie/Movie";
 
 import {TypeSelection} from "./_selectorTypes";
 
+import DefaultContentView from "./contentTypes/_DefaultView";
+
 ////////////////////////////////////////////////////////////////////////  Types:
-
-
-
 
 /**
  *  Object where keys are full XP content type strings (eg. 'my.app:content-type') and values are (optional) type-specific 'TypeSelection' objects: sets of config for how to handle that content type. All attributes in each 'TypeSelection' object are optional (see examples below), and missing values will fall back to default behavior:
@@ -40,16 +31,28 @@ const typeSelector: ContentSelector = {
         view: ListView,
     },
 
-   [PERSON_CONTENTTYPE_NAME]: {
-        query: getPerson,
-        view: PersonView,
-    },
+    /*   [PERSON_CONTENTTYPE_NAME]: {
+            query: getPerson,
+            view: PersonView,
+        },*/
 
     [MOVIE_CONTENTTYPE_NAME]: {
         query: getMovie,
         view: MovieView,
+    },
+
+    '*': {
+        view: DefaultContentView
     }
 };
 
-
-export default typeSelector;
+export function getTypeSelection(contentType?: string): TypeSelection | undefined {
+    let selection: TypeSelection | undefined;
+    if (!!contentType && contentType.length > 0) {
+        selection = typeSelector[contentType];
+    }
+    if (!selection) {
+        selection = typeSelector['*'];
+    }
+    return selection;
+}

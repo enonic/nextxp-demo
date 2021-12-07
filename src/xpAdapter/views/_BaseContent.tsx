@@ -4,8 +4,8 @@ import {FetchContentResult} from "../guillotine/fetchContent";
 
 import DefaultContentView from "../../customXp/contentTypes/_DefaultView";
 
-import contentSelector from "../../customXp/contentSelector";
-import {TypeSelection} from "../../customXp/_selectorTypes";
+import {getTypeSelection} from "../../customXp/contentSelector";
+import {TypeSelection} from '../../customXp/_selectorTypes';
 
 
 const BaseContent = (props: FetchContentResult) => {
@@ -20,11 +20,19 @@ const BaseContent = (props: FetchContentResult) => {
         console.warn("BasePage props are missing 'meta.type'. Falling back to _Default view type.");
     }
 
-    const typeSelection: TypeSelection = (contentSelector || {})[meta.type]
-    const SelectedPage = typeSelection?.view || DefaultContentView;
+    const typeSelection: TypeSelection | undefined = getTypeSelection(meta.type)
+    const SelectedPage = typeSelection?.view;
 
-    // @ts-ignore
-    return <SelectedPage content={content} page={page} />;
+    if (SelectedPage) {
+        // there is a renderer defined for this type
+        return <SelectedPage content={content} page={page}/>
+    } else if (meta.hasController) {
+        // there is a page controller for this type
+        return <DefaultContentView content={content} page={page}/>
+    }
+
+    console.info('BaseContent: no next renderer or page controller');
+    return null;
 }
 
 export default BaseContent;
