@@ -25,7 +25,7 @@ export type ContentSelector = {
 
 const typeSelector: ContentSelector = {
 
-    [LIST_CONTENTTYPE_NAME]: {
+    /*[LIST_CONTENTTYPE_NAME]: {
         query: { query: getList, variables: getListVariables },         // or just:     query: [ getList, getListVariables ]
         props: processListPropsExample,
         view: ListView,
@@ -36,10 +36,10 @@ const typeSelector: ContentSelector = {
             view: PersonView,
         },*/
 
-    [MOVIE_CONTENTTYPE_NAME]: {
+    /*[MOVIE_CONTENTTYPE_NAME]: {
         query: getMovie,
         view: MovieView,
-    },
+    }, */
 
     '*': {
         view: DefaultContentView

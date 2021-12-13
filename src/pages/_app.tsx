@@ -1,7 +1,7 @@
 import type {AppProps} from 'next/app'
 
 
-import '../styles/globals.css'
+// import '../styles/globals.css'
 
 import React from 'react';
 import Head from "next/head";
@@ -27,7 +27,8 @@ function MyApp({Component, pageProps}: AppProps) {
 
     // MAIN RENDERING:
     return (
-        <Layout {...pageProps?.content?.layoutProps}>
+        <>
+        {/*<Layout {...pageProps?.content?.layoutProps}>*/}
             {!pageProps.meta?.xpRequestType && (
                 <Head>
                     <base href='/'/>
@@ -35,7 +36,8 @@ function MyApp({Component, pageProps}: AppProps) {
             )}
 
             <Component {...pageProps} />
-        </Layout>
+        {/*</Layout>*/}
+        </>
     );
 }
 

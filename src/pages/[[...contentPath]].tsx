@@ -47,10 +47,10 @@ export const getServerSideProps: GetServerSideProps = async (context: Context): 
                 ...content,
 
                 // Injecting into props some values used in the header:
-                layoutProps: {
+                /*layoutProps: {
                     title: content?.displayName || "Next.JS",
                     logoUrl: getPublicAssetUrl('images/xp-shield.svg', context),
-                }
+                }*/
 
             },
             meta,
