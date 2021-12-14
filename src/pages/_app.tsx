@@ -1,11 +1,11 @@
 import type {AppProps} from 'next/app'
 
 
-import '../styles/globals.css'
+// import '../styles/globals.css'
 
 import React from 'react';
 import Head from "next/head";
-import Layout from "../components/blocks/Layout";
+// import Layout from "../components/blocks/Layout";
 
 
 /**
@@ -24,15 +24,17 @@ function MyApp({Component, pageProps}: AppProps) {
 
     // MAIN RENDERING:
     return (
-        <Layout {...pageProps?.content?.layoutProps}>
-            {   !pageProps.meta?.xpRequestType && (
+        <>
+        {/*<Layout {...pageProps?.content?.layoutProps}>*/}
+            {!pageProps.meta?.xpRequestType && (
                 <Head>
                     <base href='/' />
                 </Head>
             )}
 
             <Component {...pageProps} />
-        </Layout>
+        {/*</Layout>*/}
+        </>
     );
 }
 
