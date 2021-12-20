@@ -2,10 +2,10 @@ import React from "react"
 import Region from "../../../xpAdapter/views/_Region";
 
 // fully qualified XP content-type name:
-export const LIST_CONTENTTYPE_NAME = `base:folder`;
+export const FOLDER_CONTENTTYPE_NAME = `base:folder`;
 
 
-export const getListQuery = `
+export const getFolderQuery = `
 query($path:ID!) {                   
   guillotine {
     get(key:$path) {
@@ -20,11 +20,14 @@ query($path:ID!) {
 }`;
 
 
-const ListView = (props) => {
+const FolderView = (props) => {
 
     return (
-        <Region {...props} />
+        <Region regions={props.page?.regions}
+                content={props.content}
+                name="main"
+        />
     );
 };
 
-export default ListView;
+export default FolderView;

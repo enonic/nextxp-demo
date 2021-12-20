@@ -7,7 +7,7 @@ import BaseLayout from '../xpAdapter/views/_BaseLayout';
 import ImageView from './components/_Image';
 import TextView from './components/_Text';
 
-import ListView, {getListQuery, LIST_CONTENTTYPE_NAME} from "./contentTypes/list/List";
+import FolderView, {getFolderQuery, FOLDER_CONTENTTYPE_NAME} from "./contentTypes/folder/Folder";
 
 import getMovie, {MOVIE_CONTENTTYPE_NAME} from "./contentTypes/movie/getMovie";
 import MovieView from "./contentTypes/movie/Movie";
@@ -27,9 +27,10 @@ import DefaultLayoutView from './layouts/_Layout';
 *       Content Types
 * */
 
-TypesRegistry.addContentType(LIST_CONTENTTYPE_NAME, {
-    query: getListQuery,
-    view: ListView,
+
+TypesRegistry.addContentType(FOLDER_CONTENTTYPE_NAME, {
+    query: getFolderQuery,
+    view: FolderView,
 });
 
 
