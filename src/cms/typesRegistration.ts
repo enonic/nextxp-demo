@@ -15,12 +15,14 @@ import MovieView from "./contentTypes/movie/Movie";
 import getPerson, {PERSON_CONTENTTYPE_NAME} from "./contentTypes/person/getPerson";
 import PersonView from "./contentTypes/person/Person";
 
-import PersonList, {PERSONLIST_PART_NAME, PERSONLIST_QUERY, personListProcessor} from './parts/PersonList';
 
 
 import ThreeColumnLayoutView, {THREE_COL_LAYOUT_NAME} from './layouts/ThreeColumnLayout';
 import CenteredLayoutView, {CENTERED_LAYOUT_NAME} from './layouts/CenteredLayout';
 import DefaultLayoutView from './layouts/_Layout';
+
+import HeadingView, {HEADING_PART_NAME} from "./parts/Heading";
+import ChildListView, {CHILDLIST_PART_NAME} from './parts/ChildList';
 
 
 /*
@@ -75,10 +77,11 @@ TypesRegistry.addComponent(XP_COMPONENT_TYPE.TEXT, {
 *       Part Types
 * */
 
-TypesRegistry.addPart(PERSONLIST_PART_NAME, {
-    query: PERSONLIST_QUERY,
-    props: personListProcessor,
-    view: PersonList,
+TypesRegistry.addPart(CHILDLIST_PART_NAME, {
+    view: ChildListView,
+})
+TypesRegistry.addPart(HEADING_PART_NAME, {
+    view: HeadingView,
 })
 
 /*

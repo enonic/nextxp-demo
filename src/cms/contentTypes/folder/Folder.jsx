@@ -13,21 +13,19 @@ query($path:ID!) {
       displayName
       children(first:1000) {                 
         displayName
-        _href: _path
+        _path
       }
     }
   }
 }`;
 
 
-const FolderView = (props) => {
+const FolderView = (props) => (
+    <Region regions={props.page?.regions}
+            content={props.content}
+            name="main"
+    />
+);
 
-    return (
-        <Region regions={props.page?.regions}
-                content={props.content}
-                name="main"
-        />
-    );
-};
 
 export default FolderView;
