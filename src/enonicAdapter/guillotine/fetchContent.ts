@@ -407,8 +407,10 @@ function combineMultipleQueries(queriesWithVars: ComponentDescriptor[]): QueryAn
                     const [originalKey, originalVal] = originalParamString.trim().split(':');
                     const [prefixedKey, prefixedVal] = [`$${ALIAS_PREFIX}${index}_${originalKey.substr(1)}`, originalVal];
                     superParams.push(`${prefixedKey}:${prefixedVal}`);
+
                     // also update param references in query itself !
-                    query = query.replaceAll(originalKey, prefixedKey);
+                    const origKeyPattern = new RegExp(originalKey.replace(/\$/g, "\\$"), "g");
+                    query = query.replace(origKeyPattern, prefixedKey);
                 });
             }
         }
@@ -566,7 +568,7 @@ function createMetaData(contentType: string, contentPath: string, requestType: X
     const meta: MetaData = {
         type: contentType,
         path: contentPath,
-        requestType: requestType,
+        requestType: requestType || null,
         renderMode: renderMode
     }
 

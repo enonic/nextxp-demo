@@ -101,7 +101,7 @@ export interface FragmentData {
 export interface MetaData {
     type: string,
     path: string,
-    requestType: XP_REQUEST_TYPE,
+    requestType: XP_REQUEST_TYPE | null,
     renderMode: XP_RENDER_MODE,
     requestedComponent?: PageComponent,
     canRender?: boolean,
