@@ -1,19 +1,17 @@
-import {TypesRegistry} from '../xpAdapter/TypesRegistry';
+import {TypesRegistry} from '../enonicAdapter/TypesRegistry';
 
-import {XP_COMPONENT_TYPE} from '../xpAdapter/enonic-connection-config';
+import {XP_COMPONENT_TYPE} from '../enonicAdapter/enonic-connection-config';
 
-import BasePart from '../xpAdapter/views/_BasePart';
-import BaseLayout from '../xpAdapter/views/_BaseLayout';
+import BasePart from '../enonicAdapter/views/_BasePart';
+import BaseLayout from '../enonicAdapter/views/_BaseLayout';
 import ImageView from './components/_Image';
 import TextView from './components/_Text';
 
-import FolderView, {getFolderQuery, FOLDER_CONTENTTYPE_NAME} from "./contentTypes/folder/Folder";
+import FolderView, {folderQuery, FOLDER_CONTENTTYPE_NAME} from "./contentTypes/Folder";
 
-import getMovie, {MOVIE_CONTENTTYPE_NAME} from "./contentTypes/movie/getMovie";
-import MovieView from "./contentTypes/movie/Movie";
+import MovieView, {movieQuery, MOVIE_CONTENTTYPE_NAME}  from "./contentTypes/Movie";
 
-import getPerson, {PERSON_CONTENTTYPE_NAME} from "./contentTypes/person/getPerson";
-import PersonView from "./contentTypes/person/Person";
+import PersonView, {personQuery, PERSON_CONTENTTYPE_NAME} from "./contentTypes/Person";
 
 
 
@@ -27,23 +25,23 @@ import ChildListView, {CHILDLIST_PART_NAME} from './parts/ChildList';
 
 /*
 *       Content Types
+*
 * */
 
 
 TypesRegistry.addContentType(FOLDER_CONTENTTYPE_NAME, {
-    query: getFolderQuery,
+    query: folderQuery,
     view: FolderView,
 });
 
 
-/*
 TypesRegistry.addContentType(PERSON_CONTENTTYPE_NAME, {
-    query: getPerson,
+    query: personQuery,
     view: PersonView,
 });
 
 TypesRegistry.addContentType(MOVIE_CONTENTTYPE_NAME, {
-    query: getMovie,
+    query: movieQuery,
     view: MovieView,
 });
 

@@ -1,4 +1,4 @@
-import {XP_COMPONENT_TYPE} from "../../xpAdapter/enonic-connection-config";
+import {XP_COMPONENT_TYPE} from "../../enonicAdapter/enonic-connection-config";
 
 export const PAGE_FRAGMENT = `
       components {

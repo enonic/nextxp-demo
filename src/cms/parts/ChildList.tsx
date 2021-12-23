@@ -1,5 +1,5 @@
 import React from "react"
-import {APP_NAME, getContentLinkUrlFromXpPath} from "../../xpAdapter/enonic-connection-config";
+import {APP_NAME, getContentLinkUrlFromXpPath} from "../../enonicAdapter/enonic-connection-config";
 import {PartProps} from './_Part';
 
 // fully qualified XP part name:

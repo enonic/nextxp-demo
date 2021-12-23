@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {fetchContent} from "../xpAdapter/guillotine/fetchContent";
+import {fetchContent} from "../enonicAdapter/guillotine/fetchContent";
 
-import MainXpView from "../xpAdapter/views/_MainXpView";
-import {getPublicAssetUrl} from "../xpAdapter/enonic-connection-config";
+import MainXpView from "../enonicAdapter/views/_MainXpView";
+import {getPublicAssetUrl} from "../enonicAdapter/enonic-connection-config";
 
 import "../cms/typesRegistration";
 

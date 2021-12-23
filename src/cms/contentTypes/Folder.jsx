@@ -1,11 +1,11 @@
 import React from "react"
-import Region from "../../../xpAdapter/views/_Region";
+import Region from "../../enonicAdapter/views/_Region";
 
 // fully qualified XP content-type name:
 export const FOLDER_CONTENTTYPE_NAME = `base:folder`;
 
 
-export const getFolderQuery = `
+export const folderQuery = `
 query($path:ID!) {                   
   guillotine {
     get(key:$path) {
@@ -21,10 +21,7 @@ query($path:ID!) {
 
 
 const FolderView = (props) => (
-    <Region regions={props.page?.regions}
-            content={props.content}
-            name="main"
-    />
+    <Region {...props} name="main" />
 );
 
 
