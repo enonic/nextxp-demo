@@ -1,7 +1,7 @@
-import {TypesRegistry} from '../enonicAdapter/TypesRegistry';
+import {TypesRegistry} from '../enonicAdapter/types/TypesRegistry';
 
 // Do the required enonic types registration
-import "../enonicAdapter/enonicTypesRegistration";
+import "../enonicAdapter/types/enonicTypesRegistration";
 
 
 

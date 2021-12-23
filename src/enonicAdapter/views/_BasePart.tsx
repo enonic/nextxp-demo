@@ -1,7 +1,7 @@
 import React from "react"
 
 import {MetaData, PartData} from "../guillotine/_getMetaData";
-import {TypesRegistry} from '../TypesRegistry';
+import {TypesRegistry} from '../types/TypesRegistry';
 
 
 interface BasePartProps {

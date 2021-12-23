@@ -2,7 +2,7 @@ import React from "react";
 
 import {FetchContentResult} from "../guillotine/fetchContent";
 
-import {TypesRegistry} from '../TypesRegistry';
+import {TypesRegistry} from '../types/TypesRegistry';
 import RegionsView from './_Region';
 
 

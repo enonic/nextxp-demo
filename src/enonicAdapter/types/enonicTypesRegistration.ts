@@ -1,9 +1,9 @@
 import {TypesRegistry} from './TypesRegistry';
-import {FRAGMENT_CONTENTTYPE_NAME, XP_COMPONENT_TYPE} from './enonic-connection-config';
-import FragmentView from './views/_Fragment';
-import BasePart from './views/_BasePart';
-import BaseLayout from './views/_BaseLayout';
-import TextView from './views/_Text';
+import {FRAGMENT_CONTENTTYPE_NAME, XP_COMPONENT_TYPE} from '../enonic-connection-config';
+import FragmentView from '../views/_Fragment';
+import BasePart from '../views/_BasePart';
+import BaseLayout from '../views/_BaseLayout';
+import TextView from '../views/_Text';
 
 /*
 *       Content Types

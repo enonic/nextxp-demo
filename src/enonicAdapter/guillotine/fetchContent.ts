@@ -10,7 +10,7 @@ import enonicConnectionConfig, {
     XP_RENDER_MODE,
     XP_REQUEST_TYPE,
 } from "../enonic-connection-config";
-import {SelectedQueryMaybeVariablesFunc, TypeDefinition, TypesRegistry} from '../TypesRegistry';
+import {SelectedQueryMaybeVariablesFunc, TypeDefinition, TypesRegistry} from '../types/TypesRegistry';
 import {defaultVariables, LOW_PERFORMING_DEFAULT_QUERY} from './_getDefaultData';
 
 export type EnonicConnectionConfig = {

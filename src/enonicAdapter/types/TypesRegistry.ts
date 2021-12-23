@@ -1,4 +1,4 @@
-import {Context} from "../pages/[[...contentPath]]";
+import {Context} from "../../pages/[[...contentPath]]";
 
 
 /**

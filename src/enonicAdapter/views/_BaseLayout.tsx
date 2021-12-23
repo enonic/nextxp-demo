@@ -1,6 +1,6 @@
 import React from "react"
 import {LayoutData, MetaData, RegionTree} from "../guillotine/_getMetaData";
-import {TypesRegistry} from '../TypesRegistry';
+import {TypesRegistry} from '../types/TypesRegistry';
 
 
 interface BaseLayoutProps {
