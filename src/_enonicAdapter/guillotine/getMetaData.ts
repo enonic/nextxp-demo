@@ -74,11 +74,43 @@ export interface PageComponent {
     part?: PartData;
     layout?: LayoutData;
     fragment?: FragmentData;
-    text?: any;
+    text?: TextData;
     image?: any;
     regions?: RegionTree;
     data?: any;
     error?: any;
+}
+
+export interface TextData {
+    value: RichTextData;
+}
+
+export interface RichTextData {
+    processedHtml: string,
+    links: LinkData[],
+    macrosAsJson: MacroData[],
+}
+
+export interface LinkData {
+    ref: string,
+    media: {
+        content: {
+            id: string,
+        }
+    } | null,
+}
+
+export interface MacroData {
+    ref: string;
+    name: string;
+    descriptor: string;
+    config: {
+        [name: string]: MacroConfig;
+    };
+}
+
+export interface MacroConfig {
+    [key: string]: any;
 }
 
 export interface RegionTree {

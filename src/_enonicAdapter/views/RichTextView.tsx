@@ -1,9 +1,9 @@
 import React from "react"
-import {RichTextProcessor, TextData} from '../RichTextProcessor';
-import {MetaData} from '../guillotine/getMetaData';
+import {RichTextProcessor} from '../RichTextProcessor';
+import {MetaData, RichTextData} from '../guillotine/getMetaData';
 
 type Props = {
-    data: TextData,
+    data: RichTextData,
     meta: MetaData,
     tag?: string,
 }

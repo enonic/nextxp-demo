@@ -2,36 +2,8 @@ import {commonChars, CONTENT_API_URL, getUrl, RENDER_MODE} from './utils';
 import {parse} from 'node-html-parser';
 import HTMLElement from 'node-html-parser/dist/nodes/html';
 import * as ReactDOMServer from 'react-dom/server';
-import {MetaData} from './guillotine/getMetaData';
+import {LinkData, MacroData, MetaData, RichTextData} from './guillotine/getMetaData';
 import BaseMacro from './views/BaseMacro';
-
-export interface TextData {
-    processedHtml: string,
-    links: LinkData[],
-    macrosAsJson: MacroData[],
-}
-
-export interface LinkData {
-    ref: string,
-    media: {
-        content: {
-            id: string,
-        }
-    } | null,
-}
-
-export interface MacroConfig {
-    [key: string]: any;
-}
-
-export interface MacroData {
-    ref: string;
-    name: string;
-    descriptor: string;
-    config: {
-        [name: string]: MacroConfig;
-    };
-}
 
 export class RichTextProcessor {
     private static urlFunction: (url: string) => string;
@@ -40,7 +12,7 @@ export class RichTextProcessor {
     private static imageAttr = 'data-image-ref';
     private static linkAttr = 'data-link-ref';
 
-    public static process(data: TextData, meta: MetaData): string {
+    public static process(data: RichTextData, meta: MetaData): string {
         const root: HTMLElement = parse(data.processedHtml);
         const mode = meta?.renderMode || RENDER_MODE.NEXT;
         // run first to make sure contents is updated before processing links and images

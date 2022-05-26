@@ -483,8 +483,9 @@ function collectComponentDescriptors(components: PageComponent[],
             const cmpDef = ComponentRegistry.getByComponent(cmp);
             if (cmpDef) {
                 // const partPath = `${xpContentPath}/_component${cmp.path}`;
-                const queryAndVariables = getQueryAndVariables(cmp.type, xpContentPath, cmpDef.query, context,
-                    cmp[cmp.type]?.config);
+                const cmpData = cmp[cmp.type];
+                const config = cmpData && 'config' in cmpData ? cmpData.config : undefined;
+                const queryAndVariables = getQueryAndVariables(cmp.type, xpContentPath, cmpDef.query, context, config);
                 if (queryAndVariables) {
                     descriptors.push({
                         component: cmp,
@@ -507,13 +508,12 @@ function collectComponentDescriptors(components: PageComponent[],
 }
 
 function processComponentConfig(myAppName: string, myAppNameDashed: string, cmp: PageComponent) {
-    const type = cmp.type;
-    const cmpDef = cmp[type];
-    if (cmpDef?.descriptor && cmpDef?.configAsJson) {
-        const [appName, cmpName] = cmpDef.descriptor.split(':');
-        if (appName === myAppName && cmpDef.configAsJson[myAppNameDashed][cmpName]) {
-            cmpDef.config = cmpDef.configAsJson[myAppNameDashed][cmpName];
-            delete cmpDef.configAsJson;
+    const cmpData = cmp[cmp.type];
+    if (cmpData && 'descriptor' in cmpData && 'configAsJson' in cmpData) {
+        const [appName, cmpName] = cmpData.descriptor.split(':');
+        if (appName === myAppName && cmpData.configAsJson[myAppNameDashed][cmpName]) {
+            cmpData.config = cmpData.configAsJson[myAppNameDashed][cmpName];
+            delete cmpData.configAsJson;
         }
     }
 }

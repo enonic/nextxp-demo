@@ -53,6 +53,26 @@ ComponentRegistry.addMacro(CATCH_ALL, {
     view: DefaultMacro
 });
 
+const textQuery = `
+query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      displayName
+      _id
+      type
+    }
+    getSite {
+      displayName
+      _path
+    }
+  }
+}`;
+
+// Text mappings
+ComponentRegistry.addText('/main/1', {
+    query: textQuery
+});
+
 /*
 // Debug
 ComponentRegistry.addContentType(CATCH_ALL, {

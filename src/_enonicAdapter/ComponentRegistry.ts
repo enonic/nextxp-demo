@@ -16,7 +16,7 @@ export interface ComponentDefinition {
     view?: React.FunctionComponent<any>
 }
 
-type SelectorName = "contentType" | "page" | "component" | "part" | "layout" | "macro";
+type SelectorName = "contentType" | "page" | "component" | "part" | "layout" | "text" | "macro";
 
 function toSelectorName(type: XP_COMPONENT_TYPE): SelectorName | undefined {
     switch (type) {
@@ -26,6 +26,8 @@ function toSelectorName(type: XP_COMPONENT_TYPE): SelectorName | undefined {
         return "layout";
     case XP_COMPONENT_TYPE.PART:
         return "part";
+    case XP_COMPONENT_TYPE.TEXT:
+        return "text";
     }
 }
 
@@ -61,6 +63,7 @@ export class ComponentRegistry {
     private static components: ComponentDictionary = {};
     private static parts: ComponentDictionary = {};
     private static layouts: ComponentDictionary = {};
+    private static texts: ComponentDictionary = {};
     private static macros: ComponentDictionary = {};
     private static commonQuery: SelectedQueryMaybeVariablesFunc;
 
@@ -76,6 +79,8 @@ export class ComponentRegistry {
             return this.layouts;
         case 'part':
             return this.parts;
+        case 'text':
+            return this.texts;
         case 'macro':
             return this.macros;
         }
@@ -102,9 +107,9 @@ export class ComponentRegistry {
     }
 
     public static getByComponent(component: PageComponent): ComponentDefinition | undefined {
-        const type = component.type;
-        const selName = toSelectorName(type);
-        const desc = component[type]?.descriptor;
+        const selName = toSelectorName(component.type);
+        let cmpData = component[component.type];
+        const desc = cmpData && 'descriptor' in cmpData ? cmpData.descriptor : component.path;
         return selName && desc ? this.getType(selName, desc) : undefined;
     }
 
@@ -122,6 +127,14 @@ export class ComponentRegistry {
 
     public static getMacro(name: string): ComponentDefinition | undefined {
         return ComponentRegistry.getType('macro', name);
+    }
+
+    public static addText(name: string, obj: ComponentDefinition): void {
+        return ComponentRegistry.addType('text', name, obj);
+    }
+
+    public static getText(name: string): ComponentDefinition | undefined {
+        return ComponentRegistry.getType('text', name);
     }
 
     public static addContentType(name: string, obj: ComponentDefinition): void {
