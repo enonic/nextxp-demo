@@ -7,9 +7,10 @@ function sanitizeName(name: string): string {
 }
 
 export const macroConfigsQuery = (): string => {
-    return `config {
-        ${ComponentRegistry.getMacros().map(entry => `${sanitizeName(entry[0])}${entry[1].query}`).join('\n')}
-    }`
+    const macros = ComponentRegistry.getMacros();
+    return macros.length ? `config {
+        ${macros.map(entry => `${sanitizeName(entry[0])}${entry[1].query}`).join('\n')}
+    }` : '';
 }
 
 
