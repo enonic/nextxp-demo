@@ -1,6 +1,7 @@
 import React from "react"
 import {APP_NAME_UNDERSCORED, getUrl} from '../../_enonicAdapter/utils'
 import {PartProps} from '../../_enonicAdapter/views/BasePart';
+import Image from '../../_enonicAdapter/views/Image';
 
 
 export const getMovie = `
@@ -64,7 +65,7 @@ const MovieView = (props: PartProps) => {
                 {data?.cast && <Cast cast={data.cast}/>}
             </div>
             <p>
-              <a href={getUrl(parent._path)}>Back to Movies</a>
+                <a href={getUrl(parent._path)}>Back to Movies</a>
             </p>
         </>
     );
@@ -91,9 +92,9 @@ const MovieInfo = (props: MovieInfoProps) => {
                 <p>({new Date(props.release).getFullYear()})</p>
             )}
             {posterPhoto.imageUrl && (
-                <img src={posterPhoto.imageUrl}
-                     title={props.subtitle}
-                     alt={props.subtitle}
+                <Image src={posterPhoto.imageUrl}
+                       title={props.subtitle}
+                       alt={props.subtitle}
                 />
             )}
             <p>{props.abstract}</p>
@@ -125,7 +126,7 @@ interface CastMemberProps {
 const Cast = (props: CastProps) => (
     <div>
         <h4>Cast</h4>
-        <ul style={{listStyle: "none", display: "flex", flexFlow: "row wrap"}}>
+        <ul style={{listStyle: "none", paddingLeft: 0, display: "flex", flexFlow: "row wrap"}}>
             {props.cast.map(
                 (person: CastMemberProps, i: number) => person && (
                     <CastMember key={i} {...person} />
@@ -142,12 +143,12 @@ const CastMember = (props: CastMemberProps) => {
     const personPhoto = (data.photos || [])[0] || {};
 
     return (
-        <li style={{marginRight: "15px"}}>
+        <li style={{marginRight: "15px", width: "200px"}}>
             {
                 personPhoto.imageUrl &&
-                <img src={personPhoto.imageUrl}
-                     title={`${displayName} as ${character}`}
-                     alt={`${displayName} as ${character}`}/>
+                <Image src={personPhoto.imageUrl}
+                       title={`${displayName} as ${character}`}
+                       alt={`${displayName} as ${character}`}/>
             }
             <div>
                 <p>{character}</p>

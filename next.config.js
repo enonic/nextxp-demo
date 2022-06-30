@@ -6,8 +6,23 @@ const cspHeaders = [
     }
 ]
 
-module.exports = {
+const nextConfig = {
     reactStrictMode: true,
+    images: {
+        loader: 'custom',
+        domains: ['localhost'], // update/add the url of xp image server
+        deviceSizes: [400, 800, 1200, 1920],
+        imageSizes: [16, 48, 96, 128],
+    },
+
+    webpack: (config, {isServer}) => {
+        if (!isServer) {
+            // fs is server only
+            config.resolve.fallback.fs = false
+        }
+
+        return config
+    },
 
     async headers() {
         return [
@@ -19,3 +34,5 @@ module.exports = {
         ]
     },
 }
+
+module.exports = nextConfig;

@@ -1,5 +1,7 @@
 /** Import config values from .env, .env.development and .env.production */
 import {Context} from './guillotine/fetchContent';
+import * as http from 'http';
+import * as fs from 'fs';
 
 const mode = process.env.MODE || process.env.NEXT_PUBLIC_MODE;
 export const IS_DEV_MODE = (mode === 'development');
@@ -131,6 +133,23 @@ export const commonChars = (s1?: string, s2?: string) => {
     }
 
     return result;
+}
+
+export const downloadTo = (url: string, dest: string, cb?: (error?: Error | null) => void) => {
+    const file = fs.createWriteStream(dest);
+    http.get(url, function (response) {
+        response.pipe(file);
+        file.on('finish', () => file.close(cb));
+    }).on('error', function (err) {
+        fs.unlinkSync(dest);
+        if (cb) {
+            cb(err);
+        }
+    });
+};
+
+export function isServer(): boolean {
+    return typeof window === 'undefined';
 }
 
 // ---------------------------------------------------------------------------------------------------------------- Export

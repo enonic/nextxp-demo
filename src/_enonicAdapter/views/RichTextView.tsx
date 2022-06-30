@@ -3,7 +3,7 @@ import {RichTextProcessor} from '../RichTextProcessor';
 import {MetaData, RichTextData} from '../guillotine/getMetaData';
 import HTMLReactParser, {DOMNode} from 'html-react-parser';
 import {ElementType} from 'domelementtype/lib';
-import {Element} from 'domhandler/lib';
+import {Element} from 'domhandler';
 import BaseMacro from './BaseMacro';
 import {RENDER_MODE} from '../utils';
 

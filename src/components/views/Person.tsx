@@ -1,6 +1,7 @@
 import React from "react"
 import {FetchContentResult} from '../../_enonicAdapter/guillotine/fetchContent';
 import {getUrl} from '../../_enonicAdapter/utils'
+import Image from '../../_enonicAdapter/views/Image';
 
 const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
@@ -14,13 +15,10 @@ const Person = (props: FetchContentResult) => {
                 <p>{bio}</p>
                 {
                     photos.map((photo: any, i: number) => (
-                        <img key={i}
-                             src={photo.imageUrl}
-                             title={
-                                 (photo.attachments || [])[0].name ||
-                                 displayName
-                             }
-                             width="500"
+                        <Image key={i}
+                               alt={(photo.attachments || [])[0].name || displayName}
+                               src={photo.imageUrl}
+                               title={(photo.attachments || [])[0].name || displayName}
                         />
                     ))
                 }
