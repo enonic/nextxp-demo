@@ -50,9 +50,9 @@ To learn what is really happening, head on to the <<enonic-setup#, first chapter
 
 . Sign up to Enonic Cloud: https://enonic.com/sign-up/cloud-trial
 . Create a new solution based on the `Next.js demo` template
-. From `solution/environments`: Notice the links to the "Drafts API" and "Live API". you will need them later.
+. From `solution/environments`: Notice the links to the "API" route, you will need it later.
 +
-TIP: Visiting these link will give you a 404 page because the GraphQL APIs communicate via HTTP `POST` requests rather than `GET`.
+TIP: Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively, and communicate via HTTP `POST` requests rather than `GET`.
 
 === 2. Create Git repo
 
@@ -71,8 +71,8 @@ Vercel are the makers of Next.js, and you'll be using their service to host the 
 . Create a new project `enonic-demo-drafts`, and connect it to the repo you created in step 2.
 . **Add environment variables** telling the app where it will find the draft and live API, as well as token you will need to access preview mode in a later step.
 +
-KEY:VALUE:: CONTENT_API_DRAFT:<URL to the drafts API>
-KEY:VALUE:: CONTENT_API_MASTER:<URL to the live API> 
+KEY:VALUE:: CONTENT_API_DRAFT:<API URL>/draft
+KEY:VALUE:: CONTENT_API_MASTER:<API URL>/master
 KEY:VALUE:: API_TOKEN:<yoursecretstring>
 +
 . After deploying, your Vercel app should now render the front page:
@@ -90,7 +90,7 @@ With the front-end running, it is time to activate preview in Content Studio.
 +
 image:configure-preview.png[title="Form with fields for server url and nextjs token", width=804px]
 +
-NextJS server URL:: <absolute url to your vercel app>
+NextJS server URL:: <URL to your vercel app>
 NextJS API token:: <secret you added to Vercel in step 3>
 +
 . After applying and saving the changes, you should instantly see the live preview in Content Studio.
