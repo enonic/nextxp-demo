@@ -32,7 +32,7 @@ You the same will now apply to Content Studio.
 
 Content types need to exist in Enonic before an editor can create content. Similarly, page components must be defined before Content Studio can enable editors to create pages.
 
-. *Add a page component* to the Enonic app 
+. *Add a page component* to the Enonic app
 +
 .src/main/resources/site/pages/main/main.xml
 [source,xml]
@@ -50,7 +50,7 @@ Content types need to exist in Enonic before an editor can create content. Simil
 +
 NOTE: The definition of the region `main`, allows Content Studio editors to add components to the page, as you will see later.
 +
-Redploy the Enonic app to register the page component.
+**Redploy the Enonic app to register the page component.**
 +
 . **Configure page rendering in Next**
 On the Next side of things, rendering a page is similar to rendering a content type. Add the following file to your Next project.
@@ -105,8 +105,6 @@ Content Studio's ships with a built-in Text component which is handy when compos
 . Text mode will now be activated, and you can use the link:https://developer.enonic.com/docs/content-studio/stable/editor/component-types#text_component[rich-text editor] to write and format text, but also insert images.
 +
 image:text-component.png[title="Next.js-rendered text component with an image",width=1440px]
-+
-. After saving, visit the Next.js rendering directly on http://localhost:3000/ to see the result.
 +
 . You may also click the `Preview` button in Content Studio for a full screen version.
 
