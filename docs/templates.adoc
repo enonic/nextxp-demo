@@ -22,14 +22,6 @@ To complete this section, we'll need one final part for listing movie details. T
 </part>
 ----
 +
-.src/main/resources/site/parts/movie-details/movie-details.js
-[source,JavaScript]
-----
-var proxy = require('/lib/nextjs/proxy');
-
-exports.get = proxy.get;
-----
-+
 . **Redeploy** the Enonic app.
 +
 . **Register the Movie query and view** in Next.

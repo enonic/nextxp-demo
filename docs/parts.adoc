@@ -32,27 +32,16 @@ We'll start off by adding a simple component that lists child items in the tree 
 </part>
 ----
 +
-NOTE: This component also contains a form, similar to content types. This means editors can configure it - sorting Ascending or Descending.
+NOTE: This component also contains a form, similar to content types.
+This means editors can configure it - sorting Ascending or Descending.
 +
 To work seamlessly with Content Studio's WYSIWYG preview, in the Enonic app, parts need a special controller file that helps the preview reload the component when there are changes, without having to refreshing the entire page.
-+
-. **Add the preview controller file** for the child-list part
-+
-This controller simply is triggered when a component is updated in the page editor, and simply forwards the request to the proxy - like all other requests.
-+
-.src/main/resources/site/parts/child-list/child-list.js
-[source,JavaScript]
-----
-var proxy = require('/lib/nextjs/proxy');
-
-exports.get = proxy.get;
-----
 +
 . **Build and deploy your Enonic app** once more to make the new part accessible to from Content Studio.
 +
 . **Add parts to the page**
 +
-Once the app has deployed, head over to Content Studio. This time, edit the `Persons` folder item. Create the page and drag'n drop the new part into the region (`right-click -> Insert`, or drag-n-drop from the `Insert panel`` on the right).
+Once the app has deployed, head over to Content Studio.This time, edit the `Persons` folder item.Create the page and drag'n drop the new part into the region (`right-click -> Insert`, or drag-n-drop from the `Insert panel`` on the right).
 +
 TIP: The part will appear without making any changes to Next, this is because the Enonic Adapter contains fallback part rendering, as long as NextJS is running in DEV mode.
 +
@@ -102,7 +91,7 @@ For more components to play with, you may add another part:
 
 . **Add files** to the Enonic app
 +
-This part definition includes a form, with an link:https://developer.enonic.com/docs/xp/stable/components/input-types[input field] called `heading`. This makes it possible for editors to override the heading (aka displayName) coming from the content item.
+This part definition includes a form, with an link:https://developer.enonic.com/docs/xp/stable/components/input-types[input field] called `heading`.This makes it possible for editors to override the heading (aka displayName) coming from the content item.
 +
 .src/main/resources/site/parts/heading/heading.xml
 [source,xml]
@@ -117,14 +106,6 @@ This part definition includes a form, with an link:https://developer.enonic.com/
         </input>
     </form>
 </part>
-----
-+
-.src/main/resources/site/parts/heading/heading.js
-[source,JavaScript]
-----
-var proxy = require('/lib/nextjs/proxy');
-
-exports.get = proxy.get;
 ----
 +
 . **Redeploy** the Enonic app and add the part to your page
