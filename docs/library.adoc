@@ -1,0 +1,181 @@
+= Next.js library
+:toc: right
+:imagesdir: media/
+
+In this chapter, you'll enable Content Studio to load the preview from Next using the Next.js integration library.
+
+IMPORTANT: This is an advanced approach requiring additional configuration!
+
+## Task: Enable preview 
+
+To get preview going, you need to make a few changes to the Enonic app:
+
+. **Add the NextJS integration library**:
++
+The https://github.com/enonic/lib-nextjs[Nextjs library] will provide the features we need to setup the preview, and then some.
+Add it to your dependencies list by adding the following line:
++
+./build.gradle
+[source,groovy,options="nowrap"]
+----
+dependencies {
+    ...
+    include 'com.enonic.lib:lib-nextjs:<version>'
+    ...
+}
+----
++
+IMPORTANT: Ensure <version> is replaced by the most current version available.
+Visit the library on the link:https://market.enonic.com/vendors/enonic/nextjs-lib[Enonic Market].
+Click `Get started` and choose the latest version.
++
+. *Update site configuration*
++
+To trigger the next.js integration in Content Studio, we must update the https://developer.enonic.com/docs/xp/stable/cms/mappings[controller mappings], and add a configuration form to the site.
+Replace your current site.xml with this:
++
+.src/main/resources/site/site.xml
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<site xmlns="urn:enonic:xp:model:1.0">
+  <x-data name="SoMe" allowContentTypes="person|movie"/>
+  <x-data name="spotlight" allowContentTypes="media:image"/>
+  <form>
+    <input type="TextLine" name="nextjsUrl">
+      <label>NextJS server URL</label>
+    </input>
+    <input type="TextLine" name="nextjsToken">
+      <label>NextJS API token</label>
+    </input>
+  </form>
+  <mappings>
+    <mapping controller="/lib/nextjs/proxy.js" order="99">
+      <pattern>/.*</pattern>
+    </mapping>
+  </mappings>
+</site>
+----
++
+TIP: Studying the file above, you will see the proxy mapping to `/.*`, which essentially means "catch all" URL patterns.The form contains one field for the server URL, and one for the API token.
++
+. **Redeploy the Enonic app** to activate the changes:
++
+    enonic project deploy
++
+. *Activate the preview*
++
+Select the root item `Headless Movie Database` and click edit.
++
+image:edit-site.png[title="Select site item and click edit",width=650px]
++
+Configure the "Headless Movie DB" application by clicking the pencil icon.
++
+image:edit-site-app.png[title="Open app config by pressing pencil icon",width=597px]
++
+Finally - if you did not change the API token in the Next app, use these values: `http://localhost:3000[http://localhost:3000^]`, and `mySecretKey`.
++
+image:edit-hmdb-app.png[title="Form with fields for server url and nextjs token",width=771px]
++
+NOTE: You can also use your application configuration file to set these values:
++
+.<xp-home>/config/<com.example.app.name>.cfg
+```
+nextjs.url=http://localhost:3000/
+nextjs.secret=mySecretKey
+```
++
+. After applying and saving the changes, you should be able see the live preview in Content Studio.
++
+image:morgan-freeman-preview.png[title="Next.js-rendered preview in Content Studio",width=1072px]
+
+== Task: Enable smart hook
+
+Our nextjs library integration has yet another trick up it's sleeve: Automatically forcing NextJS to regenerate pages - aka revalidation using an event-driven webhook.
+
+. **Activate the event listener** by updating the `/src/main/resources/main.js` controller in your Enonic app with the following lines:
++
+In the top of the file, add this:
++
+[source,JavaScript]
+----
+...
+const nextjsEventLib = require('/lib/nextjs/event');
+...
+----
++
+and then this line to the very end of the initialize() function:
++
+[source,JavaScript]
+----
+...
+nextjsEventLib.subscribe();
+...
+----
++
+Your updated initialize() function should look something like this:
++
+./src/main/resource/main.js
+[source,JavaScript]
+----
+...
+const initialize = function () {
+    runInContext(() => {
+        const project = getProject();
+        if (!project) {
+            taskLib.executeFunction({
+                description: 'Importing content',
+                func: initProject
+            });
+        } else {
+            log.debug(`Project ${project.id} exists, skipping import`);
+        }
+    });
+    nextjsEventLib.subscribe();
+};
+...
+----
+
+. **Check the Enonic log** after redeploying the Enonic app to confirm it is working.
++
+You should see something like this:
++
+.Enonic log:
+[source,log]
+----
+2022-10-21 20:09:59,911 INFO  com.example.myproject - (/lib/nextjs/event.js) Subscribed to content update events for repos: com.enonic.cms.hmdb,com.enonic.cms.hmdb
+2022-10-21 20:09:59,914 INFO  com.example.myproject - (/lib/nextjs/event.js) Subscribed to repository update events...
+----
+
+== Task: Add a component
+
+Remember that every component (i.e. page, part or layout) controller should use library as well.
+
+For instance, you defined the part:
+
+.src/main/resources/site/parts/heading/heading.xml
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<part xmlns="urn:enonic:xp:model:1.0">
+    <display-name>Heading</display-name>
+    <description>Demo heading</description>
+    <form>
+        <input type="TextLine" name="heading">
+            <label>Override heading</label>
+        </input>
+    </form>
+</part>
+----
+
+Then, its controller would need to look like this to use next.js library:
+
+.src/main/resources/site/parts/heading/heading.js
+[source,JavaScript]
+----
+var proxy = require('/lib/nextjs/proxy');
+
+exports.get = proxy.get;
+----
+
+That completes the preview setup, moving forward, we'll make it possible to <<pages#, create pages editorially>>.
