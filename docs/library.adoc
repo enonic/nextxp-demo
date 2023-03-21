@@ -2,9 +2,9 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter, you'll enable Content Studio to load the preview from Next using the Next.js integration library.
+In this chapter, you'll integrate the NextJS connector directly into your application.
 
-IMPORTANT: This is an advanced approach requiring additional configuration!
+IMPORTANT: This is an advanced approach requiring additional configuration and complexity.
 
 ## Task: Enable preview 
 
