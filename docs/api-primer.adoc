@@ -16,7 +16,7 @@ Like Content Studio, the headless API is available from an application called `G
 
 . If Guillotine was not installed in a previous step. `XP menu` -> `Applications` -> `Install`. Search for `Guillotine` and install it.
 +
-. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. Verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called `Query playground`.
+. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. Verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called `Query Playground`.
 +
 image:query-playground.png[title="Browsing the Guillotine API using Query Playground", width=1024px]
 
@@ -42,11 +42,11 @@ One of the objectives in this tutorial is listing and presenting movie details. 
 }
 ----
 +
-NOTE: `com.example.myproject:movie` refers to the name of the application you created in the previous chapter.
+NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app.
 +
 . **View the Result**
 +
-After executing the query, you should get a result in the right panel.
+After executing the query, you should get a result in the right hand response panel.
 image:query-playground-example.png[title="Running a query for movies in Query Playground", width=1024px]
 
 == Task: Query variables
@@ -100,7 +100,7 @@ From Query Playground, open the "Request Headers" panel at the bottom, and add t
 }
 ----
 +
-NOTE: Site key can be either path, the site's unique ID. A benefit of using the ID is that you change the location and path of the site without it affecting your queries.
+NOTE: Site key can be either path, or the site's unique ID. A benefit of using the ID is that you change the location and path of the site without it affecting your queries.
 +
 . Run a query with the site context
 +

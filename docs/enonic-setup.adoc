@@ -55,23 +55,27 @@ Run the following command from your terminal
 IMPORTANT: Stick with the standard values and keep the suggested project name `com.example.myproject` for the examples in the tutorial to work properly.
 This will be referred to as **app name** later in this tutorial.
 +
-. **Deploy the application** by running this command from your freshly created project folder.
+. **Deploy the application** 
++
+The project setup created a new folder called `myproject/` (unless you specified something else). From this folder, running the following command to build and deploy the app.
 +
   enonic project deploy
 +
-When asked to create a sandbox (a local instance of Enonic XP), just give it a name i.e. `next-demo` and go with the default values. When the sandbox has started, it outputs some server logs, and the sample content gets imported automatically.
+When asked to create a sandbox (a local developer instance of Enonic XP), just give it a name i.e. `next-demo` and go with the default values. When the sandbox has started, it outputs some server logs, and the sample content gets imported automatically.
 
 === Task: Install Content Studio
 
-Navigate to http://localhost:8080[http://localhost:8080^] and log in to the admin console (you don't have to create a user for this tutorial).
+NOTE: You don't have to create a user for this tutorial
 
-. Install **Content Studio** (it's an XP app of its own) by completing the _XP Tour_ , or via the `Applications` admin app.
+Navigate to http://localhost:8080[http://localhost:8080^] and log in to the Enonic XP admin interface. 
+
+. Install **Content Studio** (it's an XP app of its own) by completing the _XP Tour_ , or via the top right `XP menu` and select the `Applications` admin app.
 +
-. From the _XP_ menu, open `Content Studio`, and choose the `Headless demo` project if needed. You should see something like this:
+. Select `XP menu` -> `Content Studio`. Choose the `Headless demo` project if needed. You should now see something like this:
 +
 image:hmdb-content.png[title="HMDB in Content Studio", width=600px]
 +
-NOTE: Some items have a default preview. That's okay for now - as we will customize this preview later.
+NOTE: Some items have a default preview. That's okay for now - you'll customize the preview later.
 
 
 **Congrats on setting up the Enonic development environment**
