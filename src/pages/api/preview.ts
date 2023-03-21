@@ -9,7 +9,7 @@ export default async function handler(req: any, res: any) {
     }
 
     // If the slug doesn't exist prevent preview mode from being enabled
-    if (!path) {
+    if (path === undefined) {
         return res.status(400).json({message: 'Invalid path'});
     }
     const reqParams = extractParams(req.query, ['token', 'path']);
