@@ -86,7 +86,7 @@ TIP: The configuration values can be overridden later when deplying your app to 
 
 Let's fire up Next and see if things are working as planned...
 
-NOTE: Make sure <<enonic-setup#hmdb, Enonic and the Headless Movie Database app is running on localhost:8080>> before you continue
+NOTE: Make sure <<enonic-setup#, Enonic XP and the Movie DB app is running on localhost:8080>> before you continue
 
 Start Next.js in  **dev mode** by running the following commands from within your next project folder:
 
@@ -106,7 +106,7 @@ For more details on booting Next, check out the link:https://nextjs.org/docs/api
 
 == Next URL patterns
 
-The URL structure of your Next site will mirror the structure of the content in the CMS. http://localhost:3000/[http://localhost:3000/^] is mounted to the site root, which in our case has the internal path `/hmdb`.
+The URL structure of your front-end will mirror the structure of the content in the CMS. http://localhost:3000/[http://localhost:3000/^] will be mounted to the site root, which in our case has the internal path `/hmdb`.
 
 Using the Movie Se7en as an example: 
 

@@ -3,7 +3,7 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-Enonic provides a highly customizable component type called link:https://developer.enonic.com/docs/xp/stable/components/components#part[parts]. Similar to page components parts must be defined in both Enonic and Next in order to fully work.
+Enonic provides a highly customizable component type called link:https://developer.enonic.com/docs/xp/stable/components/components#part[parts]. Similar to page components parts must be defined in both Enonic and Next.js in order to fully work.
 
 
 == Task: Add part to Enonic
@@ -43,15 +43,15 @@ To work seamlessly with Content Studio's WYSIWYG preview, in the Enonic app, par
 +
 Once the app has deployed, head over to Content Studio.This time, edit the `Persons` folder item.Create the page and drag'n drop the new part into the region (`right-click -> Insert`, or drag-n-drop from the `Insert panel`` on the right).
 +
-TIP: The part will appear without making any changes to Next, this is because the Enonic Adapter contains fallback part rendering, as long as NextJS is running in DEV mode.
+TIP: The part will appear without making any changes to the front-end, this is because the Enonic Adapter contains fallback part rendering, as long as Next.js is running in DEV mode.
 +
 image:missing-component.png[title="Next.js dev mode renderes nice feedback when components are missing",width=1440px]
 
-== Task: Configure part rendering in Next
+== Task: Configure part rendering in Next.js
 
 Heading over to the front-end code, we must register a new component that support actual rendering of this part.
 
-. **Add the part implementation to the Next app**
+. **Add the part implementation to the Next.js app**
 +
 .src/components/parts/ChildList.tsx
 [source,JavaScript]
@@ -110,7 +110,7 @@ This part definition includes a form, with an link:https://developer.enonic.com/
 +
 . **Redeploy** the Enonic app and add the part to your page
 +
-. **Add and register** the heading component in Next
+. **Add and register** the heading component in Next.js
 +
 .src/components/parts/Heading.tsx
 [source,JavaScript]

@@ -52,8 +52,8 @@ NOTE: The definition of the region `main`, allows Content Studio editors to add 
 +
 **Redploy the Enonic app to register the page component.**
 +
-. **Configure page rendering in Next**
-On the Next side of things, rendering a page is similar to rendering a content type. Add the following file to your Next project.
+. **Configure page rendering in Next.js**
+Rendering a page is similar to rendering a content type. Add the following file to your code.
 +
 .src/components/pages/Main.tsx
 [source,TypeScript]
@@ -77,7 +77,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 });
 ----
 
-Both Enonic and Next are now able to handle custom pages.
+Both Enonic and Next.js are now able to handle custom pages.
 
 == Task: Create your first page
 
@@ -113,7 +113,7 @@ image:text-component.png[title="Next.js-rendered text component with an image",w
 == Task: Publish page
 Your fresh new page is looking good. However, if you visit `http://localhost:3000[http://localhost:3000^]` - you'll get a "404 page not found" error. This is because only published changes are visible from the front end
 
-Content Studio uses NextJS's preview mode, which uses the drafts API. When accessing the front-end directly, NextJS fetches published content from the master branch.
+Content Studio uses Next.js' preview mode, which uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.
 
 . **Publish the page** from by clicking `Mark as ready`, and then `Publish`.
 +
@@ -123,7 +123,7 @@ image:publish.png[title="Publishing wizard",width=810px]
 
 == Troubleshooting
 
-NOTE: Using Content Studio preview in combination with `NextJS dev mode` (running on port 3000) may randomly produce **hydration error**.
+NOTE: Using Content Studio preview in combination with `Next.js dev mode` (running on port 3000) may randomly produce **hydration error**.
 
 image:hydration-error.png[title="Hydration error",width=566px]
 
