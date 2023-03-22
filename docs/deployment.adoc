@@ -36,7 +36,7 @@ enonic cloud app install
 ----
 + 
 . **Verify that the app was installed** from `Solution` -> `Applications` in the Enonic Console.
-. From XP Admin, **open Content Studio** to verify that your app automatically initialized the `Headless demo` project and imported content on the server, just like on your local machine.
+. From XP Admin, **open Content Studio** to verify that your app automatically initialized the `Movie DB` project and imported content on the server, just like on your local machine.
 
 == Task: Expose API via route
 
@@ -55,7 +55,7 @@ ID provider:: -empty-
 NOTE: The URL should look something like this: `https://account-solution-environment.enonic.net/api`.
 
 
-== Task: Add your Next.js app code to Git
+== Task: Add your front-end to Git
 
 Vercel requires access to the code via a Git repo where your user has write access.
 
@@ -86,30 +86,28 @@ TIP: Check the Vercel function logs if you are not getting the expected result.
 == Task: Link Content Studio to Vercel
 With the front-end running, you can finally link it to Content Studio, and start building pages again.
 
-NOTE: For convenience, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox application].
+NOTE: You now have to create your site again, or for convenience, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
 
-. **Install the NextJS app** `Solution` -> `Applications` -> `Install` -> Search for `Next.js`, select it an click install
-. **Add configuration options**. This time, rather than configuring the app within the site data, we will use this approach.
+. **Install the Next.xp app** `Solution` -> `Applications` -> `Install` -> Search for `Next.xp`, select it an click install
+. **Add configuration**. This time, rather than configuring the app within the site, do this via config files.
 +
-.Add this to the app configuration field
+TIP: This is safer and more flexible than storing the configuration it within the content.
++
+.Add the following to the app config field:
 [source,properties]
 ----
 nextjs.url = <Vercel app URL>
 nextjs.secret = <yourSecret>
 ----
 +
-TIP: Managing config via file is safer and more flexible than storing it as data. I.e. if you have multiple Enonic XP environments, or want to export data to developers without sharing the secrets.
-+
-[TIP]
-====
-To support multiple Next.js, use this format instead:
+.To support multiple sites and front-ends, use this format instead:
 [source,properties]
 ----
 settings.<projectID>.<siteID>.url = <Vercel app URL>
 settings.<projectID>.<siteID>.secret = <yourSecret>
 ----
-====
 +
+NOTE: If you imported content from your local environment, the next steps can be skipped
 . **Activate preview** by adding the Next.js app to the site. Since you have already placed configuration on file, adding the app to the site will do the trick.
 +
 . **Save and verify** that the configuration is working by testing the Content Studio preview.
@@ -136,7 +134,7 @@ The following topics were not covered, but will be covered in later versions of 
 * Multi-site / localization
 * and more...
 
-There are obviously many aspects of Enonic and Next.js that will never be covered by this tutorial, however - to learn more about Enonic, we recommend getting started with the following resources:
+There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
 
 * https://developer.enonic.com[Enonic Developer portal]
 * https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101] 

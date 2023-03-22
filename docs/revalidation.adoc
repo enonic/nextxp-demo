@@ -7,18 +7,18 @@ In this chapter you will learn about NextJS' static pages and how the Enonic tri
 == Introduction
 The NextJS front-end is configured to use static page generation (ISR), which basically means you get lightning fast pages, but also with specific limitations, such as getting new pages and changes instantly live on your site.
 
-TIP: NextJS also supports Server Side Rendering (SSR) which can be enabled by modifying the `[[...contentPath]].tsx` page handler.
+TIP: Next.js also supports Server Side Rendering (SSR) which can be enabled by modifying the `[[...contentPath]].tsx` page handler.
 
 == Prod mode
-So far, you have been running NextJS in dev mode.
+So far, you have been running Next.js in dev mode.
 
-By starting NextJS in `prod` mode, the application is automatically optimized, and in our case, pages get rendered statically at compile time.
+By starting Next.js in `prod` mode, the application is automatically optimized, and in our case, pages get rendered statically at compile time.
 
 == Task: Activate prod mode
 
-TIP: Remember to stop your existing NextJS dev instance before you continue.
+TIP: Remember to stop your existing Next.js dev instance before you continue.
 
-. **Start NextJS in prod mode**:
+. **Start Next.js in prod mode**:
 +
     npm run prod
 +
@@ -29,21 +29,21 @@ This will take a while longer as when compared to dev mode.
 
 == Task: Update the connector
 
-With NextJS now running on a different port, the preview integration we configured earlier has been broken.
+With Next.js now running on a different port, the preview integration we configured earlier has been broken.
 
-. **Fix the preview** by updating the NextJS app configuration on your site with the new URL, and confirm that preview starts working again.
+. **Fix the preview** by updating the Next.xp app configuration on your site with the new URL, and confirm that preview starts working again.
 
-TIP: Content Studio uses NextJS' preview mode, and will bypass static pages, so you should always see the latest updates to your drafts instantly.
+TIP: Content Studio uses Next.js' preview mode, which automatically bypass static pages, always showing the the latest updates to your draft content.
 
 
 == Task: Test page invalidation
 
 . **Edit your front-page, and publish the changes** to trigger a revalidation hook.
 
-Despite running static pages, the page should get updated at `http://localhost:4242` with your latest changes - more or less instantly. 🎉
+Despite using static pages, the page should get updated at `http://localhost:4242` with your latest changes - more or less instantly. 🎉
 
-How does it work? The Next.js application on your site is already connected to the front-end, and automatically triggers the revalidation of all pages when it detects the publishing event.
+How does it work? The Next.xp app is already connected to the front-end, and automatically triggers revalidation of all pages when it detects the publishing event.
 
-NOTE: You should also be able to tell from the NextJS log that the revalidation was triggered.
+NOTE: You should also be able to tell from the Next.js log that the revalidation was triggered.
 
 With prod mode and revalidation sorted out, its about time you <<deployment#, deploy your apps to live servers>>.

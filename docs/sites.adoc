@@ -1,0 +1,71 @@
+= Sites
+:toc: right
+:imagesdir: media/
+
+In this chapter, you'll build a tree structure of your content, with a site item at the root + learn about a handy trick for the GraphQL API.
+
+== Introduction
+
+Next.xp is built to provide complete control over a website, including landing pages and the URL structure. For this use-case, Content Studio's tree structure will come in handy.
+
+== Task: Creating the site
+
+Next.xp needs a root content item. This item will act as the front-page of your site.
+
+TIP: Before you continue, clear all selections in the Content Studio list view (this way the site content will be placed on the project root).
+
+. **Create a new item** by clicking `New` in Content Studio, then select the `Site` content type. This will open the content editor in a new tab.
+. **Give the site a name** by filling in a display name for the site, "HMDB" (short for Headless Movie DB) will do fine. 
++
+NOTE: If you choose a different name, make sure the site path name (seen below the Display name) is set to `hmdb` - as this will be used throughout the tutorial.
+. **Add the Movie DB app** to the site - by selecting it in the `Applications` form field.
+
+NOTE: Sites acts as scopes in the content structure. By adding an app to the site, you effectively allow editors to create content based on the app within this scope.
+
+
+TODO Screenshot create site
+
+When completed, your form should look something like this, and you can now press `Save` in the toolbar.
+
+== Add content
+
+To quickly get some content and structure within the site, let's move the Movie DB content into the site.
+
+. **Select all the folders** in the list, and click `Move` from the toolbar. 
+. **Move the items** by selecting the `HMDB` site as the target and click `Move` once more.
+
+TODO: Screenshot
+
+Sweet, you now have a site with a set of content and basic tree structure 
+
+== Task: Site contextual queries
+
+To simplify the GraphQL queries, you may use a so-called "site context". This is activated by passing an HTTP header along with the query. 
+
+. Specify header
++
+Back in Query Playground, open the "Request Headers" panel at the bottom, and add the following configuration:
++
+.Configure HTTP headers
+[source,JSON]
+----
+{
+  "X-Guillotine-SiteKey": "/hmdb"
+}
+----
++
+NOTE: Site key can be either path, or the site's unique content ID. A benefit of using the ID is that you can change the name and path of the site, without affecting your queries.
++
+. Run a query with the site context
++
+One of the new features you get from the site context is the ${site} placeholder, which can be used in paths. Update your path parameter as follows, and run the movie query from the previous chapter once more: 
+[source,JSON]
+----
+{
+    "path": "${site}/movies/se7en"
+}
+----
+
+NOTE: ${site} will internally resolve to the path of the site - in this case the full path will be expanded to `/hmdb/movies/se7en`.
+
+Coming up - get your <<nextjs-setup#, your Next.js developer environment>> up and running.

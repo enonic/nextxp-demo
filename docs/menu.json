@@ -9,40 +9,48 @@
             "document": "api-primer"
         },
         {
-            "title": "3 - Next.js setup",
+            "title": "3 - Sites",
+            "document": "sites"
+        },
+        {
+            "title": "4 - Next.js setup",
             "document": "nextjs-setup"
         },
         {
-            "title": "4 - Rendering basics",
+            "title": "5 - Rendering basics",
             "document": "rendering-basics"
         },
         {
-            "title": "5 - Preview",
+            "title": "6 - Preview",
             "document": "preview"
         },
         {
-            "title": "6 - Custom pages",
+            "title": "7 - Custom pages",
             "document": "pages"
         },
         {
-            "title": "7 - Parts",
+            "title": "8 - Parts",
             "document": "parts"
         },
         {
-            "title": "8 - Layouts",
+            "title": "9 - Layouts",
             "document": "layouts"
         },
         {
-            "title": "9 - Page templates",
+            "title": "10 - Page templates",
             "document": "templates"
         },
         {
-            "title": "10 - Revalidation",
+            "title": "11 - Revalidation",
             "document": "revalidation"
         },
         {
-            "title": "11 - Deployment",
+            "title": "12 - Live deployment",
             "document": "deployment"
+        },
+        {
+            "title": "TL;DR",
+            "document": "tldr"
         }
     ]
 }

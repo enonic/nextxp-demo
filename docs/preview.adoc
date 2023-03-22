@@ -2,41 +2,34 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter, you'll enable Content Studio to load the preview directly from Next.
+In this chapter, you'll enable Content Studio to load the preview directly from the Next.js.
 
-You can do it either by installing a "Next.js integration" application, or by using NextJS library in your site's `build.gradle` file.
-
-We will use the Next.js integration app here because it requires no modifications to your existing site and needs virtually no configuration since everything is already set up in the app.
+TODO
 Refer <<library#, Next.js library>> chapter if you want to use library instead.
 
 ## Task: Enable preview 
 
-Enabling preview is as simple as installing the Next.js integration app and configuring it once.
+Install the `Next.xp` app and configure it on your site.
 
 . **Install the NextJS integration app**:
 +
-The https://github.com/enonic/app-nextjs[Nextjs application] has everything set up to access Next.js.
-Install it once and use for all of your Next.js sites.
+From `XP menu` -> `Applications` -> `Install` and search for `Next.xp`
 +
-NOTE: Visit it on the link:https://market.enonic.com/vendors/enonic/app-nextjs[Enonic Market].
-Click `Get started` and choose the latest version.
-
 . *Activate the preview*
 +
-Select the root item `Headless Movie Database` and click edit.
+In Content Studio, select the `HMDB` site and click `Edit`.
 +
-image:edit-site.png[title="Select site item and click edit",width=650px]
+Add the Next.xp app to the site by selecting it in the applications combobox.
 +
-Add the "Next.js integration" app by expanding the applications dropdown and selecting it in the list
-+
+TODO
 image:add-app-nextjs.png[title="Open app config by pressing pencil icon",width=597px]
 +
-Configure the "Next.js integration" application by clicking the pencil icon.
+Configure the `Next.xp` app by clicking the pencil icon. Use the same values that were configured in the Next.js front-end: 
+
+* `http://localhost:3000[http://localhost:3000^]`
+* `mySecretKey`.
 +
-image:edit-app-nextjs.png[title="Open app config by pressing pencil icon",width=597px]
-+
-Finally - if you did not change the API token in the Next app, use these values: `http://localhost:3000[http://localhost:3000^]`, and `mySecretKey`.
-+
+TODO
 image:save-app-nextjs.png[title="Form with fields for server url and nextjs token",width=771px]
 
 

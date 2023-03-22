@@ -32,7 +32,7 @@ When completed, as always *redeploy the Enonic app*.
 
 == Task: Add layout rendering to the front-end
 
-Moving over to the the Next app, you must add the the component that will render the layout.
+Moving over to the the Next.js app, you must add the the component that will render the layout.
 
 . **Add the layout component** files
 +
