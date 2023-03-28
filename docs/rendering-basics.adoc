@@ -7,15 +7,15 @@ In this chapter we will look into the basic rendering mechanisms, and add some c
 
 == Dev mode rendering
 
-As you have seen during the setup of Next, each content item automatically render a page, listing available props. These props are fetched by the Enonic Adapter.
+As you have seen during the setup of Next, each content item automatically map to a page listing available props. These props are fetched by the so-called Enonic Adapter.
 
-By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which template is actually applied.
+By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which React template is actually applied.
 
 == Task: Get person content
 
 Let's build our first component - starting with rendring of "person" content types:
 
-NOTE: The full name of your content type should now be "com.example.myproject:person" If you used a different name when creating the Enonic app, update the `.env` file in your Next.js app to reflect this.
+NOTE: The full name of your content type should now be `com.example.myproject:person` If you used a different name when creating the Enonic app, update the `.env` file in your Next.js app to reflect this.
 
 . **Add query** by creating the following file in your front-end application
 +
@@ -30,31 +30,33 @@ This file defines a graphQL query 'getPerson' that will fetch data from the Enon
 TIP: You may validate the query by copying it to the GraphQL playground. Replace `APP_NAME_UNDERSCORED` with `com_example_myproject` and set a query variable, try this for instance:
   `{"path": "/hmdb/persons/brad-pitt"}``
 +
-. **Register the query** by adding the following lines to the component mappings file:
-+
-NOTE: Do not copy the `...` - it is just there to illustrate there are other lines of code you should keep in the target file.
+. **Add the following imports** to component mappings file:
 +
 .src/components/_mappings.ts
 [source,JavaScript]
 ----
 import getPerson from './queries/getPerson';
 import {APP_NAME} from '@enonic/nextjs-adapter';
-
-...
-
+----
++
+. Then **Register the query** in the same file:
++
+.src/components/_mappings.ts
+[source,JavaScript]
+----
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
     query: getPerson,
     view: PropsView
 });
 ----
 +
-. **View the result**
+. **Check the result**
 +
 By visiting a person item - like `http://localhost:3000/persons/morgan-freeman[http://localhost:3000/persons/morgan-freeman^]` you should now see data props being listed in the view.
 +
 image:morgan-freeman-props.png[title="Page showing data props for Morgan Freeman content item",width=767px]
 
-== Task: Add custom person rendering
+== Task: Add person template
 
 With fresh content available, it's time to make things shine:
 
@@ -66,7 +68,7 @@ With fresh content available, it's time to make things shine:
 include::{sourcedir}/components/views/Person.tsx[]
 ----
 +
-This file defines a react view 'Person' that will use the props from the query to render the person. 
+This file defines a react view `Person` that will use the props from the query to render the person. 
 +
 . **Register Person view** by adding the following import to the component mappings:
 +
@@ -153,6 +155,7 @@ image:morgan-freeman-header-footer.png[title="Rendering with header and footer",
 You may have noticed the `Common` props appearing in the various prop views - these originate from the the following statement in the mappings:
 
 .src/components/_mappings.ts
+[source,TypeScript]
 ----
 ...
 
