@@ -21,7 +21,7 @@ TIP: Visiting the API link will give you a 404 page, because the GraphQL APIs ar
 
 Vercel, the front-end hosting provider requires access to a Git repo where your account has write access.
 
-. Clone or fork https://github.com/enonic/nextjs-enonic-demo/ to a personal Github/Bitbucket/Gitlab account.
+. Clone or fork https://github.com/enonic/nextxp-demo/ to a personal Github/Bitbucket/Gitlab account.
 +
 NOTE: If you are using Github, simply press the `Fork` button at the top right.
 +

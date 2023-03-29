@@ -15,12 +15,12 @@ From an empty folder, run the following command:
 
 [source,bash,options="nowrap"]
 ----
-npx degit git@github.com:enonic/nextjs-enonic-template.git
+npx degit git@github.com:enonic/nextxp-template.git
 ----
 
-The "nextjs-enonic-template" is based on link:https://nextjs.org/docs/getting-started[Next.js' own introduction app], so if you're familiar with that, you'll recognize the structure of the files.
+The "nextxp-template" is based on link:https://nextjs.org/docs/getting-started[Next.js' own introduction app], so if you're familiar with that, you'll recognize the structure of the files.
 
-The template includes some boilerplate we will customize, and a npm dependency that facilitates and simplifies integration with Enonic - **"the Enonic adapter"**.
+The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.
 
 === Code overview
 
@@ -36,9 +36,8 @@ src/
         [[...contentPath]].tsx <!--3-->
         _app.tsx <!--4-->
         _document.tsx <!--5-->
-        _component.tsx <!--6-->
         _renderable.tsx
-        api/ <!--7-->
+        api/ <!--6-->
             revalidate.ts
             preview.ts
 ----
@@ -51,8 +50,7 @@ File name is not a typo, but Next.js syntax that makes it catch all HTTP request
 <4> Invoked on every request.
 Add common structures here (eg. `<head>` etc), but be careful not to remove functionality needed by Content Studio
 <5> Vanilla Next.js file that outlines the basic document structure of all pages.
-<6> Files supporting the visual page editor in Content Studio
-<7> These files support preview mode and regeneration of cached pages
+<6> These files support preview mode and regeneration of cached pages
 
 
 == Task: Configure application

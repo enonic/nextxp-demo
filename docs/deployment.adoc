@@ -103,8 +103,8 @@ nextjs.secret = <yourSecret>
 .To support multiple sites and front-ends, use this format instead:
 [source,properties]
 ----
-settings.<projectID>.<siteName>.url = <Vercel app URL>
-settings.<projectID>.<siteName>.secret = <yourSecret>
+nextjs.<projectID>.<siteName>.url = <Vercel app URL>
+nextjs.<projectID>.<siteName>.secret = <yourSecret>
 ----
 +
 NOTE: If you imported content from your local environment, the following two steps can be skipped
