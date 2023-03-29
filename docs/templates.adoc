@@ -3,7 +3,7 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-Thus far, page rendering has been based on hard-coding, or editorially composing one page at a time. In this chapter you'll learn how to make page templates - and reuse them across multiple content items.
+Thus far, page rendering has been based on mappings, or editorially composing one page at a time. In this chapter you'll learn how to make page templates - and reuse them across multiple content items.
 
 ## Task: Movie details part
 
@@ -22,32 +22,23 @@ To complete this section, we'll need one final part for listing movie details. T
 </part>
 ----
 +
-.src/main/resources/site/parts/movie-details/movie-details.js
-[source,JavaScript]
-----
-var proxy = require('/lib/nextjs/proxy');
-
-exports.get = proxy.get;
-----
-+
 . **Redeploy** the Enonic app.
 +
-. **Register the Movie query and view** in Next.
+. **Add the Movie query and view** in Next.
 +
 .src/components/parts/MovieDetails.tsx
 [source,JavaScript]
 ----
 include::{sourcedir}/components/parts/MovieDetails.tsx[]
 ----
-Update the component mappings:
+. **Update the component mappings**:
 +
 .src/components/_mappings.ts
 [source,javascript,options="nowrap"]
 ----
 import MovieDetails, {getMovie} from './parts/MovieDetails';
 
-...
-
+// Part mappings
 ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
     query: getMovie,
     view: MovieDetails
@@ -61,13 +52,13 @@ With the new component registered, let's put it to use.
 
 . In Content Studio, select and **edit your favorite movie** (or choose "No time to die" if you have no faviorites).
 +
-. Like you did for the other pages, activate the page editor, select the "main" page component and **add the "Movie details" part** to the page.
+. **Activate the page editor**, and select the "Main" page component and **add the "Movie details" part** to the page.
 +
 image:movie-details.png[title="No time to die, configured with movie-details part",width=1440px]
 +
 We now have a single movie nicely presented, but it would be cumbersome to manually configure each movie like this - page templates to the rescue.
 +
-. In the page editor, **select the page component** (for instance by clicking on the header).
+. In the page editor, **select the page (root) component** (for instance by clicking on the header).
 +
 image:movie-page.png[title="With page component selected, save as template appears in right hand panel",width=1440px]
 +
@@ -79,6 +70,6 @@ This will create a new page template content item, and open it in a new tab for 
 +
 image:movie-template.png[title="Content item of type template, configure to support movie items",width=1440px]
 +
-. Try visiting other movie items to **verify they now automatically render**.
+. Try visiting other movie items to **verify they now automatically render**. PS! Don't forget to publish the changes and the new page template.
 
 With templates sorted out, let's dive into  <<revalidation#, production mode and page revalidation>>.

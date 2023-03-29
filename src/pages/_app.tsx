@@ -2,8 +2,7 @@ import type {AppProps} from 'next/app'
 import '../styles/globals.css'
 import Header from '../components/views/Header';
 import Footer from '../components/views/Footer';
-import {FetchContentResult, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
-import {getUrl} from '@enonic/nextjs-adapter/UrlProcessor';
+import {FetchContentResult, getUrl, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
 import StaticContent from '@enonic/nextjs-adapter/views/StaticContent';
 
 /**
@@ -19,9 +18,14 @@ function MyApp({Component, pageProps}: AppProps<FetchContentResult>) {
         const meta = pageProps.meta;
         if (meta.requestType === XP_REQUEST_TYPE.COMPONENT) {
             return <StaticContent condition={isEdit}>
-                <details data-single-component-output="true">
+                {meta.renderMode === RENDER_MODE.NEXT ?
+                    // don't wrap it in direct next access because we want to show 1 component on the page
                     <Component {...pageProps} />
-                </details>
+                    :
+                    <details data-single-component-output="true">
+                        <Component {...pageProps} />
+                    </details>
+                }
             </StaticContent>;
         } else if (!meta.canRender
             || (meta.catchAll && meta.renderMode === RENDER_MODE.EDIT)) {

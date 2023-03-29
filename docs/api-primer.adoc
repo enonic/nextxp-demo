@@ -2,23 +2,23 @@
 :toc: right
 :imagesdir: media/
 
-Based on the developer environment you created in the previous chapter, you'll now install and use Enonic's headless graphql API, aka Guillotine
+Based on the developer environment you created in the previous chapter, you'll now install and test Enonic's headless graphql API, aka Guillotine
 
 == Headless API
 
-Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content. The API is very flexible, and may even be customized. For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
+Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content. The API is highly flexible, and may even be customized. For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
 
 TIP: New to GraphQL? Check out the link:https://graphql.org/[GraphQL documentation]
 
 == Task: Install API
 
-Like Content Studio, the headless API is available from an application called `Guillotine``.
+The headless API can be installed via an application called `Guillotine`.
 
-. If Guillotine was not installed in a previous step. `XP menu` -> `Applications` -> `Install`. Search for `Guillotine` and install it.
+. Install via `XP menu` -> `Applications` -> `Install`. Search for `Guillotine` and install it.
 +
-. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. Verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called `Query playground`.
+. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. You can verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called `Query Playground`.
 +
-image:query-playground.png[title="Browsing the Guillotine API using Query Playground", width=1024px]
+image:content-studio-guillotine.png[title="Browsing the Guillotine API using Query Playground", width=1440px]
 
 
 == Task: Run a simple query
@@ -42,17 +42,19 @@ One of the objectives in this tutorial is listing and presenting movie details. 
 }
 ----
 +
-NOTE: `com.example.myproject:movie` refers to the name of the application you created in the previous chapter.
+NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app. 
++
+TIP: If you prefer DSL over standard query language, Enonic also provides a `queryDSL()` field.
 +
 . **View the Result**
 +
-After executing the query, you should get a result in the right panel.
-image:query-playground-example.png[title="Running a query for movies in Query Playground", width=1024px]
+After executing the query, you should get a result in the right hand response panel.
+image:content-studio-basic-query.png[title="Running a query for movies in Query Playground", width=1440px]
 
 == Task: Query variables
 
-In addition to the query itself, GraphQL also supports optional `variables`.
-Variables enable you to re-use the same query, but for instance fetch different content each time.
+In addition to the query itself, GraphQL also supports optional `query variables`.
+Query variables enable you to re-use the same query, but for instance fetch different content each time.
 
 . **Add query** to the GraphQL playground:
 +
@@ -71,48 +73,19 @@ query($path:ID!){               <!--1-->
 <1> `path` is declared (with a `$` marking it as a variable in the query). The declaration includes its type (`ID`), and a `!` marking it as a _required_ parameter).
 <2> The `path` variable here used as the value of the `key` parameter, passed to the `get` field.
 +
-. **Add query Variables** using the tab at the bottom to add a `variables` JSON object. Notice how the `path` field corresponds to the `$path` in the query string.:
+. **Add query Variables**. In the bottom left of Query Playground, you will find a the `Query variables`tab. Add the following JSON to the field.
++
+NOTE: Tthe `path` field in the JSON corresponds to the `$path` in the query string above:
 +
 [source,JSON]
 ----
 {
-    "path": "/hmdb/movies/se7en"
+    "path": "/movies/se7en"
 }
 ----
 +
 . **Run the query** to validate that the parameter working as expected.
 
-== Task: Site context
-
-Throughout this tutorial you'll be building a site, and the content tree structure will be relevant for us. The HMDB sample content has a special root content item with the content type "site". However, a content project may even contain multiple sites.
-
-To simplify our queries, we will use a so-called "site context". This is activated by passing an HTTP header along with our queries. 
-
-. Specify header
-+
-From Query Playground, open the "Request Headers" panel at the bottom, and add the following configuration:
-+
-.Configure HTTP headers
-[source,JSON]
-----
-{
-  "X-Guillotine-SiteKey": "/hmdb"
-}
-----
-+
-NOTE: Site key can be either path, the site's unique ID. A benefit of using the ID is that you change the location and path of the site without it affecting your queries.
-+
-. Run a query with the site context
-+
-One of the new features we get from the site context is the ${site} placeholder, which we can use in paths. Update your path parameter as follows, and run the movie query once more: 
-[source,JSON]
-----
-{
-    "path": "${site}/movies/se7en"
-}
-----
-
-NOTE: ${site} will internally resolve the path of the site and expand it - in this case the full path will be expanded to `/hmdb/movies/se7en`.
 
 == Task: Type introspection
 
@@ -133,7 +106,7 @@ NOTE: The fully-qualified content type name is used, dots are replaced with unde
 +
 Lets get content for a movie, the referenced _image_ items `media:image` and _person_ items `com.example.myproject:person` in a single query:
 +
-Copy this query into the GraphQL playground...
+Paste this query into the GraphQL Playground:
 +
 .A query with nested introspections
 [source,JavaScript]
@@ -176,20 +149,11 @@ query($path:ID!){
   }
 }
 ----
-<1> See how `imageUrl` is requested with parameters of its own? Type introspections can expose certain link:https://developer.enonic.com/docs/guillotine/stable/api[functions for processing data] before returning it.
+<1> Notice how `imageUrl` is requested with parameters of its own? Type introspections can expose certain link:https://developer.enonic.com/docs/guillotine/stable/api[functions for processing data] before returning it.
 +
-Since the query is still parameterized with `$path`, we can use the same `variables` object used earlier
-+
-.Variables
-[source,JSON]
-----
-{
-    "path": "${site}/movies/pulp-fiction"
-}
-----
-+
-Run the query in the playground. It should produce a fully resolved set of data - which will come in handy later in this tutorial.
+Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.
 +
 All in all, this allows for fetching deep and rich content data in a single API request.
 
-Coming up - get up and running with <<nextjs-setup#, your Next.js developer environment>>.
+
+Moving forward, you'll get introduced to <<sites#, the concept of sites>>. 

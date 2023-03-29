@@ -1,0 +1,71 @@
+= Next.xp TL;DR 
+Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.
+
+:toc: right
+:imagesdir: media/
+
+[[tldr]]
+== TL;DR
+
+Want to learn what is really happening? Head on to the <<enonic-setup#, first chapter>> of the tutorial instead.
+
+=== 1. Setup Enonic
+
+. **Sign up to Enonic**: https://enonic.com/sign-up/cloud-trial
+. **Create a new solution** based on the `Next.xp demo` template. This will install the relevant Enonic apps and routes needed. 
+. From `Solution` -> `Environments` - Notice the URL to the `API`` route, you will need it later.
++
+TIP: Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP `POST` rather than `GET`.
+
+=== 2. Create Git repo
+
+Vercel, the front-end hosting provider requires access to a Git repo where your account has write access.
+
+. Clone or fork https://github.com/enonic/nextxp-demo/ to a personal Github/Bitbucket/Gitlab account.
++
+NOTE: If you are using Github, simply press the `Fork` button at the top right.
++
+. Notice the URL to your new Git repository, you will need it in the next step.
+
+=== 3. Deploy Next.js front-end
+Vercel are the makers of Next.js, and you'll be using their service to host the front-end.
+
+. Sign up to Vercel: https://vercel.com/
+. Create a new project `enonic-demo`, and connect it to the repo you created in step 2.
+. **Add environment variables** telling the app where it will find the Draft and live API respectively, as well as a secret you will need to access preview mode in a later step.
++
+KEY:VALUE:: CONTENT_API_DRAFT:<API URL>/draft
+KEY:VALUE:: CONTENT_API_MASTER:<API URL>/master
+KEY:VALUE:: API_TOKEN:mySecretToken
++
+. After deploying, the Vercel app should now render the front page:
++
+image:front-page.png[title="Front page showing some text, links and a picture",width=1003px]
++
+NOTE: Make a note of the application URL (as seen in your browser tab), you will need it when setting up preview later.
++
+TIP: Check the Vercel function logs if you are not getting the expected result.
+
+=== 4. Activate preview
+With the front-end running, it is time to enable preview in Content Studio.
+
+. From the Enonic Console, select `Solution` -> `Applications`, locate and select the `Next.xp` app.
+. From the right hand panel, click the three dots for the applicable environment, and then `Edit`.
++
+.Replace <Vercel URL> with the URL from the previous step, paste the configuration into the form, and Save:
+[source,properties]
+----
+nextjs.url = <Vercel URL>
+nextjs.secret = mySecretToken
+----
++
+image:console-app-nextxp-config.png[title="Configure Next.xp app with nextjs.url and nextjs.secret", width=803px]
++
+. **Launch Enonic XP admin** from the solution dashboard, and open Content Studio in the top right XP menu.
+. Select the root item `Headless Movie Database`, and you should instantly see the preview on the right hand side.
++
+image:cloud-preview.png[title="Front page as seen from Content Studio",width=1419px]
+
+TIP: The Next.xp app uses the token from the configuration to activate Next.js' preview mode. Changes made will only be visible in Content Studio, until published. Upon publishing, Next.xp trigger revalidation of all pages, and the changes will be live.
+
+Congratulations, you now have a Next.js site powered by Enonic! 🚀

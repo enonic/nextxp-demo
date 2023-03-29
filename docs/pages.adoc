@@ -50,10 +50,10 @@ Content types need to exist in Enonic before an editor can create content. Simil
 +
 NOTE: The definition of the region `main`, allows Content Studio editors to add components to the page, as you will see later.
 +
-**Redploy the Enonic app to register the page component.**
+Redploy the Enonic app to register the page component.
 +
-. **Configure page rendering in Next**
-On the Next side of things, rendering a page is similar to rendering a content type. Add the following file to your Next project.
+. **Configure page rendering in Next.js**
+Rendering a page is similar to rendering a content type. Add the following file to your code.
 +
 .src/components/pages/Main.tsx
 [source,TypeScript]
@@ -70,14 +70,13 @@ Finally, register it in the component mappings by adding the following lines to 
 ----
 import MainPage from './pages/Main';
 
-...
-
+// Page mappings
 ComponentRegistry.addPage(`${APP_NAME}:main`, {
     view: MainPage
 });
 ----
 
-Both Enonic and Next are now able to handle custom pages.
+Both Enonic and Next.js are now able to handle custom pages.
 
 == Task: Create your first page
 
@@ -85,7 +84,7 @@ Its time to build a custom page.
 
 . **Turn the site into a page**
 +
-From Content Studio, select and edit the site `/hmdb` content item. From the edit view, activate the page editor by clicking the monitor icon in the top right corner.
+From Content Studio, select and edit the `/hmdb` content item. From the edit view, activate the page editor by clicking the monitor icon in the top right corner.
 +
 You should now see the following:
 +
@@ -99,34 +98,24 @@ image:page-rendered.png[title="Active page controller rendering an empty region 
 
 == Task: Using the text component
 
-Content Studio's ships with a built-in Text component which is handy when composing pages.
+Content Studio ships with a built-in Text component which can be handy when composing pages.
 
 . From the Insert tab (on the right hand side), drag a Text component into the region. 
 . Text mode will now be activated, and you can use the link:https://developer.enonic.com/docs/content-studio/stable/editor/component-types#text_component[rich-text editor] to write and format text, but also insert images.
 +
 image:text-component.png[title="Next.js-rendered text component with an image",width=1440px]
 +
-. After saving, visit the Next.js rendering directly on http://localhost:3000/[http://localhost:3000/^] to see the result.
-+
 . You may also click the `Preview` button in Content Studio for a full screen version.
 
 == Task: Publish page
-Your fresh new page is looking good. However, if you visit `http://localhost:3000[http://localhost:3000^]` - you'll get a "404 page not found" error. This is because only published changes are visible from the front end
+Your new page is looking good. However, if you visit `http://localhost:3000[http://localhost:3000^]` - you'll get a "404 page not found" error. This is because only published changes are visible from the front end
 
-Content Studio uses NextJS's preview mode, which uses the drafts API. When accessing the front-end directly, NextJS fetches published content from the master branch.
+Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.
 
-. **Publish the page** from by clicking `Mark as ready`, and then `Publish`.
+. **Publish the page** from by clicking `Mark as ready...`, and then `Publish`.
 +
 image:publish.png[title="Publishing wizard",width=810px]
 +
 . **Verify that your page is live** by visiting `http://localhost:3000[http://localhost:3000^]` once again.
 
-== Troubleshooting
-
-NOTE: Using Content Studio preview in combination with `NextJS dev mode` (running on port 3000) may randomly produce **hydration error**.
-
-image:hydration-error.png[title="Hydration error",width=566px]
-
-We are working to resolve the issue. In the meantime, refresh your browser tab if this happens.
-
-That completes the introduction to page rendering, coming up we'll add some <<parts#, dynamic page components>> to play with.
+That concludes the introduction to page rendering, coming up we'll add some <<parts#, configurable page components>> to play with.

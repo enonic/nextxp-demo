@@ -1,8 +1,6 @@
 import React from 'react'
-import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
+import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
-import {getUrl} from '@enonic/nextjs-adapter/UrlProcessor';
-import {MetaData} from '@enonic/nextjs-adapter/guillotine/getMetaData';
 
 
 export const getMovie = `
@@ -63,7 +61,7 @@ const MovieView = (props: PartProps) => {
         <>
             <div>
                 <h2>{displayName}</h2>
-                {data && <MovieInfo {...data}/>}
+                {data && <MovieInfo {...data} meta={meta}/>}
                 {data?.cast && <Cast cast={data.cast} meta={meta}/>}
             </div>
             <p>
@@ -76,6 +74,7 @@ const MovieView = (props: PartProps) => {
 export default MovieView;
 
 interface MovieInfoProps {
+    meta: MetaData;
     release: string;
     subtitle: string;
     abstract: string;
@@ -94,7 +93,7 @@ const MovieInfo = (props: MovieInfoProps) => {
                 <p>({new Date(props.release).getFullYear()})</p>
             )}
             {posterPhoto.imageUrl && (
-                <img src={posterPhoto.imageUrl}
+                <img src={getUrl(posterPhoto.imageUrl, props.meta)}
                      title={props.subtitle}
                      alt={props.subtitle}
                 />
@@ -149,7 +148,7 @@ const CastMember = (props: CastMemberProps & { meta: MetaData }) => {
         <li style={{marginRight: "15px"}}>
             {
                 personPhoto.imageUrl &&
-                <img src={personPhoto.imageUrl}
+                <img src={getUrl(personPhoto.imageUrl, meta)}
                      title={`${displayName} as ${character}`}
                      alt={`${displayName} as ${character}`}/>
             }
