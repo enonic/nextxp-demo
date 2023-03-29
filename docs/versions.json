@@ -4,11 +4,6 @@
       "label": "stable",
       "checkout": "master",
       "latest": true
-    },
-    {
-      "label": "next",
-      "checkout": "b76cc36",
-      "latest": false
     }
   ]
 }
