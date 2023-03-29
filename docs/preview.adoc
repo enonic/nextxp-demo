@@ -18,16 +18,14 @@ In Content Studio, select the `HMDB` site and click `Edit`.
 +
 Add the Next.xp app to the site by selecting it in the applications combobox.
 +
-TODO
-image:add-app-nextjs.png[title="Open app config by pressing pencil icon",width=597px]
+image:content-studio-add-nextxp.png[title="Open app config by pressing pencil icon",width=597px]
 +
 Configure the `Next.xp` app by clicking the pencil icon. Use the same values that were configured in the Next.js front-end: 
 
 * `http://localhost:3000[http://localhost:3000^]`
 * `mySecretKey`.
 +
-TODO
-image:save-app-nextjs.png[title="Form with fields for server url and nextjs token",width=771px]
+image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
 
 . After applying and saving the changes, you should be able to see the live preview in Content Studio.
 +

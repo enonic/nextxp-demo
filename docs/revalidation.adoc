@@ -7,12 +7,12 @@ In this chapter you will learn about NextJS' static pages and how the Enonic tri
 == Introduction
 The NextJS front-end is configured to use static page generation (ISR), which basically means you get lightning fast pages, but also with specific limitations, such as getting new pages and changes instantly live on your site.
 
-TIP: Next.js also supports Server Side Rendering (SSR) which can be enabled by modifying the `[[...contentPath]].tsx` page handler.
+TIP: Next.js also supports Server Side Rendering (SSR) which can be enabled by modifying the `[[...contentPath]].tsx` page handler. In this mode all rendering will be "real time", meaning no caching.
 
 == Prod mode
 So far, you have been running Next.js in dev mode.
 
-By starting Next.js in `prod` mode, the application is automatically optimized, and in our case, pages get rendered statically at compile time.
+By starting Next.js in `prod` mode, the application is automatically optimized, and in our case, pages get pre-rendered statically at compile time.
 
 == Task: Activate prod mode
 
@@ -35,14 +35,13 @@ With Next.js now running on a different port, the preview integration we configu
 
 TIP: Content Studio uses Next.js' preview mode, which automatically bypass static pages, always showing the the latest updates to your draft content.
 
-
 == Task: Test page invalidation
 
-. **Edit your front-page, and publish the changes** to trigger a revalidation hook.
+. **Edit your front-page, and publish the changes**. This will trigger a revalidation hook.
 
 Despite using static pages, the page should get updated at `http://localhost:4242` with your latest changes - more or less instantly. 🎉
 
-How does it work? The Next.xp app is already connected to the front-end, and automatically triggers revalidation of all pages when it detects the publishing event.
+How does it work? In addition to handling previews, the Next.xp app automatically triggers revalidation of all pages when it detects the publishing event.
 
 NOTE: You should also be able to tell from the Next.js log that the revalidation was triggered.
 

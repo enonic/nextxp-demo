@@ -33,15 +33,13 @@ We'll start off by adding a simple component that lists child items in the tree 
 ----
 +
 NOTE: This component also contains a form, similar to content types.
-This means editors can configure it - sorting Ascending or Descending.
+This means editors can configure it - sorting the items Ascending or Descending.
 +
-To work seamlessly with Content Studio's WYSIWYG preview, in the Enonic app, parts need a special controller file that helps the preview reload the component when there are changes, without having to refreshing the entire page.
-+
-. **Build and deploy your Enonic app** once more to make the new part accessible to from Content Studio.
+. **Build and deploy your Enonic app** once more to make the new part available in Content Studio.
 +
 . **Add parts to the page**
 +
-Once the app has deployed, head over to Content Studio.This time, edit the `Persons` folder item.Create the page and drag'n drop the new part into the region (`right-click -> Insert`, or drag-n-drop from the `Insert panel`` on the right).
+Back in Content Studio, edit the `/hmdb/persons` folder item. Create the page and place the new part into the region (`right-click -> Insert`, or drag-n-drop from the `Insert panel`` on the right hand side).
 +
 TIP: The part will appear without making any changes to the front-end, this is because the Enonic Adapter contains fallback part rendering, as long as Next.js is running in DEV mode.
 +
@@ -49,7 +47,7 @@ image:missing-component.png[title="Next.js dev mode renderes nice feedback when 
 
 == Task: Configure part rendering in Next.js
 
-Heading over to the front-end code, we must register a new component that support actual rendering of this part.
+Heading over to the front-end, you must register a new component that supports rendering of this part.
 
 . **Add the part implementation to the Next.js app**
 +
@@ -64,12 +62,11 @@ include::{sourcedir}/components/parts/ChildList.tsx[]
 Update _mappings.ts with the following new lines:
 +
 .src/components/_mappings.ts
-[source,javascript,options="nowrap"]
+[source,TypeScript,options="nowrap"]
 ----
 import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
 
-...
-
+// Part mappings
 ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
     query: getChildList,
     processor: childListProcessor,
@@ -79,7 +76,7 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 +
 As you may have noticed this component has a query, a view and a processor. Processors are optional JavaScript functions that can do whatever you need it to. For instance fetch data from another source than the CMS, or post-process the query response before it is passed to the view etc.
 +
-The Enonic adapter will execute the query, pass the result via the processor, then to the view which then renders the component.
+The Enonic adapter will execute the query, pass the result via the processor, and then to the view which renders the component.
 +
 image:child-list-rendered.png[title="Part rendered with list of persons as seen from Content Studio",width=1440px]
 + 
@@ -110,7 +107,7 @@ This part definition includes a form, with an link:https://developer.enonic.com/
 +
 . **Redeploy** the Enonic app and add the part to your page
 +
-. **Add and register** the heading component in Next.js
+. **Add the heading component in Next.js**.
 +
 .src/components/parts/Heading.tsx
 [source,JavaScript]
@@ -124,8 +121,7 @@ Add the following lines to _mappings.ts:
 ----
 import Heading from './parts/Heading';
 
-...
-
+// Part mappings
 ComponentRegistry.addPart(`${APP_NAME}:heading`, {
     view: Heading
 });
@@ -133,4 +129,4 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 +
 You should now have two configurable parts to play with.
 
-In the next chapter we will make page composition even more interesting, with the introduction of <<layouts#, layouts>>. 
+In the next chapter you will make page composition even more interesting, with the introduction of <<layouts#, layouts>>. 

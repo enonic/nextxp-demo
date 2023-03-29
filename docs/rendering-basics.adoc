@@ -83,6 +83,7 @@ And then update the component mapping you created earlier to use the new view:
 .src/components/_mappings.ts
 [source,JavaScript]
 ----
+// Content type mappings
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
     query: getPerson,
     view: Person

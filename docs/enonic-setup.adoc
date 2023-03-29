@@ -75,7 +75,6 @@ image:applications-cs-install.png[title="Installing Content Studio", width=808px
 +
 . **Open Content Studio** from `XP menu` -> `Content Studio`. Choose the `Movie DB` project if asked to select a project. You should now see something like this:
 +
-TODO
 image:content-studio-moviedb.png[title="Movie DB in Content Studio", width=1440px]
 +
 NOTE: when clicking on the content items, some will have a default preview. That's okay for now - you'll customize the preview later.
