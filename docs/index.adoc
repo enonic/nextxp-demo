@@ -8,9 +8,12 @@ NOTE: **Impatient?** Skip to the end of the tutorial and get a live demo by foll
 
 == Intro
 
-While developers are free to harness the power of Next.js. Next.xp also give content editors extensive control over the site - through component based landing pages, structured content, and control over the site's URL structure.
+Next.xp provides an opinionated out-of-the-box integration between Enonic XP and and Next.js for building sites. 
+It offers content editors a familiar and hassle-free way of working with content, using structured content, component based landing pages, and extensive control over the site's URL structure.
 
-image:cloud-preview.png[title="Editors enjoy WYSIWYG editing and live preview, even when using statically generated pages",width=1419px]
+TIP: Looking to access and use Enonic's API directly? Check out the https://developer.enonic.com/docs/intro[Introduction guide], or the in-depth https://developer.enonic.com/docs/developer-101[developer 101 tutorial].
+
+image:cloud-preview.png[title="Editors enjoy WYSIWYG editing and live preview, combined with statically generated pages",width=1419px]
 
 [NOTE]
 ====
@@ -21,7 +24,8 @@ You will complete the following steps:
 
 * Set up the Enonic SDK and sample content
 * Get familiar with the headless API
-* Create a Next.js app using a template 
+* Learn about the site concept in Enonic
+* Create a Next.js app using a template
 * Activate live preview in Enonic
 * Render content based on type
 * Build landing pages using components
