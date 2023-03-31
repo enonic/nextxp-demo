@@ -31,4 +31,31 @@ image:content-studio-configure-nextxp.png[title="Form with fields for server url
 +
 image:morgan-freeman-preview.png[title="Next.js-rendered preview in Content Studio",width=1072px]
 
+
+## How does it work?
+
+There are several aspects that come into play for the preview to work seamlessly, and still remain secure.
+
+The following aspects need to be handled:
+
+* Next.js preview mode must be activated
+* API queries from Next.js must have access to the draft content
+* Permissions must be limited to the current editorial user
+* Links in the Next.js response must be processed to work properly in Content Studio
+
+image:preview-flowchart.png[title="Flowchart demonstrating the preview execution flow",width=755px]
+
+As you can see from the above flowchart, Next.xp acts as a proxy, but it is also assisted by the `Enonic Adapter` which exists inside the Next.js project
+
+### Link handling
+Content Studio internally uses a set of different relative URLs to handle preview. 
+These are: `/preview`, `/inline` and `/edit`.
+
+Next.js on the other hand will use a single basepath, typically `/` for the site. 
+As Next.js does not support dynamically changing the basepath, the `getUrl()` function that was mentioned earlier needs to be used in the Next.js project. This will take care of all links controlled by the developer's code.
+
+Additionally, Next.js will "hardcode" links to various static assets and code, which cannot be handled by getURL(). 
+These remaining URLs are the automatically processed by the Next.xp proxy before the result can be seen in Content Studio.
+
+
 That completes the preview setup, moving forward, we'll make it possible to <<pages#, create pages editorially>>.
