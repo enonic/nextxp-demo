@@ -34,7 +34,7 @@ When completed, as always *redeploy the Enonic app*.
 
 Moving over to the the Next.js app. Add the component that will render the layout.
 
-. **Add the layout component** files
+. **Add the front-end layout component** files
 +
 .src/components/layouts/TwoColumnLayout.tsx
 [source,TypeScript]
@@ -60,6 +60,7 @@ Add these new lines to the _mappings.ts file.
 [source,TypeScript,options="nowrap"]
 ----
 import TwoColumnLayout from './layouts/TwoColumnLayout';
+
 
 // Layout mappings
 ComponentRegistry.addLayout(`${APP_NAME}:2-column`, {

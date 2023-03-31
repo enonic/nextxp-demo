@@ -8,7 +8,7 @@ So far, rendering has been based on hardcoded mappings made by the developer. In
 == Task: Disable debug view
 For every page you select, the debug view keeps appearing - even in Content Studio. Disable this by following the steps below.
 
-. **Comment out the `CATCH_ALL`** content type view at the bottom of your mappings file - like this:
+. **Comment out the `CATCH_ALL` debug view** at the bottom of your mappings file - like this:
 +
 .src/components/_mappings.ts
 [source,TypeScript]

@@ -44,6 +44,7 @@ import {APP_NAME} from '@enonic/nextjs-adapter';
 .src/components/_mappings.ts
 [source,JavaScript]
 ----
+// Content type mappings
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
     query: getPerson,
     view: PropsView
