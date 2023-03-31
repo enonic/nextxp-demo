@@ -4,7 +4,7 @@ This is a step-by-step tutorial on building and managing Next.js sites, using En
 :toc: right
 :imagesdir: media/
 
-NOTE: **Impatient?** Skip to the end of the tutorial and get a live demo by following these instructions:
+NOTE: **Impatient?** Skip to the end of the tutorial and get a live demo by following <<tldr#,these instructions>>.
 
 == Intro
 
