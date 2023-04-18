@@ -5,7 +5,7 @@ Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, 
 :imagesdir: media/
 
 [[tldr]]
-== TL;DR
+== tl;dr
 
 Want to learn what is really happening? Head on to the <<enonic-setup#, first chapter>> of the tutorial instead.
 
@@ -72,8 +72,6 @@ image:cloud-preview.png[title="Front page as seen from Content Studio",width=141
 [TIP]
 ====
 For production use, we recommend moving the configuration to the solution console - <<deployment#,as described here>>.
-
-image:console-configure-app.png[title="Configure the Next.XP application in the solution console",width=769px]
 ====
 
 == How does it work?
