@@ -6,11 +6,11 @@ In this chapter, you'll build a tree structure of your content, with a site item
 
 == Introduction
 
-Next.xp is built to provide complete control over a website, including landing pages and the URL structure. For this use-case, Content Studio's tree structure will come in handy.
+Next.XP is built to provide complete control over a website, including landing pages and the URL structure. For this use-case, Content Studio's tree structure will come in handy.
 
 == Task: Creating the site
 
-Next.xp needs a root content item. This item will act as the front-page of your site.
+Next.XP needs a root content item. This item will act as the front-page of your site.
 
 TIP: Before you continue, clear all selections in the Content Studio list view (this way the site content will be placed on the project root).
 

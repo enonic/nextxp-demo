@@ -31,7 +31,7 @@ This will take a while longer as when compared to dev mode.
 
 With Next.js now running on a different port, the preview integration we configured earlier has been broken.
 
-. **Fix the preview** by updating the Next.xp app configuration on your site with the new URL, and confirm that preview starts working again.
+. **Fix the preview** by updating the Next.XP app configuration on your site with the new URL, and confirm that preview starts working again.
 
 TIP: Content Studio uses Next.js' preview mode, which automatically bypass static pages, always showing the the latest updates to your draft content.
 
@@ -41,7 +41,7 @@ TIP: Content Studio uses Next.js' preview mode, which automatically bypass stati
 
 Despite using static pages, the page should get updated at `http://localhost:4242` with your latest changes - more or less instantly. 🎉
 
-How does it work? In addition to handling previews, the Next.xp app automatically triggers revalidation of all pages when it detects the publishing event.
+How does it work? In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.
 
 NOTE: You should also be able to tell from the Next.js log that the revalidation was triggered.
 

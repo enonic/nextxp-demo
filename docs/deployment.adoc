@@ -88,10 +88,12 @@ With the front-end running, you can finally link it to Content Studio, and start
 
 NOTE: You now have to create your site and tree structure once more, or for convenience, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
 
-. **Install the Next.xp app** `Solution` -> `Applications` -> `Install` -> Search for `Next.xp`, select it an click install
+. **Install the Next.XP app** `Solution` -> `Applications` -> `Install` -> Search for `Next.XP`, select it an click install
 . **Add configuration**. This time, rather than configuring the app within the site, do this via config files.
 +
 TIP: This is safer and more flexible than storing the configuration within the content.
++
+image:console-configure-app.png[title="Configure the Next.XP application in the solution console",width=769px]
 +
 .Add the following to the app config field:
 [source,properties]
@@ -108,7 +110,7 @@ nextjs.<projectID>.<siteName>.secret = <yourSecret>
 ----
 +
 NOTE: If you imported content from your local environment, the following two steps can be skipped
-. **Add the Next.xp app to the site**. Since you have already placed configuration on file, simply adding the app to the site will do the trick.
+. **Add the Next.XP app to the site**. Since you have already placed configuration on file, simply adding the app to the site will do the trick.
 . **Save and verify** that the configuration is working by testing the Content Studio preview.
 
 == Task: Publish a page
