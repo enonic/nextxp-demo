@@ -26,7 +26,7 @@
     "@types/node": "^18.15.5",
     "@types/react": "18.0.38",
     "@types/react-dom": "^18.0.11",
-    "eslint": "8.36.0",
+    "eslint": "8.39.0",
     "eslint-config-next": "13.2.4",
     "prettier": "^2.8.8",
     "typescript": "5.0.4"
