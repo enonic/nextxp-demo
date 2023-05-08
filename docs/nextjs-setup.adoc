@@ -29,15 +29,15 @@ The following file structure should now exist within your new project folder:
 .Next project files:
 [source,files]
 ----
-.evn <!--1-->
+.evn // <1>
 src/
-    components/ <!--2-->
+    components/ // <2>
     pages/
-        [[...contentPath]].tsx <!--3-->
-        _app.tsx <!--4-->
-        _document.tsx <!--5-->
+        [[...contentPath]].tsx // <3>
+        _app.tsx // <4>
+        _document.tsx // <5>
         _renderable.tsx
-        api/ <!--6-->
+        api/ // <6>
             revalidate.ts
             preview.ts
 ----
