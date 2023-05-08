@@ -60,9 +60,9 @@ Query variables enable you to re-use the same query, but for instance fetch diff
 +
 [source,GraphQL]
 ----
-query($path:ID!){               <!--1-->
+query($path:ID!){               // <1>
   guillotine {
-    get(key:$path) {            <!--2-->
+    get(key:$path) {            // <2>
       type
       _id
       displayName
