@@ -112,7 +112,7 @@ Your new page is looking good. However, if you visit `http://localhost:3000[http
 
 Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.
 
-. **Publish the page** from by clicking `Mark as ready...`, and then `Publish`.
+. **Publish the page** by clicking `Mark as ready...`, and then `Publish`.
 +
 image:publish.png[title="Publishing wizard",width=810px]
 +
