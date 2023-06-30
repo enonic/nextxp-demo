@@ -30,7 +30,7 @@ Query playground lets us browse and use the API directly. Use the left hand fiel
 One of the objectives in this tutorial is listing and presenting movie details. Run this simple query that retrieves the ID and displayName of some movies:
 +
 .Query to fetch movies from the Headless API:
-[source,GraphQL]
+[source,graphql]
 ----
 {
     guillotine {
@@ -58,7 +58,7 @@ Query variables enable you to re-use the same query, but for instance fetch diff
 
 . **Add query** to the GraphQL playground:
 +
-[source,GraphQL]
+[source,graphql]
 ----
 query($path:ID!){               // <1>
   guillotine {
@@ -109,7 +109,7 @@ Lets get content for a movie, the referenced _image_ items `media:image` and _pe
 Paste this query into the GraphQL Playground:
 +
 .A query with nested introspections
-[source,JavaScript]
+[source,graphql]
 ----
 query($path:ID!){
   guillotine {
