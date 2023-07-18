@@ -3,7 +3,7 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-So far, rendering has been based on hardcoded mappings made by the developer. In this chaper we will enable editors to compose their own pages.
+So far, rendering has been based on hardcoded mappings made by the developer. In this chapter we will enable editors to compose their own pages.
 
 == Task: Disable debug view
 For every page you select, the debug view keeps appearing - even in Content Studio. Disable this by following the steps below.
@@ -23,9 +23,9 @@ ComponentRegistry.addContentType(CATCH_ALL, {
 */
 ----
 +
-. **Verify that pages are no longer rendering** by visting your site on `http://localhost:3000`.
+. **Verify that pages are no longer rendering** by visiting your site on `http://localhost:3000`.
 +
-You the same will now apply to Content Studio.
+The same will now apply to Content Studio.
 
 
 == Task: Setup page rendering
@@ -53,7 +53,7 @@ NOTE: The definition of the region `main`, allows Content Studio editors to add 
 Redploy the Enonic app to register the page component.
 +
 . **Configure page rendering in Next.js**
-Rendering a page is similar to rendering a content type. Add the following file to your code.
+Rendering a page is similar to rendering a content type. Go to the folder `./src/components`, create a new folder here - `pages`, and within it a new file called `Main.tsx` containing the following code.
 +
 .src/components/pages/Main.tsx
 [source,TypeScript]
@@ -80,7 +80,7 @@ Both Enonic and Next.js are now able to handle custom pages.
 
 == Task: Create your first page
 
-Its time to build a custom page.
+It's time to build a custom page.
 
 . **Turn the site into a page**
 +
@@ -108,11 +108,11 @@ image:text-component.png[title="Next.js-rendered text component with an image",w
 . You may also click the `Preview` button in Content Studio for a full screen version.
 
 == Task: Publish page
-Your new page is looking good. However, if you visit `http://localhost:3000[http://localhost:3000^]` - you'll get a "404 page not found" error. This is because only published changes are visible from the front end
+Your new page is looking good. However, if you visit `http://localhost:3000[http://localhost:3000^]` - you'll get a "404 page not found" error. This is because only published changes are visible from the front end.
 
 Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.
 
-. **Publish the page** from by clicking `Mark as ready...`, and then `Publish`.
+. **Publish the page** by clicking `Mark as ready...`, and then `Publish`.
 +
 image:publish.png[title="Publishing wizard",width=810px]
 +

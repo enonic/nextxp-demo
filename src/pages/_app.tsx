@@ -37,7 +37,7 @@ function MyApp({Component, pageProps}: AppProps<FetchContentResult>) {
         <StaticContent condition={isEdit}>
             <Header
                 title="🔥 Next.XP"
-                logoUrl={getUrl('images/xp-shield.svg', pageProps.meta)}
+                logoUrl={getUrl('/images/xp-shield.svg', pageProps.meta)}
                 meta={pageProps.meta}
             />
             <main style={{

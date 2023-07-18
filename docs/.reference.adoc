@@ -105,22 +105,22 @@ The adapter code in your project should be (all of them under _src/_, except for
 next.config.js
 
 src/
-    enonic-connection-config.js         <!--1-->
+    enonic-connection-config.js         // <1>
 
     pages/
-        [[...contentPath]].jsx          <!--2-->
+        [[...contentPath]].jsx          // <2>
 
     selectors/
         queries/
-            _getMetaData.js             <!--3-->
+            _getMetaData.js             // <3>
             _getDefaultData.js
-        contentSelector.js                 <!--4-->
+        contentSelector.js                 // <4>
 
     guillotine/
-        fetchContent.js                 <!--5-->
+        fetchContent.js                 // <5>
 
     components/
-        BasePage.jsx                    <!--6-->
+        BasePage.jsx                    // <6>
 ----
 
 <1> <<#connection-config, _enonic-connection-config.js_>> is a config file for setting up the connection to XP and holding some central constants and functions for that.
@@ -287,7 +287,7 @@ Or, when importing the app name to keep that defined in one place:
 import { appName } from '../enonic-connection-config';
 
 contentSelector = {
-    [`${appName}:my-content-type`]: {       <!--1-->
+    [`${appName}:my-content-type`]: {       // <1>
 
         // ...
     },
@@ -310,7 +310,7 @@ NOTE: This simple form is suitable for queries that only declare the `$path` par
 ----
 import { appName } from '../enonic-connection-config';
 
-const getDisplayName = `                            <!--1-->
+const getDisplayName = `                            // <1>
     query($path:ID!){
       guillotine {
         get(key:$path) {
@@ -320,7 +320,7 @@ const getDisplayName = `                            <!--1-->
 
 contentSelector = {
     [`${appName}:my-content-type`]: {
-        query: getDisplayName,                      <!--2-->
+        query: getDisplayName,                      // <2>
     },
 }
 ----
@@ -356,13 +356,13 @@ NOTE: Vice versa: if your query only declares a `$path` parameter, no `variables
 ----
 import { appName } from '../enonic-connection-config';
 
-const getSomeItemsBelowFolder = `                   <!--1-->
+const getSomeItemsBelowFolder = `                   // <1>
     query($path:ID!,$maxChildren:Int){
       guillotine {
         get(key:$path) {
           displayName
             ...on base_Folder {
-            children(first:$maxChildren) {          <!--1-->
+            children(first:$maxChildren) {          // <1>
                 displayName
                 _path
             }
@@ -372,7 +372,7 @@ const getSomeItemsBelowFolder = `                   <!--1-->
     }
 `;
 
-const resolveVariables = (path, context) => ({       <!--2-->
+const resolveVariables = (path, context) => ({       // <2>
     path: path,
     maxChildren: 1000
 });
@@ -381,13 +381,13 @@ const resolveVariables = (path, context) => ({       <!--2-->
 contentSelector = {
     'base:folder': {
         query: {
-            query: getSomeItemsBelowFolder,         <!--3-->
+            query: getSomeItemsBelowFolder,         // <3>
             variables: resolveVariables
         }
     },
 
     [`${appName}:custom-folder-type`]: {
-        query: [ getSomeItemsBelowFolder, resolveVariables ]     <!--4-->
+        query: [ getSomeItemsBelowFolder, resolveVariables ]     // <4>
     }
 }
 ----
@@ -420,11 +420,11 @@ const getDisplayName = `
     query($path:ID!){
       guillotine {
         get(key:$path) {
-          displayName                               <!--1-->
+          displayName                               // <1>
     } } }
 `;
 
-const getMyName = (content, context) => ({          <!--2-->
+const getMyName = (content, context) => ({          // <2>
     name:  content.displayName,
     catchPhrase: "Hi! My name is Slim " + content.displayName
 });
@@ -432,7 +432,7 @@ const getMyName = (content, context) => ({          <!--2-->
 contentSelector = {
     [`${appName}:my-content-type`]: {
         query: getDisplayName,
-        props: getMyName,                           <!--3-->
+        props: getMyName,                           // <3>
     },
 }
 ----
@@ -451,16 +451,16 @@ The `page` attribute (in the <<#type-selection, "type selection">> value object)
 ----
 import { appName } from '../enonic-connection-config';
 
-const RenderName = (props) => (                     <!--1-->
+const RenderName = (props) => (                     // <1>
     <>
-        <h1>{props.displayName}</h1>                <!--2-->
+        <h1>{props.displayName}</h1>                // <2>
         <p>I am a {props.type}</p>
     </>
 );
 
 contentSelector = {
     [`${appName}:my-content-type`]: {
-        page: RenderName,                           <!--2-->
+        page: RenderName,                           // <2>
     },
 }
 ----
@@ -576,27 +576,27 @@ It's also possible to **add the Enonic adapter into an existing Next.js project*
 .Enonic adapter files:
 [source,files]
 ----
-next.config.js                          <!--1-->
-.env                                    <!--2-->
+next.config.js                          // <1>
+.env                                    // <2>
 .env.production
 .env.development
 
 src/
 
-    enonicAdapter/                          <!--2-->
-        enonic-connection-config.ts     <!--3-->
+    enonicAdapter/                          // <2>
+        enonic-connection-config.ts     // <3>
         guillotine/
-            fetchContent.ts             <!--4-->
-        views/                          <!--5-->
+            fetchContent.ts             // <4>
+        views/                          // <5>
             _MainXpView.tsx
             _Region.tsx
         ...
 
-    cms/                           <!--6-->
-        queries/                        <!--7-->
+    cms/                           // <6>
+        queries/                        // <7>
             _getMetaData.ts
             _getDefaultData.ts
-        components/                     <!--8-->
+        components/                     // <8>
             _Image.tsx
             _Text.tsx
         contentTypes/
@@ -604,17 +604,17 @@ src/
         parts/
             _Part.tsx
 
-        contentSelector.ts              <!--9-->
+        contentSelector.ts              // <9>
         componentSelector.ts
         partSelector.ts
 
     pages/
-        [[...contentPath]].tsx          <!--10-->
-        _app.tsx                        <!--11-->
+        [[...contentPath]].tsx          // <10>
+        _app.tsx                        // <11>
         _document.tsx
 
     components/
-        errors/                         <!--12-->
+        errors/                         // <12>
             404.tsx
             500.tsx
             Error.tsx
