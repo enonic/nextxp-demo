@@ -51,6 +51,16 @@
         {
             "title": "TL;DR",
             "document": "tldr"
+        },
+        {
+            "title": "Release Notes",
+            "document": "release",
+            "menuItems": [
+                {
+                    "title": "Upgrade Notes",
+                    "document": "release/upgrade"
+                }
+            ]
         }
     ]
 }

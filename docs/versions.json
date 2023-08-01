@@ -1,6 +1,11 @@
 {
   "versions": [
     {
+      "label": "1.x",
+      "checkout": "662bd08f69be6011aa69d0d962a94621eebe69c0",
+      "latest": false
+    },
+    {
       "label": "stable",
       "checkout": "master",
       "latest": true
