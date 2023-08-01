@@ -1,0 +1,39 @@
+= Upgrading
+:toc: right
+
+== Guillotine application
+
+IMPORTANT: Guillotine version 7 is required if you need to modify graphql schema in your application.
+
+== Upgrading from v1.x
+
+1. Update env vars to:
+
+    APP_NAME -> ENONIC_APP_NAME
+    CONTENT_API -> ENONIC_API
+    API_TOKEN -> ENONIC_API_TOKEN
+    remove SITE_KEY
+    add ENONIC_PROJECTS=<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
+
+2. Add i18n config block to next.config.js
+
+    i18n: {
+        locales: ['en', 'no'],
+        defaultLocale: 'en',
+    }
+
+3. Remove lib-nextxp dependency from your enonic xp app build.gradle file
+4. Install app-nextxp enonic app
+5. Add config file `_com.enonic.app.nextxp.cfg_` with following content:
+
+    # uncomment this to override defaults
+    # nextjs.default.secret=yourSecret
+    # nextjs.default.url=https://new.enonic.com
+    # named configs
+    nextjs.<config-name>.secret=yourSecret
+    nextjs.<config-name>.url=https://your.next-site.com
+
+6. Add app nextxp to your site and save it
+
+7. Default configuration will be used automatically for the entire site.
+You can change it by going to app-nextxp config and selecting any of the previously defined named configurations.
