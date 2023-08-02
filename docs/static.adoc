@@ -1,0 +1,97 @@
+= Static pages and revalidation
+:toc: right
+:imagesdir: media/
+
+In this chapter you will learn about NextJS' static pages and how the Enonic triggers re-generation of pages when publishing.
+
+== Introduction
+
+The NextJS front-end is configured to use static site generation (SSG), which basically means you get lightning fast pages.
+On top of that, it has some improvements to remove common shortcomings of static pages, such as live preview in Content Studio or getting new pages and changes instantly live on your site.
+
+== Prod mode
+
+So far, you have been running Next.js in dev mode.
+
+By starting Next.js in `prod` mode, the application is automatically optimized, and in our case, pages get pre-rendered statically at compile time.
+
+== Static pages
+
+Static generation will produce html + js files that will later be served to the user when he navigates to those pages.
+This makes pages load virtually instantly, but takes additional time to compile them during build time.
+More about
+https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation[SSG].
+
+.src/pages/[[...contentPath]].ts
+[source,TypeScript,options="nowrap"]
+----
+import {GetStaticPathsResult, GetStaticPropsResult} from 'next';
+import {Context, createResponse,fetchContent,fetchContentPathsForAllLocales, FetchContentResult} from "@enonic/nextjs-adapter";
+
+export async function getStaticProps(context: Context): Promise<GetStaticPropsResult<FetchContentResult>> {     // <1>
+    const path = context.params?.contentPath || [];
+    console.info(`Accessing static page (locale=${context.locale}) ${context.preview ? '(preview) ' : ''}at: ${path}`);
+
+    const props = await fetchContent(path, context);                            // <2>
+
+    // HTTP 500
+    if (props.error && props.error.code === '500') {
+        throw props.error
+    }
+
+    return createResponse(props, context);                                      // <3>
+}
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult<any>> {    // <4>
+    const paths = await fetchContentPathsForAllLocales('\${site}/');            // <5>
+    return {
+        paths: paths,
+        fallback: 'blocking',
+    };
+}
+----
+
+<1> Next.js method indicating that we want the page to be rendered statically
+<2> Next.XP method for fetching content by path with
+<3> Next.XP method for creating Next.js response based on the response of fetchContent method
+<4> Next.js method to collect paths we want to be static
+<5> Next.XP method for getting paths of all supported contents in every configured locale. `${site}` will be substituted to the actual site name in guillotine.
+
+As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !
+
+TIP: Next.js also supports Server Side Rendering (SSR) which can be enabled by renaming `getStaticProps` to `getServerSideProps` and dropping the `getStaticPaths` method.
+In this mode all rendering will be "real time", meaning no caching.
+More about https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering[SSR].
+
+== Task: Activate prod mode
+
+TIP: Remember to stop your existing Next.js dev instance before you continue.
+
+. **Start Next.js in prod mode**:
++
+    npm run prod
++
+This will take a while longer as when compared to dev mode.
+
+. **Verify** by pointing your browser to http://localhost:4242[http://localhost:4242^], you should now see the published items, just like in dev mode. **Sweet!**
+
+
+== Task: Update the connector
+
+With Next.js now running on a different port, the preview integration we configured earlier has been broken.
+
+. **Fix the preview** by updating the Next.XP app configuration file, choosing it in your site's Next.XP app configuration dialog, and confirm that preview starts working again.
+
+TIP: Content Studio uses Next.js' preview mode, which automatically bypass static pages, always showing the latest updates to your draft content.
+
+== Task: Test page invalidation
+
+. **Edit your front-page, and publish the changes**.This will trigger a revalidation hook.
+
+Despite using static pages, the page should get updated at `http://localhost:4242` with your latest changes - more or less instantly.🎉
+
+How does it work?In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.
+
+NOTE: You should also be able to tell from the Next.js log that the revalidation was triggered.
+
+With prod mode and revalidation sorted out, it's about time you <<deployment#, deploy your apps to live servers>>.

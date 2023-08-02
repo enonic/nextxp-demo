@@ -72,4 +72,4 @@ image:movie-template.png[title="Content item of type template, configure to supp
 +
 . Try visiting other movie items to **verify they now automatically render**. PS! Don't forget to publish the changes and the new page template.
 
-With templates sorted out, let's dive into  <<revalidation#, production mode and page revalidation>>.
+With templates sorted out, let's dive into  <<static.adoc#, production mode and page revalidation>>.
