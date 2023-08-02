@@ -124,18 +124,4 @@ image:cloud-preview.png[title="Front page as seen from Content Studio", width=14
 +
 image:live.png[title="Content rendered on the live server", width=1033px]
 
-
-== Summary, and whats Next?
-
-🎉 Congratulations 🥳 - You've reached the end of this tutorial - we hope you enjoyed it!
-
-The following topics were not covered, but will be covered in later versions of this tutorial:
-
-* Handling Rich text in form fields
-* Multi-site / localization
-* and more...
-
-There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
-
-* https://developer.enonic.com[Enonic Developer portal]
-* https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101] 
+Now that we have everything working, let's see how to add <<i18n#, multi-language>> support !
