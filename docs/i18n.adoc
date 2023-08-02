@@ -1,0 +1,98 @@
+= Internationalization
+:toc: right
+:imagesdir: media/
+
+In this chapter you will learn what it takes to make your project multi-language.
+
+== Introduction
+
+Next.js has native multi-language support, allowing your projects to switch language on the fly.
+This is enabled by specifying locale list in the `next.config.js` file:
+
+.next.config.js
+[source,JavaScript,options="nowrap"]
+----
+module.exports = {
+    // ...
+    i18n: {
+        locales: ['en', 'no'],
+        defaultLocale: 'en'
+    }
+    // ...
+}
+----
+
+Full documentation is https://nextjs.org/docs/pages/building-your-application/routing/internationalization[available here].
+
+== Task: Set up i18n
+
+In addition to specifying locales in `next.config.js` file, you will need to instruct Next.XP which project to use for every locale.
+This is done in the `ENONIC_PROJECTS` environmental variable:
+
+..env
+[source,Properties,options="nowrap"]
+----
+ENONIC_PROJECTS=hmdb/hmdb,no:hbmd-no/norges-hmdb
+----
+
+Let's break down the syntax:
+
+1. First comes the default repository name and site path: `hmdb/hmdb`.
++
+IMPORTANT: This should be present at all times, even when you have no locales configuration in `next.config.js` because this instructs Next.XP where to get data from.
++
+2. Then comes the locale identifier and the repository with site path, separated by a colon: `no:hmdb-no/norges-hmdb` telling Next.XP to use that site for norwegian locale
++
+NOTE: You can have different site paths for different locales: _/hmdb_ for english and _/norges-hmdb_ for norwegian
++
+3. You need to have `<locale>:<project>/<site-path>` definition for all locales configured in `next.enonic.js` except for the default one.
+
+== Accessing locale in views
+
+When using `getStaticProps`, `locale` is accessible through the `Context`:
+
+[source,TypeScript]
+----
+import {Context,FetchContentResult} from '@enonic/nextjs-adapter';
+import {GetStaticPropsResult} from 'next';
+
+export async function getStaticProps(context: Context): Promise<GetStaticPropsResult<FetchContentResult>> {
+    const locale = context.locale;
+    const defaultLocale = context.defaultLocale;
+}
+----
+
+Additionally, `MetaData` object available in every view, contains `locale` and `defaultLocale` along with other runtime data:
+
+[source,TypeScript,options="nowrap"]
+----
+import {PageComponent, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
+
+export interface MetaData {
+    type: string;
+    path: string;
+    requestType: XP_REQUEST_TYPE;
+    renderMode: RENDER_MODE;
+    requestedComponent?: PageComponent;
+    canRender: boolean;
+    catchAll: boolean;
+    apiUrl: string;
+    baseUrl: string;
+    locale: string;
+    defaultLocale: string;
+}
+----
+
+== Summary, and whats Next?
+
+🎉 Congratulations 🥳 - You've reached the end of this tutorial - we hope you enjoyed it!
+
+The following topics were not covered, but will be covered in later versions of this tutorial:
+
+* Handling Rich text in form fields
+* and more...
+
+There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
+
+* https://developer.enonic.com[Enonic Developer portal]
+* https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101]
