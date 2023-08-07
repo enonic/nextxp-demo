@@ -536,7 +536,28 @@ Rendering a page is similar to rendering a content type. Go to the folder <code>
 <div class="listingblock">
 <div class="title">src/components/pages/Main.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">Unresolved directive in pages.adoc - include::../src/components/pages/Main.tsx[]</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
+import RegionsView from '@enonic/nextjs-adapter/views/Region';
+
+const MainPage = (props: PageProps) =&gt; {
+    const page = props.page;
+    if (!page.regions || !Object.keys(page.regions).length) {
+        page.regions = {
+            main: {
+                name: 'main',
+                components: [],
+            }
+        }
+    }
+    return (
+        &lt;&gt;
+            &lt;RegionsView {...props} name="main"/&gt;
+        &lt;/&gt;
+    );
+};
+
+export default MainPage;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -660,7 +681,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-04 12:06:19 UTC
+Last updated 2023-08-07 09:36:36 UTC
 </div>
 </div>
 </body>

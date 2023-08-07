@@ -511,7 +511,26 @@ Just like a page, layouts may declare named regions.
 <div class="listingblock">
 <div class="title">src/components/layouts/TwoColumnLayout.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">Unresolved directive in layouts.adoc - include::../src/components/layouts/TwoColumnLayout.tsx[]</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {LayoutProps} from '@enonic/nextjs-adapter/views/BaseLayout';
+import {RegionView} from '@enonic/nextjs-adapter/views/Region';
+import styles from './TwoColumnLayout.module.css';
+
+const TwoColumnLayout = (props: LayoutProps) =&gt; {
+    const regions = props.layout.regions;
+    const {common, meta} = props;
+
+    return (
+        &lt;&gt;
+            &lt;div className={styles.row}&gt;
+                &lt;RegionView name="left" components={regions['left']?.components} common={common} meta={meta}/&gt;
+                &lt;RegionView name="right" components={regions['right']?.components} common={common} meta={meta}/&gt;
+            &lt;/div&gt;
+        &lt;/&gt;
+    );
+};
+
+export default TwoColumnLayout;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -520,7 +539,21 @@ Just like a page, layouts may declare named regions.
 <div class="listingblock">
 <div class="title">src/components/layouts/TwoColumnLayout.module.css</div>
 <div class="content">
-<pre class="highlight"><code class="language-css" data-lang="css">Unresolved directive in layouts.adoc - include::../src/components/layouts/TwoColumnLayout.module.css[]</code></pre>
+<pre class="highlight"><code class="language-css" data-lang="css">.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.row :global(&gt; div) {
+    flex: 1;
+    min-width: 200px;
+}
+
+.row :global(.xp-page-editor-region-placeholder) {
+    margin-bottom: 0;
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -588,7 +621,7 @@ this specific layout does not need any additional data - hence no query or proce
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-04 12:06:19 UTC
+Last updated 2023-08-07 09:36:36 UTC
 </div>
 </div>
 </body>

@@ -483,7 +483,169 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="title">src/components/parts/MovieDetails.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">Unresolved directive in templates.adoc - include::../src/components/parts/MovieDetails.tsx[]</code></pre>
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
+import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
+import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+
+
+export const getMovie = `
+query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      type
+      displayName
+      parent {
+        _path(type: siteRelative)
+      }
+      ... on ${APP_NAME_UNDERSCORED}_Movie {
+        data {
+          subtitle
+          abstract
+          trailer
+          release
+          photos {
+            ... on media_Image {                                             
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
+              attachments {                                                 
+                name
+              }
+            }
+          }
+          cast {
+            character
+            actor {
+              ... on ${APP_NAME_UNDERSCORED}_Person {
+                _path(type: siteRelative)
+                displayName
+                data {
+                  photos {
+                    ... on media_Image {                                             
+                      imageUrl: imageUrl(type: absolute, scale: "block(200,200)")       
+                      attachments {                                                 
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+
+// Root component
+const MovieView = (props: PartProps) =&gt; {
+    const data = props.data?.get.data as MovieInfoProps;
+    const meta = props.meta;
+    const {displayName, parent = {}} = props.data.get;
+    return (
+        &lt;&gt;
+            &lt;div&gt;
+                &lt;h2&gt;{displayName}&lt;/h2&gt;
+                {data &amp;&amp; &lt;MovieInfo {...data} meta={meta}/&gt;}
+                {data?.cast &amp;&amp; &lt;Cast cast={data.cast} meta={meta}/&gt;}
+            &lt;/div&gt;
+            &lt;p&gt;
+                &lt;a href={getUrl(parent._path, meta)}&gt;Back to Movies&lt;/a&gt;
+            &lt;/p&gt;
+        &lt;/&gt;
+    );
+};
+
+export default MovieView;
+
+interface MovieInfoProps {
+    meta: MetaData;
+    release: string;
+    subtitle: string;
+    abstract: string;
+    cast: CastMemberProps[],
+    photos: {
+        imageUrl: string;
+    }[];
+}
+
+// Main movie info: release year, poster image and abstract text.
+const MovieInfo = (props: MovieInfoProps) =&gt; {
+    const posterPhoto = (props.photos || [])[0] || {};
+    return (
+        &lt;&gt;
+            {props.release &amp;&amp; (
+                &lt;p&gt;({new Date(props.release).getFullYear()})&lt;/p&gt;
+            )}
+            {posterPhoto.imageUrl &amp;&amp; (
+                &lt;img src={getUrl(posterPhoto.imageUrl, props.meta)}
+                     title={props.subtitle}
+                     alt={props.subtitle}
+                /&gt;
+            )}
+            &lt;p&gt;{props.abstract}&lt;/p&gt;
+        &lt;/&gt;
+    )
+}
+
+interface CastProps {
+    cast: CastMemberProps[];
+    meta: MetaData;
+}
+
+interface CastMemberProps {
+    character: string;
+    actor: {
+        _path: string;
+        displayName: string;
+        data: {
+            photos: {
+                imageUrl: string;
+                attachments: {
+                    name: string
+                }[]
+            }[]
+        }
+    }
+}
+
+// List persons starring in the movie.
+const Cast = (props: CastProps) =&gt; (
+    &lt;div&gt;
+        &lt;h4&gt;Cast&lt;/h4&gt;
+        &lt;ul style={{listStyle: "none", display: "flex", flexFlow: "row wrap"}}&gt;
+            {props.cast.map(
+                (person: CastMemberProps, i: number) =&gt; person &amp;&amp; (
+                    &lt;CastMember key={i} {...person} meta={props.meta}/&gt;
+                )
+            )}
+        &lt;/ul&gt;
+    &lt;/div&gt;
+);
+
+
+const CastMember = (props: CastMemberProps &amp; { meta: MetaData }) =&gt; {
+    const {character, actor, meta} = props;
+    const {displayName, _path, data} = actor;
+    const personPhoto = (data.photos || [])[0] || {};
+
+    return (
+        &lt;li style={{marginRight: "15px"}}&gt;
+            {
+                personPhoto.imageUrl &amp;&amp;
+                &lt;img src={getUrl(personPhoto.imageUrl, meta)}
+                     title={`${displayName} as ${character}`}
+                     alt={`${displayName} as ${character}`}/&gt;
+            }
+            &lt;div&gt;
+                &lt;p&gt;{character}&lt;/p&gt;
+                &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;
+                    {displayName}
+                &lt;/a&gt;&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/li&gt;
+    );
+}</code></pre>
 </div>
 </div>
 </li>
@@ -557,7 +719,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-04 12:06:19 UTC
+Last updated 2023-08-07 09:36:36 UTC
 </div>
 </div>
 </body>

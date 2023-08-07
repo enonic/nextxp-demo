@@ -540,7 +540,70 @@ The part will appear without making any changes to the front-end, this is becaus
 <div class="listingblock">
 <div class="title">src/components/parts/ChildList.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">Unresolved directive in parts.adoc - include::../src/components/parts/ChildList.tsx[]</code></pre>
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
+import {Context, getUrl, VariablesGetterResult} from '@enonic/nextjs-adapter';
+import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+
+const ChildList = (props: PartProps) =&gt; {
+    const {data, meta} = props;
+    const children = data.get.children;
+    if (!children || children.length === 0) {
+        return null;
+    }
+    return (
+        &lt;main style={{
+            margin: `0 auto`,
+            maxWidth: 960,
+            padding: `0 1.0875rem`,
+        }}&gt;
+            {
+                children &amp;&amp;
+                &lt;ul&gt;{
+                    children.map((child: any, i: number) =&gt; (
+                        &lt;li key={i}&gt;
+                            &lt;a href={getUrl(child._path, meta)}&gt;
+                                {child.displayName}
+                            &lt;/a&gt;
+                        &lt;/li&gt;
+                    ))
+                }&lt;/ul&gt;
+            }
+        &lt;/main&gt;
+    );
+};
+
+export default ChildList;
+
+export const getChildList = {
+    query: function (path: string, context?: Context, config?: any): string {
+        return `query($path:ID!, $order:String){
+              guillotine {
+                getSite {
+                  displayName
+                }
+                get(key:$path) {
+                  displayName
+                  children(sort: $order) {
+                      _path(type: siteRelative)
+                      _id
+                      displayName
+                  }
+                }
+              }
+            }`
+    },
+    variables: function (path: string, context?: Context, config?: any): VariablesGetterResult {
+        return {
+            path,
+            order: config?.sorting
+        }
+    }
+};
+
+export async function childListProcessor(common: any, context?: Context, config?: any): Promise&lt;any&gt; {
+    common.modifiedBy = 'childListProcessor';
+    return common;
+}</code></pre>
 </div>
 </div>
 </li>
@@ -616,7 +679,22 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 <div class="listingblock">
 <div class="title">src/components/parts/Heading.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">Unresolved directive in parts.adoc - include::../src/components/parts/Heading.tsx[]</code></pre>
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
+import {APP_NAME, PartData} from '@enonic/nextjs-adapter';
+
+// fully qualified XP part name:
+export const HEADING_PART_NAME = `${APP_NAME}:heading`;
+
+export interface HeadingData {
+    part: PartData;
+    common: any;
+}
+
+const HeadingView = ({part, common}: HeadingData) =&gt; (
+    &lt;h2&gt;{part?.config?.heading || common?.get?.displayName}&lt;/h2&gt;
+);
+
+export default HeadingView;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -647,7 +725,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-04 12:06:19 UTC
+Last updated 2023-08-07 09:36:36 UTC
 </div>
 </div>
 </body>

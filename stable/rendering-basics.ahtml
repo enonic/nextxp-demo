@@ -492,7 +492,35 @@ The full name of your content type should now be <code>com.example.myproject:per
 <div class="listingblock">
 <div class="title">src/components/queries/getPerson.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">Unresolved directive in rendering-basics.adoc - include::../src/components/queries/getPerson.ts[]</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
+
+const getPerson = `
+query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      displayName
+      ... on ${APP_NAME_UNDERSCORED}_Person {
+        data {
+          bio
+          dateofbirth
+          photos {
+           ... on media_Image {                                             
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
+              attachments {                                                 
+                name
+              }
+            }
+          }
+        }
+      }
+      parent {
+        _path(type: siteRelative)                                                           
+      }
+    }
+  }
+}`;
+
+export default getPerson;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -561,7 +589,41 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <div class="listingblock">
 <div class="title">src/components/views/Person.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">Unresolved directive in rendering-basics.adoc - include::../src/components/views/Person.tsx[]</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
+
+const Person = (props: FetchContentResult) =&gt; {
+    const {displayName, data, parent} = props.data?.get as any;
+    const {bio, photos} = data;
+    const meta = props.meta;
+    const {_path} = parent;
+
+    return (
+        &lt;&gt;
+            &lt;div&gt;
+                &lt;h2&gt;{displayName}&lt;/h2&gt;
+                &lt;p&gt;{bio}&lt;/p&gt;
+                {
+                    photos.map((photo: any, i: number) =&gt; (
+                        &lt;img key={i}
+                             src={getUrl(photo.imageUrl, meta)}
+                             title={getTitle(photo, displayName)}
+                             alt={getTitle(photo, displayName)}
+                             width="500"
+                        /&gt;
+                    ))
+                }
+            &lt;/div&gt;
+            &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;Back to Persons&lt;/a&gt;&lt;/p&gt;
+        &lt;/&gt;
+    )
+}
+
+export default Person;
+
+function getTitle(photo: any, displayName: string) {
+    return (photo.attachments || [])[0].name || displayName;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -737,7 +799,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-04 12:06:19 UTC
+Last updated 2023-08-07 09:36:36 UTC
 </div>
 </div>
 </body>
