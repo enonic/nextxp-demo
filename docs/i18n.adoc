@@ -37,19 +37,19 @@ ENONIC_PROJECTS=hmdb/hmdb,no:hbmd-no/norges-hmdb
 
 Let's break down the syntax:
 
-1. First comes the default repository name and site path: `hmdb/hmdb`.
+1. First comes the repository name and site path for default locale (`en` in this case): `hmdb/hmdb`.
 +
-IMPORTANT: This should be present at all times, even when you have no locales configuration in `next.config.js` because this instructs Next.XP where to get data from.
+IMPORTANT: This should be present at all times, even when you have no locales configuration in `next.config.js` because this instructs Next.XP where to get the data from.
 +
-2. Then comes the locale identifier and the repository with site path, separated by a colon: `no:hmdb-no/norges-hmdb` telling Next.XP to use that site for norwegian locale
+2. Then comes additional locale identifier and the repository with site path, separated by a colon: `no:hmdb-no/norges-hmdb` telling Next.XP to use `/norges-hmdb` site in `hmdb-no` project for `no` locale
 +
 NOTE: You can have different site paths for different locales: _/hmdb_ for english and _/norges-hmdb_ for norwegian
 +
-3. You need to have `<locale>:<project>/<site-path>` definition for all locales configured in `next.enonic.js` except for the default one.
+3. You need to have `<locale>:<project>/<site-path>` definition for all locales configured in `next.enonic.js` except for the default one which suffice `<project>/<site-path>`.
 
 == Accessing locale in views
 
-When using `getStaticProps`, `locale` is accessible through the `Context`:
+When using `getStaticProps` or `getServerSideProps`, `locale` is accessible through the `Context`:
 
 [source,TypeScript]
 ----
