@@ -8,45 +8,50 @@ IMPORTANT: Guillotine version 7 is required if you need to modify graphql schema
 
 == Upgrading from v1.x
 
-1. Update env vars to:
+. Update env vars to:
 
     APP_NAME -> ENONIC_APP_NAME
-    CONTENT_API -> ENONIC_API
+    remove CONTENT_API_MASTER
+    remove CONTENT_API_DRAFT
+    add ENONIC_API
     API_TOKEN -> ENONIC_API_TOKEN
     remove SITE_KEY
     add ENONIC_PROJECTS=<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
 
-2. Add i18n config block to next.config.js
+. Add i18n config block to next.config.js
 
     i18n: {
         locales: ['en', 'no'],
         defaultLocale: 'en',
     }
 
-3. Remove `lib-nextxp` dependency from your Enonic XP app build.gradle file
-4. Install `Next.XP` application from Enonic Market
-5. Add config file `_com.enonic.app.nextxp.cfg_` with the following content:
-
-    # default configuration
-    # nextjs.default.secret=yourSecret
-    # nextjs.default.url=http://127.0.0.1:4242
-    #
-    # config 'someName'
-    nextjs.someName.secret=yourSecret
-    nextjs.someName.url=https://your.next-site.com
-    #
-    # config 'anotherName'
-    nextjs.anotherName.secret=yourOtherSecret
-    nextjs.anotherName.url=https://your.other-next-site.com
-    # ...
+. Remove `lib-nextxp` dependency from your Enonic XP app build.gradle file
+. Install `Next.XP` application from Enonic Market
+. Create config file named `_com.enonic.app.nextxp.cfg_` in `_<xp-home>/config/_` folder to change default values and add more configurations:
++
+[source,properties]
+----
+# uncomment to override default values
+# nextjs.default.secret=yourSecret
+# nextjs.default.url=http://127.0.0.1:4242
+#
+# config 'someName'
+nextjs.someName.secret=yourSecret
+nextjs.someName.url=https://your.next-site.com
+#
+# config 'anotherName'
+nextjs.anotherName.secret=yourOtherSecret
+nextjs.anotherName.url=https://your.other-next-site.com
+# ...
+----
 +
 NOTE: Remember to update properties' values with your own data
 
-6. remove `lib-guillotine` dependency from your enonic app build.gradle file
-7. install `Guillotine` application from Enonic Market
+. remove `lib-guillotine` dependency from your enonic app build.gradle file
+. install `Guillotine` application from Enonic Market
 +
 NOTE: Use Guillotine 7 or higher if you need to extend the graphql schema
 
-8. Add `Next.XP` application to your site in every layer and save it
-9. Default configuration will be used automatically for each site.
+. Add `Next.XP` application to your site in every layer and save it
+. Default configuration will be used automatically for each site.
 You can change it by going to `Next.XP` application config in each site and selecting named configurations.

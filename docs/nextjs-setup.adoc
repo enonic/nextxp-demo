@@ -65,17 +65,16 @@ The following configuration values should match your environment
 [source,files]
 ----
 # Provide a unique value which will be used to secure the preview mode
-API_TOKEN=mySecretKey
+ENONIC_API_TOKEN=mySecretKey
 
 # Enonic app name, must match the name of your app
-APP_NAME=com.example.myproject
+ENONIC_APP_NAME=com.example.myproject
 
-# Path to site, or site ID
-SITE_KEY=/hmdb
+# Enonic XP projects configuration for different locales
+ENONIC_PROJECTS=hmdb/hmdb
 
 # Absolute URL to Content API
-CONTENT_API_DRAFT=http://127.0.0.1:8080/site/moviedb/draft
-CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master
+ENONIC_API=http://127.0.0.1:8080/site
 ----
 
 TIP: The configuration values can be overridden later when deplying your app to a live server.

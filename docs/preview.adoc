@@ -20,10 +20,37 @@ Add the Next.XP app to the site by selecting it in the applications combobox.
 +
 image:content-studio-add-nextxp.png[title="Open app config by pressing pencil icon",width=597px]
 +
-Configure the `Next.XP` app by clicking the pencil icon. Use the same values that were configured in the Next.js front-end: 
+Save the site to make all the features of the app available.
 
-* `http://localhost:3000[http://localhost:3000^]`
-* `mySecretKey`.
+. *Configure the `Next.XP` app*
++
+By default `Next.XP` uses the following values:
++
+`url: *http://127.0.0.1:3000*`
++
+`secret: *mySecret*`
++
+You can change default values and add more configurations by adding a config file named `_com.enonic.app.nextxp.cfg_` in `_<xp-home>/config/_` folder:
++
+[source,properties]
+----
+# uncomment to override default values
+# nextjs.default.secret=yourSecret
+# nextjs.default.url=http://127.0.0.1:4242
+#
+# config 'someName'
+nextjs.someName.secret=yourSecret
+nextjs.someName.url=https://your.next-site.com
+#
+# config 'anotherName'
+nextjs.anotherName.secret=yourOtherSecret
+nextjs.anotherName.url=https://your.other-next-site.com
+# ...
+----
++
+NOTE: Remember to update properties' values with your own data
++
+To assign a configuration to a site, click the pencil icon next to the `Next.XP` app name in the site wizard and select from the list of named configurations:
 +
 image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
 
