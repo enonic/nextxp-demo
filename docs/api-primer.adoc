@@ -6,35 +6,61 @@ Based on the developer environment you created in the previous chapter, you'll n
 
 == Headless API
 
-Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content. The API is highly flexible, and may even be customized. For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
+Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content.The API is highly flexible, and may even be customized.For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
 
-TIP: New to GraphQL? Check out the link:https://graphql.org/[GraphQL documentation]
+TIP: New to GraphQL?Check out the link:https://graphql.org/[GraphQL documentation]
 
 == Task: Install API
 
 The headless API can be installed via an application called `Guillotine`.
 
-. Install via `XP menu` -> `Applications` -> `Install`. Search for `Guillotine` and install it.
+. Install via `XP menu` -> `Applications` -> `Install`.
+Search for `Guillotine` and install it.
 +
-. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. You can verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called `Query Playground`.
+. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project.
+You can verify that Guillotine is working by opening Content Studio.
+Look for a new menu item on the left called `Query Playground`.
 +
-image:content-studio-guillotine.png[title="Browsing the Guillotine API using Query Playground", width=1440px]
+image:content-studio-guillotine.png[title="Browsing the Guillotine API using Query Playground",width=1440px]
 
+== Accessing the API externally
+
+Guillotine application creates a graphQL API endpoint for every site that it is added to.
+So if your Enonic XP is running on `http://localhost:8080`, you will get the following URLs for every site with Guillotine app added:
+
+ http://localhost:8080/site/[project-name]/[branch-name]
+
+where `branch-name` can only be `draft` or `master`, with `draft` being protected by authentication.
 
 == Task: Run a simple query
 
-Query playground lets us browse and use the API directly. Use the left hand field to type/paste in queries, press the "play" button to **run the query**, and the result will be presented in the right hand field.
+Query playground lets us browse and use the API directly.
+Use the left hand field to type/paste in queries, press the "play" button to **run the query**, and the result will be presented in the right hand field.
 
 . **Query movies**:
 +
-One of the objectives in this tutorial is listing and presenting movie details. Run this simple query that retrieves the ID and displayName of some movies:
+One of the objectives in this tutorial is listing and presenting movie details.
+Run this simple query that retrieves the ID and displayName of some movies:
 +
 .Query to fetch movies from the Headless API:
 [source,graphql]
 ----
 {
     guillotine {
-        query(query: "valid='true' and type='com.example.myproject:movie'", sort: "displayName") {
+        queryDsl(
+          query: {
+            boolean: {
+              must:[
+                {term: {field: "valid", value: {boolean:true}}}
+                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+              ]
+            }
+          }
+          sort: {
+          	field:"displayName"
+          	direction:ASC
+        	}
+        ) {
             id: _id
             displayName
         }
@@ -42,14 +68,14 @@ One of the objectives in this tutorial is listing and presenting movie details. 
 }
 ----
 +
-NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app. 
+NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app.
 +
 TIP: If you prefer DSL over standard query language, Enonic also provides a `queryDSL()` field.
 +
 . **View the Result**
 +
 After executing the query, you should get a result in the right hand response panel.
-image:content-studio-basic-query.png[title="Running a query for movies in Query Playground", width=1440px]
+image:content-studio-basic-query.png[title="Running a query for movies in Query Playground",width=1440px]
 
 == Task: Query variables
 
