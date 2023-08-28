@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Setting up Next.js</title>
+<title>Getting to know the API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,23 +436,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Setting up Next.js</h1>
+<h1>Getting to know the API</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_js_at_a_glance">Next.js at a glance</a></li>
-<li><a href="#task_create_the_next_js_project">Task: Create the Next.js project</a>
-<ul class="sectlevel2">
-<li><a href="#code_overview">Code overview</a></li>
-</ul>
-</li>
-<li><a href="#task_configure_application">Task: Configure application</a></li>
-<li><a href="#task_boot_the_server">Task: Boot the server</a></li>
-<li><a href="#next_url_patterns">Next URL patterns</a>
-<ul class="sectlevel2">
-<li><a href="#task_visit_some_more_pages">Task: Visit some more pages</a></li>
-</ul>
-</li>
+<li><a href="#headless_api">Headless API</a></li>
+<li><a href="#task_install_api">Task: Install API</a></li>
+<li><a href="#accessing_the_api_externally">Accessing the API externally</a></li>
+<li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
+<li><a href="#task_query_variables">Task: Query variables</a></li>
+<li><a href="#task_type_introspection">Task: Type introspection</a></li>
 </ul>
 </div>
 </div>
@@ -460,122 +453,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will create a front-end application that renders pages based on content in the CMS.</p>
+<p>Based on the developer environment you created in the previous chapter, you&#8217;ll now install and test Enonic&#8217;s headless graphql API, aka Guillotine</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="next_js_at_a_glance"><a class="link" href="#next_js_at_a_glance">Next.js at a glance</a></h2>
+<h2 id="headless_api"><a class="link" href="#headless_api">Headless API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>). Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_create_the_next_js_project"><a class="link" href="#task_create_the_next_js_project">Task: Create the Next.js project</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>From an empty folder, run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-bash" data-lang="bash">npx degit git@github.com:enonic/nextxp-template.git</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The "nextxp-template" is based on <a href="https://nextjs.org/docs/getting-started">Next.js' own introduction app</a>, so if you&#8217;re familiar with that, you&#8217;ll recognize the structure of the files.</p>
-</div>
-<div class="paragraph">
-<p>The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
-</div>
-<div class="sect2">
-<h3 id="code_overview"><a class="link" href="#code_overview">Code overview</a></h3>
-<div class="paragraph">
-<p>The following file structure should now exist within your new project folder:</p>
-</div>
-<div class="listingblock">
-<div class="title">Next project files:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">.env <i class="conum" data-value="1"></i><b>(1)</b>
-src/
-    components/ <i class="conum" data-value="2"></i><b>(2)</b>
-    pages/
-        [[...contentPath]].tsx <i class="conum" data-value="3"></i><b>(3)</b>
-        _app.tsx <i class="conum" data-value="4"></i><b>(4)</b>
-        _document.tsx <i class="conum" data-value="5"></i><b>(5)</b>
-        _renderable.tsx
-        api/ <i class="conum" data-value="6"></i><b>(6)</b>
-            revalidate.ts
-            preview.ts</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Environment variables are placed in this file</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Contains your implementation of CMS components</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Invoked on every request.
-Add common structures here (eg. <code>&lt;head&gt;</code> etc), but be careful not to remove functionality needed by Content Studio</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Vanilla Next.js file that outlines the basic document structure of all pages.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>These files support preview mode and regeneration of cached pages</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_configure_application"><a class="link" href="#task_configure_application">Task: Configure application</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By default, the configuration should work for your setup, but have a look to be sure:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Verify your configuration</p>
-<div class="paragraph">
-<p>The following configuration values should match your environment</p>
-</div>
-<div class="listingblock">
-<div class="title">.env extract:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files"># Provide a unique value which will be used to secure the preview mode
-API_TOKEN=mySecretKey
-
-# Enonic app name, must match the name of your app
-APP_NAME=com.example.myproject
-
-# Path to site, or site ID
-SITE_KEY=/hmdb
-
-# Absolute URL to Content API
-CONTENT_API_DRAFT=http://127.0.0.1:8080/site/moviedb/draft
-CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
-</div>
-</div>
-</li>
-</ol>
+<p>Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content.The API is highly flexible, and may even be customized.For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -584,7 +470,7 @@ CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The configuration values can be overridden later when deplying your app to a live server.
+New to GraphQL?Check out the <a href="https://graphql.org/">GraphQL documentation</a>
 </td>
 </tr>
 </table>
@@ -592,10 +478,86 @@ The configuration values can be overridden later when deplying your app to a liv
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_boot_the_server"><a class="link" href="#task_boot_the_server">Task: Boot the server</a></h2>
+<h2 id="task_install_api"><a class="link" href="#task_install_api">Task: Install API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s fire up Next and see if things are working as planned&#8230;&#8203;</p>
+<p>The headless API can be installed via an application called <code>Guillotine</code>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install via <code>XP menu</code> &#8594; <code>Applications</code> &#8594; <code>Install</code>.
+Search for <code>Guillotine</code> and install it.</p>
+</li>
+<li>
+<p>Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project.
+You can verify that Guillotine is working by opening Content Studio.
+Look for a new menu item on the left called <code>Query Playground</code>.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="accessing_the_api_externally"><a class="link" href="#accessing_the_api_externally">Accessing the API externally</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Guillotine application creates a graphQL API endpoint for every site that it is added to.
+So if your Enonic XP is running on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>, you will get the following URLs for every site with Guillotine app added:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://localhost:8080/site/[project-name]/[branch-name]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>branch-name</code> can only be <code>draft</code> or <code>master</code>, with <code>draft</code> being protected by authentication.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_run_a_simple_query"><a class="link" href="#task_run_a_simple_query">Task: Run a simple query</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Query playground lets us browse and use the API directly.
+Use the left hand field to type/paste in queries, press the "play" button to <strong>run the query</strong>, and the result will be presented in the right hand field.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Query movies</strong>:</p>
+<div class="paragraph">
+<p>One of the objectives in this tutorial is listing and presenting movie details.
+Run this simple query that retrieves the ID and displayName of some movies:</p>
+</div>
+<div class="listingblock">
+<div class="title">Query to fetch movies from the Headless API:</div>
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">{
+    guillotine {
+        queryDsl(
+          query: {
+            boolean: {
+              must:[
+                {term: {field: "valid", value: {boolean:true}}}
+                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+              ]
+            }
+          }
+          sort: {
+          	field:"displayName"
+          	direction:ASC
+        	}
+        ) {
+            id: _id
+            displayName
+        }
+    }
+}</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -604,25 +566,10 @@ The configuration values can be overridden later when deplying your app to a liv
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app is running on localhost:8080</a> before you continue
+<code>com.example.myproject</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your next project folder:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>npm install
-npm run dev</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If Next boots without errors, point your browser to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> to see the glorious result.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-debug.png" alt="content debug" width="767px" title="Application root page, showing debugging details"></span></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -631,69 +578,197 @@ npm run dev</pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>Running Next in <code>dev</code> mode normally works fine. Should you however experience "strange issues" - try deleting the <code>.next/</code> folder and reboot</p>
-</div>
-<div class="paragraph">
-<p>For more details on booting Next, check out the <a href="https://nextjs.org/docs/api-reference/cli">Next.js CLI docs</a>.</p>
-</div>
+If you prefer DSL over standard query language, Enonic also provides a <code>queryDSL()</code> field.
 </td>
 </tr>
 </table>
 </div>
+</li>
+<li>
+<p><strong>View the Result</strong></p>
+<div class="paragraph">
+<p>After executing the query, you should get a result in the right hand response panel.
+<span class="image"><img src="media/content-studio-basic-query.png" alt="content studio basic query" width="1440px" title="Running a query for movies in Query Playground"></span></p>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="next_url_patterns"><a class="link" href="#next_url_patterns">Next URL patterns</a></h2>
+<h2 id="task_query_variables"><a class="link" href="#task_query_variables">Task: Query variables</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The URL structure of your front-end will mirror the structure of the content in the CMS. <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> will be mounted to the site root, which in our case has the internal path <code>/hmdb</code>.</p>
+<p>In addition to the query itself, GraphQL also supports optional <code>query variables</code>.
+Query variables enable you to re-use the same query, but for instance fetch different content each time.</p>
 </div>
-<div class="paragraph">
-<p>Using the Movie Se7en as an example:</p>
-</div>
-<div class="paragraph">
-<div class="title">Result when visiting <a href="http://localhost:3000/movies/se7en" target="_blank" rel="noopener">http://localhost:3000/movies/se7en</a></div>
-<p><span class="image"><img src="media/se7en-debug.png" alt="se7en debug" width="766px" title="Default render: movie content item The Godfather"></span></p>
-</div>
-<div class="paragraph">
-<div class="title">Se7en as seen in Content Studio - internal path is <code>/hmdb/movies/se7en</code></div>
-<p><span class="image"><img src="media/se7en-edit.png" alt="se7en edit" width="768px" title="Editing item in Content Studio - the path /hmdb/movies/se7en is highlighted"></span></p>
-</div>
-<div class="sect2">
-<h3 id="task_visit_some_more_pages"><a class="link" href="#task_visit_some_more_pages">Task: Visit some more pages</a></h3>
-<div class="paragraph">
-<p>Give the default rendering a spin by trying out some other URLs, for example:<br></p>
-</div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><a href="http://localhost:3000/movies" target="_blank" rel="noopener">http://localhost:3000/movies</a><br></p>
+<p><strong>Add query</strong> to the GraphQL playground:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){               <i class="conum" data-value="1"></i><b>(1)</b>
+  guillotine {
+    get(key:$path) {            <i class="conum" data-value="2"></i><b>(2)</b>
+      type
+      _id
+      displayName
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>path</code> is declared (with a <code>$</code> marking it as a variable in the query). The declaration includes its type (<code>ID</code>), and a <code>!</code> marking it as a <em>required</em> parameter).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>path</code> variable here used as the value of the <code>key</code> parameter, passed to the <code>get</code> field.</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons" target="_blank" rel="noopener">http://localhost:3000/persons</a><br></p>
+<p><strong>Add query Variables</strong>. In the bottom left of Query Playground, you will find a the `Query variables`tab. Add the following JSON to the field.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Tthe <code>path</code> field in the JSON corresponds to the <code>$path</code> in the query string above:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "path": "/movies/se7en"
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons/brad-pitt" target="_blank" rel="noopener">http://localhost:3000/persons/brad-pitt</a></p>
+<p><strong>Run the query</strong> to validate that the parameter working as expected.</p>
 </li>
-</ul>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_type_introspection"><a class="link" href="#task_type_introspection">Task: Type introspection</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The queries above only specify fields like <code>_id</code> and <code>displayName</code> for each content found. These are general fields in the CMS, available across all content types.</p>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;etc.</p>
+<p>Content types may also define their own <a href="https://developer.enonic.com/docs/xp/stable/cms/content-types">custom fields</a>. These are stored under the <code>data</code> field. In the headless API, deeper data and functionality belonging to a content type is accessed through <strong>introspection</strong>.</p>
 </div>
 <div class="paragraph">
-<p><strong>That&#8217;s it for the basic Next.js setup.</strong></p>
+<p>For example, you may introspect the fields that are exclusive to the <code>com.example.myproject:movie</code> content type like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">Content type introspection:</div>
+<div class="content">
+<pre class="highlight nowrap"><code>... on com_example_myproject_Movie</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The fully-qualified content type name is used, dots are replaced with underscores, and the name is capitalized <code>Movie</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Fetch a complex data set</strong></p>
+<div class="paragraph">
+<p>Lets get content for a movie, the referenced <em>image</em> items <code>media:image</code> and <em>person</em> items <code>com.example.myproject:person</code> in a single query:</p>
 </div>
 <div class="paragraph">
-<p>Next, well have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
+<p>Paste this query into the GraphQL Playground:</p>
 </div>
+<div class="listingblock">
+<div class="title">A query with nested introspections</div>
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      type
+      displayName
+      ... on com_example_myproject_Movie {
+        data {
+          subtitle
+          abstract
+          trailer
+          release
+          photos {
+            ... on media_Image {
+                imageUrl: imageUrl(type: absolute, scale: "width(500)")
+            }
+          }
+          cast {
+            character
+            actor {
+              displayName
+              ... on com_example_myproject_Person {
+                _path
+                data {
+                  photos {
+                    ... on media_Image {
+                      imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice how <code>imageUrl</code> is requested with parameters of its own? Type introspections can expose certain <a href="https://developer.enonic.com/docs/guillotine/stable/api">functions for processing data</a> before returning it.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>All in all, this allows for fetching deep and rich content data in a single API request.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Moving forward, you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 12:44:30 UTC
+Last updated 2023-08-28 12:44:08 UTC
 </div>
 </div>
 </body>

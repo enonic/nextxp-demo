@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Setting up Next.js</title>
+<title>Custom pages</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,23 +436,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Setting up Next.js</h1>
+<h1>Custom pages</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_js_at_a_glance">Next.js at a glance</a></li>
-<li><a href="#task_create_the_next_js_project">Task: Create the Next.js project</a>
-<ul class="sectlevel2">
-<li><a href="#code_overview">Code overview</a></li>
-</ul>
-</li>
-<li><a href="#task_configure_application">Task: Configure application</a></li>
-<li><a href="#task_boot_the_server">Task: Boot the server</a></li>
-<li><a href="#next_url_patterns">Next URL patterns</a>
-<ul class="sectlevel2">
-<li><a href="#task_visit_some_more_pages">Task: Visit some more pages</a></li>
-</ul>
-</li>
+<li><a href="#task_disable_debug_view">Task: Disable debug view</a></li>
+<li><a href="#task_setup_page_rendering">Task: Setup page rendering</a></li>
+<li><a href="#task_create_your_first_page">Task: Create your first page</a></li>
+<li><a href="#task_using_the_text_component">Task: Using the text component</a></li>
+<li><a href="#task_publish_page">Task: Publish page</a></li>
 </ul>
 </div>
 </div>
@@ -460,142 +452,67 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will create a front-end application that renders pages based on content in the CMS.</p>
+<p>So far, rendering has been based on hardcoded mappings made by the developer. In this chapter we will enable editors to compose their own pages.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="next_js_at_a_glance"><a class="link" href="#next_js_at_a_glance">Next.js at a glance</a></h2>
+<h2 id="task_disable_debug_view"><a class="link" href="#task_disable_debug_view">Task: Disable debug view</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>). Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_create_the_next_js_project"><a class="link" href="#task_create_the_next_js_project">Task: Create the Next.js project</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>From an empty folder, run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-bash" data-lang="bash">npx degit git@github.com:enonic/nextxp-template.git</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The "nextxp-template" is based on <a href="https://nextjs.org/docs/getting-started">Next.js' own introduction app</a>, so if you&#8217;re familiar with that, you&#8217;ll recognize the structure of the files.</p>
-</div>
-<div class="paragraph">
-<p>The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
-</div>
-<div class="sect2">
-<h3 id="code_overview"><a class="link" href="#code_overview">Code overview</a></h3>
-<div class="paragraph">
-<p>The following file structure should now exist within your new project folder:</p>
-</div>
-<div class="listingblock">
-<div class="title">Next project files:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">.env <i class="conum" data-value="1"></i><b>(1)</b>
-src/
-    components/ <i class="conum" data-value="2"></i><b>(2)</b>
-    pages/
-        [[...contentPath]].tsx <i class="conum" data-value="3"></i><b>(3)</b>
-        _app.tsx <i class="conum" data-value="4"></i><b>(4)</b>
-        _document.tsx <i class="conum" data-value="5"></i><b>(5)</b>
-        _renderable.tsx
-        api/ <i class="conum" data-value="6"></i><b>(6)</b>
-            revalidate.ts
-            preview.ts</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Environment variables are placed in this file</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Contains your implementation of CMS components</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Invoked on every request.
-Add common structures here (eg. <code>&lt;head&gt;</code> etc), but be careful not to remove functionality needed by Content Studio</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Vanilla Next.js file that outlines the basic document structure of all pages.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>These files support preview mode and regeneration of cached pages</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_configure_application"><a class="link" href="#task_configure_application">Task: Configure application</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By default, the configuration should work for your setup, but have a look to be sure:</p>
+<p>For every page you select, the debug view keeps appearing - even in Content Studio. Disable this by following the steps below.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Verify your configuration</p>
-<div class="paragraph">
-<p>The following configuration values should match your environment</p>
-</div>
+<p><strong>Comment out the <code>CATCH_ALL</code> debug view</strong> at the bottom of your mappings file - like this:</p>
 <div class="listingblock">
-<div class="title">.env extract:</div>
+<div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files"># Provide a unique value which will be used to secure the preview mode
-API_TOKEN=mySecretKey
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">...
 
-# Enonic app name, must match the name of your app
-APP_NAME=com.example.myproject
-
-# Path to site, or site ID
-SITE_KEY=/hmdb
-
-# Absolute URL to Content API
-CONTENT_API_DRAFT=http://127.0.0.1:8080/site/moviedb/draft
-CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
+/*
+// Debug
+ComponentRegistry.addContentType(CATCH_ALL, {
+    view: PropsView
+});
+*/</code></pre>
 </div>
+</div>
+</li>
+<li>
+<p><strong>Verify that pages are no longer rendering</strong> by visiting your site on <code><a href="http://localhost:3000" class="bare">http://localhost:3000</a></code>.</p>
+<div class="paragraph">
+<p>The same will now apply to Content Studio.</p>
 </div>
 </li>
 </ol>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The configuration values can be overridden later when deplying your app to a live server.
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_boot_the_server"><a class="link" href="#task_boot_the_server">Task: Boot the server</a></h2>
+<h2 id="task_setup_page_rendering"><a class="link" href="#task_setup_page_rendering">Task: Setup page rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s fire up Next and see if things are working as planned&#8230;&#8203;</p>
+<p>Content types need to exist in Enonic before an editor can create content. Similarly, page components must be defined before Content Studio can enable editors to create pages.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Add a page component</strong> to the Enonic app</p>
+<div class="listingblock">
+<div class="title">src/main/resources/site/pages/main/main.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;page xmlns="urn:enonic:xp:model:1.0"&gt;
+  &lt;display-name&gt;Main page&lt;/display-name&gt;
+  &lt;description&gt;Will be rendered by front-end&lt;/description&gt;
+  &lt;form/&gt;
+  &lt;regions&gt;
+      &lt;region name="main"/&gt;
+  &lt;/regions&gt;
+&lt;/page&gt;</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -604,96 +521,167 @@ The configuration values can be overridden later when deplying your app to a liv
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app is running on localhost:8080</a> before you continue
+The definition of the region <code>main</code>, allows Content Studio editors to add components to the page, as you will see later.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your next project folder:</p>
+<p>Redploy the Enonic app to register the page component.</p>
 </div>
-<div class="literalblock">
+</li>
+<li>
+<p><strong>Configure page rendering in Next.js</strong>
+Rendering a page is similar to rendering a content type. Go to the folder <code>./src/components</code>, create a new folder here - <code>pages</code>, and within it a new file called <code>Main.tsx</code> containing the following code.</p>
+<div class="listingblock">
+<div class="title">src/components/pages/Main.tsx</div>
 <div class="content">
-<pre>npm install
-npm run dev</pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
+import RegionsView from '@enonic/nextjs-adapter/views/Region';
+
+const MainPage = (props: PageProps) =&gt; {
+    const page = props.page;
+    if (!page.regions || !Object.keys(page.regions).length) {
+        page.regions = {
+            main: {
+                name: 'main',
+                components: [],
+            }
+        }
+    }
+    return (
+        &lt;&gt;
+            &lt;RegionsView {...props} name="main"/&gt;
+        &lt;/&gt;
+    );
+};
+
+export default MainPage;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>If Next boots without errors, point your browser to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> to see the glorious result.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-debug.png" alt="content debug" width="767px" title="Application root page, showing debugging details"></span></p>
-</div>
-<div class="admonitionblock tip">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>Running Next in <code>dev</code> mode normally works fine. Should you however experience "strange issues" - try deleting the <code>.next/</code> folder and reboot</p>
-</div>
-<div class="paragraph">
-<p>For more details on booting Next, check out the <a href="https://nextjs.org/docs/api-reference/cli">Next.js CLI docs</a>.</p>
-</div>
+The &lt;RegionsView&gt; element is referring to the 'main' region we defined in the page component earlier.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Finally, register it in the component mappings by adding the following lines to _mappings.ts</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import MainPage from './pages/Main';
+
+// Page mappings
+ComponentRegistry.addPage(`${APP_NAME}:main`, {
+    view: MainPage
+});</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Both Enonic and Next.js are now able to handle custom pages.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="next_url_patterns"><a class="link" href="#next_url_patterns">Next URL patterns</a></h2>
+<h2 id="task_create_your_first_page"><a class="link" href="#task_create_your_first_page">Task: Create your first page</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The URL structure of your front-end will mirror the structure of the content in the CMS. <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> will be mounted to the site root, which in our case has the internal path <code>/hmdb</code>.</p>
+<p>It&#8217;s time to build a custom page.</p>
 </div>
-<div class="paragraph">
-<p>Using the Movie Se7en as an example:</p>
-</div>
-<div class="paragraph">
-<div class="title">Result when visiting <a href="http://localhost:3000/movies/se7en" target="_blank" rel="noopener">http://localhost:3000/movies/se7en</a></div>
-<p><span class="image"><img src="media/se7en-debug.png" alt="se7en debug" width="766px" title="Default render: movie content item The Godfather"></span></p>
-</div>
-<div class="paragraph">
-<div class="title">Se7en as seen in Content Studio - internal path is <code>/hmdb/movies/se7en</code></div>
-<p><span class="image"><img src="media/se7en-edit.png" alt="se7en edit" width="768px" title="Editing item in Content Studio - the path /hmdb/movies/se7en is highlighted"></span></p>
-</div>
-<div class="sect2">
-<h3 id="task_visit_some_more_pages"><a class="link" href="#task_visit_some_more_pages">Task: Visit some more pages</a></h3>
-<div class="paragraph">
-<p>Give the default rendering a spin by trying out some other URLs, for example:<br></p>
-</div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><a href="http://localhost:3000/movies" target="_blank" rel="noopener">http://localhost:3000/movies</a><br></p>
+<p><strong>Turn the site into a page</strong></p>
+<div class="paragraph">
+<p>From Content Studio, select and edit the <code>/hmdb</code> content item. From the edit view, activate the page editor by clicking the monitor icon in the top right corner.</p>
+</div>
+<div class="paragraph">
+<p>You should now see the following:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/page-setup.png" alt="page setup" width="1440px" title="Selecting the page component in the page view"></span></p>
+</div>
+<div class="paragraph">
+<p>From the preview area, select the <code>Main</code> component we created earlier from the dropdown menu.</p>
+</div>
+<div class="paragraph">
+<p>You should then see a page with a single "dropzone" inside (the region we specified earlier).</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/page-rendered.png" alt="page rendered" width="1440px" title="Active page controller rendering an empty region visualized by a placeholder"></span></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_using_the_text_component"><a class="link" href="#task_using_the_text_component">Task: Using the text component</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content Studio ships with a built-in Text component which can be handy when composing pages.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From the Insert tab (on the right hand side), drag a Text component into the region.</p>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons" target="_blank" rel="noopener">http://localhost:3000/persons</a><br></p>
+<p>Text mode will now be activated, and you can use the <a href="https://developer.enonic.com/docs/content-studio/stable/editor/component-types#text_component">rich-text editor</a> to write and format text, but also insert images.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/text-component.png" alt="text component" width="1440px" title="Next.js-rendered text component with an image"></span></p>
+</div>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons/brad-pitt" target="_blank" rel="noopener">http://localhost:3000/persons/brad-pitt</a></p>
+<p>You may also click the <code>Preview</code> button in Content Studio for a full screen version.</p>
 </li>
-</ul>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_publish_page"><a class="link" href="#task_publish_page">Task: Publish page</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your new page is looking good. However, if you visit <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> - you&#8217;ll get a "404 page not found" error. This is because only published changes are visible from the front end.</p>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;etc.</p>
+<p>Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Publish the page</strong> by clicking <code>Mark as ready&#8230;&#8203;</code>, and then <code>Publish</code>.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/publish.png" alt="publish" width="810px" title="Publishing wizard"></span></p>
+</div>
+</li>
+<li>
+<p><strong>Verify that your page is live</strong> by visiting <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> once again.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p><strong>That&#8217;s it for the basic Next.js setup.</strong></p>
-</div>
-<div class="paragraph">
-<p>Next, well have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
-</div>
+<p>That concludes the introduction to page rendering, coming up we&#8217;ll add some <a href="parts.ahtml">configurable page components</a> to play with.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 12:44:30 UTC
+Last updated 2023-08-28 12:44:08 UTC
 </div>
 </div>
 </body>

@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Setting up Next.js</title>
+<meta name="author" content="Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.">
+<title>Next.XP TL;DR</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,143 +437,178 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Setting up Next.js</h1>
+<h1>Next.XP TL;DR</h1>
+<div class="details">
+<span id="author" class="author">Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_js_at_a_glance">Next.js at a glance</a></li>
-<li><a href="#task_create_the_next_js_project">Task: Create the Next.js project</a>
+<li><a href="#tldr">tl;dr</a>
 <ul class="sectlevel2">
-<li><a href="#code_overview">Code overview</a></li>
+<li><a href="#1_setup_enonic">1. Setup Enonic</a></li>
+<li><a href="#2_create_git_repo">2. Create Git repo</a></li>
+<li><a href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></li>
+<li><a href="#4_activate_preview">4. Activate preview</a></li>
 </ul>
 </li>
-<li><a href="#task_configure_application">Task: Configure application</a></li>
-<li><a href="#task_boot_the_server">Task: Boot the server</a></li>
-<li><a href="#next_url_patterns">Next URL patterns</a>
-<ul class="sectlevel2">
-<li><a href="#task_visit_some_more_pages">Task: Visit some more pages</a></li>
-</ul>
-</li>
+<li><a href="#how_does_it_work">How does it work?</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this chapter we will create a front-end application that renders pages based on content in the CMS.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="next_js_at_a_glance"><a class="link" href="#next_js_at_a_glance">Next.js at a glance</a></h2>
+<h2 id="tldr"><a class="link" href="#tldr">tl;dr</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>). Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_create_the_next_js_project"><a class="link" href="#task_create_the_next_js_project">Task: Create the Next.js project</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>From an empty folder, run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-bash" data-lang="bash">npx degit git@github.com:enonic/nextxp-template.git</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The "nextxp-template" is based on <a href="https://nextjs.org/docs/getting-started">Next.js' own introduction app</a>, so if you&#8217;re familiar with that, you&#8217;ll recognize the structure of the files.</p>
-</div>
-<div class="paragraph">
-<p>The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
+<p>Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.</p>
 </div>
 <div class="sect2">
-<h3 id="code_overview"><a class="link" href="#code_overview">Code overview</a></h3>
-<div class="paragraph">
-<p>The following file structure should now exist within your new project folder:</p>
-</div>
-<div class="listingblock">
-<div class="title">Next project files:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">.env <i class="conum" data-value="1"></i><b>(1)</b>
-src/
-    components/ <i class="conum" data-value="2"></i><b>(2)</b>
-    pages/
-        [[...contentPath]].tsx <i class="conum" data-value="3"></i><b>(3)</b>
-        _app.tsx <i class="conum" data-value="4"></i><b>(4)</b>
-        _document.tsx <i class="conum" data-value="5"></i><b>(5)</b>
-        _renderable.tsx
-        api/ <i class="conum" data-value="6"></i><b>(6)</b>
-            revalidate.ts
-            preview.ts</code></pre>
-</div>
-</div>
-<div class="colist arabic">
+<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://enonic.com/sign-up" class="bare">https://enonic.com/sign-up</a></p>
+</li>
+<li>
+<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.XP Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
+</li>
+<li>
+<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> route, you will need it later.</p>
+<div class="admonitionblock tip">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Environment variables are placed in this file</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Contains your implementation of CMS components</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Invoked on every request.
-Add common structures here (eg. <code>&lt;head&gt;</code> etc), but be careful not to remove functionality needed by Content Studio</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Vanilla Next.js file that outlines the basic document structure of all pages.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>These files support preview mode and regeneration of cached pages</td>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP <code>POST</code> rather than <code>GET</code>.
+</td>
 </tr>
 </table>
 </div>
+</li>
+</ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="task_configure_application"><a class="link" href="#task_configure_application">Task: Configure application</a></h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2. Create Git repo</a></h3>
 <div class="paragraph">
-<p>By default, the configuration should work for your setup, but have a look to be sure:</p>
+<p>To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.</p>
+</div>
+<div class="paragraph">
+<p>Vercel uses this access to automatically fetch and build the app based on events. The write permission is used to setup the required webhooks etc in Github.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Verify your configuration</p>
+<p>Clone or fork <a href="https://github.com/enonic/nextxp-demo/" class="bare">https://github.com/enonic/nextxp-demo/</a> to your personal Github/Bitbucket/Gitlab account.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you are using Github, simply press the <code>Fork</code> button at the top right.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></h3>
 <div class="paragraph">
-<p>The following configuration values should match your environment</p>
+<p>Vercel are the makers of Next.js, and you&#8217;ll be using their service to host the front-end.</p>
 </div>
-<div class="listingblock">
-<div class="title">.env extract:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files"># Provide a unique value which will be used to secure the preview mode
-API_TOKEN=mySecretKey
-
-# Enonic app name, must match the name of your app
-APP_NAME=com.example.myproject
-
-# Path to site, or site ID
-SITE_KEY=/hmdb
-
-# Absolute URL to Content API
-CONTENT_API_DRAFT=http://127.0.0.1:8080/site/moviedb/draft
-CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
+</li>
+<li>
+<p>Create a new project i.e. <code>enonic-demo</code>, and follow the steps to connect it to the Git repo you created in step 2.</p>
+</li>
+<li>
+<p><strong>Add environment variables</strong> telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">KEY:VALUE</dt>
+<dd>
+<p>ENONIC_API:&lt;API URL&gt;</p>
+</dd>
+<dt class="hdlist1">KEY:VALUE</dt>
+<dd>
+<p>ENONIC_API_TOKEN:mySecretKey</p>
+</dd>
+</dl>
 </div>
+</li>
+<li>
+<p>After deploying, the Vercel app should render the front page:</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/front-page.png" alt="front page" width="1003px" title="Front page showing some text, links and a picture"></span></p>
+</div>
+<div class="paragraph">
+<p>Make a note of the application URL, you will need it when setting up the preview later.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Check the Vercel function logs if you are not getting the expected result.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4_activate_preview"><a class="link" href="#4_activate_preview">4. Activate preview</a></h3>
+<div class="paragraph">
+<p>With the front-end running, it is time to enable preview in Content Studio.</p>
+</div>
+<div class="paragraph">
+<p>The fastest way to try it out goes as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Launch Enonic XP admin</strong> from the solution dashboard.</p>
+</li>
+<li>
+<p><strong>Open Content Studio</strong> from the top right <code>XP menu &#8594; Content Studio</code>.</p>
+</li>
+<li>
+<p>Choose the <code>Headless Movie DB</code> project, then click the root item in the tree structure <code>/hmdb</code> and click <code>Edit</code>.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-edit-site.png" alt="content studio edit site" width="650px" title="Select and edit the site"></span></p>
+</div>
+</li>
+<li>
+<p>Add the <code>Next.XP</code> app to the list of applications on the site. It will override the default preview for the content within the site.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="779px" title="Add the Next.XP application to the site."></span></p>
+</div>
+</li>
+<li>
+<p>Finally, and edit the Next.XP app configuration by clicking the pencil icon. Make sure it matches the URL to your Vercel site, and uses the correct token. <code>Save</code> the changes.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-configure-app.png" alt="content studio configure app" width="843px" title="Configure the Next.XP application with correct URL and Token from previous step"></span></p>
+</div>
+</li>
+<li>
+<p>After saving, the preview should update to show your front-end.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
 </div>
 </li>
 </ol>
@@ -584,116 +620,37 @@ CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The configuration values can be overridden later when deplying your app to a live server.
+<div class="paragraph">
+<p>For production use, we recommend moving the configuration to the solution console - <a href="deployment.ahtml">as described here</a>.</p>
+</div>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_boot_the_server"><a class="link" href="#task_boot_the_server">Task: Boot the server</a></h2>
+<h2 id="how_does_it_work"><a class="link" href="#how_does_it_work">How does it work?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s fire up Next and see if things are working as planned&#8230;&#8203;</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app is running on localhost:8080</a> before you continue
-</td>
-</tr>
-</table>
+<p>The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode.</p>
 </div>
 <div class="paragraph">
-<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your next project folder:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>npm install
-npm run dev</pre>
-</div>
+<p>Your edits will only be visible in Content Studio, until published.</p>
 </div>
 <div class="paragraph">
-<p>If Next boots without errors, point your browser to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> to see the glorious result.</p>
+<p>When publishing changes, Next.XP will automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-debug.png" alt="content debug" width="767px" title="Application root page, showing debugging details"></span></p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Running Next in <code>dev</code> mode normally works fine. Should you however experience "strange issues" - try deleting the <code>.next/</code> folder and reboot</p>
-</div>
-<div class="paragraph">
-<p>For more details on booting Next, check out the <a href="https://nextjs.org/docs/api-reference/cli">Next.js CLI docs</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="next_url_patterns"><a class="link" href="#next_url_patterns">Next URL patterns</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The URL structure of your front-end will mirror the structure of the content in the CMS. <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> will be mounted to the site root, which in our case has the internal path <code>/hmdb</code>.</p>
-</div>
-<div class="paragraph">
-<p>Using the Movie Se7en as an example:</p>
-</div>
-<div class="paragraph">
-<div class="title">Result when visiting <a href="http://localhost:3000/movies/se7en" target="_blank" rel="noopener">http://localhost:3000/movies/se7en</a></div>
-<p><span class="image"><img src="media/se7en-debug.png" alt="se7en debug" width="766px" title="Default render: movie content item The Godfather"></span></p>
-</div>
-<div class="paragraph">
-<div class="title">Se7en as seen in Content Studio - internal path is <code>/hmdb/movies/se7en</code></div>
-<p><span class="image"><img src="media/se7en-edit.png" alt="se7en edit" width="768px" title="Editing item in Content Studio - the path /hmdb/movies/se7en is highlighted"></span></p>
-</div>
-<div class="sect2">
-<h3 id="task_visit_some_more_pages"><a class="link" href="#task_visit_some_more_pages">Task: Visit some more pages</a></h3>
-<div class="paragraph">
-<p>Give the default rendering a spin by trying out some other URLs, for example:<br></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://localhost:3000/movies" target="_blank" rel="noopener">http://localhost:3000/movies</a><br></p>
-</li>
-<li>
-<p><a href="http://localhost:3000/persons" target="_blank" rel="noopener">http://localhost:3000/persons</a><br></p>
-</li>
-<li>
-<p><a href="http://localhost:3000/persons/brad-pitt" target="_blank" rel="noopener">http://localhost:3000/persons/brad-pitt</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;etc.</p>
-</div>
-<div class="paragraph">
-<p><strong>That&#8217;s it for the basic Next.js setup.</strong></p>
-</div>
-<div class="paragraph">
-<p>Next, well have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
-</div>
+<p>Congratulations, you now have a Next.js site powered by Enonic! 🚀</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 12:44:30 UTC
+Last updated 2023-08-28 12:44:08 UTC
 </div>
 </div>
 </body>

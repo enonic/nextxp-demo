@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Setting up Next.js</title>
+<title>Release Notes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,256 +436,66 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Setting up Next.js</h1>
+<h1>Release Notes</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_js_at_a_glance">Next.js at a glance</a></li>
-<li><a href="#task_create_the_next_js_project">Task: Create the Next.js project</a>
+<li><a href="#next_xp_demo_2">Next.XP Demo 2</a>
 <ul class="sectlevel2">
-<li><a href="#code_overview">Code overview</a></li>
-</ul>
-</li>
-<li><a href="#task_configure_application">Task: Configure application</a></li>
-<li><a href="#task_boot_the_server">Task: Boot the server</a></li>
-<li><a href="#next_url_patterns">Next URL patterns</a>
-<ul class="sectlevel2">
-<li><a href="#task_visit_some_more_pages">Task: Visit some more pages</a></li>
+<li><a href="#support_for_shortcuts">Support for shortcuts</a></li>
+<li><a href="#support_next_js_localization">Support Next.js localization</a></li>
+<li><a href="#changes_to_nextjs_urlsecret_configuration">Changes to nextjs url/secret configuration</a></li>
+<li><a href="#other_improvements">Other improvements</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this chapter we will create a front-end application that renders pages based on content in the CMS.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="next_js_at_a_glance"><a class="link" href="#next_js_at_a_glance">Next.js at a glance</a></h2>
+<h2 id="next_xp_demo_2"><a class="link" href="#next_xp_demo_2">Next.XP Demo 2</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="support_for_shortcuts"><a class="link" href="#support_for_shortcuts">Support for shortcuts</a></h3>
 <div class="paragraph">
-<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>). Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
+<p>Next.XP now supports base:shortcut content types.
+Note, that shortcuts are not displayed in Page Editor because there is nothing to edit.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_create_the_next_js_project"><a class="link" href="#task_create_the_next_js_project">Task: Create the Next.js project</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>From an empty folder, run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-bash" data-lang="bash">npx degit git@github.com:enonic/nextxp-template.git</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The "nextxp-template" is based on <a href="https://nextjs.org/docs/getting-started">Next.js' own introduction app</a>, so if you&#8217;re familiar with that, you&#8217;ll recognize the structure of the files.</p>
-</div>
-<div class="paragraph">
-<p>The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
 </div>
 <div class="sect2">
-<h3 id="code_overview"><a class="link" href="#code_overview">Code overview</a></h3>
+<h3 id="support_next_js_localization"><a class="link" href="#support_next_js_localization">Support Next.js localization</a></h3>
 <div class="paragraph">
-<p>The following file structure should now exist within your new project folder:</p>
+<p>You can now use multi-language Next.js projects with Next.XP.
+Both in Content Studio and stand-alone.
+All that is needed for that, on top of the <code>i18n</code> section in <code>next.config.js</code>, is installing <code>guillotine</code> application (if you don&#8217;t have it already) and adding a new environmental variable called <code>ENONIC_PROJECTS</code>.
+You can read more in the <a href="#upgrading">upgrade section</a>.</p>
 </div>
-<div class="listingblock">
-<div class="title">Next project files:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">.env <i class="conum" data-value="1"></i><b>(1)</b>
-src/
-    components/ <i class="conum" data-value="2"></i><b>(2)</b>
-    pages/
-        [[...contentPath]].tsx <i class="conum" data-value="3"></i><b>(3)</b>
-        _app.tsx <i class="conum" data-value="4"></i><b>(4)</b>
-        _document.tsx <i class="conum" data-value="5"></i><b>(5)</b>
-        _renderable.tsx
-        api/ <i class="conum" data-value="6"></i><b>(6)</b>
-            revalidate.ts
-            preview.ts</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Environment variables are placed in this file</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Contains your implementation of CMS components</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Invoked on every request.
-Add common structures here (eg. <code>&lt;head&gt;</code> etc), but be careful not to remove functionality needed by Content Studio</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Vanilla Next.js file that outlines the basic document structure of all pages.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>These files support preview mode and regeneration of cached pages</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_configure_application"><a class="link" href="#task_configure_application">Task: Configure application</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By default, the configuration should work for your setup, but have a look to be sure:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Verify your configuration</p>
-<div class="paragraph">
-<p>The following configuration values should match your environment</p>
-</div>
-<div class="listingblock">
-<div class="title">.env extract:</div>
-<div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files"># Provide a unique value which will be used to secure the preview mode
-API_TOKEN=mySecretKey
-
-# Enonic app name, must match the name of your app
-APP_NAME=com.example.myproject
-
-# Path to site, or site ID
-SITE_KEY=/hmdb
-
-# Absolute URL to Content API
-CONTENT_API_DRAFT=http://127.0.0.1:8080/site/moviedb/draft
-CONTENT_API_MASTER=http://127.0.0.1:8080/site/moviedb/master</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The configuration values can be overridden later when deplying your app to a live server.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_boot_the_server"><a class="link" href="#task_boot_the_server">Task: Boot the server</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Let&#8217;s fire up Next and see if things are working as planned&#8230;&#8203;</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app is running on localhost:8080</a> before you continue
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your next project folder:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>npm install
-npm run dev</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If Next boots without errors, point your browser to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> to see the glorious result.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-debug.png" alt="content debug" width="767px" title="Application root page, showing debugging details"></span></p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Running Next in <code>dev</code> mode normally works fine. Should you however experience "strange issues" - try deleting the <code>.next/</code> folder and reboot</p>
-</div>
-<div class="paragraph">
-<p>For more details on booting Next, check out the <a href="https://nextjs.org/docs/api-reference/cli">Next.js CLI docs</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="next_url_patterns"><a class="link" href="#next_url_patterns">Next URL patterns</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The URL structure of your front-end will mirror the structure of the content in the CMS. <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> will be mounted to the site root, which in our case has the internal path <code>/hmdb</code>.</p>
-</div>
-<div class="paragraph">
-<p>Using the Movie Se7en as an example:</p>
-</div>
-<div class="paragraph">
-<div class="title">Result when visiting <a href="http://localhost:3000/movies/se7en" target="_blank" rel="noopener">http://localhost:3000/movies/se7en</a></div>
-<p><span class="image"><img src="media/se7en-debug.png" alt="se7en debug" width="766px" title="Default render: movie content item The Godfather"></span></p>
-</div>
-<div class="paragraph">
-<div class="title">Se7en as seen in Content Studio - internal path is <code>/hmdb/movies/se7en</code></div>
-<p><span class="image"><img src="media/se7en-edit.png" alt="se7en edit" width="768px" title="Editing item in Content Studio - the path /hmdb/movies/se7en is highlighted"></span></p>
 </div>
 <div class="sect2">
-<h3 id="task_visit_some_more_pages"><a class="link" href="#task_visit_some_more_pages">Task: Visit some more pages</a></h3>
+<h3 id="changes_to_nextjs_urlsecret_configuration"><a class="link" href="#changes_to_nextjs_urlsecret_configuration">Changes to nextjs url/secret configuration</a></h3>
 <div class="paragraph">
-<p>Give the default rendering a spin by trying out some other URLs, for example:<br></p>
+<p>There is no more url and secret inputs in the next.xp application configuration.
+Instead, there is a dropdown allowing to select named configuration from the app-nextxp configuration file.
+Format of that file has also been changed to support that.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="other_improvements"><a class="link" href="#other_improvements">Other improvements</a></h3>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://localhost:3000/movies" target="_blank" rel="noopener">http://localhost:3000/movies</a><br></p>
+<p>Static generation for every locale</p>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons" target="_blank" rel="noopener">http://localhost:3000/persons</a><br></p>
+<p>Static paths query is non-recursive now and queries all content in one request per-repository</p>
 </li>
 <li>
-<p><a href="http://localhost:3000/persons/brad-pitt" target="_blank" rel="noopener">http://localhost:3000/persons/brad-pitt</a></p>
+<p>You can configure different site names for different locales</p>
+</li>
+<li>
+<p>All environmental variabales now have <code>ENONIC_</code> prefix to avoid collisions</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;etc.</p>
-</div>
-<div class="paragraph">
-<p><strong>That&#8217;s it for the basic Next.js setup.</strong></p>
-</div>
-<div class="paragraph">
-<p>Next, well have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
 </div>
 </div>
 </div>
@@ -693,7 +503,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 12:44:30 UTC
+Last updated 2023-08-28 12:44:08 UTC
 </div>
 </div>
 </body>
