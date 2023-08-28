@@ -41,12 +41,16 @@
             "document": "templates"
         },
         {
-            "title": "11 - Revalidation",
-            "document": "revalidation"
+            "title": "11 - Static pages and revalidation",
+            "document": "static"
         },
         {
             "title": "12 - Live deployment",
             "document": "deployment"
+        },
+        {
+            "title": "13 - Internationalization",
+            "document": "i18n"
         },
         {
             "title": "TL;DR",
