@@ -41,7 +41,7 @@
             "document": "templates"
         },
         {
-            "title": "11 - Static pages and revalidation",
+            "title": "11 - Static pages",
             "document": "static"
         },
         {
@@ -49,7 +49,7 @@
             "document": "deployment"
         },
         {
-            "title": "13 - Internationalization",
+            "title": "13 - I18n",
             "document": "i18n"
         },
         {
