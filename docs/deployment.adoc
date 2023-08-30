@@ -97,7 +97,7 @@ By default `Next.XP` uses the following values:
 +
 `url: *http://127.0.0.1:3000*`
 +
-`secret: *mySecret*`
+`secret: *mySecretKey*`
 +
 .Add the following lines to the app config field if you want to override default values:
 [source,properties]
