@@ -28,7 +28,7 @@ By default `Next.XP` uses the following values:
 +
 `url: *http://127.0.0.1:3000*`
 +
-`secret: *mySecret*`
+`secret: *mySecretKey*`
 +
 You can change default values and add more configurations by adding a config file named `_com.enonic.app.nextxp.cfg_` in `_<xp-home>/config/_` folder:
 +

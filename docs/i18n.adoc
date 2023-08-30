@@ -24,7 +24,33 @@ module.exports = {
 
 Full documentation is https://nextjs.org/docs/pages/building-your-application/routing/internationalization[available here].
 
-== Task: Set up i18n
+== Task: Create localized content
+
+First, we need to create some localized content in Enonic XP.
+To do that, go to Content Studio and click on the `Settings` icon on the left-hand side of the grid.
+You will be presented with the list of projects:
+
+image:content-studio-project-list.png[title="Project list",width=2559px]
+
+Select the `Movie DB` project and click on the `New...` button that will take you to the new layer wizard:
+
+image:content-studio-project-wizard.png[title="New layer wizard",width=2559px]
+
+Fill in the form with the following values:
+
+* *Name*: `Norsk Movie DB`
+* *Identifier*: `moviedb-no`
+* *Language*: `norsk (no)`
+* *Access mode*: `Public`
+
+Rest of the fields are arbitrary and can be left as is.
+After saving it and closing the wizard you should see new layer in the list:
+
+image:content-studio-project-list-2.png[title="Project list",width=2559px]
+
+Now you can move on to configuring Next.XP to use this new layer.
+
+== Task: Set up i18n in Next.XP
 
 In addition to specifying locales in `next.config.js` file, you will need to instruct Next.XP which project to use for every locale.
 This is done in the `ENONIC_PROJECTS` environmental variable:
@@ -32,7 +58,7 @@ This is done in the `ENONIC_PROJECTS` environmental variable:
 ..env
 [source,Properties,options="nowrap"]
 ----
-ENONIC_PROJECTS=hmdb/hmdb,no:hbmd-no/norges-hmdb
+ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
 ----
 
 Let's break down the syntax:
@@ -41,9 +67,9 @@ Let's break down the syntax:
 +
 IMPORTANT: This should be present at all times, even when you have no locales configuration in `next.config.js` because this instructs Next.XP where to get the data from.
 +
-2. Then comes additional locale identifier and the repository with site path, separated by a colon: `no:hmdb-no/norges-hmdb` telling Next.XP to use `/norges-hmdb` site in `hmdb-no` project for `no` locale
+2. Then comes additional locale identifier and the repository with site path, separated by a colon: `no:moviedb-no/hmdb` telling Next.XP to use `/hmdb` site in `moviedb-no` project for `no` locale
 +
-NOTE: You can have different site paths for different locales: _/hmdb_ for english and _/norges-hmdb_ for norwegian
+NOTE: You can have different site paths for different locales: i.e. `/hmdb` for english and `/norges-hmdb` for norwegian
 +
 3. You need to have `<locale>:<project>/<site-path>` definition for all locales configured in `next.enonic.js` except for the default one which suffice `<project>/<site-path>`.
 
