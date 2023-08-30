@@ -468,7 +468,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="next_js_at_a_glance"><a class="link" href="#next_js_at_a_glance">Next.js at a glance</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>). Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
+<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>.
+Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
 </div>
 </div>
 </div>
@@ -567,7 +568,7 @@ ENONIC_API_TOKEN=mySecretKey
 ENONIC_APP_NAME=com.example.myproject
 
 # Enonic XP projects configuration for different locales
-ENONIC_PROJECTS=hmdb/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
+ENONIC_PROJECTS=moviedb/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
 
 # Absolute URL to Content API
 ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
@@ -710,7 +711,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>

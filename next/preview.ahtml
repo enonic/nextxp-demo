@@ -495,7 +495,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><code>url: <strong><a href="http://127.0.0.1:3000" class="bare">http://127.0.0.1:3000</a></strong></code></p>
 </div>
 <div class="paragraph">
-<p><code>secret: <strong>mySecret</strong></code></p>
+<p><code>secret: <strong>mySecretKey</strong></code></p>
 </div>
 <div class="paragraph">
 <p>You can change default values and add more configurations by adding a config file named <code><em>com.enonic.app.nextxp.cfg</em></code> in <code><em>&lt;xp-home&gt;/config/</em></code> folder:</p>
@@ -599,7 +599,7 @@ These remaining URLs are the automatically processed by the Next.XP proxy before
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>

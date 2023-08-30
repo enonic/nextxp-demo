@@ -441,7 +441,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#task_set_up_i18n">Task: Set up i18n</a></li>
+<li><a href="#task_create_localized_content">Task: Create localized content</a></li>
+<li><a href="#task_set_up_i18n_in_next_xp">Task: Set up i18n in Next.XP</a></li>
 <li><a href="#accessing_locale_in_views">Accessing locale in views</a></li>
 <li><a href="#summary_and_whats_next">Summary, and whats Next?</a></li>
 </ul>
@@ -481,7 +482,55 @@ This is enabled by specifying locale list in the <code>next.config.js</code> fil
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_set_up_i18n"><a class="link" href="#task_set_up_i18n">Task: Set up i18n</a></h2>
+<h2 id="task_create_localized_content"><a class="link" href="#task_create_localized_content">Task: Create localized content</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First, we need to create some localized content in Enonic XP.
+To do that, go to Content Studio and click on the <code>Settings</code> icon on the left-hand side of the grid.
+You will be presented with the list of projects:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-project-list.png" alt="content studio project list" width="2559px" title="Project list"></span></p>
+</div>
+<div class="paragraph">
+<p>Select the <code>Movie DB</code> project and click on the <code>New&#8230;&#8203;</code> button that will take you to the new layer wizard:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-project-wizard.png" alt="content studio project wizard" width="2559px" title="New layer wizard"></span></p>
+</div>
+<div class="paragraph">
+<p>Fill in the form with the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name</strong>: <code>Norsk Movie DB</code></p>
+</li>
+<li>
+<p><strong>Identifier</strong>: <code>moviedb-no</code></p>
+</li>
+<li>
+<p><strong>Language</strong>: <code>norsk (no)</code></p>
+</li>
+<li>
+<p><strong>Access mode</strong>: <code>Public</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Rest of the fields are arbitrary and can be left as is.
+After saving it and closing the wizard you should see new layer in the list:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-project-list-2.png" alt="content studio project list 2" width="2559px" title="Project list"></span></p>
+</div>
+<div class="paragraph">
+<p>Now you can move on to configuring Next.XP to use this new layer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_set_up_i18n_in_next_xp"><a class="link" href="#task_set_up_i18n_in_next_xp">Task: Set up i18n in Next.XP</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In addition to specifying locales in <code>next.config.js</code> file, you will need to instruct Next.XP which project to use for every locale.
@@ -490,7 +539,7 @@ This is done in the <code>ENONIC_PROJECTS</code> environmental variable:</p>
 <div class="listingblock">
 <div class="title">.env</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-Properties" data-lang="Properties">ENONIC_PROJECTS=hmdb/hmdb,no:hbmd-no/norges-hmdb</code></pre>
+<pre class="highlight nowrap"><code class="language-Properties" data-lang="Properties">ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -514,7 +563,7 @@ This should be present at all times, even when you have no locales configuration
 </div>
 </li>
 <li>
-<p>Then comes additional locale identifier and the repository with site path, separated by a colon: <code>no:hmdb-no/norges-hmdb</code> telling Next.XP to use <code>/norges-hmdb</code> site in <code>hmdb-no</code> project for <code>no</code> locale</p>
+<p>Then comes additional locale identifier and the repository with site path, separated by a colon: <code>no:moviedb-no/hmdb</code> telling Next.XP to use <code>/hmdb</code> site in <code>moviedb-no</code> project for <code>no</code> locale</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -522,7 +571,7 @@ This should be present at all times, even when you have no locales configuration
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can have different site paths for different locales: <em>/hmdb</em> for english and <em>/norges-hmdb</em> for norwegian
+You can have different site paths for different locales: i.e. <code>/hmdb</code> for english and <code>/norges-hmdb</code> for norwegian
 </td>
 </tr>
 </table>
@@ -613,7 +662,7 @@ export interface MetaData {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>

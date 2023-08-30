@@ -532,7 +532,20 @@ The definition of the region <code>main</code>, allows Content Studio editors to
 </li>
 <li>
 <p><strong>Configure page rendering in Next.js</strong>
-Rendering a page is similar to rendering a content type. Go to the folder <code>./src/components</code>, create a new folder here - <code>pages</code>, and within it a new file called <code>Main.tsx</code> containing the following code.</p>
+Rendering a page is similar to rendering a content type.
+Go to the folder <code>./src/components</code>, create a new folder here - <code>pages</code>, and within it a new file called <code>Main.tsx</code> containing the following code.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Make sure to use <code>src/components/pages</code>, not <code>src/pages</code>!
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="title">src/components/pages/Main.tsx</div>
 <div class="content">
@@ -681,7 +694,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>

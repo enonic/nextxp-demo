@@ -695,7 +695,7 @@ This way you can override defaults and add more configurations.</p>
 <p><code>url: <strong><a href="http://127.0.0.1:3000" class="bare">http://127.0.0.1:3000</a></strong></code></p>
 </div>
 <div class="paragraph">
-<p><code>secret: <strong>mySecret</strong></code></p>
+<p><code>secret: <strong>mySecretKey</strong></code></p>
 </div>
 <div class="listingblock">
 <div class="title">Add the following lines to the app config field if you want to override default values:</div>
@@ -764,7 +764,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>

@@ -446,6 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#task_activate_prod_mode">Task: Activate prod mode</a></li>
 <li><a href="#task_update_the_connector">Task: Update the connector</a></li>
 <li><a href="#task_test_page_invalidation">Task: Test page invalidation</a></li>
+<li><a href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></li>
 </ul>
 </div>
 </div>
@@ -461,7 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The NextJS front-end is configured to use static site generation (SSG), which basically means you get lightning fast pages.
+<p>The NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages.
 On top of that, it has some improvements to remove common shortcomings of static pages, such as live preview in Content Studio or getting new pages and changes instantly live on your site.</p>
 </div>
 </div>
@@ -542,20 +543,6 @@ export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&g
 <div class="paragraph">
 <p>As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Next.js also supports Server Side Rendering (SSR) which can be enabled by renaming <code>getStaticProps</code> to <code>getServerSideProps</code> and dropping the <code>getStaticPaths</code> method.
-In this mode all rendering will be "real time", meaning no caching.
-More about <a href="https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering">SSR</a>.
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -626,7 +613,8 @@ Content Studio uses Next.js' preview mode, which automatically bypass static pag
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Edit your front-page, and publish the changes</strong>.This will trigger a revalidation hook.</p>
+<p><strong>Edit your front-page, and publish the changes</strong>.
+This will trigger a revalidation hook.</p>
 </li>
 </ol>
 </div>
@@ -634,7 +622,8 @@ Content Studio uses Next.js' preview mode, which automatically bypass static pag
 <p>Despite using static pages, the page should get updated at <code><a href="http://localhost:4242" class="bare">http://localhost:4242</a></code> with your latest changes - more or less instantly.🎉</p>
 </div>
 <div class="paragraph">
-<p>How does it work?In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.</p>
+<p>How does it work?
+In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -648,6 +637,31 @@ You should also be able to tell from the Next.js log that the revalidation was t
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="optional_task_convert_to_server_side_rendering_ssr"><a class="link" href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next.js supports several ways of rendering along with Static Site Generation (SSG).</p>
+</div>
+<div class="paragraph">
+<p>Server Side Rendering (SSR) is one of them and can be enabled by:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>renaming <code>getStaticProps</code> to <code>getServerSideProps</code></p>
+</li>
+<li>
+<p>removing the <code>getStaticPaths</code> method.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In this mode Next.js will render the page on every request, while still using the same Next.XP methods for fetching data from Enonic XP.
+More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering">here</a>.</p>
+</div>
 <div class="paragraph">
 <p>With prod mode and revalidation sorted out, it&#8217;s about time you <a href="deployment.ahtml">deploy your apps to live servers</a>.</p>
 </div>
@@ -656,7 +670,7 @@ You should also be able to tell from the Next.js log that the revalidation was t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 13:15:18 UTC
+Last updated 2023-08-30 08:17:20 UTC
 </div>
 </div>
 </body>
