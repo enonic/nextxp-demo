@@ -2,15 +2,50 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter you will learn what it takes to make your project multi-language.
+In this chapter you will learn what it takes to support multi-language for your site.
 
 == Introduction
 
 Next.js has native multi-language support, allowing your projects to switch language on the fly.
-This is enabled by specifying locale list in the `next.config.js` file:
 
+To back this, Content Studio has a feature called content layering. This means you can create additional content projects that inherit content from another project, and the inherited items may then be translated and published independently of the parent items.
+
+== Task: Create a layered project
+
+To demonstrate multi-language, you first need to activate support for translating your content in Content Studio. In our case, let's try Norwegian.
+
+. **Create a new project** in Content Studio by clicking on the `Settings` cog icon, on the left-hand side of the grid. You will be presented with the currently available projects:
++
+image:content-studio-settings.png[title="Project list",width=1024px]
++
+Click `New...` button, and select type `Layer`. Then choose the `Movie DB` project as the parent
++
+image:content-studio-create-layer.png[title="Layered project type",width=1024px]
++
+Fill in the rest of the form, using the following values:
++
+* *Name*: `Film DB`
+* *Identifier*: `moviedb-no`
+* *Language*: `norsk (no)`
+* *Access mode*: `Public`
+* Other fields may be skipped
++
+After saving and closing the wizard, the new project should appear in the list.
++
+. *Verify the new layer* by going back to the content list (via the pencil icon), and then switching context using the context selector in the top bar.
++
+After switching context, you should see the following:
++
+image:content-studio-filmdb.png[title="Film DB project",width=1024px]
+
+== Task: Set up i18n in Next.js
+
+Next, let's turn on multi-language support in Next.js. 
+
+. Start by activating Next.js' multilanguage support by adding a few lintes to the `next.config.js` file:
++
 .next.config.js
-[source,JavaScript,options="nowrap"]
+[source,JSON]
 ----
 module.exports = {
     // ...
@@ -21,59 +56,86 @@ module.exports = {
     // ...
 }
 ----
-
-Full documentation is https://nextjs.org/docs/pages/building-your-application/routing/internationalization[available here].
-
-== Task: Create localized content
-
-First, we need to create some localized content in Enonic XP.
-To do that, go to Content Studio and click on the `Settings` icon on the left-hand side of the grid.
-You will be presented with the list of projects:
-
-image:content-studio-project-list.png[title="Project list",width=2559px]
-
-Select the `Movie DB` project and click on the `New...` button that will take you to the new layer wizard:
-
-image:content-studio-project-wizard.png[title="New layer wizard",width=2559px]
-
-Fill in the form with the following values:
-
-* *Name*: `Norsk Movie DB`
-* *Identifier*: `moviedb-no`
-* *Language*: `norsk (no)`
-* *Access mode*: `Public`
-
-Rest of the fields are arbitrary and can be left as is.
-After saving it and closing the wizard you should see new layer in the list:
-
-image:content-studio-project-list-2.png[title="Project list",width=2559px]
-
-Now you can move on to configuring Next.XP to use this new layer.
-
-== Task: Set up i18n in Next.XP
-
-In addition to specifying locales in `next.config.js` file, you will need to instruct Next.XP which project to use for every locale.
-This is done in the `ENONIC_PROJECTS` environmental variable:
-
++
+. *Configure the Enonic adapter*, by specifying which content project to use for each specific locale:
++
 ..env
-[source,Properties,options="nowrap"]
+[source,Properties]
 ----
+// ...
 ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
+// ...
 ----
++
+Let's break down the syntax.
++
+For each comma separated entry, you will find the following pattern: `<locale>:<repository>/<sitekey>`. From the example above `no:moviedb-no/hmdb`. 
++
+The first entry in the list may skip the locale. As it will map to the `defaultLocale` specified in `next.config.js` earlier. In our case,`en`.
++
+NOTE: The reason for repeating the is that when using paths, the path may be different in each project/translation.
 
-Let's break down the syntax:
 
-1. First comes the repository name and site path for default locale (`en` in this case): `hmdb/hmdb`.
+== Task: Translate and publish
+
+As long as your preview configuration was working before you started, Content Studio should automatically be able to detect the right locale for each project.
+
+NOTE: You may need to restart/rebuild your Next.js server for the changes to be picked up.
+
+. In Content Studio, *Switch editing context* to the `Film DB` project by toggling in the top left corner of Content Studio.
 +
-IMPORTANT: This should be present at all times, even when you have no locales configuration in `next.config.js` because this instructs Next.XP where to get the data from.
+Content Studio should automatically be able to detect the correct Next.js locale for the project. Select an item, and you should get a preview.
 +
-2. Then comes additional locale identifier and the repository with site path, separated by a colon: `no:moviedb-no/hmdb` telling Next.XP to use `/hmdb` site in `moviedb-no` project for `no` locale
+. *Translate the site content* by selecting the site content, then click `localize` (rather than edit..). This effectively takes you to the edit form. You may now show off your skills while translating the page to Norwegian.
 +
-NOTE: You can have different site paths for different locales: i.e. `/hmdb` for english and `/norges-hmdb` for norwegian
+Once finished, click `Mark as Ready` and proceed to publish the entire site structure.
 +
-3. You need to have `<locale>:<project>/<site-path>` definition for all locales configured in `next.enonic.js` except for the default one which suffice `<project>/<site-path>`.
+[TIP]
+====
+*Publish the entire tree* by selecting the tree icon in the publishing wizard.
+image:content-studio-mark-as-ready.png[title="Click tree icon to include all children",width=819px]
+
+====
++
+. **Verify that your front-end is working**
++
+Finally. By adding `/no` i.e. `localhost:4242/no` to the URL of your Next.js server, you should now see the published content from the Norwegian project.
+
+
+== Multi front-end setup
+
+In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.
+
+To use different front-ends for previewing different sites, follow these steps:
+
+. *Update the Next.xp configuration file* for your Enonic installation by adding multiple entries:
++
+NOTE: The sandbox configuration files are located in the sandbox home directory, located in your users home directory at `.enonic/sandboxes/<your-sandbox-name>/home/config`. 
++
+.com.enonic.app.nextxp.cfg
+[source,properties]
+----
+# uncomment to override default values
+# nextjs.default.secret=yourSecret
+# nextjs.default.url=http://127.0.0.1:4242
+#
+# config 'someName'
+nextjs.someName.secret=yourSecret
+nextjs.someName.url=https://your.next-site.com
+#
+# config 'anotherName'
+nextjs.anotherName.secret=yourOtherSecret
+nextjs.anotherName.url=https://your.other-next-site.com
+# ...
+----
++
+. *Assign the configuration to your site* by click the pencil icon next to the `Next.XP` app name in the site form, and selecting it from the list of named configurations:
++
+image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
 
 == Accessing locale in views
+
+Here are some tips on how to make further use of locales in Next.js.
 
 When using `getStaticProps` or `getServerSideProps`, `locale` is accessible through the `Context`:
 
@@ -109,16 +171,4 @@ export interface MetaData {
 }
 ----
 
-== Summary, and whats Next?
-
-🎉 Congratulations 🥳 - You've reached the end of this tutorial - we hope you enjoyed it!
-
-The following topics were not covered, but will be covered in later versions of this tutorial:
-
-* Handling Rich text in form fields
-* and more...
-
-There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
-
-* https://developer.enonic.com[Enonic Developer portal]
-* https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101]
+Now that we have everything working, it's about time you <<deployment#, deploy to live servers>>.

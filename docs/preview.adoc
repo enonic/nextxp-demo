@@ -21,39 +21,14 @@ Add the Next.XP app to the site by selecting it in the applications combobox.
 image:content-studio-add-nextxp.png[title="Open app config by pressing pencil icon",width=597px]
 +
 Save the site to make all the features of the app available.
-
-. *Configure the `Next.XP` app*
 +
-By default `Next.XP` uses the following values:
+By default Next.XP preview uses the following values:
 +
-`url: *http://127.0.0.1:3000*`
+* *url*: `http://127.0.0.1:3000`
+* *secret*: `mySecretKey`
 +
-`secret: *mySecretKey*`
+This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <<static#, Static pages>>, and <<deployment#, Deployment>> chapters.
 +
-You can change default values and add more configurations by adding a config file named `_com.enonic.app.nextxp.cfg_` in `_<xp-home>/config/_` folder:
-+
-[source,properties]
-----
-# uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...
-----
-+
-NOTE: Remember to update properties' values with your own data
-+
-To assign a configuration to a site, click the pencil icon next to the `Next.XP` app name in the site wizard and select from the list of named configurations:
-+
-image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
-
 . After applying and saving the changes, you should be able to see the live preview in Content Studio.
 +
 image:morgan-freeman-preview.png[title="Next.js-rendered preview in Content Studio",width=1072px]
