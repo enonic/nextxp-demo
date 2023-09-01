@@ -5,7 +5,7 @@
 In this chapter you will launch cloud instances of both Enonic and Next - link them together, and see the glorious result.
 
 == Introduction
-To complete this chapter, you´ll be using Enonic to host the XP side of things, and Vercel for the front-end - Vercel are the makers of Next.js.
+To complete this chapter, you'll be using Enonic to host the XP side of things, and Vercel for the front-end - Vercel are the makers of Next.js.
 
 NOTE: Both Enonic and Next.js are open source software projects and can be deployed more or less anywhere. Have a look at the https://developer.enonic.com/docs/hosting[Enonic platform hosting page] for more details.
 
@@ -13,8 +13,8 @@ NOTE: Both Enonic and Next.js are open source software projects and can be deplo
 
 Create an account to get a free developer instance of Enonic XP
 
-. **Sign up** for a https://enonic.com/sign-up/cloud-trial[free developer instance].
-. **Create a new solution** using the `CMS essentials` template. This will install applications like `Content Studio` and `Guillotine` automatically.
+. *Sign up* for a https://enonic.com/sign-up[free developer account].
+. *Create a new solution using the `CMS essentials` template*. This will install applications like `Content Studio` and `Guillotine` automatically.
 
 When the new solution has started, launch `Enonic XP Admin` to verify that everything is up and running.
 
@@ -57,11 +57,11 @@ NOTE: The URL should look something like this: `https://account-solution-environ
 
 == Task: Add your front-end to Git
 
-Vercel will need to access the code from a Git repo where your user has write access.
+Vercel (which will be hosting your front-end) will need write access to a Git repo with your code.
 
 . **Create a new Git repo** - Vercel supports Github, Gitlab and Bitbucket.
 +
-. **Commit and push** your Next.js app files to a new Git repo.
+. **Commit and push** your Next.js app files to a the new repo.
 
 
 == Task: Deploy Next app
@@ -73,6 +73,7 @@ You are now ready to deploy the the front-end application.
 +
 * ENONIC_API:<enonic route URL>
 * ENONIC_API_TOKEN:<yourSecret>
+* ENONIC_PROJECTS:moviedb/hmdb
 
 . **Verify the result**. The front-page of your app should now display a 404 - as you are back to the originally imported content without a site.
 +
@@ -89,32 +90,20 @@ NOTE: You now have to create your site and tree structure once more, or for conv
 
 . **Install the Next.XP app** `Solution` -> `Applications` -> `Install` -> Search for `Next.XP`, select it an click install
 . **Add configuration**.
-This way you can override defaults and add more configurations.
 +
 image:console-configure-app.png[title="Configure the Next.XP application in the solution console",width=769px]
 +
-By default `Next.XP` uses the following values:
-+
-`url: *http://127.0.0.1:3000*`
-+
-`secret: *mySecretKey*`
-+
-.Add the following lines to the app config field if you want to override default values:
+.Add the following lines to the app config field to override the default values:
 [source,properties]
 ----
 nextjs.default.url = <Vercel app URL>
 nextjs.default.secret = <yourSecret>
 ----
 +
-.You can also add as many named configurations as needed:
-[source,properties]
-----
-nextjs.<configurationName>.url = <Vercel app URL>
-nextjs.<configurationName>.secret = <yourSecret>
-----
+TIP: Remember, you can also create named configurations if needed.
 +
 NOTE: If you imported content from your local environment, the following two steps can be skipped
-. **Add the Next.XP app to the site**.Since you have already placed configuration on file, simply adding the app to the site will do the trick.
+. **Add the Next.XP app to the site** to activate preview.
 . **Save and verify** that the configuration is working by testing the Content Studio preview.
 
 == Task: Publish a page
@@ -128,4 +117,13 @@ image:cloud-preview.png[title="Front page as seen from Content Studio", width=14
 +
 image:live.png[title="Content rendered on the live server", width=1033px]
 
-Now that we have everything working, let's see how to add <<i18n#, multi-language>> support !
+== Summary, and whats Next?
+
+🎉 Congratulations 🥳 - You've reached the end of this tutorial - we hope you enjoyed it!
+
+There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
+
+* https://developer.enonic.com[Enonic Developer portal]
+* https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101]
+
+

@@ -2,7 +2,7 @@
 :toc: right
 :imagesdir: media/
 
-This is a step-by-step tutorial on building and managing Next.js sites, using Enonic XP as the backend. The combined set of software and tools used in this tutorial is simply called Next.XP. 
+This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. 
 
 NOTE: **Impatient?** Skip to the end of the tutorial and get a live demo by following <<tldr#,these instructions>>.
 
@@ -24,14 +24,15 @@ This tutorial assumes you are somewhat familiar with link:https://nextjs.org/[Ne
 You will complete the following steps:
 
 * Set up the Enonic SDK and sample content
-* Get familiar with the headless API
+* Get familiar with the GraphQL API
 * Learn about the site concept in Enonic
-* Create a Next.js app using a template
+* Create a Next.js app from a template
 * Activate live preview in Enonic
 * Render content based on type
 * Build landing pages using components
 * Create page templates
-* Learn about static rendering in Next.js
+* Static Site Generation SSG
 * Deploy to live servers
+* How to handle multi-language sites
 
 Get started by <<enonic-setup#, setting up the Enonic development environment>>.
