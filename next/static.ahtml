@@ -441,11 +441,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#prod_mode">Prod mode</a></li>
 <li><a href="#static_pages">Static pages</a></li>
 <li><a href="#task_activate_prod_mode">Task: Activate prod mode</a></li>
-<li><a href="#task_update_the_connector">Task: Update the connector</a></li>
-<li><a href="#task_test_page_invalidation">Task: Test page invalidation</a></li>
+<li><a href="#task_fixing_preview">Task: Fixing preview</a></li>
+<li><a href="#task_test_page_invalidation">Task: Test page invalidation</a>
+<ul class="sectlevel2">
+<li><a href="#what_happens">What happens?</a></li>
+</ul>
+</li>
+<li><a href="#a_look_at_the_code">A look at the code</a></li>
 <li><a href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></li>
 </ul>
 </div>
@@ -454,7 +458,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will learn about NextJS' static pages and how the Enonic triggers re-generation of pages when publishing.</p>
+<p>In this chapter you will learn about NextJS' static site generation capabilities, and how the Enonic triggers re-generation of pages when publishing.</p>
 </div>
 </div>
 </div>
@@ -462,19 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages.
-On top of that, it has some improvements to remove common shortcomings of static pages, such as live preview in Content Studio or getting new pages and changes instantly live on your site.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="prod_mode"><a class="link" href="#prod_mode">Prod mode</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>So far, you have been running Next.js in dev mode.</p>
-</div>
-<div class="paragraph">
-<p>By starting Next.js in <code>prod</code> mode, the application is automatically optimized, and in our case, pages get pre-rendered statically at compile time.</p>
+<p>Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages.</p>
 </div>
 </div>
 </div>
@@ -482,10 +474,152 @@ On top of that, it has some improvements to remove common shortcomings of static
 <h2 id="static_pages"><a class="link" href="#static_pages">Static pages</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Static generation will produce html + js files that will later be served to the user when he navigates to those pages.
-This makes pages load virtually instantly, but takes additional time to compile them during build time.
-More about
+<p>Static Site Generation (SSG) will produce static html + js files, rather than rendering on request. This makes pages load virtually instantly, but adds an additional compilation build step, which may be time consuming.</p>
+</div>
+<div class="paragraph">
+<p>Extensive documentation on More about
 <a href="https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation">SSG</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_activate_prod_mode"><a class="link" href="#task_activate_prod_mode">Task: Activate prod mode</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far, you have been running Next.js in dev mode.</p>
+</div>
+<div class="paragraph">
+<p>By starting Next.js in <code>prod</code> mode, the application is automatically optimized, and in our case, pages get pre-rendered statically before the server starts.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Remember to stop your existing Next.js dev instance before you continue.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Start Next.js in prod mode</strong>:</p>
+<div class="literalblock">
+<div class="content">
+<pre>npm run prod</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will take a while longer as when compared to dev mode.</p>
+</div>
+</li>
+<li>
+<p><strong>Verify</strong> by pointing your browser to <a href="http://localhost:4242" target="_blank" rel="noopener">http://localhost:4242</a>, you should now see the published items, just like in dev mode. Only this time, they will be much faster. <strong>Sweet!</strong></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_fixing_preview"><a class="link" href="#task_fixing_preview">Task: Fixing preview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Next.js now running on a different port, which means the Content Studio preview will stop working.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fix the preview by <strong>adding a Next.XP configuration file</strong>, with the following content to your sandbox:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The configuration files are located in your sandbox home directory, which can be found in your users home directory as <code>.enonic/sandboxes/&lt;your-sandbox&gt;/home/config/</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">com.enonic.app.nextxp.cfg</div>
+<div class="content">
+<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.secret=mySecretKey
+nextjs.default.url=http://127.0.0.1:4242</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Verify that the preview is working</strong> in Content Studio.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Even if you are using Static Pages, Content Studio activates Next.js' preview mode, which automatically bypasses static pages, always giiving you a fresh view of your draft content.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_test_page_invalidation"><a class="link" href="#task_test_page_invalidation">Task: Test page invalidation</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Edit your front-page, and publish the changes</strong>.
+This will trigger a revalidation hook, built into the Next.XP app.</p>
+</div>
+<div class="paragraph">
+<p>The page should now get updated at <code><a href="http://localhost:4242" class="bare">http://localhost:4242</a></code> with your latest changes - more or less instantly.🎉</p>
+</div>
+<div class="sect2">
+<h3 id="what_happens"><a class="link" href="#what_happens">What happens?</a></h3>
+<div class="paragraph">
+<p>In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You should also be able to tell from the Next.js log that the revalidation was triggered.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="a_look_at_the_code"><a class="link" href="#a_look_at_the_code">A look at the code</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Static Site Generation is controlled within the content page handler. There are essentially two important functions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getStaticProps()</code> - instructs Next.js to render static output</p>
+</li>
+<li>
+<p><code>getStaticPaths()</code> - This function will be used by Next.js at build time to create a list of pages to compile before the server starts</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Below, we explain the details of the code:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/pages/[[&#8230;&#8203;contentPath]].ts</div>
@@ -546,107 +680,13 @@ export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&g
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_activate_prod_mode"><a class="link" href="#task_activate_prod_mode">Task: Activate prod mode</a></h2>
-<div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Remember to stop your existing Next.js dev instance before you continue.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Start Next.js in prod mode</strong>:</p>
-<div class="literalblock">
-<div class="content">
-<pre>npm run prod</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will take a while longer as when compared to dev mode.</p>
-</div>
-</li>
-<li>
-<p><strong>Verify</strong> by pointing your browser to <a href="http://localhost:4242" target="_blank" rel="noopener">http://localhost:4242</a>, you should now see the published items, just like in dev mode. <strong>Sweet!</strong></p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_update_the_connector"><a class="link" href="#task_update_the_connector">Task: Update the connector</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With Next.js now running on a different port, the preview integration we configured earlier has been broken.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Fix the preview</strong> by updating the Next.XP app configuration file, choosing it in your site&#8217;s Next.XP app configuration dialog, and confirm that preview starts working again.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Content Studio uses Next.js' preview mode, which automatically bypass static pages, always showing the latest updates to your draft content.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_test_page_invalidation"><a class="link" href="#task_test_page_invalidation">Task: Test page invalidation</a></h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Edit your front-page, and publish the changes</strong>.
-This will trigger a revalidation hook.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Despite using static pages, the page should get updated at <code><a href="http://localhost:4242" class="bare">http://localhost:4242</a></code> with your latest changes - more or less instantly.🎉</p>
-</div>
-<div class="paragraph">
-<p>How does it work?
-In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You should also be able to tell from the Next.js log that the revalidation was triggered.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="optional_task_convert_to_server_side_rendering_ssr"><a class="link" href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Next.js supports several ways of rendering along with Static Site Generation (SSG).</p>
+<p>Next.js also supports dynamic rendering aka Server Side Rendering (SSR), which may be more useful for certain types of applications/websites.</p>
 </div>
 <div class="paragraph">
-<p>Server Side Rendering (SSR) is one of them and can be enabled by:</p>
+<p>You may easily convert your front-end into SSR by performing the following changes to the content handler:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -663,14 +703,14 @@ You should also be able to tell from the Next.js log that the revalidation was t
 More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>With prod mode and revalidation sorted out, it&#8217;s about time you <a href="deployment.ahtml">deploy your apps to live servers</a>.</p>
+<p>With prod mode and revalidation sorted out, let&#8217;s see how to add <a href="i18n.ahtml">multi-language</a> support.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-30 08:17:20 UTC
+Last updated 2023-09-01 12:59:56 UTC
 </div>
 </div>
 </body>

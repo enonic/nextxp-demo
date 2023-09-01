@@ -45,12 +45,12 @@
             "document": "static"
         },
         {
-            "title": "12 - Live deployment",
-            "document": "deployment"
+            "title": "12 - Multi language",
+            "document": "i18n"
         },
         {
-            "title": "13 - I18n",
-            "document": "i18n"
+            "title": "13 - Live deployment",
+            "document": "deployment"
         },
         {
             "title": "TL;DR",

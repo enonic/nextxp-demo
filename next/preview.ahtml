@@ -485,54 +485,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Save the site to make all the features of the app available.</p>
 </div>
+<div class="paragraph">
+<p>By default Next.XP preview uses the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>url</strong>: <code><a href="http://127.0.0.1:3000" class="bare">http://127.0.0.1:3000</a></code></p>
 </li>
 <li>
-<p><strong>Configure the <code>Next.XP</code> app</strong></p>
+<p><strong>secret</strong>: <code>mySecretKey</code></p>
 <div class="paragraph">
-<p>By default <code>Next.XP</code> uses the following values:</p>
+<p>This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <a href="static.ahtml">Static pages</a>, and <a href="deployment.ahtml">Deployment</a> chapters.</p>
 </div>
-<div class="paragraph">
-<p><code>url: <strong><a href="http://127.0.0.1:3000" class="bare">http://127.0.0.1:3000</a></strong></code></p>
-</div>
-<div class="paragraph">
-<p><code>secret: <strong>mySecretKey</strong></code></p>
-</div>
-<div class="paragraph">
-<p>You can change default values and add more configurations by adding a config file named <code><em>com.enonic.app.nextxp.cfg</em></code> in <code><em>&lt;xp-home&gt;/config/</em></code> folder:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Remember to update properties' values with your own data
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To assign a configuration to a site, click the pencil icon next to the <code>Next.XP</code> app name in the site wizard and select from the list of named configurations:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-configure-nextxp.png" alt="content studio configure nextxp" width="771px" title="Form with fields for server url and nextjs token"></span></p>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -599,7 +566,7 @@ These remaining URLs are the automatically processed by the Next.XP proxy before
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-30 08:17:20 UTC
+Last updated 2023-09-01 12:59:56 UTC
 </div>
 </div>
 </body>

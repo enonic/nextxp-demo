@@ -441,10 +441,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#task_create_localized_content">Task: Create localized content</a></li>
-<li><a href="#task_set_up_i18n_in_next_xp">Task: Set up i18n in Next.XP</a></li>
+<li><a href="#task_create_a_layered_project">Task: Create a layered project</a></li>
+<li><a href="#task_set_up_i18n_in_next_js">Task: Set up i18n in Next.js</a></li>
+<li><a href="#task_translate_and_publish">Task: Translate and publish</a></li>
+<li><a href="#multi_front_end_setup">Multi front-end setup</a></li>
 <li><a href="#accessing_locale_in_views">Accessing locale in views</a></li>
-<li><a href="#summary_and_whats_next">Summary, and whats Next?</a></li>
 </ul>
 </div>
 </div>
@@ -452,7 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will learn what it takes to make your project multi-language.</p>
+<p>In this chapter you will learn what it takes to support multi-language for your site.</p>
 </div>
 </div>
 </div>
@@ -460,51 +461,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Next.js has native multi-language support, allowing your projects to switch language on the fly.
-This is enabled by specifying locale list in the <code>next.config.js</code> file:</p>
-</div>
-<div class="listingblock">
-<div class="title">next.config.js</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-JavaScript" data-lang="JavaScript">module.exports = {
-    // ...
-    i18n: {
-        locales: ['en', 'no'],
-        defaultLocale: 'en'
-    }
-    // ...
-}</code></pre>
-</div>
+<p>Next.js has native multi-language support, allowing your projects to switch language on the fly.</p>
 </div>
 <div class="paragraph">
-<p>Full documentation is <a href="https://nextjs.org/docs/pages/building-your-application/routing/internationalization">available here</a>.</p>
+<p>To back this, Content Studio has a feature called content layering. This means you can create additional content projects that inherit content from another project, and the inherited items may then be translated and published independently of the parent items.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_create_localized_content"><a class="link" href="#task_create_localized_content">Task: Create localized content</a></h2>
+<h2 id="task_create_a_layered_project"><a class="link" href="#task_create_a_layered_project">Task: Create a layered project</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>First, we need to create some localized content in Enonic XP.
-To do that, go to Content Studio and click on the <code>Settings</code> icon on the left-hand side of the grid.
-You will be presented with the list of projects:</p>
+<p>To demonstrate multi-language, you first need to activate support for translating your content in Content Studio. In our case, let&#8217;s try Norwegian.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create a new project</strong> in Content Studio by clicking on the <code>Settings</code> cog icon, on the left-hand side of the grid. You will be presented with the currently available projects:</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-settings.png" alt="content studio settings" width="1024px" title="Project list"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-project-list.png" alt="content studio project list" width="2559px" title="Project list"></span></p>
+<p>Click <code>New&#8230;&#8203;</code> button, and select type <code>Layer</code>. Then choose the <code>Movie DB</code> project as the parent</p>
 </div>
 <div class="paragraph">
-<p>Select the <code>Movie DB</code> project and click on the <code>New&#8230;&#8203;</code> button that will take you to the new layer wizard:</p>
+<p><span class="image"><img src="media/content-studio-create-layer.png" alt="content studio create layer" width="1024px" title="Layered project type"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-project-wizard.png" alt="content studio project wizard" width="2559px" title="New layer wizard"></span></p>
-</div>
-<div class="paragraph">
-<p>Fill in the form with the following values:</p>
+<p>Fill in the rest of the form, using the following values:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Name</strong>: <code>Norsk Movie DB</code></p>
+<p><strong>Name</strong>: <code>Film DB</code></p>
 </li>
 <li>
 <p><strong>Identifier</strong>: <code>moviedb-no</code></p>
@@ -515,55 +504,71 @@ You will be presented with the list of projects:</p>
 <li>
 <p><strong>Access mode</strong>: <code>Public</code></p>
 </li>
+<li>
+<p>Other fields may be skipped</p>
+<div class="paragraph">
+<p>After saving and closing the wizard, the new project should appear in the list.</p>
+</div>
+</li>
 </ul>
 </div>
+</li>
+<li>
+<p><strong>Verify the new layer</strong> by going back to the content list (via the pencil icon), and then switching context using the context selector in the top bar.</p>
 <div class="paragraph">
-<p>Rest of the fields are arbitrary and can be left as is.
-After saving it and closing the wizard you should see new layer in the list:</p>
+<p>After switching context, you should see the following:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-project-list-2.png" alt="content studio project list 2" width="2559px" title="Project list"></span></p>
+<p><span class="image"><img src="media/content-studio-filmdb.png" alt="content studio filmdb" width="1024px" title="Film DB project"></span></p>
 </div>
-<div class="paragraph">
-<p>Now you can move on to configuring Next.XP to use this new layer.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_set_up_i18n_in_next_xp"><a class="link" href="#task_set_up_i18n_in_next_xp">Task: Set up i18n in Next.XP</a></h2>
+<h2 id="task_set_up_i18n_in_next_js"><a class="link" href="#task_set_up_i18n_in_next_js">Task: Set up i18n in Next.js</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In addition to specifying locales in <code>next.config.js</code> file, you will need to instruct Next.XP which project to use for every locale.
-This is done in the <code>ENONIC_PROJECTS</code> environmental variable:</p>
-</div>
-<div class="listingblock">
-<div class="title">.env</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-Properties" data-lang="Properties">ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s break down the syntax:</p>
+<p>Next, let&#8217;s turn on multi-language support in Next.js.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>First comes the repository name and site path for default locale (<code>en</code> in this case): <code>hmdb/hmdb</code>.</p>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-This should be present at all times, even when you have no locales configuration in <code>next.config.js</code> because this instructs Next.XP where to get the data from.
-</td>
-</tr>
-</table>
+<p>Start by activating Next.js' multilanguage support by adding a few lintes to the <code>next.config.js</code> file:</p>
+<div class="listingblock">
+<div class="title">next.config.js</div>
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">module.exports = {
+    // ...
+    i18n: {
+        locales: ['en', 'no'],
+        defaultLocale: 'en'
+    }
+    // ...
+}</code></pre>
+</div>
 </div>
 </li>
 <li>
-<p>Then comes additional locale identifier and the repository with site path, separated by a colon: <code>no:moviedb-no/hmdb</code> telling Next.XP to use <code>/hmdb</code> site in <code>moviedb-no</code> project for <code>no</code> locale</p>
+<p><strong>Configure the Enonic adapter</strong>, by specifying which content project to use for each specific locale:</p>
+<div class="listingblock">
+<div class="title">.env</div>
+<div class="content">
+<pre class="highlight"><code class="language-Properties" data-lang="Properties">// ...
+ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
+// ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s break down the syntax.</p>
+</div>
+<div class="paragraph">
+<p>For each comma separated entry, you will find the following pattern: <code>&lt;locale&gt;:&lt;repository&gt;/&lt;sitekey&gt;</code>. From the example above <code>no:moviedb-no/hmdb</code>.</p>
+</div>
+<div class="paragraph">
+<p>The first entry in the list may skip the locale. As it will map to the <code>defaultLocale</code> specified in <code>next.config.js</code> earlier. In our case,<code>en</code>.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -571,14 +576,121 @@ This should be present at all times, even when you have no locales configuration
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can have different site paths for different locales: i.e. <code>/hmdb</code> for english and <code>/norges-hmdb</code> for norwegian
+The reason for repeating the is that when using paths, the path may be different in each project/translation.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_translate_and_publish"><a class="link" href="#task_translate_and_publish">Task: Translate and publish</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As long as your preview configuration was working before you started, Content Studio should automatically be able to detect the right locale for each project.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You may need to restart/rebuild your Next.js server for the changes to be picked up.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In Content Studio, <strong>Switch editing context</strong> to the <code>Film DB</code> project by toggling in the top left corner of Content Studio.</p>
+<div class="paragraph">
+<p>Content Studio should automatically be able to detect the correct Next.js locale for the project. Select an item, and you should get a preview.</p>
+</div>
+</li>
+<li>
+<p><strong>Translate the site content</strong> by selecting the site content, then click <code>localize</code> (rather than edit..). This effectively takes you to the edit form. You may now show off your skills while translating the page to Norwegian.</p>
+<div class="paragraph">
+<p>Once finished, click <code>Mark as Ready</code> and proceed to publish the entire site structure.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Publish the entire tree</strong> by selecting the tree icon in the publishing wizard.
+<span class="image"><img src="media/content-studio-mark-as-ready.png" alt="content studio mark as ready" width="819px" title="Click tree icon to include all children"></span></p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>You need to have <code>&lt;locale&gt;:&lt;project&gt;/&lt;site-path&gt;</code> definition for all locales configured in <code>next.enonic.js</code> except for the default one which suffice <code>&lt;project&gt;/&lt;site-path&gt;</code>.</p>
+<p><strong>Verify that your front-end is working</strong></p>
+<div class="paragraph">
+<p>Finally. By adding <code>/no</code> i.e. <code>localhost:4242/no</code> to the URL of your Next.js server, you should now see the published content from the Norwegian project.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="multi_front_end_setup"><a class="link" href="#multi_front_end_setup">Multi front-end setup</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.</p>
+</div>
+<div class="paragraph">
+<p>To use different front-ends for previewing different sites, follow these steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Update the Next.xp configuration file</strong> for your Enonic installation by adding multiple entries:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The sandbox configuration files are located in the sandbox home directory, located in your users home directory at <code>.enonic/sandboxes/&lt;your-sandbox-name&gt;/home/config</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">com.enonic.app.nextxp.cfg</div>
+<div class="content">
+<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
+# nextjs.default.secret=yourSecret
+# nextjs.default.url=http://127.0.0.1:4242
+#
+# config 'someName'
+nextjs.someName.secret=yourSecret
+nextjs.someName.url=https://your.next-site.com
+#
+# config 'anotherName'
+nextjs.anotherName.secret=yourOtherSecret
+nextjs.anotherName.url=https://your.other-next-site.com
+# ...</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Assign the configuration to your site</strong> by click the pencil icon next to the <code>Next.XP</code> app name in the site form, and selecting it from the list of named configurations:</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-configure-nextxp.png" alt="content studio configure nextxp" width="771px" title="Form with fields for server url and nextjs token"></span></p>
+</div>
 </li>
 </ol>
 </div>
@@ -587,6 +699,9 @@ You can have different site paths for different locales: i.e. <code>/hmdb</code>
 <div class="sect1">
 <h2 id="accessing_locale_in_views"><a class="link" href="#accessing_locale_in_views">Accessing locale in views</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Here are some tips on how to make further use of locales in Next.js.</p>
+</div>
 <div class="paragraph">
 <p>When using <code>getStaticProps</code> or <code>getServerSideProps</code>, <code>locale</code> is accessible through the <code>Context</code>:</p>
 </div>
@@ -623,46 +738,15 @@ export interface MetaData {
 }</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="summary_and_whats_next"><a class="link" href="#summary_and_whats_next">Summary, and whats Next?</a></h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>🎉 Congratulations 🥳 - You&#8217;ve reached the end of this tutorial - we hope you enjoyed it!</p>
-</div>
-<div class="paragraph">
-<p>The following topics were not covered, but will be covered in later versions of this tutorial:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Handling Rich text in form fields</p>
-</li>
-<li>
-<p>and more&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://developer.enonic.com">Enonic Developer portal</a></p>
-</li>
-<li>
-<p><a href="https://developer.enonic.com/guides/developer-101/xp7">Enonic Developer 101</a></p>
-</li>
-</ul>
+<p>Now that we have everything working, it&#8217;s about time you <a href="deployment.ahtml">deploy to live servers</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-30 08:17:20 UTC
+Last updated 2023-09-01 12:59:56 UTC
 </div>
 </div>
 </body>
