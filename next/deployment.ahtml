@@ -593,7 +593,7 @@ The URL should look something like this: <code><a href="https://account-solution
 <p><strong>Create a new Git repo</strong> - Vercel supports Github, Gitlab and Bitbucket.</p>
 </li>
 <li>
-<p><strong>Commit and push</strong> your Next.js app files to a the new repo.</p>
+<p><strong>Commit and push</strong> your Next.js app files to the new repo.</p>
 </li>
 </ol>
 </div>
@@ -614,17 +614,17 @@ The URL should look something like this: <code><a href="https://account-solution
 <p>Create a new project <code>enonic-tutorial</code> and connect it to the repo you created in the previous step.</p>
 </li>
 <li>
-<p><strong>Add the following environment variables</strong> to the project (name:value):</p>
+<p><strong>Add the following environment variables</strong> to the project (name: value):</p>
 <div class="ulist">
 <ul>
 <li>
-<p>ENONIC_API:&lt;enonic route URL&gt;</p>
+<p>ENONIC_API: &lt;enonic route URL&gt;</p>
 </li>
 <li>
-<p>ENONIC_API_TOKEN:&lt;yourSecret&gt;</p>
+<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
 </li>
 <li>
-<p>ENONIC_PROJECTS:moviedb/hmdb</p>
+<p>ENONIC_PROJECTS: moviedb/hmdb</p>
 </li>
 </ul>
 </div>
@@ -667,16 +667,16 @@ Check the Vercel function logs if you are not getting the expected result.
 <h2 id="task_link_content_studio_to_vercel"><a class="link" href="#task_link_content_studio_to_vercel">Task: Link Content Studio to Vercel</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With the front-end running, you can finally link it to Content Studio, and start building pages again.</p>
+<p>With the front-end running, you can link it to Content Studio to activate the preview, and start building pages once again.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You now have to create your site and tree structure once more, or for convenience, you may export content from your local machine, and importing it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
+To save time, you may export content from your local machine, and importing it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
 </td>
 </tr>
 </table>
@@ -694,7 +694,7 @@ You now have to create your site and tree structure once more, or for convenienc
 <div class="listingblock">
 <div class="title">Add the following lines to the app config field to override the default values:</div>
 <div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.url = &lt;Vercel app URL&gt;
+<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.url = &lt;Vercel application URL&gt;
 nextjs.default.secret = &lt;yourSecret&gt;</code></pre>
 </div>
 </div>
@@ -781,7 +781,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 12:59:56 UTC
+Last updated 2023-09-01 14:08:01 UTC
 </div>
 </div>
 </body>

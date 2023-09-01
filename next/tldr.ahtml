@@ -537,10 +537,25 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <div class="ulist">
 <ul>
 <li>
-<p>ENONIC_API:&lt;API URL&gt;</p>
+<p>ENONIC_API: &lt;URL to Enonic API&gt;</p>
 </li>
 <li>
-<p>ENONIC_API_TOKEN:&lt;yourSecret&gt;</p>
+<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
+</li>
+<li>
+<p>ENONIC_PROJECTS: /hmdb/hmdb</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The PROJECTS variable defines which content project, and site to access in Enonic.
+</td>
+</tr>
+</table>
+</div>
 </li>
 </ul>
 </div>
@@ -642,7 +657,7 @@ Check the Vercel function logs if you are not getting the expected result.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 12:59:56 UTC
+Last updated 2023-09-01 14:08:01 UTC
 </div>
 </div>
 </body>

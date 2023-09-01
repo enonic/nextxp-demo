@@ -464,7 +464,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Next.js has native multi-language support, allowing your projects to switch language on the fly.</p>
 </div>
 <div class="paragraph">
-<p>To back this, Content Studio has a feature called content layering. This means you can create additional content projects that inherit content from another project, and the inherited items may then be translated and published independently of the parent items.</p>
+<p>To back this, Content Studio has a feature called content layering.</p>
 </div>
 </div>
 </div>
@@ -548,6 +548,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     // ...
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The defaultLocale is the one that will be used to serve content on your domain root <code>/</code>, others will be available on /no etc.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -650,7 +662,7 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 <p>In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.</p>
 </div>
 <div class="paragraph">
-<p>To use different front-ends for previewing different sites, follow these steps:</p>
+<p>Setting up Next.js to do this is just like handling a single language. For Content Studio preview to know which Next.js server to use, means some additional configuration.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -700,7 +712,7 @@ nextjs.anotherName.url=https://your.other-next-site.com
 <h2 id="accessing_locale_in_views"><a class="link" href="#accessing_locale_in_views">Accessing locale in views</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here are some tips on how to make further use of locales in Next.js.</p>
+<p>Here are some insight on how to make further use of locales in your Next.js project.</p>
 </div>
 <div class="paragraph">
 <p>When using <code>getStaticProps</code> or <code>getServerSideProps</code>, <code>locale</code> is accessible through the <code>Context</code>:</p>
@@ -746,7 +758,7 @@ export interface MetaData {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 12:59:56 UTC
+Last updated 2023-09-01 14:08:01 UTC
 </div>
 </div>
 </body>
