@@ -8,7 +8,7 @@ In this chapter you will learn what it takes to support multi-language for your 
 
 Next.js has native multi-language support, allowing your projects to switch language on the fly.
 
-To back this, Content Studio has a feature called content layering. This means you can create additional content projects that inherit content from another project, and the inherited items may then be translated and published independently of the parent items.
+To back this, Content Studio has a feature called content layering.
 
 == Task: Create a layered project
 
@@ -56,6 +56,8 @@ module.exports = {
     // ...
 }
 ----
++
+NOTE: The defaultLocale is the one that will be used to serve content on your domain root `/`, others will be available on /no etc. 
 +
 . *Configure the Enonic adapter*, by specifying which content project to use for each specific locale:
 +
@@ -106,7 +108,7 @@ Finally. By adding `/no` i.e. `localhost:4242/no` to the URL of your Next.js ser
 
 In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.
 
-To use different front-ends for previewing different sites, follow these steps:
+Setting up Next.js to do this is just like handling a single language. For Content Studio preview to know which Next.js server to use, means some additional configuration.
 
 . *Update the Next.xp configuration file* for your Enonic installation by adding multiple entries:
 +
@@ -135,7 +137,7 @@ image:content-studio-configure-nextxp.png[title="Form with fields for server url
 
 == Accessing locale in views
 
-Here are some tips on how to make further use of locales in Next.js.
+Here are some insight on how to make further use of locales in your Next.js project.
 
 When using `getStaticProps` or `getServerSideProps`, `locale` is accessible through the `Context`:
 

@@ -61,7 +61,7 @@ Vercel (which will be hosting your front-end) will need write access to a Git re
 
 . **Create a new Git repo** - Vercel supports Github, Gitlab and Bitbucket.
 +
-. **Commit and push** your Next.js app files to a the new repo.
+. **Commit and push** your Next.js app files to the new repo.
 
 
 == Task: Deploy Next app
@@ -69,11 +69,11 @@ You are now ready to deploy the the front-end application.
 
 . Sign up to Vercel: https://vercel.com/
 . Create a new project `enonic-tutorial` and connect it to the repo you created in the previous step.
-. **Add the following environment variables** to the project (name:value):
+. **Add the following environment variables** to the project (name: value):
 +
-* ENONIC_API:<enonic route URL>
-* ENONIC_API_TOKEN:<yourSecret>
-* ENONIC_PROJECTS:moviedb/hmdb
+* ENONIC_API: <enonic route URL>
+* ENONIC_API_TOKEN: <yourSecret>
+* ENONIC_PROJECTS: moviedb/hmdb
 
 . **Verify the result**. The front-page of your app should now display a 404 - as you are back to the originally imported content without a site.
 +
@@ -84,9 +84,9 @@ image:404.png[title="Front page rendering before a site has been added to it", w
 TIP: Check the Vercel function logs if you are not getting the expected result.
 
 == Task: Link Content Studio to Vercel
-With the front-end running, you can finally link it to Content Studio, and start building pages again.
+With the front-end running, you can link it to Content Studio to activate the preview, and start building pages once again.
 
-NOTE: You now have to create your site and tree structure once more, or for convenience, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
+TIP: To save time, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
 
 . **Install the Next.XP app** `Solution` -> `Applications` -> `Install` -> Search for `Next.XP`, select it an click install
 . **Add configuration**.
@@ -96,7 +96,7 @@ image:console-configure-app.png[title="Configure the Next.XP application in the 
 .Add the following lines to the app config field to override the default values:
 [source,properties]
 ----
-nextjs.default.url = <Vercel app URL>
+nextjs.default.url = <Vercel application URL>
 nextjs.default.secret = <yourSecret>
 ----
 +

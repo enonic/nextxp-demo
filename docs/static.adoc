@@ -6,14 +6,9 @@ In this chapter you will learn about NextJS' static site generation capabilities
 
 == Introduction
 
-Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages.
+Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages, but adds an additional compilation build step .
 
-== Static pages
-
-Static Site Generation (SSG) will produce static html + js files, rather than rendering on request. This makes pages load virtually instantly, but adds an additional compilation build step, which may be time consuming.
-
-Extensive documentation on More about
-https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation[SSG].
+For more information visit the https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation[Next.js SSG documentation].
 
 == Task: Activate prod mode
 
@@ -34,7 +29,7 @@ This will take a while longer as when compared to dev mode.
 
 == Task: Fixing preview
 
-With Next.js now running on a different port, which means the Content Studio preview will stop working.
+With Next.js now running on a different port, Content Studio preview will stop working.
 
 . Fix the preview by *adding a Next.XP configuration file*, with the following content to your sandbox:
 +
@@ -49,16 +44,17 @@ nextjs.default.url=http://127.0.0.1:4242
 
 . *Verify that the preview is working* in Content Studio.
 +
-TIP: Even if you are using Static Pages, Content Studio activates Next.js' preview mode, which automatically bypasses static pages, always giiving you a fresh view of your draft content.
+TIP: Content Studio uses Next.js' preview mode, which automatically bypasses static pages - giving you a fresh preview of your draft content.
 
 == Task: Test page invalidation
+With all pages now being cached as files, Next.js must be instructed to re-generate the pages when a change is published.
 
 *Edit your front-page, and publish the changes*.
-This will trigger a revalidation hook, built into the Next.XP app.
+This will trigger a revalidation hook, which is built into the Next.XP app.
 
-The page should now get updated at `http://localhost:4242` with your latest changes - more or less instantly.🎉
+The page should now get updated at `http://localhost:4242` - more or less instantly.🎉
 
-=== What happens?
+=== What happened?
 
 In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.
 
@@ -69,7 +65,7 @@ NOTE: You should also be able to tell from the Next.js log that the revalidation
 Static Site Generation is controlled within the content page handler. There are essentially two important functions:
 
 * `getStaticProps()` - instructs Next.js to render static output
-* `getStaticPaths()` - This function will be used by Next.js at build time to create a list of pages to compile before the server starts
+* `getStaticPaths()` - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.
 
 Below, we explain the details of the code:
 
