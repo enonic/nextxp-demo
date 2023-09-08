@@ -27,16 +27,18 @@ When the new solution has started, launch `Enonic XP Admin` to verify that every
 ----
 enonic cloud login
 ----
-+ 
++
 . **Install your enonic app** directly from the app folder by running this command:
 +
 [source,bash,{subs}]
 ----
 enonic cloud app install
 ----
-+ 
++
 . **Verify that the app was installed** from `Solution` -> `Applications` in the Enonic Console.
 . From XP Admin, **open Content Studio** to verify that your app automatically initialized the `Movie DB` project and imported content on the server, just like on your local machine.
+. Just like <<sites#, you did it locally>> , **create a new site** called `Hmdb` and move all imported content there.
+. Lastly, remember to create a localized version of the site <<i18n#, as you did before>>.
 
 == Task: Expose API via route
 
@@ -46,11 +48,11 @@ The purpose of routes is to expose APIs and other endpoints in Enonic XP like `:
 +
 Use the following settings:
 +
-Internal path:: `/site/hmdb`
+Internal path:: `/site`
 Public path:: `/api`
 ID provider:: -empty-
 +
-. **Make a note of the route URL** - you will find it in the route details. 
+. **Make a note of the route URL** - you will find it in the route details.
 
 NOTE: The URL should look something like this: `https://account-solution-environment.enonic.net/api`.
 
@@ -73,13 +75,14 @@ You are now ready to deploy the the front-end application.
 +
 * ENONIC_API: <enonic route URL>
 * ENONIC_API_TOKEN: <yourSecret>
-* ENONIC_PROJECTS: moviedb/hmdb
+* ENONIC_PROJECTS: moviedb/hmdb,no:moviedb-no/hmdb
 
-. **Verify the result**. The front-page of your app should now display a 404 - as you are back to the originally imported content without a site.
+. **Verify the result**.
+The front-page of your app should now display a 404 - as you haven't published any content yet.
 +
 NOTE: Make a note of the URL to the Vercel app, you will need it later
 +
-image:404.png[title="Front page rendering before a site has been added to it", width=768px]
+image:404.png[title="Front page rendering before a site has been added to it",width=768px]
 +
 TIP: Check the Vercel function logs if you are not getting the expected result.
 

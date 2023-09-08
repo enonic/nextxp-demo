@@ -52,7 +52,7 @@ With the new component registered, let's put it to use.
 
 . In Content Studio, select and **edit your favorite movie** (or choose "No time to die" if you have no faviorites).
 +
-. **Activate the page editor**, and select the "Main" page component and **add the "Movie details" part** to the page.
+. **Activate the page editor** by pressing `Display` icon in the top right screen corner, select the "Main page" descriptor and **add the "Movie details" part** to the page.
 +
 image:movie-details.png[title="No time to die, configured with movie-details part",width=1440px]
 +
@@ -70,6 +70,6 @@ This will create a new page template content item, and open it in a new tab for 
 +
 image:movie-template.png[title="Content item of type template, configure to support movie items",width=1440px]
 +
-. Try visiting other movie items to **verify they now automatically render**. PS! Don't forget to publish the changes and the new page template.
+. Try visiting other movie items to **verify they now automatically render**.PS!Don't forget to publish the changes and the new page template.
 
 With templates sorted out, let's dive into  <<static.adoc#, production mode and page revalidation>>.

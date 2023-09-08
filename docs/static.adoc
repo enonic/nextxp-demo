@@ -99,10 +99,10 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult<any>> {    
 ----
 
 <1> Next.js method indicating that we want the page to be rendered statically
-<2> Next.XP method for fetching content by path with
-<3> Next.XP method for creating Next.js response based on the response of fetchContent method
+<2> Next.XP method for fetching content from Enonic XP by path
+<3> Next.XP method for creating Next.js response based on results of fetchContent method
 <4> Next.js method to collect paths we want to be static
-<5> Next.XP method for getting paths of all supported contents in every configured locale. `${site}` will be substituted to the actual site name in guillotine.
+<5> Next.XP method for getting paths of all supported contents for every configured locale. `${site}` will be substituted with the actual site name.
 
 As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !
 
@@ -113,6 +113,7 @@ Next.js also supports dynamic rendering aka Server Side Rendering (SSR), which m
 You may easily convert your front-end into SSR by performing the following changes to the content handler:
 
 . renaming `getStaticProps` to `getServerSideProps`
+. setting  `isStatic` parameter to `false` in the `createResponse` method
 . removing the `getStaticPaths` method.
 
 In this mode Next.js will render the page on every request, while still using the same Next.XP methods for fetching data from Enonic XP.
