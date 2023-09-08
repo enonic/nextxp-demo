@@ -527,7 +527,7 @@ The definition of the region <code>main</code>, allows Content Studio editors to
 </table>
 </div>
 <div class="paragraph">
-<p>Redploy the Enonic app to register the page component.</p>
+<p><strong>Redploy the Enonic app</strong> to register the page component.</p>
 </div>
 </li>
 <li>
@@ -694,7 +694,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 14:08:01 UTC
+Last updated 2023-09-08 11:04:35 UTC
 </div>
 </div>
 </body>

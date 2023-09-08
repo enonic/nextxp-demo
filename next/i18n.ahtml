@@ -576,10 +576,13 @@ ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
 <p>Let&#8217;s break down the syntax.</p>
 </div>
 <div class="paragraph">
-<p>For each comma separated entry, you will find the following pattern: <code>&lt;locale&gt;:&lt;repository&gt;/&lt;sitekey&gt;</code>. From the example above <code>no:moviedb-no/hmdb</code>.</p>
+<p>For each comma separated entry, you will find the following pattern: <code>&lt;locale&gt;:&lt;repository&gt;/&lt;sitekey&gt;</code>.
+From the example above <code>no:moviedb-no/hmdb</code>.</p>
 </div>
 <div class="paragraph">
-<p>The first entry in the list may skip the locale. As it will map to the <code>defaultLocale</code> specified in <code>next.config.js</code> earlier. In our case,<code>en</code>.</p>
+<p>The first entry in the list may skip the locale.
+As it will map to the <code>defaultLocale</code> specified in <code>next.config.js</code> earlier.
+In our case,<code>en</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -588,11 +591,14 @@ ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The reason for repeating the is that when using paths, the path may be different in each project/translation.
+The reason for repeating paths, is that the path may be different in each project/translation.
 </td>
 </tr>
 </table>
 </div>
+</li>
+<li>
+<p>Finally <strong>restart your Next.js server</strong> to pick up the changes to environment variables.</p>
 </li>
 </ol>
 </div>
@@ -758,7 +764,7 @@ export interface MetaData {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 14:08:01 UTC
+Last updated 2023-09-08 11:04:35 UTC
 </div>
 </div>
 </body>

@@ -651,11 +651,11 @@ export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&g
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Next.XP method for fetching content by path with</td>
+<td>Next.XP method for fetching content from Enonic XP by path</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Next.XP method for creating Next.js response based on the response of fetchContent method</td>
+<td>Next.XP method for creating Next.js response based on results of fetchContent method</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -663,7 +663,7 @@ export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&g
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Next.XP method for getting paths of all supported contents in every configured locale. <code>${site}</code> will be substituted to the actual site name in guillotine.</td>
+<td>Next.XP method for getting paths of all supported contents for every configured locale. <code>${site}</code> will be substituted with the actual site name.</td>
 </tr>
 </table>
 </div>
@@ -687,6 +687,9 @@ export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&g
 <p>renaming <code>getStaticProps</code> to <code>getServerSideProps</code></p>
 </li>
 <li>
+<p>setting  <code>isStatic</code> parameter to <code>false</code> in the <code>createResponse</code> method</p>
+</li>
+<li>
 <p>removing the <code>getStaticPaths</code> method.</p>
 </li>
 </ol>
@@ -703,7 +706,7 @@ More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-01 14:08:01 UTC
+Last updated 2023-09-08 11:04:35 UTC
 </div>
 </div>
 </body>
