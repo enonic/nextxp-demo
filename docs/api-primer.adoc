@@ -70,8 +70,6 @@ Run this simple query that retrieves the ID and displayName of some movies:
 +
 NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app.
 +
-TIP: If you prefer DSL over standard query language, Enonic also provides a `queryDSL()` field.
-+
 . **View the Result**
 +
 After executing the query, you should get a result in the right hand response panel.

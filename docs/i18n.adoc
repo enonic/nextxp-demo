@@ -40,7 +40,7 @@ image:content-studio-filmdb.png[title="Film DB project",width=1024px]
 
 == Task: Set up i18n in Next.js
 
-Next, let's turn on multi-language support in Next.js. 
+Next, let's turn on multi-language support in Next.js.
 
 . Start by activating Next.js' multilanguage support by adding a few lintes to the `next.config.js` file:
 +
@@ -57,7 +57,7 @@ module.exports = {
 }
 ----
 +
-NOTE: The defaultLocale is the one that will be used to serve content on your domain root `/`, others will be available on /no etc. 
+NOTE: The defaultLocale is the one that will be used to serve content on your domain root `/`, others will be available on /no etc.
 +
 . *Configure the Enonic adapter*, by specifying which content project to use for each specific locale:
 +
@@ -71,11 +71,16 @@ ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
 +
 Let's break down the syntax.
 +
-For each comma separated entry, you will find the following pattern: `<locale>:<repository>/<sitekey>`. From the example above `no:moviedb-no/hmdb`. 
+For each comma separated entry, you will find the following pattern: `<locale>:<repository>/<sitekey>`.
+From the example above `no:moviedb-no/hmdb`.
 +
-The first entry in the list may skip the locale. As it will map to the `defaultLocale` specified in `next.config.js` earlier. In our case,`en`.
+The first entry in the list may skip the locale.
+As it will map to the `defaultLocale` specified in `next.config.js` earlier.
+In our case,`en`.
 +
-NOTE: The reason for repeating the is that when using paths, the path may be different in each project/translation.
+NOTE: The reason for repeating paths, is that the path may be different in each project/translation.
++
+. Finally *restart your Next.js server* to pick up the changes to environment variables.
 
 
 == Task: Translate and publish
