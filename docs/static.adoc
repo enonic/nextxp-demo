@@ -2,7 +2,7 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter you will learn about NextJS' static site generation capabilities, and how the Enonic triggers re-generation of pages when publishing.
+In this chapter you will learn about NextJS' static site generation capabilities, and how Enonic triggers re-generation of pages when publishing.
 
 == Introduction
 
