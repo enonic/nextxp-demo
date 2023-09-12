@@ -13,10 +13,10 @@
     "lint": "npx next lint"
   },
   "dependencies": {
-    "@enonic/nextjs-adapter": "^2.0.0",
+    "@enonic/nextjs-adapter": "2.0.0",
     "cross-env": "^7.0.3",
     "html-react-parser": "^4.2.2",
-    "next": "13.4.19",
+    "next": "13.4.12",
     "next-transpile-modules": "^10.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -26,6 +26,7 @@
     "@types/node": "^20.6.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "^18.2.6",
+    "@typescript-eslint/parser": "^6.7.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "prettier": "^3.0.3",
