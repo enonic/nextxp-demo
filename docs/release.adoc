@@ -10,8 +10,7 @@ Note, that shortcuts are not displayed in Page Editor because there is nothing t
 
 === Support Next.js localization
 
-You can now use multi-language Next.js projects with Next.XP.
-Both in Content Studio and stand-alone.
+You can now use multi-language Next.js projects with Next.XP, both in Content Studio and stand-alone.
 All that is needed for that, on top of the `i18n` section in `next.config.js`, is installing `guillotine` application (if you don't have it already) and adding a new environmental variable called `ENONIC_PROJECTS`.
 You can read more in the <<upgrading, upgrade section>>.
 

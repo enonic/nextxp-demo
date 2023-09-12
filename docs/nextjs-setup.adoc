@@ -80,7 +80,7 @@ ENONIC_API=http://127.0.0.1:8080/site <2>
 +
 <1> XP projects configuration.
 More about it in <<i18n#, multi-language>> support.
-<2> The base URL to the content APIs created by Guillotine discussed in <<api-primer#, the API>>, but without project and branch parts.
+<2>Base URL of the Guillotine API discussed in <<api-primer#, the API>>, but without project and branch parts.
 +
 We don't need to specify the project and branch parts here, as the Enonic Adapter will automatically add these based on the runtime environment.
 For example, when serving the preview for Content Studio, the project will be set to the currently opened one, and the branch will be set to `draft`.

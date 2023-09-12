@@ -89,7 +89,7 @@ TIP: Check the Vercel function logs if you are not getting the expected result.
 == Task: Link Content Studio to Vercel
 With the front-end running, you can link it to Content Studio to activate the preview, and start building pages once again.
 
-TIP: To save time, you may export content from your local machine, and importing it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
+TIP: To save time, you may export content from your local machine and import it to the server using the https://market.enonic.com/vendors/glenn-ricaud/data-toolbox[Data Toolbox app].
 
 . **Install the Next.XP app** `Solution` -> `Applications` -> `Install` -> Search for `Next.XP`, select it an click install
 . **Add configuration**.

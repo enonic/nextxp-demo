@@ -42,7 +42,7 @@ image:content-studio-filmdb.png[title="Film DB project",width=1024px]
 
 Next, let's turn on multi-language support in Next.js.
 
-. Start by activating Next.js' multilanguage support by adding a few lintes to the `next.config.js` file:
+. Start by activating Next.js' multilanguage support by adding a few lines to the `next.config.js` file:
 +
 .next.config.js
 [source,JSON]
@@ -74,9 +74,7 @@ Let's break down the syntax.
 For each comma separated entry, you will find the following pattern: `<locale>:<repository>/<sitekey>`.
 From the example above `no:moviedb-no/hmdb`.
 +
-The first entry in the list may skip the locale.
-As it will map to the `defaultLocale` specified in `next.config.js` earlier.
-In our case,`en`.
+The first entry in the list may skip the locale, as it will map to the `defaultLocale` specified in `next.config.js` earlier (in our case, `en`).
 +
 NOTE: The reason for repeating paths, is that the path may be different in each project/translation.
 +
@@ -106,18 +104,18 @@ image:content-studio-mark-as-ready.png[title="Click tree icon to include all chi
 +
 . **Verify that your front-end is working**
 +
-Finally. By adding `/no` i.e. `localhost:4242/no` to the URL of your Next.js server, you should now see the published content from the Norwegian project.
+Finally, by adding `/no` (i.e. `localhost:4242/no`) to the URL of your Next.js server you should now see the published content from the Norwegian project.
 
 
 == Multi front-end setup
 
 In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.
 
-Setting up Next.js to do this is just like handling a single language. For Content Studio preview to know which Next.js server to use, means some additional configuration.
+Setting up Next.js to do this is just like handling a single language. To enable Content Studio preview to know which Next.js server to use, some additional configuration will be required.
 
 . *Update the Next.xp configuration file* for your Enonic installation by adding multiple entries:
 +
-NOTE: The sandbox configuration files are located in the sandbox home directory, located in your users home directory at `.enonic/sandboxes/<your-sandbox-name>/home/config`. 
+NOTE: The sandbox configuration files are located in the sandbox' home directory inside your user's root directory at `.enonic/sandboxes/<your-sandbox-name>/home/config`. 
 +
 .com.enonic.app.nextxp.cfg
 [source,properties]
@@ -136,7 +134,7 @@ nextjs.anotherName.url=https://your.other-next-site.com
 # ...
 ----
 +
-. *Assign the configuration to your site* by click the pencil icon next to the `Next.XP` app name in the site form, and selecting it from the list of named configurations:
+. *Assign the configuration to your site* by clicking the pencil icon next to the `Next.XP` app name in the site form, and selecting it from the list of named configurations:
 +
 image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
 
@@ -157,7 +155,7 @@ export async function getStaticProps(context: Context): Promise<GetStaticPropsRe
 }
 ----
 
-Additionally, `MetaData` object available in every view, contains `locale` and `defaultLocale` along with other runtime data:
+Additionally, `MetaData` object (available in every view) contains `locale` and `defaultLocale` along with other runtime data:
 
 [source,TypeScript,options="nowrap"]
 ----

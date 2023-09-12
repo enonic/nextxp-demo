@@ -45,12 +45,12 @@ nextjs.anotherName.url=https://your.other-next-site.com
 # ...
 ----
 +
-NOTE: Remember to update properties' values with your own data
+NOTE: Remember to update property values with your own data
 
-. remove `lib-guillotine` dependency from your enonic app build.gradle file
+. remove `lib-guillotine` dependency from build.gradle file of your Enonic XP app
 . install `Guillotine` application from Enonic Market
 +
-NOTE: Use Guillotine 7 or higher if you need to extend the graphql schema
+TIP: Use Guillotine 7 or higher if you need to extend the graphql schema
 
 . Add `Next.XP` application to your site in every layer and save it
 . Default configuration will be used automatically for each site.
