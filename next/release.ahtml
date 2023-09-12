@@ -465,8 +465,7 @@ Note, that shortcuts are not displayed in Page Editor because there is nothing t
 <div class="sect2">
 <h3 id="support_next_js_localization"><a class="link" href="#support_next_js_localization">Support Next.js localization</a></h3>
 <div class="paragraph">
-<p>You can now use multi-language Next.js projects with Next.XP.
-Both in Content Studio and stand-alone.
+<p>You can now use multi-language Next.js projects with Next.XP, both in Content Studio and stand-alone.
 All that is needed for that, on top of the <code>i18n</code> section in <code>next.config.js</code>, is installing <code>guillotine</code> application (if you don&#8217;t have it already) and adding a new environmental variable called <code>ENONIC_PROJECTS</code>.
 You can read more in the <a href="#upgrading">upgrade section</a>.</p>
 </div>
@@ -503,7 +502,7 @@ Format of that file has also been changed to support that.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>

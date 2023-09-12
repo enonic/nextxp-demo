@@ -683,7 +683,7 @@ Check the Vercel function logs if you are not getting the expected result.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-To save time, you may export content from your local machine, and importing it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
+To save time, you may export content from your local machine and import it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
 </td>
 </tr>
 </table>
@@ -788,7 +788,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>

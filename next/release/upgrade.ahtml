@@ -524,22 +524,22 @@ nextjs.anotherName.url=https://your.other-next-site.com
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember to update properties' values with your own data
+Remember to update property values with your own data
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>remove <code>lib-guillotine</code> dependency from your enonic app build.gradle file</p>
+<p>remove <code>lib-guillotine</code> dependency from build.gradle file of your Enonic XP app</p>
 </li>
 <li>
 <p>install <code>Guillotine</code> application from Enonic Market</p>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 Use Guillotine 7 or higher if you need to extend the graphql schema
@@ -562,7 +562,7 @@ You can change it by going to <code>Next.XP</code> application config in each si
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>

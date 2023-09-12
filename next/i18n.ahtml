@@ -535,7 +535,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Start by activating Next.js' multilanguage support by adding a few lintes to the <code>next.config.js</code> file:</p>
+<p>Start by activating Next.js' multilanguage support by adding a few lines to the <code>next.config.js</code> file:</p>
 <div class="listingblock">
 <div class="title">next.config.js</div>
 <div class="content">
@@ -580,9 +580,7 @@ ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
 From the example above <code>no:moviedb-no/hmdb</code>.</p>
 </div>
 <div class="paragraph">
-<p>The first entry in the list may skip the locale.
-As it will map to the <code>defaultLocale</code> specified in <code>next.config.js</code> earlier.
-In our case,<code>en</code>.</p>
+<p>The first entry in the list may skip the locale, as it will map to the <code>defaultLocale</code> specified in <code>next.config.js</code> earlier (in our case, <code>en</code>).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -654,7 +652,7 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 <li>
 <p><strong>Verify that your front-end is working</strong></p>
 <div class="paragraph">
-<p>Finally. By adding <code>/no</code> i.e. <code>localhost:4242/no</code> to the URL of your Next.js server, you should now see the published content from the Norwegian project.</p>
+<p>Finally, by adding <code>/no</code> (i.e. <code>localhost:4242/no</code>) to the URL of your Next.js server you should now see the published content from the Norwegian project.</p>
 </div>
 </li>
 </ol>
@@ -668,7 +666,7 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 <p>In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.</p>
 </div>
 <div class="paragraph">
-<p>Setting up Next.js to do this is just like handling a single language. For Content Studio preview to know which Next.js server to use, means some additional configuration.</p>
+<p>Setting up Next.js to do this is just like handling a single language. To enable Content Studio preview to know which Next.js server to use, some additional configuration will be required.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -681,7 +679,7 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The sandbox configuration files are located in the sandbox home directory, located in your users home directory at <code>.enonic/sandboxes/&lt;your-sandbox-name&gt;/home/config</code>.
+The sandbox configuration files are located in the sandbox' home directory inside your user&#8217;s root directory at <code>.enonic/sandboxes/&lt;your-sandbox-name&gt;/home/config</code>.
 </td>
 </tr>
 </table>
@@ -705,7 +703,7 @@ nextjs.anotherName.url=https://your.other-next-site.com
 </div>
 </li>
 <li>
-<p><strong>Assign the configuration to your site</strong> by click the pencil icon next to the <code>Next.XP</code> app name in the site form, and selecting it from the list of named configurations:</p>
+<p><strong>Assign the configuration to your site</strong> by clicking the pencil icon next to the <code>Next.XP</code> app name in the site form, and selecting it from the list of named configurations:</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/content-studio-configure-nextxp.png" alt="content studio configure nextxp" width="771px" title="Form with fields for server url and nextjs token"></span></p>
 </div>
@@ -735,7 +733,7 @@ export async function getStaticProps(context: Context): Promise&lt;GetStaticProp
 </div>
 </div>
 <div class="paragraph">
-<p>Additionally, <code>MetaData</code> object available in every view, contains <code>locale</code> and <code>defaultLocale</code> along with other runtime data:</p>
+<p>Additionally, <code>MetaData</code> object (available in every view) contains <code>locale</code> and <code>defaultLocale</code> along with other runtime data:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -764,7 +762,7 @@ export interface MetaData {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>

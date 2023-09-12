@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will learn about NextJS' static site generation capabilities, and how the Enonic triggers re-generation of pages when publishing.</p>
+<p>In this chapter you will learn about NextJS' static site generation capabilities, and how Enonic triggers re-generation of pages when publishing.</p>
 </div>
 </div>
 </div>
@@ -706,7 +706,7 @@ More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>

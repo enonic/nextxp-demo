@@ -579,11 +579,8 @@ ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>XP projects configuration.
-More about it in <a href="i18n.ahtml">multi-language</a> support.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The base URL to the content APIs created by Guillotine discussed in <a href="api-primer.ahtml">the API</a>, but without project and branch parts.</td>
+More about it in <a href="i18n.ahtml">multi-language</a> support.
+&lt;2&gt;Base URL of the Guillotine API discussed in <a href="api-primer.ahtml">the API</a>, but without project and branch parts.</td>
 </tr>
 </table>
 </div>
@@ -711,7 +708,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 09:04:00 UTC
+Last updated 2023-09-12 11:49:36 UTC
 </div>
 </div>
 </body>
