@@ -1,9 +1,10 @@
-import {JSESSIONID_HEADER, RENDER_MODE_HEADER, XP_BASE_URL_HEADER} from '@enonic/nextjs-adapter';
+import {JSESSIONID_HEADER, PROJECT_ID_HEADER, RENDER_MODE_HEADER, XP_BASE_URL_HEADER} from '@enonic/nextjs-adapter';
 import {ParsedUrlQuery} from 'querystring';
+import {NextApiRequest, NextApiResponse} from 'next';
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const {token, path} = req.query;
-    if (token !== process.env.API_TOKEN) {
+    if (token !== process.env.ENONIC_API_TOKEN) {
         // XP hijacks 401 to show login page, so send 407 instead
         return res.status(407).json({message: 'Invalid token'});
     }
@@ -24,12 +25,13 @@ export default async function handler(req: any, res: any) {
         params: reqParams,
         headers: {
             [RENDER_MODE_HEADER]: req.headers[RENDER_MODE_HEADER],
+            [PROJECT_ID_HEADER]: req.headers[PROJECT_ID_HEADER],
             [XP_BASE_URL_HEADER]: req.headers[XP_BASE_URL_HEADER],
             [JSESSIONID_HEADER]: req.headers[JSESSIONID_HEADER]
         }
     });
 
-    res.redirect(path);
+    res.redirect(path as string);
 }
 
 function extractParams(query: ParsedUrlQuery, omit: string[]) {

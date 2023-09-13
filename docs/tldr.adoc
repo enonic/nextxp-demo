@@ -34,9 +34,11 @@ Vercel are the makers of Next.js, and you'll be using their service to host the 
 . Create a new project i.e. `enonic-demo`, and follow the steps to connect it to the Git repo you created in step 2.
 . **Add environment variables** telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.
 +
-KEY:VALUE:: CONTENT_API_DRAFT:<API URL>/draft
-KEY:VALUE:: CONTENT_API_MASTER:<API URL>/master
-KEY:VALUE:: API_TOKEN:mySecretKey
+* ENONIC_API: <URL to Enonic API>
+* ENONIC_API_TOKEN: <yourSecret>
+* ENONIC_PROJECTS: /hmdb/hmdb
++
+NOTE: The PROJECTS variable defines which content project and site to access in Enonic.
 +
 . After deploying, the Vercel app should render the front page:
 +
@@ -61,10 +63,6 @@ image:content-studio-edit-site.png[title="Select and edit the site",width=650px]
 +
 image:content-studio-add-nextxp.png[title="Add the Next.XP application to the site.",width=779px]
 +
-. Finally, and edit the Next.XP app configuration by clicking the pencil icon. Make sure it matches the URL to your Vercel site, and uses the correct token. `Save` the changes.
-+
-image:content-studio-configure-app.png[title="Configure the Next.XP application with correct URL and Token from previous step",width=843px]
-
 . After saving, the preview should update to show your front-end.
 +
 image:cloud-preview.png[title="Front page as seen from Content Studio",width=1419px]

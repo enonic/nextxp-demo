@@ -20,13 +20,15 @@ Add the Next.XP app to the site by selecting it in the applications combobox.
 +
 image:content-studio-add-nextxp.png[title="Open app config by pressing pencil icon",width=597px]
 +
-Configure the `Next.XP` app by clicking the pencil icon. Use the same values that were configured in the Next.js front-end: 
-
-* `http://localhost:3000[http://localhost:3000^]`
-* `mySecretKey`.
+Save the site to make all the features of the app available.
 +
-image:content-studio-configure-nextxp.png[title="Form with fields for server url and nextjs token",width=771px]
-
+By default Next.XP preview uses the following values:
++
+* *url*: `http://127.0.0.1:3000`
+* *secret*: `mySecretKey`
++
+This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <<static#, Static pages>>, and <<deployment#, Deployment>> chapters.
++
 . After applying and saving the changes, you should be able to see the live preview in Content Studio.
 +
 image:morgan-freeman-preview.png[title="Next.js-rendered preview in Content Studio",width=1072px]

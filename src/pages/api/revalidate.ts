@@ -1,29 +1,35 @@
-import {recursiveFetchChildren} from "../[[...contentPath]]";
-import {getContentApiUrl} from '@enonic/nextjs-adapter';
+import {ContentPathItem, fetchContentPathsForLocale, getLocaleProjectConfigById, PROJECT_ID_HEADER} from '@enonic/nextjs-adapter';
 import {NextApiRequest, NextApiResponse} from 'next';
 
 interface ResponseData {
     message: string
 }
 
-export default async function handler(req: NextApiRequest,
-                                      res: NextApiResponse<ResponseData>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     const {token, path} = req.query;
     // Check for secret to confirm this is a valid request
-    if (token !== process.env.API_TOKEN) {
+    if (token !== process.env.ENONIC_API_TOKEN) {
         // XP hijacks 401 to show login page, so send 407 instead
         return res.status(407).json({message: 'Invalid token'});
     }
-
-    const contentApiUrl = getContentApiUrl({req});
 
     try {
         // Return 200 immediately and do revalidate in background
         res.status(200).json({message: 'Revalidation started'});
         if (!path) {
             console.info('Started revalidating everything...');
-            const paths = await getRevalidatePaths(contentApiUrl);
-            const promises = paths.map(item => revalidatePath(res, item.params.contentPath));
+            const projectId = req.headers[PROJECT_ID_HEADER] as string | undefined;
+            const config = getLocaleProjectConfigById(projectId);
+            const paths = await fetchContentPathsForLocale('\${site}/', config);
+            const promises = paths.map((item: ContentPathItem) => {
+                const cp = item.params.contentPath;
+                if (cp[0] === "") {
+                    cp[0] = config.locale;
+                } else {
+                    cp.unshift(config.locale);
+                }
+                return revalidatePath(res, cp);
+            });
             await Promise.all(promises);
             console.info(`Done revalidating everything`);
         } else {
@@ -33,10 +39,6 @@ export default async function handler(req: NextApiRequest,
     } catch (err) {
         console.error(`Revalidation [${path ?? 'everything'}] error: ` + err);
     }
-}
-
-async function getRevalidatePaths(contentApiUrl: string) {
-    return recursiveFetchChildren(contentApiUrl, '\${site}/', 3);
 }
 
 async function revalidatePath(res: any, path: string[] | string) {
