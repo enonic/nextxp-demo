@@ -41,30 +41,16 @@
             "document": "templates"
         },
         {
-            "title": "11 - Static pages",
-            "document": "static"
+            "title": "11 - Revalidation",
+            "document": "revalidation"
         },
         {
-            "title": "12 - Multi language",
-            "document": "i18n"
-        },
-        {
-            "title": "13 - Live deployment",
+            "title": "12 - Live deployment",
             "document": "deployment"
         },
         {
             "title": "TL;DR",
             "document": "tldr"
-        },
-        {
-            "title": "Release Notes",
-            "document": "release",
-            "menuItems": [
-                {
-                    "title": "Upgrade Notes",
-                    "document": "release/upgrade"
-                }
-            ]
         }
     ]
 }

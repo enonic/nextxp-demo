@@ -680,7 +680,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 <p>In Content Studio, select and <strong>edit your favorite movie</strong> (or choose "No time to die" if you have no faviorites).</p>
 </li>
 <li>
-<p><strong>Activate the page editor</strong>, and select the "Main" page component and <strong>add the "Movie details" part</strong> to the page.</p>
+<p><strong>Activate the page editor</strong> by pressing <code>Display</code> icon in the top right screen corner, select the "Main page" descriptor and <strong>add the "Movie details" part</strong> to the page.</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/movie-details.png" alt="movie details" width="1440px" title="No time to die, configured with movie-details part"></span></p>
 </div>
@@ -707,19 +707,19 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 </li>
 <li>
-<p>Try visiting other movie items to <strong>verify they now automatically render</strong>. PS! Don&#8217;t forget to publish the changes and the new page template.</p>
+<p>Try visiting other movie items to <strong>verify they now automatically render</strong>.PS!Don&#8217;t forget to publish the changes and the new page template.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>With templates sorted out, let&#8217;s dive into  <a href="revalidation.ahtml">production mode and page revalidation</a>.</p>
+<p>With templates sorted out, let&#8217;s dive into  <a href="static.ahtml">production mode and page revalidation</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:51 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

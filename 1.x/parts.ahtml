@@ -505,10 +505,7 @@ This means editors can configure it - sorting the items Ascending or Descending.
 <li>
 <p><strong>Add parts to the page</strong></p>
 <div class="paragraph">
-<p>Back in Content Studio, edit the <code>/hmdb/persons</code> folder item.
-Expand the page preview section by clicking display icon in the top right corner and select <code>Main page</code> controller in the dropdown in the middle of page.
-Create the page and add a new part to the region (<code>right-click &#8594; Insert</code>, or drag-n-drop from the <code>Insert panel`</code> on the right hand side).
-Finally select the <code>Child list</code> in the part descriptor dropdown.</p>
+<p>Back in Content Studio, edit the <code>/hmdb/persons</code> folder item. Create the page and place the new part into the region (<code>right-click &#8594; Insert</code>, or drag-n-drop from the <code>Insert panel`</code> on the right hand side).</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -728,7 +725,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:36 UTC
+Last updated 2023-09-13 08:43:16 UTC
 </div>
 </div>
 </body>

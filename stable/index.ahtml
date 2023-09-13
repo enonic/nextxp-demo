@@ -448,7 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is a step-by-step tutorial on building and managing Next.js sites, using Enonic XP as the backend. The combined set of software and tools used in this tutorial is simply called Next.XP.</p>
+<p>This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -511,13 +511,13 @@ Looking to access and use Enonic&#8217;s API directly? Check out the <a href="ht
 <p>Set up the Enonic SDK and sample content</p>
 </li>
 <li>
-<p>Get familiar with the headless API</p>
+<p>Get familiar with the GraphQL API</p>
 </li>
 <li>
 <p>Learn about the site concept in Enonic</p>
 </li>
 <li>
-<p>Create a Next.js app using a template</p>
+<p>Create a Next.js app from a template</p>
 </li>
 <li>
 <p>Activate live preview in Enonic</p>
@@ -532,10 +532,13 @@ Looking to access and use Enonic&#8217;s API directly? Check out the <a href="ht
 <p>Create page templates</p>
 </li>
 <li>
-<p>Learn about static rendering in Next.js</p>
+<p>Static Site Generation SSG</p>
 </li>
 <li>
 <p>Deploy to live servers</p>
+</li>
+<li>
+<p>How to handle multi-language sites</p>
 </li>
 </ul>
 </div>
@@ -547,7 +550,7 @@ Looking to access and use Enonic&#8217;s API directly? Check out the <a href="ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:51 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

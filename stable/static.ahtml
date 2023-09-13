@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Upgrading</title>
+<title>Static pages and revalidation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -434,88 +434,151 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body id="upgrading" class="article toc2 toc-right">
+<body class="article toc2 toc-right">
 <div id="header">
-<h1>Upgrading</h1>
+<h1>Static pages and revalidation</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#guillotine_application">Guillotine application</a></li>
-<li><a href="#upgrading_from_v1_x">Upgrading from v1.x</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#task_activate_prod_mode">Task: Activate prod mode</a></li>
+<li><a href="#task_fixing_preview">Task: Fixing preview</a></li>
+<li><a href="#task_test_page_invalidation">Task: Test page invalidation</a>
+<ul class="sectlevel2">
+<li><a href="#what_happened">What happened?</a></li>
+</ul>
+</li>
+<li><a href="#a_look_at_the_code">A look at the code</a></li>
+<li><a href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="guillotine_application"><a class="link" href="#guillotine_application">Guillotine application</a></h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock important">
+<div class="paragraph">
+<p>In this chapter you will learn about NextJS' static site generation capabilities, and how Enonic triggers re-generation of pages when publishing.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages, but adds an additional compilation build step .</p>
+</div>
+<div class="paragraph">
+<p>For more information visit the <a href="https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation">Next.js SSG documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_activate_prod_mode"><a class="link" href="#task_activate_prod_mode">Task: Activate prod mode</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far, you have been running Next.js in dev mode.</p>
+</div>
+<div class="paragraph">
+<p>By starting Next.js in <code>prod</code> mode, the application is automatically optimized, and in our case, pages get pre-rendered statically before the server starts.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Guillotine version 7 is required if you need to modify graphql schema in your application.
+Remember to stop your existing Next.js dev instance before you continue.
 </td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="upgrading_from_v1_x"><a class="link" href="#upgrading_from_v1_x">Upgrading from v1.x</a></h2>
-<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Update env vars to:</p>
+<p><strong>Start Next.js in prod mode</strong>:</p>
 <div class="literalblock">
 <div class="content">
-<pre>APP_NAME -&gt; ENONIC_APP_NAME
-remove CONTENT_API_MASTER
-remove CONTENT_API_DRAFT
-add ENONIC_API
-API_TOKEN -&gt; ENONIC_API_TOKEN
-remove SITE_KEY
-add ENONIC_PROJECTS=&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
+<pre>npm run prod</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>This will take a while longer as when compared to dev mode.</p>
 </div>
 </li>
 <li>
-<p>Add i18n config block to next.config.js</p>
-<div class="literalblock">
-<div class="content">
-<pre>i18n: {
-    locales: ['en', 'no'],
-    defaultLocale: 'en',
-}</pre>
+<p><strong>Verify</strong> by pointing your browser to <a href="http://localhost:4242" target="_blank" rel="noopener">http://localhost:4242</a>, you should now see the published items, just like in dev mode. Only this time, they will be much faster. <strong>Sweet!</strong></p>
+</li>
+</ol>
 </div>
 </div>
-</li>
+</div>
+<div class="sect1">
+<h2 id="task_fixing_preview"><a class="link" href="#task_fixing_preview">Task: Fixing preview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Next.js now running on a different port, Content Studio preview will stop working.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Remove <code>lib-nextxp</code> dependency from your Enonic XP app build.gradle file</p>
-</li>
-<li>
-<p>Install <code>Next.XP</code> application from Enonic Market</p>
-</li>
-<li>
-<p>Create config file named <code><em>com.enonic.app.nextxp.cfg</em></code> in <code><em>&lt;xp-home&gt;/config/</em></code> folder to change default values and add more configurations:</p>
+<p>Fix the preview by <strong>adding a Next.XP configuration file</strong>, with the following content to your sandbox:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The configuration files are located in your sandbox home directory, which can be found in your users home directory as <code>.enonic/sandboxes/&lt;your-sandbox&gt;/home/config/</code>.
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
+<div class="title">com.enonic.app.nextxp.cfg</div>
 <div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...</code></pre>
+<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.secret=mySecretKey
+nextjs.default.url=http://127.0.0.1:4242</code></pre>
 </div>
+</div>
+</li>
+<li>
+<p><strong>Verify that the preview is working</strong> in Content Studio.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Content Studio uses Next.js' preview mode, which automatically bypasses static pages - giving you a fresh preview of your draft content.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_test_page_invalidation"><a class="link" href="#task_test_page_invalidation">Task: Test page invalidation</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With all pages now being cached as files, Next.js must be instructed to re-generate the pages when a change is published.</p>
+</div>
+<div class="paragraph">
+<p><strong>Edit your front-page, and publish the changes</strong>.
+This will trigger a revalidation hook, which is built into the Next.XP app.</p>
+</div>
+<div class="paragraph">
+<p>The page should now get updated at <code><a href="http://localhost:4242" class="bare">http://localhost:4242</a></code> - more or less instantly.🎉</p>
+</div>
+<div class="sect2">
+<h3 id="what_happened"><a class="link" href="#what_happened">What happened?</a></h3>
+<div class="paragraph">
+<p>In addition to handling previews, the Next.XP app automatically triggers revalidation of all pages when it detects the publishing event.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -524,45 +587,126 @@ nextjs.anotherName.url=https://your.other-next-site.com
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember to update property values with your own data
+You should also be able to tell from the Next.js log that the revalidation was triggered.
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="a_look_at_the_code"><a class="link" href="#a_look_at_the_code">A look at the code</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Static Site Generation is controlled within the content page handler. There are essentially two important functions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getStaticProps()</code> - instructs Next.js to render static output</p>
 </li>
 <li>
-<p>remove <code>lib-guillotine</code> dependency from build.gradle file of your Enonic XP app</p>
+<p><code>getStaticPaths()</code> - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.</p>
 </li>
-<li>
-<p>install <code>Guillotine</code> application from Enonic Market</p>
-<div class="admonitionblock tip">
+</ul>
+</div>
+<div class="paragraph">
+<p>Below, we explain the details of the code:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/pages/[[&#8230;&#8203;contentPath]].ts</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {GetStaticPathsResult, GetStaticPropsResult} from 'next';
+import {Context, createResponse,fetchContent,fetchContentPathsForAllLocales, FetchContentResult} from "@enonic/nextjs-adapter";
+
+export async function getStaticProps(context: Context): Promise&lt;GetStaticPropsResult&lt;FetchContentResult&gt;&gt; {     <i class="conum" data-value="1"></i><b>(1)</b>
+    const path = context.params?.contentPath || [];
+    console.info(`Accessing static page (locale=${context.locale}) ${context.preview ? '(preview) ' : ''}at: ${path}`);
+
+    const props = await fetchContent(path, context);                            <i class="conum" data-value="2"></i><b>(2)</b>
+
+    // HTTP 500
+    if (props.error &amp;&amp; props.error.code === '500') {
+        throw props.error
+    }
+
+    return createResponse(props, context);                                      <i class="conum" data-value="3"></i><b>(3)</b>
+}
+
+export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&gt;&gt; {    <i class="conum" data-value="4"></i><b>(4)</b>
+    const paths = await fetchContentPathsForAllLocales('\${site}/');            <i class="conum" data-value="5"></i><b>(5)</b>
+    return {
+        paths: paths,
+        fallback: 'blocking',
+    };
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Use Guillotine 7 or higher if you need to extend the graphql schema
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Next.js method indicating that we want the page to be rendered statically</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Next.XP method for fetching content from Enonic XP by path</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Next.XP method for creating Next.js response based on results of fetchContent method</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Next.js method to collect paths we want to be static</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Next.XP method for getting paths of all supported contents for every configured locale. <code>${site}</code> will be substituted with the actual site name.</td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="optional_task_convert_to_server_side_rendering_ssr"><a class="link" href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next.js also supports dynamic rendering aka Server Side Rendering (SSR), which may be more useful for certain types of applications/websites.</p>
+</div>
+<div class="paragraph">
+<p>You may easily convert your front-end into SSR by performing the following changes to the content handler:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>renaming <code>getStaticProps</code> to <code>getServerSideProps</code></p>
 </li>
 <li>
-<p>Add <code>Next.XP</code> application to your site in every layer and save it</p>
+<p>setting  <code>isStatic</code> parameter to <code>false</code> in the <code>createResponse</code> method</p>
 </li>
 <li>
-<p>Default configuration will be used automatically for each site.
-You can change it by going to <code>Next.XP</code> application config in each site and selecting named configurations.</p>
+<p>removing the <code>getStaticPaths</code> method.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>In this mode Next.js will render the page on every request, while still using the same Next.XP methods for fetching data from Enonic XP.
+More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>With prod mode and revalidation sorted out, let&#8217;s see how to add <a href="i18n.ahtml">multi-language</a> support.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:36 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

@@ -483,17 +483,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="597px" title="Open app config by pressing pencil icon"></span></p>
 </div>
 <div class="paragraph">
-<p>Configure the <code>Next.XP</code> app by clicking the pencil icon. Use the same values that were configured in the Next.js front-end:</p>
+<p>Save the site to make all the features of the app available.</p>
+</div>
+<div class="paragraph">
+<p>By default Next.XP preview uses the following values:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code></p>
+<p><strong>url</strong>: <code><a href="http://127.0.0.1:3000" class="bare">http://127.0.0.1:3000</a></code></p>
 </li>
 <li>
-<p><code>mySecretKey</code>.</p>
+<p><strong>secret</strong>: <code>mySecretKey</code></p>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-configure-nextxp.png" alt="content studio configure nextxp" width="771px" title="Form with fields for server url and nextjs token"></span></p>
+<p>This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <a href="static.ahtml">Static pages</a>, and <a href="deployment.ahtml">Deployment</a> chapters.</p>
 </div>
 </li>
 </ul>
@@ -563,7 +566,7 @@ These remaining URLs are the automatically processed by the Next.XP proxy before
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:51 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

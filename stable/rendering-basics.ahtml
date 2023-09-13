@@ -721,7 +721,7 @@ import {getUrl} from '@enonic/nextjs-adapter';</code></pre>
     &lt;StaticContent condition={isEdit}&gt;
         &lt;Header
             title="🔥 Next.XP"
-            logoUrl={getUrl('images/xp-shield.svg', pageProps.meta)}
+            logoUrl={getUrl('/images/xp-shield.svg', pageProps.meta)}
             meta={pageProps.meta}
         /&gt;
             &lt;main style={{
@@ -799,7 +799,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:51 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

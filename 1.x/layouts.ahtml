@@ -5,8 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="author" content="Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.">
-<title>Next.XP TL;DR</title>
+<title>Layouts</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,72 +436,48 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Next.XP TL;DR</h1>
-<div class="details">
-<span id="author" class="author">Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</span><br>
-</div>
+<h1>Layouts</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#tldr">tl;dr</a>
-<ul class="sectlevel2">
-<li><a href="#1_setup_enonic">1. Setup Enonic</a></li>
-<li><a href="#2_create_git_repo">2. Create Git repo</a></li>
-<li><a href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></li>
-<li><a href="#4_activate_preview">4. Activate preview</a></li>
-</ul>
-</li>
-<li><a href="#how_does_it_work">How does it work?</a></li>
+<li><a href="#task_add_layout_to_enonic">Task: Add layout to Enonic</a></li>
+<li><a href="#task_add_layout_rendering_to_the_front_end">Task: Add layout rendering to the front-end</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="tldr"><a class="link" href="#tldr">tl;dr</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.</p>
-</div>
-<div class="sect2">
-<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://enonic.com/sign-up" class="bare">https://enonic.com/sign-up</a></p>
-</li>
-<li>
-<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.XP Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
-</li>
-<li>
-<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> route, you will need it later.</p>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP <code>POST</code> rather than <code>GET</code>.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
+<p>Layouts are essentially parts, with an extra trick up their sleve. Regions. This means that layouts may host other components, and build rich page structures.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2. Create Git repo</a></h3>
+</div>
+<div class="sect1">
+<h2 id="task_add_layout_to_enonic"><a class="link" href="#task_add_layout_to_enonic">Task: Add layout to Enonic</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.</p>
-</div>
-<div class="paragraph">
-<p>Vercel uses this access to automatically fetch and build the app based on events. The write permission is used to setup the required webhooks etc in Github.</p>
+<p>Adding layouts is more or less identical to pages and parts. Simply follow the steps below:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Clone or fork <a href="https://github.com/enonic/nextxp-demo/" class="bare">https://github.com/enonic/nextxp-demo/</a> to your personal Github/Bitbucket/Gitlab account.</p>
+<p><strong>Add the <code>2-column</code> layout</strong> to the Enonic app</p>
+<div class="listingblock">
+<div class="title">src/main/resources/site/layouts/2-column/2-column.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;layout xmlns="urn:enonic:xp:model:1.0"&gt;
+    &lt;display-name&gt;2 columns&lt;/display-name&gt;
+    &lt;description&gt;Provides left and right regions&lt;/description&gt;
+    &lt;form/&gt;
+    &lt;regions&gt;
+        &lt;region name="left"/&gt;
+        &lt;region name="right"/&gt;
+    &lt;/regions&gt;
+&lt;/layout&gt;</code></pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -510,40 +485,77 @@ Visiting the API link will give you a 404 page, because the GraphQL APIs are loc
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you are using Github, simply press the <code>Fork</code> button at the top right.
+Just like a page, layouts may declare named regions.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>When completed, as always <strong>redeploy the Enonic app</strong>.</p>
 </div>
 </li>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></h3>
+</div>
+<div class="sect1">
+<h2 id="task_add_layout_rendering_to_the_front_end"><a class="link" href="#task_add_layout_rendering_to_the_front_end">Task: Add layout rendering to the front-end</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Vercel are the makers of Next.js, and you&#8217;ll be using their service to host the front-end.</p>
+<p>Moving over to the the Next.js app. Add the component that will render the layout.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
-</li>
-<li>
-<p>Create a new project i.e. <code>enonic-demo</code>, and follow the steps to connect it to the Git repo you created in step 2.</p>
-</li>
-<li>
-<p><strong>Add environment variables</strong> telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>ENONIC_API: &lt;URL to Enonic API&gt;</p>
-</li>
-<li>
-<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
-</li>
-<li>
-<p>ENONIC_PROJECTS: /hmdb/hmdb</p>
+<p><strong>Add the front-end layout component</strong> files</p>
+<div class="listingblock">
+<div class="title">src/components/layouts/TwoColumnLayout.tsx</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {LayoutProps} from '@enonic/nextjs-adapter/views/BaseLayout';
+import {RegionView} from '@enonic/nextjs-adapter/views/Region';
+import styles from './TwoColumnLayout.module.css';
+
+const TwoColumnLayout = (props: LayoutProps) =&gt; {
+    const regions = props.layout.regions;
+    const {common, meta} = props;
+
+    return (
+        &lt;&gt;
+            &lt;div className={styles.row}&gt;
+                &lt;RegionView name="left" components={regions['left']?.components} common={common} meta={meta}/&gt;
+                &lt;RegionView name="right" components={regions['right']?.components} common={common} meta={meta}/&gt;
+            &lt;/div&gt;
+        &lt;/&gt;
+    );
+};
+
+export default TwoColumnLayout;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And it&#8217;s CSS module</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/layouts/TwoColumnLayout.module.css</div>
+<div class="content">
+<pre class="highlight"><code class="language-css" data-lang="css">.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.row :global(&gt; div) {
+    flex: 1;
+    min-width: 200px;
+}
+
+.row :global(.xp-page-editor-region-placeholder) {
+    margin-bottom: 0;
+}</code></pre>
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -551,31 +563,37 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The PROJECTS variable defines which content project and site to access in Enonic.
+This is an example of using CSS modules. For more details visit the <a href="https://nextjs.org/docs/basic-features/built-in-css-support">Next.js style documentation</a>
 </td>
 </tr>
 </table>
 </div>
 </li>
-</ul>
-</div>
-</li>
 <li>
-<p>After deploying, the Vercel app should render the front page:</p>
+<p><strong>Register the component</strong> in _mappings.ts:</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/front-page.png" alt="front page" width="1003px" title="Front page showing some text, links and a picture"></span></p>
+<p>Add these new lines to the _mappings.ts file.</p>
 </div>
-<div class="paragraph">
-<p>Make a note of the application URL, you will need it when setting up the preview later.</p>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import TwoColumnLayout from './layouts/TwoColumnLayout';
+
+
+// Layout mappings
+ComponentRegistry.addLayout(`${APP_NAME}:2-column`, {
+    view: TwoColumnLayout
+});</code></pre>
 </div>
-<div class="admonitionblock tip">
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Check the Vercel function logs if you are not getting the expected result.
+this specific layout does not need any additional data - hence no query or processor:
 </td>
 </tr>
 </table>
@@ -583,81 +601,27 @@ Check the Vercel function logs if you are not getting the expected result.
 </li>
 </ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="4_activate_preview"><a class="link" href="#4_activate_preview">4. Activate preview</a></h3>
 <div class="paragraph">
-<p>With the front-end running, it is time to enable preview in Content Studio.</p>
+<p>After completing these steps, you should be able to add the layout to a page, and then add components inside the layout. It might look something like this:</p>
 </div>
 <div class="paragraph">
-<p>The fastest way to try it out goes as follows:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Launch Enonic XP admin</strong> from the solution dashboard.</p>
-</li>
-<li>
-<p><strong>Open Content Studio</strong> from the top right <code>XP menu &#8594; Content Studio</code>.</p>
-</li>
-<li>
-<p>Choose the <code>Headless Movie DB</code> project, then click the root item in the tree structure <code>/hmdb</code> and click <code>Edit</code>.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-edit-site.png" alt="content studio edit site" width="650px" title="Select and edit the site"></span></p>
-</div>
-</li>
-<li>
-<p>Add the <code>Next.XP</code> app to the list of applications on the site. It will override the default preview for the content within the site.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="779px" title="Add the Next.XP application to the site."></span></p>
-</div>
-</li>
-<li>
-<p>After saving, the preview should update to show your front-end.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For production use, we recommend moving the configuration to the solution console - <a href="deployment.ahtml">as described here</a>.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="how_does_it_work"><a class="link" href="#how_does_it_work">How does it work?</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode.</p>
+<p><span class="image"><img src="media/layout-empty.png" alt="layout empty" width="1440px" title="Empty layout on the persons page"></span></p>
 </div>
 <div class="paragraph">
-<p>Your edits will only be visible in Content Studio, until published.</p>
+<p>By combining layout, part and text we are starting to see the potential of the page editor:</p>
 </div>
 <div class="paragraph">
-<p>When publishing changes, Next.XP will automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
+<p><span class="image"><img src="media/layout-part-text.png" alt="layout part text" width="1440px" title="Layout combined with part and text components"></span></p>
 </div>
 <div class="paragraph">
-<p>Congratulations, you now have a Next.js site powered by Enonic! 🚀</p>
+<p>In the next chapter we will look into <a href="templates.ahtml">page templates</a>. Page templates allow us to reuse a page definition across multiple content items.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:36 UTC
+Last updated 2023-09-13 08:43:16 UTC
 </div>
 </div>
 </body>

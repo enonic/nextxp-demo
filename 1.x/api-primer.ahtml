@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Custom pages</title>
+<title>Getting to know the API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,15 +436,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Custom pages</h1>
+<h1>Getting to know the API</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#task_disable_debug_view">Task: Disable debug view</a></li>
-<li><a href="#task_setup_page_rendering">Task: Setup page rendering</a></li>
-<li><a href="#task_create_your_first_page">Task: Create your first page</a></li>
-<li><a href="#task_using_the_text_component">Task: Using the text component</a></li>
-<li><a href="#task_publish_page">Task: Publish page</a></li>
+<li><a href="#headless_api">Headless API</a></li>
+<li><a href="#task_install_api">Task: Install API</a></li>
+<li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
+<li><a href="#task_query_variables">Task: Query variables</a></li>
+<li><a href="#task_type_introspection">Task: Type introspection</a></li>
 </ul>
 </div>
 </div>
@@ -452,38 +452,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>So far, rendering has been based on hardcoded mappings made by the developer. In this chapter we will enable editors to compose their own pages.</p>
+<p>Based on the developer environment you created in the previous chapter, you&#8217;ll now install and test Enonic&#8217;s headless graphql API, aka Guillotine</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_disable_debug_view"><a class="link" href="#task_disable_debug_view">Task: Disable debug view</a></h2>
+<h2 id="headless_api"><a class="link" href="#headless_api">Headless API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For every page you select, the debug view keeps appearing - even in Content Studio. Disable this by following the steps below.</p>
+<p>Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content. The API is highly flexible, and may even be customized. For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_install_api"><a class="link" href="#task_install_api">Task: Install API</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The headless API can be installed via an application called <code>Guillotine</code>.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Comment out the <code>CATCH_ALL</code> debug view</strong> at the bottom of your mappings file - like this:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">...
-
-/*
-// Debug
-ComponentRegistry.addContentType(CATCH_ALL, {
-    view: PropsView
-});
-*/</code></pre>
-</div>
-</div>
+<p>Install via <code>XP menu</code> &#8594; <code>Applications</code> &#8594; <code>Install</code>. Search for <code>Guillotine</code> and install it.</p>
 </li>
 <li>
-<p><strong>Verify that pages are no longer rendering</strong> by visiting your site on <code><a href="http://localhost:3000" class="bare">http://localhost:3000</a></code>.</p>
+<p>Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. You can verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called <code>Query Playground</code>.</p>
 <div class="paragraph">
-<p>The same will now apply to Content Studio.</p>
+<p><span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
 </div>
 </li>
 </ol>
@@ -491,86 +498,29 @@ ComponentRegistry.addContentType(CATCH_ALL, {
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_setup_page_rendering"><a class="link" href="#task_setup_page_rendering">Task: Setup page rendering</a></h2>
+<h2 id="task_run_a_simple_query"><a class="link" href="#task_run_a_simple_query">Task: Run a simple query</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Content types need to exist in Enonic before an editor can create content. Similarly, page components must be defined before Content Studio can enable editors to create pages.</p>
+<p>Query playground lets us browse and use the API directly. Use the left hand field to type/paste in queries, press the "play" button to <strong>run the query</strong>, and the result will be presented in the right hand field.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add a page component</strong> to the Enonic app</p>
-<div class="listingblock">
-<div class="title">src/main/resources/site/pages/main/main.xml</div>
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-&lt;page xmlns="urn:enonic:xp:model:1.0"&gt;
-  &lt;display-name&gt;Main page&lt;/display-name&gt;
-  &lt;description&gt;Will be rendered by front-end&lt;/description&gt;
-  &lt;form/&gt;
-  &lt;regions&gt;
-      &lt;region name="main"/&gt;
-  &lt;/regions&gt;
-&lt;/page&gt;</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The definition of the region <code>main</code>, allows Content Studio editors to add components to the page, as you will see later.
-</td>
-</tr>
-</table>
-</div>
+<p><strong>Query movies</strong>:</p>
 <div class="paragraph">
-<p><strong>Redeploy the Enonic app</strong> to register the page component.</p>
-</div>
-</li>
-<li>
-<p><strong>Configure page rendering in Next.js</strong>
-Rendering a page is similar to rendering a content type.
-Go to the folder <code>./src/components</code>, create a new folder here called <code>pages</code>, and inside it a new file called <code>Main.tsx</code> containing the following code.</p>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Make sure to use <code>src/components/pages</code>, not <code>src/pages</code>!
-</td>
-</tr>
-</table>
+<p>One of the objectives in this tutorial is listing and presenting movie details. Run this simple query that retrieves the ID and displayName of some movies:</p>
 </div>
 <div class="listingblock">
-<div class="title">src/components/pages/Main.tsx</div>
+<div class="title">Query to fetch movies from the Headless API:</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
-import RegionsView from '@enonic/nextjs-adapter/views/Region';
-
-const MainPage = (props: PageProps) =&gt; {
-    const page = props.page;
-    if (!page.regions || !Object.keys(page.regions).length) {
-        page.regions = {
-            main: {
-                name: 'main',
-                components: [],
-            }
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">{
+    guillotine {
+        query(query: "valid='true' and type='com.example.myproject:movie'", sort: "displayName") {
+            id: _id
+            displayName
         }
     }
-    return (
-        &lt;&gt;
-            &lt;RegionsView {...props} name="main"/&gt;
-        &lt;/&gt;
-    );
-};
-
-export default MainPage;</code></pre>
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -580,121 +530,209 @@ export default MainPage;</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The &lt;RegionsView&gt; element is referring to the 'main' region we defined in the page component earlier.
+<code>com.example.myproject</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
 </td>
 </tr>
 </table>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you prefer DSL over standard query language, Enonic also provides a <code>queryDSL()</code> field.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>View the Result</strong></p>
 <div class="paragraph">
-<p>Finally, register it in the component mappings by adding the following lines to _mappings.ts</p>
+<p>After executing the query, you should get a result in the right hand response panel.
+<span class="image"><img src="media/content-studio-basic-query.png" alt="content studio basic query" width="1440px" title="Running a query for movies in Query Playground"></span></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_query_variables"><a class="link" href="#task_query_variables">Task: Query variables</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In addition to the query itself, GraphQL also supports optional <code>query variables</code>.
+Query variables enable you to re-use the same query, but for instance fetch different content each time.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Add query</strong> to the GraphQL playground:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){               <i class="conum" data-value="1"></i><b>(1)</b>
+  guillotine {
+    get(key:$path) {            <i class="conum" data-value="2"></i><b>(2)</b>
+      type
+      _id
+      displayName
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>path</code> is declared (with a <code>$</code> marking it as a variable in the query). The declaration includes its type (<code>ID</code>), and a <code>!</code> marking it as a <em>required</em> parameter).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>path</code> variable here used as the value of the <code>key</code> parameter, passed to the <code>get</code> field.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>Add query Variables</strong>. In the bottom left of Query Playground, you will find a the `Query variables`tab. Add the following JSON to the field.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Tthe <code>path</code> field in the JSON corresponds to the <code>$path</code> in the query string above:
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import MainPage from './pages/Main';
-
-// Page mappings
-ComponentRegistry.addPage(`${APP_NAME}:main`, {
-    view: MainPage
-});</code></pre>
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "path": "/movies/se7en"
+}</code></pre>
 </div>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Both Enonic and Next.js are now able to handle custom pages.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_create_your_first_page"><a class="link" href="#task_create_your_first_page">Task: Create your first page</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>It&#8217;s time to build a custom page.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
-<p><strong>Turn the site into a page</strong></p>
-<div class="paragraph">
-<p>From Content Studio, select and edit the <code>/hmdb</code> content item. From the edit view, activate the page editor by clicking the monitor icon in the top right corner.</p>
-</div>
-<div class="paragraph">
-<p>You should now see the following:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/page-setup.png" alt="page setup" width="1440px" title="Selecting the page component in the page view"></span></p>
-</div>
-<div class="paragraph">
-<p>From the preview area, select the <code>Main</code> component we created earlier from the dropdown menu.</p>
-</div>
-<div class="paragraph">
-<p>You should then see a page with a single "dropzone" inside (the region we specified earlier).</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/page-rendered.png" alt="page rendered" width="1440px" title="Active page controller rendering an empty region visualized by a placeholder"></span></p>
-</div>
+<p><strong>Run the query</strong> to validate that the parameter working as expected.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_using_the_text_component"><a class="link" href="#task_using_the_text_component">Task: Using the text component</a></h2>
+<h2 id="task_type_introspection"><a class="link" href="#task_type_introspection">Task: Type introspection</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Content Studio ships with a built-in Text component which can be handy when composing pages.</p>
+<p>The queries above only specify fields like <code>_id</code> and <code>displayName</code> for each content found. These are general fields in the CMS, available across all content types.</p>
+</div>
+<div class="paragraph">
+<p>Content types may also define their own <a href="https://developer.enonic.com/docs/xp/stable/cms/content-types">custom fields</a>. These are stored under the <code>data</code> field. In the headless API, deeper data and functionality belonging to a content type is accessed through <strong>introspection</strong>.</p>
+</div>
+<div class="paragraph">
+<p>For example, you may introspect the fields that are exclusive to the <code>com.example.myproject:movie</code> content type like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">Content type introspection:</div>
+<div class="content">
+<pre class="highlight nowrap"><code>... on com_example_myproject_Movie</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The fully-qualified content type name is used, dots are replaced with underscores, and the name is capitalized <code>Movie</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>From the Insert tab (on the right hand side), drag a Text component into the region.</p>
-</li>
-<li>
-<p>Text mode will now be activated, and you can use the <a href="https://developer.enonic.com/docs/content-studio/stable/editor/component-types#text_component">rich-text editor</a> to write and format text, but also insert images.</p>
+<p><strong>Fetch a complex data set</strong></p>
 <div class="paragraph">
-<p><span class="image"><img src="media/text-component.png" alt="text component" width="1440px" title="Next.js-rendered text component with an image"></span></p>
+<p>Lets get content for a movie, the referenced <em>image</em> items <code>media:image</code> and <em>person</em> items <code>com.example.myproject:person</code> in a single query:</p>
 </div>
-</li>
-<li>
-<p>You may also click the <code>Preview</code> button in Content Studio for a full screen version.</p>
+<div class="paragraph">
+<p>Paste this query into the GraphQL Playground:</p>
+</div>
+<div class="listingblock">
+<div class="title">A query with nested introspections</div>
+<div class="content">
+<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      type
+      displayName
+      ... on com_example_myproject_Movie {
+        data {
+          subtitle
+          abstract
+          trailer
+          release
+          photos {
+            ... on media_Image {
+                imageUrl: imageUrl(type: absolute, scale: "width(500)")
+            }
+          }
+          cast {
+            character
+            actor {
+              displayName
+              ... on com_example_myproject_Person {
+                _path
+                data {
+                  photos {
+                    ... on media_Image {
+                      imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice how <code>imageUrl</code> is requested with parameters of its own? Type introspections can expose certain <a href="https://developer.enonic.com/docs/guillotine/stable/api">functions for processing data</a> before returning it.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>All in all, this allows for fetching deep and rich content data in a single API request.</p>
+</div>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_publish_page"><a class="link" href="#task_publish_page">Task: Publish page</a></h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Your new page is looking good. However, if you visit <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> - you&#8217;ll get a "404 page not found" error. This is because only published changes are visible from the front end.</p>
-</div>
-<div class="paragraph">
-<p>Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Publish the page</strong> by clicking <code>Mark as ready&#8230;&#8203;</code>, and then <code>Publish</code>.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/publish.png" alt="publish" width="810px" title="Publishing wizard"></span></p>
-</div>
-</li>
-<li>
-<p><strong>Verify that your page is live</strong> by visiting <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> once again.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>That concludes the introduction to page rendering, coming up we&#8217;ll add some <a href="parts.ahtml">configurable page components</a> to play with.</p>
+<p>Moving forward, you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:36 UTC
+Last updated 2023-09-13 08:43:16 UTC
 </div>
 </div>
 </body>

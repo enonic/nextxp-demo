@@ -442,6 +442,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#headless_api">Headless API</a></li>
 <li><a href="#task_install_api">Task: Install API</a></li>
+<li><a href="#accessing_the_api_externally">Accessing the API externally</a></li>
 <li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
 <li><a href="#task_query_variables">Task: Query variables</a></li>
 <li><a href="#task_type_introspection">Task: Type introspection</a></li>
@@ -460,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="headless_api"><a class="link" href="#headless_api">Headless API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic provides and out-of-the-box GraphQL API that dynamically to reflects your applications and content. The API is highly flexible, and may even be customized. For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
+<p>Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content.The API is highly flexible, and may even be customized.For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -469,7 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
+New to GraphQL?Check out the <a href="https://graphql.org/">GraphQL documentation</a>
 </td>
 </tr>
 </table>
@@ -485,10 +486,13 @@ New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentati
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Install via <code>XP menu</code> &#8594; <code>Applications</code> &#8594; <code>Install</code>. Search for <code>Guillotine</code> and install it.</p>
+<p>Install via XP menu (XP icon in the top right corner) &#8594; <code>Applications</code> &#8594; <code>Install</code>.
+Search for <code>Guillotine</code> and install the app.</p>
 </li>
 <li>
-<p>Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project. You can verify that Guillotine is working by opening Content Studio. Look for a new menu item on the left called <code>Query Playground</code>.</p>
+<p>Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project.
+You can verify that Guillotine is working by opening Content Studio.
+Look for a new menu item on the left called <code>Query Playground</code>.</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
 </div>
@@ -498,24 +502,56 @@ New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentati
 </div>
 </div>
 <div class="sect1">
+<h2 id="accessing_the_api_externally"><a class="link" href="#accessing_the_api_externally">Accessing the API externally</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Guillotine application creates a graphQL API endpoint for every site that it is added to.
+So if your Enonic XP is running on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>, you will get the following URLs for every site with Guillotine app added:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://localhost:8080/site/[project-name]/[branch-name]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>branch-name</code> can only be <code>draft</code> or <code>master</code>, with <code>draft</code> being protected by authentication.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="task_run_a_simple_query"><a class="link" href="#task_run_a_simple_query">Task: Run a simple query</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Query playground lets us browse and use the API directly. Use the left hand field to type/paste in queries, press the "play" button to <strong>run the query</strong>, and the result will be presented in the right hand field.</p>
+<p>Query playground lets us browse and use the API directly.
+Use the left hand field to type/paste in queries, press the "play" button to <strong>run the query</strong>, and the result will be presented in the right hand field.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><strong>Query movies</strong>:</p>
 <div class="paragraph">
-<p>One of the objectives in this tutorial is listing and presenting movie details. Run this simple query that retrieves the ID and displayName of some movies:</p>
+<p>One of the objectives in this tutorial is listing and presenting movie details.
+Run this simple query that retrieves the ID and displayName of some movies:</p>
 </div>
 <div class="listingblock">
 <div class="title">Query to fetch movies from the Headless API:</div>
 <div class="content">
 <pre class="highlight"><code class="language-graphql" data-lang="graphql">{
     guillotine {
-        query(query: "valid='true' and type='com.example.myproject:movie'", sort: "displayName") {
+        queryDsl(
+          query: {
+            boolean: {
+              must:[
+                {term: {field: "valid", value: {boolean:true}}}
+                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+              ]
+            }
+          }
+          sort: {
+          	field:"displayName"
+          	direction:ASC
+        	}
+        ) {
             id: _id
             displayName
         }
@@ -531,18 +567,6 @@ New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentati
 </td>
 <td class="content">
 <code>com.example.myproject</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you prefer DSL over standard query language, Enonic also provides a <code>queryDSL()</code> field.
 </td>
 </tr>
 </table>
@@ -732,7 +756,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:51 UTC
+Last updated 2023-09-13 08:43:32 UTC
 </div>
 </div>
 </body>

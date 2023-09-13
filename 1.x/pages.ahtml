@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Rendering basics</title>
+<title>Custom pages</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,15 +436,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Rendering basics</h1>
+<h1>Custom pages</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#dev_mode_rendering">Dev mode rendering</a></li>
-<li><a href="#task_get_person_content">Task: Get person content</a></li>
-<li><a href="#task_add_person_template">Task: Add person template</a></li>
-<li><a href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></li>
-<li><a href="#the_common_query">The common query</a></li>
+<li><a href="#task_disable_debug_view">Task: Disable debug view</a></li>
+<li><a href="#task_setup_page_rendering">Task: Setup page rendering</a></li>
+<li><a href="#task_create_your_first_page">Task: Create your first page</a></li>
+<li><a href="#task_using_the_text_component">Task: Using the text component</a></li>
+<li><a href="#task_publish_page">Task: Publish page</a></li>
 </ul>
 </div>
 </div>
@@ -452,332 +452,67 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will look into the basic rendering mechanisms, and add some custom rendering to our app as well.</p>
+<p>So far, rendering has been based on hardcoded mappings made by the developer. In this chapter we will enable editors to compose their own pages.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="dev_mode_rendering"><a class="link" href="#dev_mode_rendering">Dev mode rendering</a></h2>
+<h2 id="task_disable_debug_view"><a class="link" href="#task_disable_debug_view">Task: Disable debug view</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As you have seen during the setup of Next, each content item automatically map to a page listing available props. These props are fetched by the so-called Enonic Adapter.</p>
-</div>
-<div class="paragraph">
-<p>By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which React template is actually applied.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_get_person_content"><a class="link" href="#task_get_person_content">Task: Get person content</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Let&#8217;s build our first component - starting with rendring of "person" content types:</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The full name of your content type should now be <code>com.example.myproject:person</code> If you used a different name when creating the Enonic app, update the <code>.env</code> file in your Next.js app to reflect this.
-</td>
-</tr>
-</table>
+<p>For every page you select, the debug view keeps appearing - even in Content Studio. Disable this by following the steps below.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add query</strong> by creating the following file in your front-end application</p>
-<div class="listingblock">
-<div class="title">src/components/queries/getPerson.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
-
-const getPerson = `
-query($path:ID!){
-  guillotine {
-    get(key:$path) {
-      displayName
-      ... on ${APP_NAME_UNDERSCORED}_Person {
-        data {
-          bio
-          dateofbirth
-          photos {
-           ... on media_Image {                                             
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
-              attachments {                                                 
-                name
-              }
-            }
-          }
-        }
-      }
-      parent {
-        _path(type: siteRelative)                                                           
-      }
-    }
-  }
-}`;
-
-export default getPerson;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This file defines a graphQL query 'getPerson' that will fetch data from the Enonic API.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You may validate the query by copying it to the GraphQL playground. Replace <code>APP_NAME_UNDERSCORED</code> with <code>com_example_myproject</code> and set a query variable, try this for instance:
-  <code>{"path": "/hmdb/persons/brad-pitt"}`</code>
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p><strong>Add the following imports</strong> to component mappings file:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import getPerson from './queries/getPerson';
-import {APP_NAME} from '@enonic/nextjs-adapter';</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Then <strong>Register the query</strong> in the same file:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
-ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPerson,
-    view: PropsView
-});</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Check the result</strong></p>
-<div class="paragraph">
-<p>By visiting a person item - like <code><a href="http://localhost:3000/persons/morgan-freeman" target="_blank" rel="noopener">http://localhost:3000/persons/morgan-freeman</a></code> you should now see data props being listed in the view.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-props.png" alt="morgan freeman props" width="767px" title="Page showing data props for Morgan Freeman content item"></span></p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_add_person_template"><a class="link" href="#task_add_person_template">Task: Add person template</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With fresh content available, it&#8217;s time to make things shine:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Add view</strong> by creating the following file in your Next.js application</p>
-<div class="listingblock">
-<div class="title">src/components/views/Person.tsx</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
-
-const Person = (props: FetchContentResult) =&gt; {
-    const {displayName, data, parent} = props.data?.get as any;
-    const {bio, photos} = data;
-    const meta = props.meta;
-    const {_path} = parent;
-
-    return (
-        &lt;&gt;
-            &lt;div&gt;
-                &lt;h2&gt;{displayName}&lt;/h2&gt;
-                &lt;p&gt;{bio}&lt;/p&gt;
-                {
-                    photos.map((photo: any, i: number) =&gt; (
-                        &lt;img key={i}
-                             src={getUrl(photo.imageUrl, meta)}
-                             title={getTitle(photo, displayName)}
-                             alt={getTitle(photo, displayName)}
-                             width="500"
-                        /&gt;
-                    ))
-                }
-            &lt;/div&gt;
-            &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;Back to Persons&lt;/a&gt;&lt;/p&gt;
-        &lt;/&gt;
-    )
-}
-
-export default Person;
-
-function getTitle(photo: any, displayName: string) {
-    return (photo.attachments || [])[0].name || displayName;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This file defines a react view <code>Person</code> that will use the props from the query to render the person.</p>
-</div>
-</li>
-<li>
-<p><strong>Register Person view</strong> by adding the following import to the component mappings:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import Person from './views/Person';</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And then update the component mapping you created earlier to use the new view:</p>
-</div>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
-ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPerson,
-    view: Person
-});</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Check the result</strong> - The page should automatically reload once the changes have been saved</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-render.png" alt="morgan freeman render" width="768px" title="Person rendering with query and view"></span></p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>The content type mapping applies to every <code>person</code> content item in the site, regardless of it&#8217;s location in the hierarchy. Try looking at some other persons, eg. <a href="http://localhost:3000/persons/uma-thurman" target="_blank" rel="noopener">http://localhost:3000/persons/uma-thurman</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_add_custom_header_and_footer"><a class="link" href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Adding some styles, a header and a footer will make the site more interesting visually. Next.js provides a handy solution to this problem.</p>
-</div>
-<div class="paragraph">
-<p>The <code>_app.tsx</code> file initializes the React pipeline, and by modifying it we can inject the same header and footer components to all pages generated by Next.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Sample header and footer views are already included in the starter under /<code>src/components/views</code>, so all we need to do is put them to work.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Update <code>src/pages/_app.tsx`</code> with the following changes:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Add these imports</strong></p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import Header from '../components/views/Header';
-import Footer from '../components/views/Footer';
-import {getUrl} from '@enonic/nextjs-adapter';</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>And at the bottom of the file <strong>replace the entire return function</strong>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
-    &lt;StaticContent condition={isEdit}&gt;
-        &lt;Component {...pageProps} /&gt;
-    &lt;/StaticContent&gt;
-);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>with this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
-    &lt;StaticContent condition={isEdit}&gt;
-        &lt;Header
-            title="🔥 Next.XP"
-            logoUrl={getUrl('/images/xp-shield.svg', pageProps.meta)}
-            meta={pageProps.meta}
-        /&gt;
-            &lt;main style={{
-                margin: `0 auto`,
-                maxWidth: 960,
-                padding: `0 1rem`,
-            }}&gt;
-                &lt;Component {...pageProps} /&gt;
-            &lt;/main&gt;
-        &lt;Footer/&gt;
-    &lt;/StaticContent&gt;
-);</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Pay attention to the <code>getUrl()</code> function. It ensures that links to assets and pages are working seamlessly in Next.js, as well as in Content Studio preview mode - as you will see later.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Morgan Freeman&#8217;s page should now look like this</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-header-footer.png" alt="morgan freeman header footer" width="768px" title="Rendering with header and footer"></span></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="the_common_query"><a class="link" href="#the_common_query">The common query</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You may have noticed the <code>Common</code> props appearing in the various prop views - these originate from the the following statement in the mappings:</p>
-</div>
+<p><strong>Comment out the <code>CATCH_ALL</code> debug view</strong> at the bottom of your mappings file - like this:</p>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">...
 
-// Common query
-ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
-
-...</code></pre>
+/*
+// Debug
+ComponentRegistry.addContentType(CATCH_ALL, {
+    view: PropsView
+});
+*/</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p><strong>Verify that pages are no longer rendering</strong> by visiting your site on <code><a href="http://localhost:3000" class="bare">http://localhost:3000</a></code>.</p>
 <div class="paragraph">
-<p>The result of this query is available across all components on the page, and may be useful if you want to fetch data for the page itself, or to be used across multiple components. Feel free to adapt it to your requirements.</p>
+<p>The same will now apply to Content Studio.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_setup_page_rendering"><a class="link" href="#task_setup_page_rendering">Task: Setup page rendering</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content types need to exist in Enonic before an editor can create content. Similarly, page components must be defined before Content Studio can enable editors to create pages.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Add a page component</strong> to the Enonic app</p>
+<div class="listingblock">
+<div class="title">src/main/resources/site/pages/main/main.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;page xmlns="urn:enonic:xp:model:1.0"&gt;
+  &lt;display-name&gt;Main page&lt;/display-name&gt;
+  &lt;description&gt;Will be rendered by front-end&lt;/description&gt;
+  &lt;form/&gt;
+  &lt;regions&gt;
+      &lt;region name="main"/&gt;
+  &lt;/regions&gt;
+&lt;/page&gt;</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -786,20 +521,167 @@ ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you do not need any common props, remove it from the mappings to optimize performance.
+The definition of the region <code>main</code>, allows Content Studio editors to add components to the page, as you will see later.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>With the basic rendering completed, in the following chapter, you&#8217;ll add <a href="preview.ahtml">preview support to Content Studio</a>.</p>
+<p>Redploy the Enonic app to register the page component.</p>
+</div>
+</li>
+<li>
+<p><strong>Configure page rendering in Next.js</strong>
+Rendering a page is similar to rendering a content type. Go to the folder <code>./src/components</code>, create a new folder here - <code>pages</code>, and within it a new file called <code>Main.tsx</code> containing the following code.</p>
+<div class="listingblock">
+<div class="title">src/components/pages/Main.tsx</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
+import RegionsView from '@enonic/nextjs-adapter/views/Region';
+
+const MainPage = (props: PageProps) =&gt; {
+    const page = props.page;
+    if (!page.regions || !Object.keys(page.regions).length) {
+        page.regions = {
+            main: {
+                name: 'main',
+                components: [],
+            }
+        }
+    }
+    return (
+        &lt;&gt;
+            &lt;RegionsView {...props} name="main"/&gt;
+        &lt;/&gt;
+    );
+};
+
+export default MainPage;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The &lt;RegionsView&gt; element is referring to the 'main' region we defined in the page component earlier.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, register it in the component mappings by adding the following lines to _mappings.ts</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import MainPage from './pages/Main';
+
+// Page mappings
+ComponentRegistry.addPage(`${APP_NAME}:main`, {
+    view: MainPage
+});</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Both Enonic and Next.js are now able to handle custom pages.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_create_your_first_page"><a class="link" href="#task_create_your_first_page">Task: Create your first page</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It&#8217;s time to build a custom page.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Turn the site into a page</strong></p>
+<div class="paragraph">
+<p>From Content Studio, select and edit the <code>/hmdb</code> content item. From the edit view, activate the page editor by clicking the monitor icon in the top right corner.</p>
+</div>
+<div class="paragraph">
+<p>You should now see the following:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/page-setup.png" alt="page setup" width="1440px" title="Selecting the page component in the page view"></span></p>
+</div>
+<div class="paragraph">
+<p>From the preview area, select the <code>Main</code> component we created earlier from the dropdown menu.</p>
+</div>
+<div class="paragraph">
+<p>You should then see a page with a single "dropzone" inside (the region we specified earlier).</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/page-rendered.png" alt="page rendered" width="1440px" title="Active page controller rendering an empty region visualized by a placeholder"></span></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_using_the_text_component"><a class="link" href="#task_using_the_text_component">Task: Using the text component</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content Studio ships with a built-in Text component which can be handy when composing pages.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From the Insert tab (on the right hand side), drag a Text component into the region.</p>
+</li>
+<li>
+<p>Text mode will now be activated, and you can use the <a href="https://developer.enonic.com/docs/content-studio/stable/editor/component-types#text_component">rich-text editor</a> to write and format text, but also insert images.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/text-component.png" alt="text component" width="1440px" title="Next.js-rendered text component with an image"></span></p>
+</div>
+</li>
+<li>
+<p>You may also click the <code>Preview</code> button in Content Studio for a full screen version.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_publish_page"><a class="link" href="#task_publish_page">Task: Publish page</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your new page is looking good. However, if you visit <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> - you&#8217;ll get a "404 page not found" error. This is because only published changes are visible from the front end.</p>
+</div>
+<div class="paragraph">
+<p>Content Studio activates Next.js' preview mode, which in turn uses the drafts API. When accessing the front-end directly, Next.js fetches published content from the master branch.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Publish the page</strong> by clicking <code>Mark as ready&#8230;&#8203;</code>, and then <code>Publish</code>.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/publish.png" alt="publish" width="810px" title="Publishing wizard"></span></p>
+</div>
+</li>
+<li>
+<p><strong>Verify that your page is live</strong> by visiting <code><a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></code> once again.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>That concludes the introduction to page rendering, coming up we&#8217;ll add some <a href="parts.ahtml">configurable page components</a> to play with.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-12 11:49:36 UTC
+Last updated 2023-09-13 08:43:16 UTC
 </div>
 </div>
 </body>
