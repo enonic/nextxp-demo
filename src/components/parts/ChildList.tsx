@@ -19,7 +19,7 @@ const ChildList = (props: PartProps) => {
                 <ul>{
                     children.map((child: any, i: number) => (
                         <li key={i}>
-                            <a href={getUrl(child._path, meta)}>
+                            <a href={getUrl(child.pageUrl, meta)}>
                                 {child.displayName}
                             </a>
                         </li>
@@ -42,8 +42,7 @@ export const getChildList = {
                 get(key:$path) {
                   displayName
                   children(sort: $order) {
-                      _path(type: siteRelative)
-                      _id
+                      pageUrl(type:absolute)
                       displayName
                   }
                 }

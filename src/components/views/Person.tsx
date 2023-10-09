@@ -5,7 +5,7 @@ const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
-    const {_path} = parent;
+    const {pageUrl} = parent;
 
     return (
         <>
@@ -23,7 +23,7 @@ const Person = (props: FetchContentResult) => {
                     ))
                 }
             </div>
-            <p><a href={getUrl(_path, meta)}>Back to Persons</a></p>
+            <p><a href={getUrl(pageUrl, meta)}>Back to Persons</a></p>
         </>
     )
 }

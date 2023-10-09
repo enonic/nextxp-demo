@@ -20,7 +20,7 @@ query($path:ID!){
         }
       }
       parent {
-        _path(type: siteRelative)                                                           
+        pageUrl(type:absolute)                                                     
       }
     }
   }
