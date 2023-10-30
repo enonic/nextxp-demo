@@ -19,7 +19,7 @@ const ChildList = (props: PartProps) => {
                 <ul>{
                     children.map((child: any, i: number) => (
                         <li key={i}>
-                            <a href={getUrl(child._path, meta)}>
+                            <a href={getUrl(child.pageUrl, meta)}>
                                 {child.displayName}
                             </a>
                         </li>
@@ -34,16 +34,15 @@ export default ChildList;
 
 export const getChildList = {
     query: function (path: string, context?: Context, config?: any): string {
-        return `query($path:ID!, $order:String){
-              guillotine {
+        return `query($path:ID!, $order:String, $repo: String, $siteKey: String, $branch: String) {
+              guillotine(repo: $repo, siteKey: $siteKey, branch: $branch) {
                 getSite {
                   displayName
                 }
                 get(key:$path) {
                   displayName
                   children(sort: $order) {
-                      _path(type: siteRelative)
-                      _id
+                      pageUrl
                       displayName
                   }
                 }
@@ -52,8 +51,7 @@ export const getChildList = {
     },
     variables: function (path: string, context?: Context, config?: any): VariablesGetterResult {
         return {
-            path,
-            order: config?.sorting
+            order: config?.sorting,
         }
     }
 };

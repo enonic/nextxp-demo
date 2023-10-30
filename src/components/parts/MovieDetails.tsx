@@ -3,14 +3,13 @@ import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 
 
-export const getMovie = `
-query($path:ID!){
-  guillotine {
+export const getMovie = `query($path:ID!, $repo: String, $siteKey: String, $branch: String){
+  guillotine(repo: $repo, siteKey: $siteKey, branch: $branch) {
     get(key:$path) {
       type
       displayName
       parent {
-        _path(type: siteRelative)
+        pageUrl
       }
       ... on ${APP_NAME_UNDERSCORED}_Movie {
         data {
@@ -30,7 +29,7 @@ query($path:ID!){
             character
             actor {
               ... on ${APP_NAME_UNDERSCORED}_Person {
-                _path(type: siteRelative)
+                pageUrl
                 displayName
                 data {
                   photos {
@@ -65,7 +64,7 @@ const MovieView = (props: PartProps) => {
                 {data?.cast && <Cast cast={data.cast} meta={meta}/>}
             </div>
             <p>
-                <a href={getUrl(parent._path, meta)}>Back to Movies</a>
+                <a href={getUrl(parent.pageUrl, meta)}>Back to Movies</a>
             </p>
         </>
     );
@@ -111,7 +110,7 @@ interface CastProps {
 interface CastMemberProps {
     character: string;
     actor: {
-        _path: string;
+        pageUrl: string;
         displayName: string;
         data: {
             photos: {
@@ -141,7 +140,7 @@ const Cast = (props: CastProps) => (
 
 const CastMember = (props: CastMemberProps & { meta: MetaData }) => {
     const {character, actor, meta} = props;
-    const {displayName, _path, data} = actor;
+    const {displayName, pageUrl, data} = actor;
     const personPhoto = (data.photos || [])[0] || {};
 
     return (
@@ -154,7 +153,7 @@ const CastMember = (props: CastMemberProps & { meta: MetaData }) => {
             }
             <div>
                 <p>{character}</p>
-                <p><a href={getUrl(_path, meta)}>
+                <p><a href={getUrl(pageUrl, meta)}>
                     {displayName}
                 </a></p>
             </div>

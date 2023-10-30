@@ -2,8 +2,8 @@
 // Result is included in props.common
 
 export const commonQuery = `
-query($path:ID!){
-  guillotine {
+query($path:ID!, $repo: String, $siteKey: String, $branch: String){
+  guillotine(siteKey: $siteKey, repo: $repo, branch: $branch) {
     get(key:$path) {
       displayName
       _id
@@ -13,13 +13,8 @@ query($path:ID!){
     }
     getSite {
       displayName
-      _path
+      pageUrl
     }
   }
 }`;
 
-export function commonVariables(path: string) {
-    return {
-        path
-    }
-}
