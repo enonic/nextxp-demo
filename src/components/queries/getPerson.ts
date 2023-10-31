@@ -1,9 +1,6 @@
-import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
+import {APP_NAME_UNDERSCORED, queryGuillotineWithPath} from '@enonic/nextjs-adapter';
 
-const getPerson = `
-query($path:ID!){
-  guillotine {
-    get(key:$path) {
+const getPerson = queryGuillotineWithPath(`get(key:$path) {
       displayName
       ... on ${APP_NAME_UNDERSCORED}_Person {
         data {
@@ -20,10 +17,8 @@ query($path:ID!){
         }
       }
       parent {
-        _path(type: siteRelative)                                                           
+        pageUrl                                                        
       }
-    }
-  }
-}`;
+    }`);
 
 export default getPerson;

@@ -7,12 +7,11 @@ import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
 import Heading from './parts/Heading';
 import MovieDetails, {getMovie} from './parts/MovieDetails';
 import TwoColumnLayout from './layouts/TwoColumnLayout';
-import {commonQuery, commonVariables} from './queries/common';
-import PanelMacro from './macros/PanelMacro';
+import {commonQuery} from './queries/common';
 
 
 // You can set common query for all views here
-ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
+ComponentRegistry.setCommonQuery(commonQuery);
 
 /*
 // Macro mappings (should come first as may be used in other components)
