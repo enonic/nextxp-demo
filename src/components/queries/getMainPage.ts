@@ -1,10 +1,7 @@
-const getMainPage = `
-query($path:ID!, $repo: String, $siteKey: String, $branch: String) {
-  guillotine(siteKey: $siteKey, repo: $repo, branch: $branch) {
-    getSite {
+import {queryGuillotine} from '@enonic/nextjs-adapter';
+
+const getMainPage = queryGuillotine(`getSite {
       displayName
-    }
-  }
-}`;
+    }`);
 
 export default getMainPage;

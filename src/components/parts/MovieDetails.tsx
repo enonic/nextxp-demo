@@ -1,11 +1,9 @@
 import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
+import {APP_NAME_UNDERSCORED, getUrl, MetaData, queryGuillotineWithPath} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 
 
-export const getMovie = `query($path:ID!, $repo: String, $siteKey: String, $branch: String){
-  guillotine(repo: $repo, siteKey: $siteKey, branch: $branch) {
-    get(key:$path) {
+export const getMovie = queryGuillotineWithPath(`get(key:$path) {
       type
       displayName
       parent {
@@ -46,9 +44,7 @@ export const getMovie = `query($path:ID!, $repo: String, $siteKey: String, $bran
           }
         }
       }
-    }
-  }
-}`;
+    }`);
 
 
 // Root component

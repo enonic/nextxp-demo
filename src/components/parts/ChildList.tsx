@@ -1,5 +1,5 @@
 import React from 'react'
-import {Context, getUrl, VariablesGetterResult} from '@enonic/nextjs-adapter';
+import {Context, getUrl, queryGuillotineWithPath, VariablesGetterResult} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 
 const ChildList = (props: PartProps) => {
@@ -34,9 +34,7 @@ export default ChildList;
 
 export const getChildList = {
     query: function (path: string, context?: Context, config?: any): string {
-        return `query($path:ID!, $order:String, $repo: String, $siteKey: String, $branch: String) {
-              guillotine(repo: $repo, siteKey: $siteKey, branch: $branch) {
-                getSite {
+        return queryGuillotineWithPath(`getSite {
                   displayName
                 }
                 get(key:$path) {
@@ -45,9 +43,9 @@ export const getChildList = {
                       pageUrl
                       displayName
                   }
-                }
-              }
-            }`
+                }`, {
+            '$order': 'String'
+        })
     },
     variables: function (path: string, context?: Context, config?: any): VariablesGetterResult {
         return {

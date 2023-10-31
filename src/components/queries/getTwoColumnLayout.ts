@@ -1,11 +1,8 @@
-const getTwoColumnLayout = `
-query($path:ID!, $repo: String, $siteKey: String, $branch: String) {
-  guillotine(siteKey: $siteKey, repo: $repo, branch: $branch) {
-    getSite {
+import {queryGuillotine} from '@enonic/nextjs-adapter';
+
+const getTwoColumnLayout = queryGuillotine(`getSite {
       displayName
       type
-    }
-  }
-}`;
+    }`);
 
 export default getTwoColumnLayout;
