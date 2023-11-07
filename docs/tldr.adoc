@@ -59,11 +59,22 @@ The fastest way to try it out goes as follows:
 +
 image:content-studio-edit-site.png[title="Select and edit the site",width=650px]
 +
-. Add the `Next.XP` app to the list of applications on the site. It will override the default preview for the content within the site.
+. Add the `Next.XP` app to the list of applications on the site.
+It will override the default preview for the content within the site.
 +
 image:content-studio-add-nextxp.png[title="Add the Next.XP application to the site.",width=779px]
 +
-. After saving, the preview should update to show your front-end.
+. Next we need to tell Next.XP where to find the frontend server:
++
+.Go to Applications tab in Enonic Cloud and select Next.XP app:
+image:cloud-next-app-edit.png[title="Select the Next.XP application",width=937px]
++
+.Press `Edit...` button in the app context menu and add the URL and secret of the Vercel app you deployed in step 3:
+image:cloud-next-app-config.png[title="Add the Next.XP application to the site.",width=872px]
++
+NOTE: We are overriding default configuration, so it will get applied automatically to all sites, that didn't specify otherwise.
++
+. After saving and going back to Content Studio, the preview should update to show your front-end.
 +
 image:cloud-preview.png[title="Front page as seen from Content Studio",width=1419px]
 
