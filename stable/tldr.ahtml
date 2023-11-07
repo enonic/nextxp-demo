@@ -607,13 +607,37 @@ Check the Vercel function logs if you are not getting the expected result.
 </div>
 </li>
 <li>
-<p>Add the <code>Next.XP</code> app to the list of applications on the site. It will override the default preview for the content within the site.</p>
+<p>Add the <code>Next.XP</code> app to the list of applications on the site.
+It will override the default preview for the content within the site.</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="779px" title="Add the Next.XP application to the site."></span></p>
 </div>
 </li>
 <li>
-<p>After saving, the preview should update to show your front-end.</p>
+<p>Next we need to tell Next.XP where to find the frontend server:</p>
+<div class="paragraph">
+<div class="title">Go to Applications tab in Enonic Cloud and select Next.XP app:</div>
+<p><span class="image"><img src="media/cloud-next-app-edit.png" alt="cloud next app edit" width="937px" title="Select the Next.XP application"></span></p>
+</div>
+<div class="paragraph">
+<div class="title">Press <code>Edit&#8230;&#8203;</code> button in the app context menu and add the URL and secret of the Vercel app you deployed in step 3:</div>
+<p><span class="image"><img src="media/cloud-next-app-config.png" alt="cloud next app config" width="872px" title="Add the Next.XP application to the site."></span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We are overriding default configuration, so it will get applied automatically to all sites, that didn&#8217;t specify otherwise.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>After saving and going back to Content Studio, the preview should update to show your front-end.</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
 </div>
@@ -657,7 +681,7 @@ Check the Vercel function logs if you are not getting the expected result.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-13 08:43:32 UTC
+Last updated 2023-11-07 08:40:35 UTC
 </div>
 </div>
 </body>
