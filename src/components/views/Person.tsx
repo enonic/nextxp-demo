@@ -1,11 +1,14 @@
 import React from 'react'
 import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
+import Link from 'next/link';
 
 const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
     const {_path} = parent;
+
+    console.info('Parent path of: ', _path);
 
     return (
         <>
@@ -23,7 +26,7 @@ const Person = (props: FetchContentResult) => {
                     ))
                 }
             </div>
-            <p><a href={getUrl(_path, meta)}>Back to Persons</a></p>
+            <p><Link href={_path}>Back to Persons</Link></p>
         </>
     )
 }
