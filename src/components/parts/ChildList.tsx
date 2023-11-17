@@ -1,6 +1,7 @@
 import React from 'react'
-import {Context, getUrl, VariablesGetterResult} from '@enonic/nextjs-adapter';
+import {Context, VariablesGetterResult} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+import Link from 'next/link';
 
 const ChildList = (props: PartProps) => {
     const {data, meta} = props;
@@ -19,9 +20,10 @@ const ChildList = (props: PartProps) => {
                 <ul>{
                     children.map((child: any, i: number) => (
                         <li key={i}>
-                            <a href={getUrl(child._path, meta)}>
+                            <Link href={child._path}>{child.displayName}</Link>
+                            {/*<a href={getUrl(child._path, meta)}>
                                 {child.displayName}
-                            </a>
+                            </a>*/}
                         </li>
                     ))
                 }</ul>

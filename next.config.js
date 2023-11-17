@@ -1,5 +1,4 @@
 const withTM = require('next-transpile-modules')(['@enonic/nextjs-adapter']);
-const withEnonicCache = require('@enonic/nextjs-adapter/server').withEnonicCache;
 
 function getEnonicWebpackConfig(config) {
     config.resolve.fallback = {
@@ -27,6 +26,7 @@ async function getEnonicHeaders() {
 
 const config = {
     reactStrictMode: true,
+    trailingSlash: true,
     i18n: {
         locales: ['en', 'no'],
         defaultLocale: 'en',
@@ -35,4 +35,4 @@ const config = {
     headers: getEnonicHeaders,
 };
 
-module.exports = withTM(withEnonicCache(config));
+module.exports = withTM(config);
