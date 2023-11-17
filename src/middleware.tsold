@@ -1,0 +1,39 @@
+import {NextRequest, NextResponse} from 'next/server'
+import {getLocaleProjectConfigById, PROJECT_ID_HEADER} from '@enonic/nextjs-adapter'
+import {addBasePath} from 'next/dist/client/add-base-path';
+
+// Get the preferred locale, similar to the above or using a library
+function getLocale(req: NextRequest) {
+    const projectId = req.headers.get(PROJECT_ID_HEADER) || undefined;
+    const locale = getLocaleProjectConfigById(projectId).locale;
+    return {locale, projectId}
+}
+
+export function middleware(req: NextRequest) {
+
+    const {locale, projectId} = getLocale(req)
+
+    console.info('middleware', req.nextUrl.locale, locale, projectId);
+
+    if (req.nextUrl.locale === locale ||
+        !req.nextUrl.locale && locale === 'default') {
+        return;
+    }
+
+    const baseUrl = addBasePath(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`);
+    const url = new URL(baseUrl, req.url);
+
+    console.info(`Project "${projectId}" needs "${locale}" locale, was "${req.nextUrl.locale}"; redirecting to: ${url}`);
+
+    const response = NextResponse.redirect(url);
+    response.headers.set('Accept-Language', locale);
+    response.cookies.set('NEXT_LOCALE', locale);
+
+    return response;
+
+}
+
+export const config = {
+    // do not localize next.js paths
+    matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)",],
+};
