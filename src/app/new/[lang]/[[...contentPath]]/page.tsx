@@ -1,9 +1,9 @@
 import React from 'react';
-import {ContentPathItem, EnonicView, fetchContentPathsForAllLocales} from "@enonic/nextjs-adapter";
+import {ContentPathItem, fetchContent, fetchContentPathsForAllLocales} from "@enonic/nextjs-adapter";
+import MainView from '@enonic/nextjs-adapter/views/MainView';
 
 import "@enonic/nextjs-adapter/baseMappings";
 import "../../../../components/_mappings";
-import {headers} from 'next/headers';
 
 export const dynamic = 'force-static'
 // export const dynamicParams = true
@@ -15,29 +15,25 @@ export const preferredRegion = 'auto'
 
 // export const maxDuration = 5
 
-export interface PageProps {
+export type PageProps = {
     contentPath: string[],
     lang: string,
 }
 
 export async function generateStaticParams(): Promise<any[]> {
     const paths = await fetchContentPathsForAllLocales('\${site}/');
-    const result = paths.map((path: ContentPathItem) => ({
+    return paths.map((path: ContentPathItem) => ({
         contentPath: path.params.contentPath,
         lang: path.locale,
     }));
-    console.info(result);
-    return result;
 }
 
 export default async function Page({params}: { params: PageProps }) {
     console.info('Accessing page', params);
 
-    const data = fetchData(params.contentPath);
-
-    headers()
+    const data = await fetchContent(params.contentPath)
 
     return (
-        <EnonicView contentPath={params.contentPath}/>
+        <MainView {...data}/>
     )
 };

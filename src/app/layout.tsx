@@ -1,8 +1,12 @@
 import {PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
 import {Metadata} from 'next';
+import {ReactNode} from 'react';
+import {PageProps} from './new/[lang]/[[...contentPath]]/page';
 
-export interface LayoutProps {
-    children: React.ReactNode
+
+export type LayoutProps = {
+    params: PageProps
+    children: ReactNode
 }
 
 export default function RootLayout({children}: LayoutProps) {
@@ -22,7 +26,7 @@ export default function RootLayout({children}: LayoutProps) {
 export function generateMetadata(): Metadata {
     return {
         title: {
-            default: 'Next.js + Enonic XP = ❤️',
+            default: 'Next.js + Enonic XP = Next.XP',
             template: '%s | Next.XP',
         },
         description: 'The React Framework for Enonic XP',
