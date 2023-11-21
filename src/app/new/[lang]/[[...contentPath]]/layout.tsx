@@ -1,11 +1,16 @@
 import Footer from '../../../../components/views/Footer';
 import {LayoutProps} from '../../../layout';
 import Header from '../../../../components/views/Header';
+import {fetchContent, getUrl} from '@enonic/nextjs-adapter';
+import {Metadata, ResolvingMetadata} from 'next';
 
 
-export default function Layout(props: LayoutProps) {
+export default async function ContentLayout(props: LayoutProps) {
+
+    const {meta, common} = await fetchContent(props.params.contentPath)
+
     return (<>
-            <Header meta={}>Header</Header>
+            <Header meta={meta} title={common?.get?.displayName} logoUrl={getUrl('/images/xp-shield.svg', meta)}/>
             <main style={{
                 margin: `0 auto`,
                 maxWidth: 960,
@@ -16,4 +21,13 @@ export default function Layout(props: LayoutProps) {
             <Footer/>
         </>
     )
+}
+
+export async function generateMetadata(props: LayoutProps, parent: ResolvingMetadata): Promise<Metadata> {
+
+    const {common} = await fetchContent(props.params.contentPath)
+
+    return {
+        title: common?.get?.displayName || 'Content path layout',
+    }
 }
