@@ -1,9 +1,14 @@
 import Footer from '../../../../components/views/Footer';
-import {LayoutProps} from '../../../layout';
 import Header from '../../../../components/views/Header';
 import {fetchContent, getUrl} from '@enonic/nextjs-adapter';
 import {Metadata, ResolvingMetadata} from 'next';
+import {ReactNode} from 'react';
+import {PageProps} from './page';
 
+export type LayoutProps = {
+    params: PageProps
+    children: ReactNode
+}
 
 export default async function ContentLayout(props: LayoutProps) {
 
