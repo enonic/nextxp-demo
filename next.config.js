@@ -1,6 +1,6 @@
-const withTM = require('next-transpile-modules')(['@enonic/nextjs-adapter']);
+/** @type {import('next').NextConfig} */
 
-function getEnonicWebpackConfig(config) {
+function getEnonicWebpackConfig(config, {buildId, dev, isServer, defaultLoaders, nextRuntime, webpack}) {
     config.resolve.fallback = {
         ...config.resolve.fallback,
         // client-side resolution for node modules
@@ -31,8 +31,9 @@ const config = {
         locales: ['en', 'no'],
         defaultLocale: 'en',
     },
+    transpilePackages: ['@enonic/nextjs-adapter'],
     webpack: getEnonicWebpackConfig,
     headers: getEnonicHeaders,
 };
 
-module.exports = withTM(config);
+module.exports = config;

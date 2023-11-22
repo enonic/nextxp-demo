@@ -1,15 +1,14 @@
 import {PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
 import {Metadata} from 'next';
 import {ReactNode} from 'react';
-import {PageProps} from './new/[lang]/[[...contentPath]]/page';
 
+import '../styles/globals.css';
 
-export type LayoutProps = {
-    params: PageProps
+export type RootLayoutProps = {
     children: ReactNode
 }
 
-export default function RootLayout({children}: LayoutProps) {
+export default function RootLayout({children}: RootLayoutProps) {
 
     const bodyAttrs: { [key: string]: string } = {
         className: "edit",
