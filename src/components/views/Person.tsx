@@ -8,8 +8,6 @@ const Person = (props: FetchContentResult) => {
     const meta = props.meta;
     const {_path} = parent;
 
-    console.info('Parent path of: ', _path);
-
     return (
         <>
             <div>

@@ -27,10 +27,6 @@ async function getEnonicHeaders() {
 const config = {
     reactStrictMode: true,
     trailingSlash: true,
-    i18n: {
-        locales: ['en', 'no'],
-        defaultLocale: 'en',
-    },
     transpilePackages: ['@enonic/nextjs-adapter'],
     webpack: getEnonicWebpackConfig,
     headers: getEnonicHeaders,

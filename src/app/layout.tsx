@@ -3,12 +3,14 @@ import {Metadata} from 'next';
 import {ReactNode} from 'react';
 
 import '../styles/globals.css';
+import {PageProps} from './[language]/[[...contentPath]]/page';
 
-export type RootLayoutProps = {
+export type LayoutProps = {
+    params: PageProps
     children: ReactNode
 }
 
-export default function RootLayout({children}: RootLayoutProps) {
+export default function RootLayout({children}: LayoutProps) {
 
     const bodyAttrs: { [key: string]: string } = {
         className: "edit",
