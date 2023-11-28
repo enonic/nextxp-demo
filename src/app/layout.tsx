@@ -3,7 +3,7 @@ import {Metadata} from 'next';
 import {ReactNode} from 'react';
 
 import '../styles/globals.css';
-import {PageProps} from './[language]/[[...contentPath]]/page';
+import {PageProps} from './[locale]/[[...contentPath]]/page';
 
 export type LayoutProps = {
     params: PageProps

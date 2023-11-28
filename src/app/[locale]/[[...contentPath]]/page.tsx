@@ -17,7 +17,7 @@ export const preferredRegion = 'auto'
 // export const maxDuration = 5
 
 export type PageProps = {
-    language: string,
+    locale: string,
     contentPath: string[],
 }
 
@@ -35,11 +35,11 @@ export default async function Page({params}: { params: PageProps }) {
     )
 };
 
-export async function generateStaticParams({params: {language},}: { params: { language: string } }): Promise<any[]> {
+export async function generateStaticParams(props: { params: PageProps }): Promise<any[]> {
     const paths = await fetchContentPathsForAllLocales('\${site}/');
     const result = paths.map((item: ContentPathItem) => ({
         contentPath: item.params.contentPath,
-        language: item.locale,
+        locale: item.locale,
     }));
     console.info('Content path layout paths: ', result);
     return result;
