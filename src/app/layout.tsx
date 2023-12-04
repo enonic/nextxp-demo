@@ -27,7 +27,7 @@ export default function RootLayout({children}: LayoutProps) {
 export function generateMetadata(): Metadata {
     return {
         title: {
-            default: 'Next.js + Enonic XP = Next.XP',
+            default: 'Next.XP 3.0',
             template: '%s | Next.XP',
         },
         description: 'The React Framework for Enonic XP',
