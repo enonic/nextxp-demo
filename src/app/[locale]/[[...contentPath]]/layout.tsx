@@ -10,9 +10,9 @@ export type LayoutProps = {
     children: ReactNode
 }
 
-export default async function ContentLayout(props: LayoutProps) {
+export default async function ContentLayout({params, children}: LayoutProps) {
 
-    const {meta, common} = await fetchContent(props.params.contentPath)
+    const {meta, common} = await fetchContent(params);
 
     return (<>
             <Header meta={meta} title={common?.get?.displayName} logoUrl={getUrl('/images/xp-shield.svg', meta)}/>
@@ -21,16 +21,16 @@ export default async function ContentLayout(props: LayoutProps) {
                 maxWidth: 960,
                 padding: `0 1rem`,
             }}>
-                {props.children}
+                {children}
             </main>
             <Footer/>
         </>
     )
 }
 
-export async function generateMetadata(props: LayoutProps, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({params}: LayoutProps, parent: ResolvingMetadata): Promise<Metadata> {
 
-    const {common} = await fetchContent(props.params.contentPath)
+    const {common} = await fetchContent(params);
 
     return {
         title: common?.get?.displayName || 'Content path layout',
