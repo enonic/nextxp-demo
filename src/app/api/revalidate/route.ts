@@ -1,8 +1,5 @@
 import {revalidatePath} from 'next/cache';
 import {NextRequest} from 'next/server';
-import {getProjectLocales} from '@enonic/nextjs-adapter';
-
-const LOCALE_SEGMENT = '[locale]';
 
 export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
@@ -18,18 +15,17 @@ export async function GET(req: NextRequest) {
 
     try {
         if (!path) {
-            const localeSegment = getProjectLocales().length > 1 ? `/${LOCALE_SEGMENT}` : '';
-            revalidatePath(`${localeSegment}/[[..contentPath]]/page`, 'page');
+            // This will revalidate everything
+            revalidatePath('/', 'layout');
             console.info(`Revalidated everything`);
         } else {
             revalidatePath(normalizePath(path), 'page');
             console.info(`Revalidated [${path}]`);
         }
-        return Response.json({message: 'Revalidation done'}, {
-            status: 200,
-        });
+        return Response.json({revalidated: true}, {status: 200});
     } catch (err) {
         console.error(`Revalidation [${path ?? 'everything'}] error: ` + err);
+        return Response.json({revalidated: false}, {status: 200});
     }
 }
 
