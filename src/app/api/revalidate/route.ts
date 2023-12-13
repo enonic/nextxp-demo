@@ -1,18 +1,17 @@
 import {revalidatePath} from 'next/cache';
 import {NextRequest} from 'next/server';
+import {validateToken} from '../../../utils';
 
 export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
-    const token = params.get('token');
-    const path = params.get('path');
     // Check for secret to confirm this is a valid request
-    if (token !== process.env.ENONIC_API_TOKEN) {
-        // XP hijacks 401 to show login page, so send 407 instead
-        return Response.json({message: 'Invalid token'}, {
-            status: 407,
-        });
+    const token = params.get('token');
+    const response = validateToken(token);
+    if (response !== null) {
+        return response;
     }
 
+    const path = params.get('path');
     try {
         if (!path) {
             // This will revalidate everything
