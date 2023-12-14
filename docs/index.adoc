@@ -1,10 +1,10 @@
-= Next.js + Enonic XP = Next.XP
+= Next.js website powered by Enonic XP
 :toc: right
 :imagesdir: media/
 
 This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. 
 
-NOTE: **Impatient?** Skip to the end of the tutorial and get a live demo by following <<tldr#,these instructions>>.
+NOTE: **Looking for a demo?** Try out a <<demo#, live version of Next.XP>>.
 
 == Intro
 

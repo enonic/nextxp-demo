@@ -1,21 +1,19 @@
-= Next.XP TL;DR 
-Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.
-
+= Next.XP Demo
+Skip straight to the end of this tutorial. 
 :toc: right
 :imagesdir: media/
 
-[[tldr]]
-== tl;dr
 
-Want to learn what is really happening? Head on to the <<enonic-setup#, first chapter>> of the tutorial instead.
+== What?
+You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.
+
+TIP: Want to learn what is really happening? Head on to the <<enonic-setup#, first chapter>> of the tutorial instead.
 
 === 1. Setup Enonic
 
-. **Sign up for a free Enonic account**: on https://enonic.com/sign-up
+. **Sign up for a free Enonic account**: on https://www.enonic.com/sign-up
 . After logging in to your account, **create a new solution** from `Solutions -> Create -> Next.XP Demo`. This will install all required Enonic apps and setup the routes needed. 
-. From your new solution, click `Environments` - Notice the URL to the `API` route, you will need it later.
-+
-TIP: Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP `POST` rather than `GET`.
+. From your new solution, click `Environments` - Notice the URL to the `API` ingress, you will need it later.
 
 === 2. Create Git repo
 
@@ -38,13 +36,13 @@ Vercel are the makers of Next.js, and you'll be using their service to host the 
 * ENONIC_API_TOKEN: <yourSecret>
 * ENONIC_PROJECTS: /hmdb/hmdb
 +
-NOTE: The PROJECTS variable defines which content project and site to access in Enonic.
+NOTE: The PROJECTS variable defines /<projectname>/<site-path> to tell the Front-end which site to use.
 +
 . After deploying, the Vercel app should render the front page:
 +
 image:front-page.png[title="Front page showing some text, links and a picture",width=1003px]
 +
-Make a note of the application URL, you will need it when setting up the preview later.
+Make a note of the Vercel application URL, you will need it when setting up the preview later.
 +
 TIP: Check the Vercel function logs if you are not getting the expected result.
 
@@ -64,7 +62,7 @@ It will override the default preview for the content within the site.
 +
 image:content-studio-add-nextxp.png[title="Add the Next.XP application to the site.",width=779px]
 +
-. Next we need to tell Next.XP where to find the frontend server:
+. Now, instruct Next.XP where to find the frontend server:
 +
 .Go to Applications tab in Enonic Cloud and select Next.XP app:
 image:cloud-next-app-edit.png[title="Select the Next.XP application",width=937px]
@@ -72,7 +70,7 @@ image:cloud-next-app-edit.png[title="Select the Next.XP application",width=937px
 .Press `Edit...` button in the app context menu and add the URL and secret of the Vercel app you deployed in step 3:
 image:cloud-next-app-config.png[title="Add the Next.XP application to the site.",width=872px]
 +
-NOTE: We are overriding default configuration, so it will get applied automatically to all sites, that didn't specify otherwise.
+NOTE: We are overriding default preview configuration for all sites using the Next.XP app. Next.XP supports setting up and using multiple front-ends as well ofcourse.
 +
 . After saving and going back to Content Studio, the preview should update to show your front-end.
 +
