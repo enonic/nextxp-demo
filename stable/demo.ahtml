@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="author" content="Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.">
-<title>Next.XP TL;DR</title>
+<meta name="author" content="Skip straight to the end of this tutorial.">
+<title>Next.XP Demo</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,14 +437,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Next.XP TL;DR</h1>
+<h1>Next.XP Demo</h1>
 <div class="details">
-<span id="author" class="author">Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</span><br>
+<span id="author" class="author">Skip straight to the end of this tutorial.</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#tldr">tl;dr</a>
+<li><a href="#what">What?</a>
 <ul class="sectlevel2">
 <li><a href="#1_setup_enonic">1. Setup Enonic</a></li>
 <li><a href="#2_create_git_repo">2. Create Git repo</a></li>
@@ -458,23 +458,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="tldr"><a class="link" href="#tldr">tl;dr</a></h2>
+<h2 id="what"><a class="link" href="#what">What?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.</p>
+<p>You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</p>
 </div>
-<div class="sect2">
-<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://enonic.com/sign-up" class="bare">https://enonic.com/sign-up</a></p>
-</li>
-<li>
-<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.XP Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
-</li>
-<li>
-<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> route, you will need it later.</p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -482,11 +470,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP <code>POST</code> rather than <code>GET</code>.
+Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.
 </td>
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://www.enonic.com/sign-up" class="bare">https://www.enonic.com/sign-up</a></p>
+</li>
+<li>
+<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.XP Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
+</li>
+<li>
+<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> ingress, you will need it later.</p>
 </li>
 </ol>
 </div>
@@ -551,7 +551,7 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The PROJECTS variable defines which content project and site to access in Enonic.
+The PROJECTS variable defines /&lt;projectname&gt;/&lt;site-path&gt; to tell the Front-end which site to use.
 </td>
 </tr>
 </table>
@@ -566,7 +566,7 @@ The PROJECTS variable defines which content project and site to access in Enonic
 <p><span class="image"><img src="media/front-page.png" alt="front page" width="1003px" title="Front page showing some text, links and a picture"></span></p>
 </div>
 <div class="paragraph">
-<p>Make a note of the application URL, you will need it when setting up the preview later.</p>
+<p>Make a note of the Vercel application URL, you will need it when setting up the preview later.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -614,7 +614,7 @@ It will override the default preview for the content within the site.</p>
 </div>
 </li>
 <li>
-<p>Next we need to tell Next.XP where to find the frontend server:</p>
+<p>Now, instruct Next.XP where to find the frontend server:</p>
 <div class="paragraph">
 <div class="title">Go to Applications tab in Enonic Cloud and select Next.XP app:</div>
 <p><span class="image"><img src="media/cloud-next-app-edit.png" alt="cloud next app edit" width="937px" title="Select the Next.XP application"></span></p>
@@ -630,7 +630,7 @@ It will override the default preview for the content within the site.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We are overriding default configuration, so it will get applied automatically to all sites, that didn&#8217;t specify otherwise.
+We are overriding default preview configuration for all sites using the Next.XP app. Next.XP supports setting up and using multiple front-ends as well ofcourse.
 </td>
 </tr>
 </table>
@@ -681,7 +681,7 @@ We are overriding default configuration, so it will get applied automatically to
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-11-07 08:40:35 UTC
+Last updated 2023-12-14 09:15:47 UTC
 </div>
 </div>
 </body>
