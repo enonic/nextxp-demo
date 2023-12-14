@@ -70,22 +70,18 @@ image:cloud-next-app-edit.png[title="Select the Next.XP application",width=937px
 .Press `Edit...` button in the app context menu and add the URL and secret of the Vercel app you deployed in step 3:
 image:cloud-next-app-config.png[title="Add the Next.XP application to the site.",width=872px]
 +
-NOTE: We are overriding default preview configuration for all sites using the Next.XP app. Next.XP supports setting up and using multiple front-ends as well ofcourse.
+NOTE: We are overriding default preview configuration for all sites using the Next.XP app. Use a different keyword than `default` to define multiple front-ends.
 +
 . After saving and going back to Content Studio, the preview should update to show your front-end.
 +
 image:cloud-preview.png[title="Front page as seen from Content Studio",width=1419px]
 
-[TIP]
-====
-For production use, we recommend moving the configuration to the solution console - <<deployment#,as described here>>.
-====
 
 == How does it work?
-The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode. 
+The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode.
 
 Your edits will only be visible in Content Studio, until published. 
 
-When publishing changes, Next.XP will automatically trigger revalidation of all pages in the front-end, and the changes will go live.
+When publishing changes, Next.XP should automatically trigger revalidation of all pages in the front-end, and the changes will go live.
 
 Congratulations, you now have a Next.js site powered by Enonic! 🚀
