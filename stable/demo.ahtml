@@ -630,7 +630,7 @@ It will override the default preview for the content within the site.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We are overriding default preview configuration for all sites using the Next.XP app. Next.XP supports setting up and using multiple front-ends as well ofcourse.
+We are overriding default preview configuration for all sites using the Next.XP app. Use a different keyword than <code>default</code> to define multiple front-ends.
 </td>
 </tr>
 </table>
@@ -643,20 +643,6 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 </li>
 </ol>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For production use, we recommend moving the configuration to the solution console - <a href="deployment.ahtml">as described here</a>.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -671,7 +657,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 <p>Your edits will only be visible in Content Studio, until published.</p>
 </div>
 <div class="paragraph">
-<p>When publishing changes, Next.XP will automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
+<p>When publishing changes, Next.XP should automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
 </div>
 <div class="paragraph">
 <p>Congratulations, you now have a Next.js site powered by Enonic! 🚀</p>
@@ -681,7 +667,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-14 09:15:47 UTC
+Last updated 2023-12-14 09:20:39 UTC
 </div>
 </div>
 </body>
