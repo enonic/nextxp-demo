@@ -1,10 +1,11 @@
 import React from 'react';
-import {fetchContent, fetchContentPathsForAllLocales, FetchContentResult} from "@enonic/nextjs-adapter";
+import {fetchContent, fetchContentPathsForAllLocales, FetchContentResult, validateData} from "@enonic/nextjs-adapter";
 import MainView from '@enonic/nextjs-adapter/views/MainView';
 
 import "@enonic/nextjs-adapter/baseMappings";
 import "../../../components/_mappings";
 import {draftMode} from 'next/headers';
+import {Metadata} from 'next';
 
 export const dynamic = 'auto'
 export const dynamicParams = true  // show 404 for missing in cache pages
@@ -31,10 +32,19 @@ export default async function Page({params}: { params: PageProps }) {
 
     console.info(`Page fetch took ${duration} ms`);
 
+    validateData(data);
+
     return (
         <MainView {...data}/>
     )
 };
+
+export async function generateMetadata({params}: { params: PageProps }): Promise<Metadata> {
+    const {common} = await fetchContent(params);
+    return {
+        title: common?.get?.displayName || 'Not found',
+    };
+}
 
 export async function generateStaticParams(props: { params: PageProps }): Promise<any[]> {
     return await fetchContentPathsForAllLocales('\${site}/');
