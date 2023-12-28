@@ -28,11 +28,13 @@ export function middleware(req: NextRequest) {
 
     console.debug(`Middleware redirecting '${pathname}' to '${req.nextUrl.pathname}'`);
 
-    return NextResponse.rewrite(req.nextUrl);
+    return NextResponse.rewrite(req.nextUrl, {
+        request: req,
+    });
 }
 
 export const config = {
     // do not localize next.js paths
     // TODO: also exclude public folder paths (images, fonts, etc)
-    matcher: ["/((?!api/|images/|fonts/|_next/static|_next/image|assets|favicon.ico|sw.js).*)",],
+    matcher: ["/((?!robots.txt|sitemap.xml|manifest.json|api/|images/|fonts/|_next/webpack-hmr|_next/static|_next/image|assets|favicon.ico|sw.js).*)",],
 };
