@@ -9,13 +9,13 @@ You will deploy a Next.js front-end on Vercel, and back-end with content on Enon
 
 TIP: Want to learn what is really happening? Head on to the <<enonic-setup#, first chapter>> of the tutorial instead.
 
-=== 1. Setup Enonic
+== 1 - Setup Enonic
 
 . **Sign up for a free Enonic account**: on https://www.enonic.com/sign-up
 . After logging in to your account, **create a new solution** from `Solutions -> Create -> Next.XP Demo`. This will install all required Enonic apps and setup the routes needed. 
 . From your new solution, click `Environments` - Notice the URL to the `API` ingress, you will need it later.
 
-=== 2. Create Git repo
+== 2 - Create Git repo
 
 To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.
 
@@ -25,7 +25,7 @@ Vercel uses this access to automatically fetch and build the app based on events
 +
 NOTE: If you are using Github, simply press the `Fork` button at the top right.
 
-=== 3. Deploy the Next.js front-end
+== 3 - Deploy the Next.js front-end
 Vercel are the makers of Next.js, and you'll be using their service to host the front-end.
 
 . Sign up to Vercel: https://vercel.com/
@@ -46,7 +46,7 @@ Make a note of the Vercel application URL, you will need it when setting up the 
 +
 TIP: Check the Vercel function logs if you are not getting the expected result.
 
-=== 4. Activate preview
+== 4 - Activate preview
 With the front-end running, it is time to enable preview in Content Studio.
 
 The fastest way to try it out goes as follows:
