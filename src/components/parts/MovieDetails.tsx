@@ -19,9 +19,9 @@ query($path:ID!){
           trailer
           release
           photos {
-            ... on media_Image {                                             
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
-              attachments {                                                 
+            ... on media_Image {
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")
+              attachments {
                 name
               }
             }
@@ -34,9 +34,9 @@ query($path:ID!){
                 displayName
                 data {
                   photos {
-                    ... on media_Image {                                             
-                      imageUrl: imageUrl(type: absolute, scale: "block(200,200)")       
-                      attachments {                                                 
+                    ... on media_Image {
+                      imageUrl: imageUrl(type: absolute, scale: "block(200,200)")
+                      attachments {
                         name
                       }
                     }
