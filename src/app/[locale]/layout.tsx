@@ -1,12 +1,12 @@
-import {fetchContent, getUrl, PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
+import {fetchContent, getAsset, PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
 import {Metadata} from 'next';
 import {ReactNode} from 'react';
 
-import '../styles/globals.css';
+import '../../styles/globals.css';
 
-import {PageProps} from './[locale]/[[...contentPath]]/page';
-import Header from '../components/views/Header';
-import Footer from '../components/views/Footer';
+import {PageProps} from './[[...contentPath]]/page';
+import Header from '../../components/views/Header';
+import Footer from '../../components/views/Footer';
 
 export type LayoutProps = {
     params: PageProps
@@ -27,7 +27,7 @@ export default async function RootLayout({params, children}: LayoutProps) {
     return (
         <html lang="en">
         <body {...bodyAttrs}>
-        <Header meta={meta} title={title} logoUrl={getUrl('/images/xp-shield.svg', meta)}/>
+        <Header meta={meta} title={title} logoUrl={getAsset('/images/xp-shield.svg', meta)}/>
         <main>{children}</main>
         <Footer/>
         </body>

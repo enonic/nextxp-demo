@@ -2,7 +2,7 @@
 
 import {IS_DEV_MODE} from '@enonic/nextjs-adapter/utils';
 import {useEffect} from 'react'
-import styles from '../styles/error.module.css';
+import styles from '../../styles/error.module.css';
 
 type ErrorProps = {
     error: Error & { digest?: string },
