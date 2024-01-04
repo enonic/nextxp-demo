@@ -1,4 +1,4 @@
-import styles from '../styles/error.module.css';
+import styles from '../../styles/error.module.css';
 
 export default function Custom404() {
     return <div className={styles.fourohfour}>
