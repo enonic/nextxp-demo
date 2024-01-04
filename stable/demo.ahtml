@@ -444,14 +444,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#what">What?</a>
-<ul class="sectlevel2">
-<li><a href="#1_setup_enonic">1. Setup Enonic</a></li>
-<li><a href="#2_create_git_repo">2. Create Git repo</a></li>
-<li><a href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></li>
-<li><a href="#4_activate_preview">4. Activate preview</a></li>
-</ul>
-</li>
+<li><a href="#what">What?</a></li>
+<li><a href="#1_setup_enonic">1 - Setup Enonic</a></li>
+<li><a href="#2_create_git_repo">2 - Create Git repo</a></li>
+<li><a href="#3_deploy_the_next_js_front_end">3 - Deploy the Next.js front-end</a></li>
+<li><a href="#4_activate_preview">4 - Activate preview</a></li>
 <li><a href="#how_does_it_work">How does it work?</a></li>
 </ul>
 </div>
@@ -475,8 +472,11 @@ Want to learn what is really happening? Head on to the <a href="enonic-setup.aht
 </tr>
 </table>
 </div>
-<div class="sect2">
-<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1 - Setup Enonic</a></h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -491,8 +491,10 @@ Want to learn what is really happening? Head on to the <a href="enonic-setup.aht
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2. Create Git repo</a></h3>
+</div>
+<div class="sect1">
+<h2 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2 - Create Git repo</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.</p>
 </div>
@@ -519,8 +521,10 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></h3>
+</div>
+<div class="sect1">
+<h2 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3 - Deploy the Next.js front-end</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Vercel are the makers of Next.js, and you&#8217;ll be using their service to host the front-end.</p>
 </div>
@@ -584,8 +588,10 @@ Check the Vercel function logs if you are not getting the expected result.
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="4_activate_preview"><a class="link" href="#4_activate_preview">4. Activate preview</a></h3>
+</div>
+<div class="sect1">
+<h2 id="4_activate_preview"><a class="link" href="#4_activate_preview">4 - Activate preview</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>With the front-end running, it is time to enable preview in Content Studio.</p>
 </div>
@@ -646,7 +652,6 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
 <h2 id="how_does_it_work"><a class="link" href="#how_does_it_work">How does it work?</a></h2>
 <div class="sectionbody">
@@ -667,7 +672,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-14 09:20:39 UTC
+Last updated 2024-01-04 12:39:50 UTC
 </div>
 </div>
 </body>

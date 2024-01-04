@@ -504,9 +504,9 @@ query($path:ID!){
           bio
           dateofbirth
           photos {
-           ... on media_Image {                                             
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
-              attachments {                                                 
+           ... on media_Image {
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")
+              attachments {
                 name
               }
             }
@@ -514,7 +514,7 @@ query($path:ID!){
         }
       }
       parent {
-        _path(type: siteRelative)                                                           
+        _path(type: siteRelative)
       }
     }
   }
@@ -799,7 +799,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-14 09:20:39 UTC
+Last updated 2024-01-04 12:39:50 UTC
 </div>
 </div>
 </body>

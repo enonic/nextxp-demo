@@ -450,7 +450,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic provides a highly customizable component type called <a href="https://developer.enonic.com/docs/xp/stable/components/components#part">parts</a>. Similar to page components parts must be defined in both Enonic and Next.js in order to fully work.</p>
+<p>Enonic provides a highly customizable component type called <a href="https://developer.enonic.com/docs/xp/stable/cms/pages/parts" target="_blank" rel="noopener">parts</a>. Similar to page components parts must be defined in both Enonic and Next.js in order to fully work.</p>
 </div>
 </div>
 </div>
@@ -656,7 +656,7 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 <li>
 <p><strong>Add files</strong> to the Enonic app</p>
 <div class="paragraph">
-<p>This part definition includes a form, with an <a href="https://developer.enonic.com/docs/xp/stable/components/input-types">input field</a> called <code>heading</code>.This makes it possible for editors to override the heading (aka displayName) coming from the content item.</p>
+<p>This part definition includes a form, with an <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types">input field</a> called <code>heading</code>.This makes it possible for editors to override the heading (aka displayName) coming from the content item.</p>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/site/parts/heading/heading.xml</div>
@@ -728,7 +728,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-14 09:20:39 UTC
+Last updated 2024-01-04 12:39:50 UTC
 </div>
 </div>
 </body>
