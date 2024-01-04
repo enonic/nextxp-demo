@@ -10,9 +10,9 @@ query($path:ID!){
           bio
           dateofbirth
           photos {
-           ... on media_Image {                                             
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
-              attachments {                                                 
+           ... on media_Image {
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")
+              attachments {
                 name
               }
             }
@@ -20,7 +20,7 @@ query($path:ID!){
         }
       }
       parent {
-        _path(type: siteRelative)                                                           
+        _path(type: siteRelative)
       }
     }
   }
