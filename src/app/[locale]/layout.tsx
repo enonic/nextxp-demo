@@ -1,4 +1,4 @@
-import {fetchContent, getAsset, PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
+import {fetchContent, getAsset, I18n, LocaleContextProvider, PORTAL_COMPONENT_ATTRIBUTE} from '@enonic/nextjs-adapter';
 import {Metadata} from 'next';
 import {ReactNode} from 'react';
 
@@ -13,9 +13,9 @@ export type LayoutProps = {
     children: ReactNode
 }
 
-const title = 'Next.XP 3.0';
-
 export default async function RootLayout({params, children}: LayoutProps) {
+
+    await I18n.setLocale(params.locale);
 
     const bodyAttrs: { [key: string]: string } = {
         className: "edit",
@@ -27,9 +27,11 @@ export default async function RootLayout({params, children}: LayoutProps) {
     return (
         <html lang="en">
         <body {...bodyAttrs}>
-        <Header meta={meta} title={title} logoUrl={getAsset('/images/xp-shield.svg', meta)}/>
-        <main>{children}</main>
-        <Footer/>
+        <LocaleContextProvider locale={params.locale}>
+            <Header meta={meta} title={I18n.localize('title')} logoUrl={getAsset('/images/xp-shield.svg', meta)}/>
+            <main>{children}</main>
+            <Footer/>
+        </LocaleContextProvider>
         </body>
         </html>
     )
@@ -37,7 +39,7 @@ export default async function RootLayout({params, children}: LayoutProps) {
 
 export const metadata: Metadata = {
     title: {
-        default: title,
+        default: I18n.localize('title'),
         template: '%s | Next.XP',
     },
     description: 'The React Framework for Enonic XP',

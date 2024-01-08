@@ -1,5 +1,5 @@
 import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
+import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData} from '@enonic/nextjs-adapter';
 import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 import Link from 'next/link';
 
@@ -66,7 +66,7 @@ const MovieView = (props: PartProps) => {
                 {data?.cast && <Cast cast={data.cast} meta={meta}/>}
             </div>
             <p>
-                <Link href={getUrl(`/${parent._path}`, meta)}>Back to Movies</Link>
+                <Link href={getUrl(`/${parent._path}`, meta)}>{I18n.localize('back')}</Link>
             </p>
         </>
     );
