@@ -34,7 +34,6 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    // do not localize next.js paths
-    // TODO: also exclude public folder paths (images, fonts, etc)
+    // NB: should contain all files and folders in the /public folder
     matcher: ["/((?!robots.txt|sitemap.xml|manifest.json|api/|images/|fonts/|_next/webpack-hmr|_next/static|_next/image|assets|favicon.ico|sw.js).*)",],
 };

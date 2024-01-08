@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
 
 function getEnonicWebpackConfig(config, {buildId, dev, isServer, defaultLoaders, nextRuntime, webpack}) {
     config.resolve.fallback = {
         ...config.resolve.fallback,
         // client-side resolution for node modules
         fs: false
+    }
+    config.resolve.alias = {
+        ...config.resolve.alias,
+        "@phrases": path.resolve(__dirname, "./src/phrases"),
     }
     return config;
 }
