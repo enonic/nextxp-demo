@@ -1,6 +1,6 @@
 'use client' // Error components must be Client Components
 
-import {IS_DEV_MODE} from '@enonic/nextjs-adapter/utils';
+import {IS_DEV_MODE} from '@enonic/nextjs-adapter/env';
 import {useEffect} from 'react'
 import styles from '../../styles/error.module.css';
 
