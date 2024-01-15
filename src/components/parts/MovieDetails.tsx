@@ -1,6 +1,5 @@
 import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData} from '@enonic/nextjs-adapter';
-import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData, PartProps} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
 
 
