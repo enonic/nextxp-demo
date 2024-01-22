@@ -2,24 +2,17 @@
 :toc: right
 :imagesdir: media/
 
-Based on the developer environment you created in the previous chapter, you'll now install and test Enonic's headless graphql API, aka Guillotine
-
 == Headless API
 
-Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content.The API is highly flexible, and may even be customized.For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
+Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content. The API is highly flexible and customizable. For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
 
-TIP: New to GraphQL?Check out the link:https://graphql.org/[GraphQL documentation]
+TIP: New to GraphQL? Check out the link:https://graphql.org/[GraphQL documentation]
 
-== Task: Install API
+== Task: Open the GraphQL playground
 
-The headless API can be installed via an application called `Guillotine`.
+The headless API is provided by the app called Guillotine which was automatically installed as a part of the "Essentials" template you used for a new sandbox in the previous chapter.
 
-. Install via XP menu (XP icon in the top right corner) -> `Applications` -> `Install`.
-Search for `Guillotine` and install the app.
-+
-. Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project.
-You can verify that Guillotine is working by opening Content Studio.
-Look for a new menu item on the left called `Query Playground`.
+You can verify that Guillotine is working by opening `Query Playground` from the Content Studio's menu (GraphQL icon in the menu on the left-hand side).
 +
 image:content-studio-guillotine.png[title="Browsing the Guillotine API using Query Playground",width=1440px]
 
@@ -180,4 +173,4 @@ Run the query in the Playground. It should produce a complete set of data - whic
 All in all, this allows for fetching deep and rich content data in a single API request.
 
 
-Moving forward, you'll get introduced to <<sites#, the concept of sites>>. 
+Moving forward, you'll get introduced to <<sites#, the concept of sites>>.
