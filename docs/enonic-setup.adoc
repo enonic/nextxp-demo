@@ -2,23 +2,23 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter, we will create an Enonic app based on the `Movie DB` project and launch a local development environment of the platform.
+In this chapter, we will create an Enonic app based on the https://market.enonic.com/vendors/enonic/introduction[`Introduction`] starter kit and launch a local development environment of the platform.
 
 TIP: For an in-depth tutorial on Enonic, visit the official link:https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101] guide.
 
 [[xp-at-a-glance]]
 == Enonic at a glance
 
-Our platform is called Enonic XP (XP, or Enonic for short).
+Our platform is called "Enonic XP" (or simply "Enonic").
 
 === Enonic apps
-Enonic apps are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more link:https://developer.enonic.com/guides/developer-101/xp7/apps[**applications**] in a single platform instance.
+Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more link:https://developer.enonic.com/guides/developer-101/xp7/apps[**applications**] in a single platform instance.
 
-Discover ready to run applications on link:https://market.enonic.com/[Enonic Market], or build your own. You will create an app of your own in this tutorial.
+Discover ready-to-run applications on link:https://market.enonic.com/[Enonic Market], or build your own. You will create an app of your own in this tutorial.
 
-An app may provide specific functionality. It may for instance produce everything needed for a large website, or provide smaller specific services, such as an **API**. An app is given a unique <<#new-project, **app name**>> when it's built.
+An application typically provides specific functionality. It may for instance produce everything needed for a large website, or provide specific microservices, such as an **API**. An app is given a unique <<#new-project, **app name**>> when it's built.
 
-TIP: Useful terminology: A **sandbox** is a local Enonic development server running on your laptop. Once an app is built, it can be **deployed** to the sandbox - where it will be started and made available.
+TIP: Useful terminology: A **sandbox** is a local instance of Enonic XP platform running on your PC/laptop. Once an app is built, it can be **deployed** to the sandbox - where it will be started and made available.
 
 === Content
 
@@ -26,59 +26,104 @@ Apps typically ship with one or more link:https://developer.enonic.com/guides/de
 
 Content types are used to create **content items**. Content is commonly created and handled via Enonic's link:https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet[**Content Studio**]. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.
 
-Each content items has a unique **name** within it's path - similar to files and folders in a filesystem. It alsho has a human-friendly displayName.
+Each content items has a unique **name** within it's path - similar to files and folders in a filesystem. It also has a human-friendly display name.
 
-Content items can exist in two different link:https://developer.enonic.com/docs/xp/stable/storage/branches[**branches**]: When creating or editing in Content Studio, you're always working in the `draft` branch. When publishing, new items and changes are copied to the `master` branch.
+Content items exist in two different link:https://developer.enonic.com/docs/xp/stable/storage/branches[**branches**]. When creating or editing in Content Studio, you're always working in the `draft` branch. When published, changes will be copied to the `master` branch.
 
 == The Movie Database
 
-With Enonic, you may obviously create your own content model from scratch, but to save time, you'll be using link:https://market.enonic.com/vendors/enonic/movie-db[The Movie Database] as a template.
+With Enonic, you can obviously create your own content model from scratch, but to save time you'll be using link:https://market.enonic.com/vendors/enonic/intro[Introduction app] as a template.
 
-The movie DB ships with a pre-defined content-model, and sample content from the cinematic sphere.
+This app ships with a pre-defined content-model, and sample content from the cinematic industry.
 
 Let's get going!
 
-=== Task: Create application from starter
+=== Task: Install the Enonic CLI
 
-. link:https://developer.enonic.com/start[**Install the Enonic CLI**] (follow link for instructions).
+link:https://developer.enonic.com/start[**Install the Enonic CLI**] (follow link for instructions).
 
-. **Create a new project** using the "The Movie DB" as your template:
-+
-Run the following command from your terminal
-+
-  enonic project create -r app-moviedb
-+
-IMPORTANT: Stick with the standard values and keep the suggested project name `com.example.myproject` for the examples in the tutorial to work properly.
-This will be referred to as **app name** later in this tutorial.
-+
-. **Deploy the application** 
-+
-Run these commands to build and deploy the app:
-+
-  cd myproject/
-  enonic project deploy
-+
+=== Task: Create and start a sandbox
 
-TIP: When asked to create a sandbox (a local developer instance of Enonic XP), just give it a name i.e. `next-tutorial` and go with the default values. 
-
-When the sandbox has started, it outputs some server logs, and the sample content gets imported automatically.
-
-=== Task: Install Content Studio
-
-NOTE: You don't have to create a user in the Sandbox for this tutorial:
-
-Navigate to http://localhost:8080/admin[http://localhost:8080/admin^] and login without creating a user.
-
-. Install **Content Studio** from the `top right XP menu` -> `Applications` -> `Install` and search for "Content Studio".
+. Create a sandbox called `mysandbox` by running this command in your terminal:
 +
-image:applications-cs-install.png[title="Installing Content Studio", width=808px]
+  enonic sandbox create mysandbox -t essentials -f
 +
-. **Open Content Studio** from `XP menu` -> `Content Studio`. Choose the `Movie DB` project if asked to select a project. You should now see something like this:
+NOTE: `-f` flag will force using the most recent release of Enonic XP.
 +
+. Start the sandbox with this command:
++
+  enonic sandbox start mysandbox --dev
++
+NOTE: Dev mode optimizes the development process.
+
+=== Task: Create and deploy an app
+
+IMPORTANT: Let the sandbox run in the first terminal window, and open a new terminal window for the following commands.
+
+. **Create a new project** using the `Introduction` app as a starter, by running the following command in your terminal:
++
+ enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox
++
+This command will:
+
+* use the GitHub repo `github.com/enonic/tutorial-intro` as a starter
+* to create an app called `com.example.myproject` with version `1.0.0`
+* in the directory `myproject`
+* and link it to `mysandbox` which you created earlier
+
+. **Deploy the application**
++
+Assuming `mysandbox` is still running in another Terminal window, run these commands:
+
+  cd myapp
+  enonic dev
+
+The last command will build and deploy the app to `mysandbox`, then start watching for changes in the code to automatically rebuild as you work on it.
+
+[NOTE]
+====
+Look for the following output to verify that the app has been built:
+
+    BUILD SUCCESSFUL in 6s
+    3 actionable tasks: 3 executed
+    Waiting for changes to input files...
+====
+
+== Task: Open Admin dashboard
+
+Let's have a look at the sandbox' web interface. Open http://localhost:8080[http://localhost:8080^] in your browser (or just click the link).
+
+You should now see the Welcome page:
+
+.Welcome page
+image::xp-boot.png[The XP boot page, 1085w]
+
+The Welcome page provides an overview of the sandbox, including installed application and https://developer.enonic.com/docs/xp/stable/deployment/config[standard configuration files^].
+
+NOTE: `My App` should be in the list, together with other applications that were automatically installed when you created the sandbox.
+
+Click btn:[Log In as Guest] to open the XP admin dashboard. You should now see the following:
+
+.The XP admin dashboard
+image::xp-dashboard.png[The XP admin dashboard, {image-xl}]
+
+You are now on the admin dashboard. The right hand menu (aka `XP menu`) enables navigation between admin tools. Admin tools may be injected as extensions via applications.
+
+NOTE: If things don't look exactly the same, don't worry. In every new version of XP the background picture gets updated. Also, admin dashboard is automatically localized - based on your browsers preferred language.
+
+== Task: Open Content Studio
+
+https://market.enonic.com/vendors/enonic/content-studio[Content Studio^] is the editorial interface used to create and manage content. It was pre-installed from https://market.enonic.com[Enonic Market^] as a part of the `Essentials` template when you started the sandbox, and can now be accessed from the XP menu.
+
+*Click btn:[Content Studio]* in the XP menu to launch it.
+
+The first time your application was deployed to the sandbox, it automatically created a content project called `Intro Project` and populated it with content. Since this is the only available project at the moment, Content Studio will automatically open it, revealing the list of sample content items.
+
+TIP: The current project is shown at the top of Content Studio.
+
 image:content-studio-moviedb.png[title="Movie DB in Content Studio", width=1440px]
-+
-NOTE: when clicking on the content items, some will have a default preview. That's okay for now - you'll customize the preview later.
 
+NOTE: Some of the content items will have a default preview. That's okay for now - you'll customize the preview later.
 
 **Congrats on setting up the Enonic development environment**
 
