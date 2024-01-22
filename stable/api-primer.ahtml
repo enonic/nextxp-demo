@@ -441,7 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#headless_api">Headless API</a></li>
-<li><a href="#task_install_api">Task: Install API</a></li>
+<li><a href="#task_open_the_graphql_playground">Task: Open the GraphQL playground</a></li>
 <li><a href="#accessing_the_api_externally">Accessing the API externally</a></li>
 <li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
 <li><a href="#task_query_variables">Task: Query variables</a></li>
@@ -450,18 +450,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Based on the developer environment you created in the previous chapter, you&#8217;ll now install and test Enonic&#8217;s headless graphql API, aka Guillotine</p>
-</div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="headless_api"><a class="link" href="#headless_api">Headless API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content.The API is highly flexible, and may even be customized.For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
+<p>Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content. The API is highly flexible and customizable. For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -470,7 +463,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-New to GraphQL?Check out the <a href="https://graphql.org/">GraphQL documentation</a>
+New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
 </td>
 </tr>
 </table>
@@ -478,26 +471,17 @@ New to GraphQL?Check out the <a href="https://graphql.org/">GraphQL documentatio
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_install_api"><a class="link" href="#task_install_api">Task: Install API</a></h2>
+<h2 id="task_open_the_graphql_playground"><a class="link" href="#task_open_the_graphql_playground">Task: Open the GraphQL playground</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The headless API can be installed via an application called <code>Guillotine</code>.</p>
+<p>The headless API is provided by the app called Guillotine which was automatically installed as a part of the "Essentials" template you used for a new sandbox in the previous chapter.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install via XP menu (XP icon in the top right corner) &#8594; <code>Applications</code> &#8594; <code>Install</code>.
-Search for <code>Guillotine</code> and install the app.</p>
-</li>
-<li>
-<p>Once installed, Guillotine will automatically create and expose a GraphQL API for your application and project.
-You can verify that Guillotine is working by opening Content Studio.
-Look for a new menu item on the left called <code>Query Playground</code>.</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
+<p>You can verify that Guillotine is working by opening <code>Query Playground</code> from the Content Studio&#8217;s menu (GraphQL icon in the menu on the left-hand side).</p>
 </div>
-</li>
-</ol>
+<div class="paragraph">
+<p>+
+<span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
 </div>
 </div>
 </div>
@@ -756,7 +740,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-04 12:39:50 UTC
+Last updated 2024-01-22 09:47:56 UTC
 </div>
 </div>
 </body>

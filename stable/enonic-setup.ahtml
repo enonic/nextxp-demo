@@ -448,10 +448,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#the_movie_database">The Movie Database</a>
 <ul class="sectlevel2">
-<li><a href="#task_create_application_from_starter">Task: Create application from starter</a></li>
-<li><a href="#task_install_content_studio">Task: Install Content Studio</a></li>
+<li><a href="#task_install_the_enonic_cli">Task: Install the Enonic CLI</a></li>
+<li><a href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></li>
+<li><a href="#task_create_and_deploy_an_app">Task: Create and deploy an app</a></li>
 </ul>
 </li>
+<li><a href="#task_open_admin_dashboard">Task: Open Admin dashboard</a></li>
+<li><a href="#task_open_content_studio">Task: Open Content Studio</a></li>
 </ul>
 </div>
 </div>
@@ -459,7 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter, we will create an Enonic app based on the <code>Movie DB</code> project and launch a local development environment of the platform.</p>
+<p>In this chapter, we will create an Enonic app based on the <a href="https://market.enonic.com/vendors/enonic/introduction"><code>Introduction</code></a> starter kit and launch a local development environment of the platform.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -479,18 +482,18 @@ For an in-depth tutorial on Enonic, visit the official <a href="https://develope
 <h2 id="xp-at-a-glance"><a class="link" href="#xp-at-a-glance">Enonic at a glance</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our platform is called Enonic XP (XP, or Enonic for short).</p>
+<p>Our platform is called "Enonic XP" (or simply "Enonic").</p>
 </div>
 <div class="sect2">
 <h3 id="enonic_apps"><a class="link" href="#enonic_apps">Enonic apps</a></h3>
 <div class="paragraph">
-<p>Enonic apps are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/apps"><strong>applications</strong></a> in a single platform instance.</p>
+<p>Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/apps"><strong>applications</strong></a> in a single platform instance.</p>
 </div>
 <div class="paragraph">
-<p>Discover ready to run applications on <a href="https://market.enonic.com/">Enonic Market</a>, or build your own. You will create an app of your own in this tutorial.</p>
+<p>Discover ready-to-run applications on <a href="https://market.enonic.com/">Enonic Market</a>, or build your own. You will create an app of your own in this tutorial.</p>
 </div>
 <div class="paragraph">
-<p>An app may provide specific functionality. It may for instance produce everything needed for a large website, or provide smaller specific services, such as an <strong>API</strong>. An app is given a unique <a href="#new-project"><strong>app name</strong></a> when it&#8217;s built.</p>
+<p>An application typically provides specific functionality. It may for instance produce everything needed for a large website, or provide specific microservices, such as an <strong>API</strong>. An app is given a unique <a href="#new-project"><strong>app name</strong></a> when it&#8217;s built.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -499,7 +502,7 @@ For an in-depth tutorial on Enonic, visit the official <a href="https://develope
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Useful terminology: A <strong>sandbox</strong> is a local Enonic development server running on your laptop. Once an app is built, it can be <strong>deployed</strong> to the sandbox - where it will be started and made available.
+Useful terminology: A <strong>sandbox</strong> is a local instance of Enonic XP platform running on your PC/laptop. Once an app is built, it can be <strong>deployed</strong> to the sandbox - where it will be started and made available.
 </td>
 </tr>
 </table>
@@ -514,10 +517,10 @@ Useful terminology: A <strong>sandbox</strong> is a local Enonic development ser
 <p>Content types are used to create <strong>content items</strong>. Content is commonly created and handled via Enonic&#8217;s <a href="https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet"><strong>Content Studio</strong></a>. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.</p>
 </div>
 <div class="paragraph">
-<p>Each content items has a unique <strong>name</strong> within it&#8217;s path - similar to files and folders in a filesystem. It alsho has a human-friendly displayName.</p>
+<p>Each content items has a unique <strong>name</strong> within it&#8217;s path - similar to files and folders in a filesystem. It also has a human-friendly display name.</p>
 </div>
 <div class="paragraph">
-<p>Content items can exist in two different <a href="https://developer.enonic.com/docs/xp/stable/storage/branches"><strong>branches</strong></a>: When creating or editing in Content Studio, you&#8217;re always working in the <code>draft</code> branch. When publishing, new items and changes are copied to the <code>master</code> branch.</p>
+<p>Content items exist in two different <a href="https://developer.enonic.com/docs/xp/stable/storage/branches"><strong>branches</strong></a>. When creating or editing in Content Studio, you&#8217;re always working in the <code>draft</code> branch. When published, changes will be copied to the <code>master</code> branch.</p>
 </div>
 </div>
 </div>
@@ -526,31 +529,69 @@ Useful terminology: A <strong>sandbox</strong> is a local Enonic development ser
 <h2 id="the_movie_database"><a class="link" href="#the_movie_database">The Movie Database</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With Enonic, you may obviously create your own content model from scratch, but to save time, you&#8217;ll be using <a href="https://market.enonic.com/vendors/enonic/movie-db">The Movie Database</a> as a template.</p>
+<p>With Enonic, you can obviously create your own content model from scratch, but to save time you&#8217;ll be using <a href="https://market.enonic.com/vendors/enonic/intro">Introduction app</a> as a template.</p>
 </div>
 <div class="paragraph">
-<p>The movie DB ships with a pre-defined content-model, and sample content from the cinematic sphere.</p>
+<p>This app ships with a pre-defined content-model, and sample content from the cinematic industry.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s get going!</p>
 </div>
 <div class="sect2">
-<h3 id="task_create_application_from_starter"><a class="link" href="#task_create_application_from_starter">Task: Create application from starter</a></h3>
+<h3 id="task_install_the_enonic_cli"><a class="link" href="#task_install_the_enonic_cli">Task: Install the Enonic CLI</a></h3>
+<div class="paragraph">
+<p><a href="https://developer.enonic.com/start"><strong>Install the Enonic CLI</strong></a> (follow link for instructions).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="task_create_and_start_a_sandbox"><a class="link" href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://developer.enonic.com/start"><strong>Install the Enonic CLI</strong></a> (follow link for instructions).</p>
-</li>
-<li>
-<p><strong>Create a new project</strong> using the "The Movie DB" as your template:</p>
-<div class="paragraph">
-<p>Run the following command from your terminal</p>
-</div>
+<p>Create a sandbox called <code>mysandbox</code> by running this command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic project create -r app-moviedb</pre>
+<pre>enonic sandbox create mysandbox -t essentials -f</pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>-f</code> flag will force using the most recent release of Enonic XP.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Start the sandbox with this command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>enonic sandbox start mysandbox --dev</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Dev mode optimizes the development process.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="task_create_and_deploy_an_app"><a class="link" href="#task_create_and_deploy_an_app">Task: Create and deploy an app</a></h3>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -558,23 +599,148 @@ Useful terminology: A <strong>sandbox</strong> is a local Enonic development ser
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Stick with the standard values and keep the suggested project name <code>com.example.myproject</code> for the examples in the tutorial to work properly.
-This will be referred to as <strong>app name</strong> later in this tutorial.
+Let the sandbox run in the first terminal window, and open a new terminal window for the following commands.
 </td>
 </tr>
 </table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create a new project</strong> using the <code>Introduction</code> app as a starter, by running the following command in your terminal:</p>
+<div class="literalblock">
+<div class="content">
+<pre>enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>use the GitHub repo <code>github.com/enonic/tutorial-intro</code> as a starter</p>
+</li>
+<li>
+<p>to create an app called <code>com.example.myproject</code> with version <code>1.0.0</code></p>
+</li>
+<li>
+<p>in the directory <code>myproject</code></p>
+</li>
+<li>
+<p>and link it to <code>mysandbox</code> which you created earlier</p>
+</li>
+</ul>
 </div>
 </li>
 <li>
 <p><strong>Deploy the application</strong></p>
 <div class="paragraph">
-<p>Run these commands to build and deploy the app:</p>
+<p>Assuming <code>mysandbox</code> is still running in another Terminal window, run these commands:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>cd myproject/
-enonic project deploy</pre>
+<pre>cd myapp
+enonic dev</pre>
 </div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The last command will build and deploy the app to <code>mysandbox</code>, then start watching for changes in the code to automatically rebuild as you work on it.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Look for the following output to verify that the app has been built:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>BUILD SUCCESSFUL in 6s
+3 actionable tasks: 3 executed
+Waiting for changes to input files...</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_open_admin_dashboard"><a class="link" href="#task_open_admin_dashboard">Task: Open Admin dashboard</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s have a look at the sandbox' web interface. Open <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> in your browser (or just click the link).</p>
+</div>
+<div class="paragraph">
+<p>You should now see the Welcome page:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/xp-boot.png" alt="The XP boot page" width="1085w">
+</div>
+<div class="title">Figure 1. Welcome page</div>
+</div>
+<div class="paragraph">
+<p>The Welcome page provides an overview of the sandbox, including installed application and <a href="https://developer.enonic.com/docs/xp/stable/deployment/config" target="_blank" rel="noopener">standard configuration files</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>My App</code> should be in the list, together with other applications that were automatically installed when you created the sandbox.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Click btn:[Log In as Guest] to open the XP admin dashboard. You should now see the following:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/xp-dashboard.png" alt="The XP admin dashboard" width="{image-xl}">
+</div>
+<div class="title">Figure 2. The XP admin dashboard</div>
+</div>
+<div class="paragraph">
+<p>You are now on the admin dashboard. The right hand menu (aka <code>XP menu</code>) enables navigation between admin tools. Admin tools may be injected as extensions via applications.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If things don&#8217;t look exactly the same, don&#8217;t worry. In every new version of XP the background picture gets updated. Also, admin dashboard is automatically localized - based on your browsers preferred language.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_open_content_studio"><a class="link" href="#task_open_content_studio">Task: Open Content Studio</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://market.enonic.com/vendors/enonic/content-studio" target="_blank" rel="noopener">Content Studio</a> is the editorial interface used to create and manage content. It was pre-installed from <a href="https://market.enonic.com" target="_blank" rel="noopener">Enonic Market</a> as a part of the <code>Essentials</code> template when you started the sandbox, and can now be accessed from the XP menu.</p>
+</div>
+<div class="paragraph">
+<p><strong>Click btn:[Content Studio]</strong> in the XP menu to launch it.</p>
+</div>
+<div class="paragraph">
+<p>The first time your application was deployed to the sandbox, it automatically created a content project called <code>Intro Project</code> and populated it with content. Since this is the only available project at the moment, Content Studio will automatically open it, revealing the list of sample content items.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -583,45 +749,11 @@ enonic project deploy</pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-When asked to create a sandbox (a local developer instance of Enonic XP), just give it a name i.e. <code>next-tutorial</code> and go with the default values.
+The current project is shown at the top of Content Studio.
 </td>
 </tr>
 </table>
 </div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>When the sandbox has started, it outputs some server logs, and the sample content gets imported automatically.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="task_install_content_studio"><a class="link" href="#task_install_content_studio">Task: Install Content Studio</a></h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You don&#8217;t have to create a user in the Sandbox for this tutorial:
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Navigate to <a href="http://localhost:8080/admin" target="_blank" rel="noopener">http://localhost:8080/admin</a> and login without creating a user.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install <strong>Content Studio</strong> from the <code>top right XP menu</code> &#8594; <code>Applications</code> &#8594; <code>Install</code> and search for "Content Studio".</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/applications-cs-install.png" alt="applications cs install" width="808px" title="Installing Content Studio"></span></p>
-</div>
-</li>
-<li>
-<p><strong>Open Content Studio</strong> from <code>XP menu</code> &#8594; <code>Content Studio</code>. Choose the <code>Movie DB</code> project if asked to select a project. You should now see something like this:</p>
 <div class="paragraph">
 <p><span class="image"><img src="media/content-studio-moviedb.png" alt="content studio moviedb" width="1440px" title="Movie DB in Content Studio"></span></p>
 </div>
@@ -632,13 +764,10 @@ You don&#8217;t have to create a user in the Sandbox for this tutorial:
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-when clicking on the content items, some will have a default preview. That&#8217;s okay for now - you&#8217;ll customize the preview later.
+Some of the content items will have a default preview. That&#8217;s okay for now - you&#8217;ll customize the preview later.
 </td>
 </tr>
 </table>
-</div>
-</li>
-</ol>
 </div>
 <div class="paragraph">
 <p><strong>Congrats on setting up the Enonic development environment</strong></p>
@@ -649,10 +778,9 @@ when clicking on the content items, some will have a default preview. That&#8217
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-04 12:39:50 UTC
+Last updated 2024-01-22 09:47:56 UTC
 </div>
 </div>
 </body>
