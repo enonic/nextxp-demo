@@ -3,7 +3,7 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-Enonic provides a highly customizable component type called link:https://developer.enonic.com/docs/xp/stable/components/components#part[parts]. Similar to page components parts must be defined in both Enonic and Next.js in order to fully work.
+Enonic provides a highly customizable component type called link:https://developer.enonic.com/docs/xp/stable/cms/pages/parts[parts^]. Similar to page components parts must be defined in both Enonic and Next.js in order to fully work.
 
 
 == Task: Add part to Enonic
@@ -91,7 +91,7 @@ For more components to play with, you may add another part:
 
 . **Add files** to the Enonic app
 +
-This part definition includes a form, with an link:https://developer.enonic.com/docs/xp/stable/components/input-types[input field] called `heading`.This makes it possible for editors to override the heading (aka displayName) coming from the content item.
+This part definition includes a form, with an link:https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types[input field] called `heading`.This makes it possible for editors to override the heading (aka displayName) coming from the content item.
 +
 .src/main/resources/site/parts/heading/heading.xml
 [source,xml]
