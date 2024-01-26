@@ -108,7 +108,7 @@ This part definition includes a form, with an link:https://developer.enonic.com/
 </part>
 ----
 +
-. **Redeploy** the Enonic app and add the part to your page
+. **Redeploy** the Enonic app and add the part to your page (happens automatically if you started sandbox with `--dev` flag).
 +
 . **Add the heading component in Next.js**.
 +

@@ -50,7 +50,7 @@ Content types need to exist in Enonic before an editor can create content. Simil
 +
 NOTE: The definition of the region `main`, allows Content Studio editors to add components to the page, as you will see later.
 +
-*Redeploy the Enonic app* to register the page component.
+*Redeploy the Enonic app* to register the page component (happens automatically if you started sandbox with `--dev` flag).
 +
 . **Configure page rendering in Next.js**
 Rendering a page is similar to rendering a content type.
@@ -72,6 +72,7 @@ Finally, register it in the component mappings by adding the following lines to 
 [source,TypeScript]
 ----
 import MainPage from './pages/Main';
+import {APP_NAME} from '@enonic/nextjs-adapter';
 
 // Page mappings
 ComponentRegistry.addPage(`${APP_NAME}:main`, {

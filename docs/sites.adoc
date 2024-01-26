@@ -18,7 +18,7 @@ TIP: Before you continue, clear all selections in the Content Studio list view (
 . **Give the site a name** by filling in a display name for the site, "HMDB" (short for Headless Movie DB) will do fine. 
 +
 NOTE: If you choose a different name, make sure the site path name (seen below the Display name) is set to `hmdb` - as this will be used throughout the tutorial.
-. **Add the Movie DB app** to the site - by selecting it in the `Applications` form field.
+. **Add your app** to the site - by selecting it in the `Applications` form field.
 +
 NOTE: Sites acts as scopes in the content structure. By adding an app to the site, you effectively allow editors to create content based on the app within this scope.
 +
