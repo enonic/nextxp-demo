@@ -1,5 +1,5 @@
+import type {MacroProps} from '@enonic/nextjs-adapter';
 import React from 'react'
-import {MacroProps} from '@enonic/nextjs-adapter/types';
 
 import styles from './PanelMacro.module.css';
 
