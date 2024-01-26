@@ -168,6 +168,15 @@ query($path:ID!){
 ----
 <1> Notice how `imageUrl` is requested with parameters of its own? Type introspections can expose certain link:https://developer.enonic.com/docs/guillotine/stable/api[functions for processing data] before returning it.
 +
+. Keep the **query variables** from the previous step:
++
+[source,JSON]
+----
+{
+    "path": "/movies/se7en"
+}
+----
++
 Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.
 +
 All in all, this allows for fetching deep and rich content data in a single API request.

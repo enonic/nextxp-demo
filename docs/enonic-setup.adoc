@@ -75,7 +75,7 @@ This command will:
 +
 Assuming `mysandbox` is still running in another Terminal window, run these commands:
 
-  cd myapp
+  cd myproject
   enonic dev
 
 The last command will build and deploy the app to `mysandbox`, then start watching for changes in the code to automatically rebuild as you work on it.

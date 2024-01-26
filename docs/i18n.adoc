@@ -1,6 +1,7 @@
 = Internationalization
 :toc: right
 :imagesdir: media/
+:sourcedir: ../src/
 
 In this chapter you will learn what it takes to support multi-language for your site.
 
@@ -25,7 +26,7 @@ image:content-studio-create-layer.png[title="Layered project type",width=1024px]
 Fill in the rest of the form, using the following values:
 +
 * *Name*: `Film DB`
-* *Identifier*: `moviedb-no`
+* *Identifier*: `intro-no`
 * *Language*: `norsk (no)`
 * *Access mode*: `Public`
 * Other fields may be skipped
@@ -37,46 +38,37 @@ After saving and closing the wizard, the new project should appear in the list.
 After switching context, you should see the following:
 +
 image:content-studio-filmdb.png[title="Film DB project",width=1024px]
++
+. Finally *publish the project* by clicking the `Publish` button in the top bar.
 
 == Task: Set up i18n in Next.js
 
 Next, let's turn on multi-language support in Next.js.
 
-. Start by activating Next.js' multilanguage support by adding a few lines to the `next.config.js` file:
+. This template comes with middleware configured to do language detection and redirection.
+Feel free to study the code in `src/middleware.ts` to get a better understanding of how it works.
 +
-.next.config.js
-[source,JSON]
-----
-module.exports = {
-    // ...
-    i18n: {
-        locales: ['en', 'no'],
-        defaultLocale: 'en'
-    }
-    // ...
-}
-----
-+
-NOTE: The defaultLocale is the one that will be used to serve content on your domain root `/`, others will be available on /no etc.
-+
-. *Configure the Enonic adapter*, by specifying which content project to use for each specific locale:
+. But you need to *configure the Enonic adapter*, by specifying which content project to use for each locale:
 +
 ..env
 [source,Properties]
 ----
 // ...
-ENONIC_PROJECTS=moviedb/hmdb,no:moviedb-no/hmdb
+ENONIC_PROJECTS=en:intro/hmdb,no:intro-no/hmdb
 // ...
 ----
 +
 Let's break down the syntax.
 +
 For each comma separated entry, you will find the following pattern: `<locale>:<repository>/<sitekey>`.
-From the example above `no:moviedb-no/hmdb`.
+In the example above `en:intro/hmdb` and `no:intro-no/hmdb`.
 +
-The first entry in the list may skip the locale, as it will map to the `defaultLocale` specified in `next.config.js` earlier (in our case, `en`).
+The first entry will map to the `defaultLocale` that is used in the locale related methods in the NextJS adapter.
 +
 NOTE: The reason for repeating paths, is that the path may be different in each project/translation.
++
+. Next, add the static texts file for every locale to the `src/phrases` folder.
+The file name should be `<locale>.json`, e.g. `no.json` for Norwegian.
 +
 . Finally *restart your Next.js server* to pick up the changes to environment variables.
 
@@ -142,21 +134,24 @@ image:content-studio-configure-nextxp.png[title="Form with fields for server url
 
 Here are some insight on how to make further use of locales in your Next.js project.
 
-When using `getStaticProps` or `getServerSideProps`, `locale` is accessible through the `Context`:
-
+. Locale is available as path parameter on the page
++
 [source,TypeScript]
+.src/app/[locale]/[[...contentPath]]/page.tsx
 ----
-import {Context,FetchContentResult} from '@enonic/nextjs-adapter';
-import {GetStaticPropsResult} from 'next';
+export type PageProps = {
+    locale: string,
+    contentPath: string[],
+}
 
-export async function getStaticProps(context: Context): Promise<GetStaticPropsResult<FetchContentResult>> {
-    const locale = context.locale;
-    const defaultLocale = context.defaultLocale;
+export default async function Page({params}: { params: PageProps }) {
+    const {locale, contentPath} = params;
+    // ...
 }
 ----
 
-Additionally, `MetaData` object (available in every view) contains `locale` and `defaultLocale` along with other runtime data:
-
+. Result of `fetchContent()` call from `@enonic/nextjs-adapter` contains `MetaData` object (available in every view) that includes `locale` and `defaultLocale` along with other calculated runtime data:
++
 [source,TypeScript,options="nowrap"]
 ----
 import {PageComponent, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
@@ -173,6 +168,45 @@ export interface MetaData {
     baseUrl: string;
     locale: string;
     defaultLocale: string;
+}
+----
+
+You can also use `I18n.getLocale()` and `useLocaleContext()` to access locale in server-side and client-side components respectively.
+
+== Localizing the views
+
+So far we have only localized the content.
+Here is how you can localize texts in your views:
+
+. Remember, we added file for every locale to the `src/phrases` folder earlier ?
+
+. Use `useLocaleContext` from `@enonic/nextjs-adapter` to access current locale in client-side components:
++
+[source,TypeScript]
+----
+'use client';
+
+import {useLocaleContext} from '@enonic/nextjs-adapter';
+
+export default function ClientSideComponent() {
+    const {locale, localize} = useLocaleContext();
+    const localizedText = localize('text.key');
+    // ...
+}
+----
+
+NOTE: The `useLocaleContext` hook is only available in client-side components.
+
+. In server-side components, you can use `I18n.getLocale()` from `@enonic/nextjs-adapter` todo the same:
++
+[source,TypeScript]
+----
+import {I18n} from '@enonic/nextjs-adapter';
+
+export default function ServerSideComponent() {
+    const locale = I18n.getLocale();
+    const localizedText = I18n.localize('text.key');
+    // ...
 }
 ----
 

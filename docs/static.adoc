@@ -1,14 +1,15 @@
 = Static pages and revalidation
 :toc: right
 :imagesdir: media/
+:sourcedir: ../src/app/[locale]/[[...contentPath]]/
 
 In this chapter you will learn about NextJS' static site generation capabilities, and how Enonic triggers re-generation of pages when publishing.
 
 == Introduction
 
-Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages, but adds an additional compilation build step .
+Your NextJS front-end strives to use Static Site Generation (SSG) when possible which basically means you get lightning fast pages, but adds an additional compilation build step.
 
-For more information visit the https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation[Next.js SSG documentation].
+For more information visit the https://nextjs.org/docs/app/building-your-application/rendering[Next.js rendering documentation].
 
 == Task: Activate prod mode
 
@@ -62,61 +63,20 @@ NOTE: You should also be able to tell from the Next.js log that the revalidation
 
 == A look at the code
 
-Static Site Generation is controlled within the content page handler. There are essentially two important functions:
+Static Site Generation is controlled within the content page handler.
 
-* `getStaticProps()` - instructs Next.js to render static output
-* `getStaticPaths()` - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.
+And the function we are interested the most is:
+
+* `generateStaticParams()` - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.
 
 Below, we explain the details of the code:
 
-.src/pages/[[...contentPath]].ts
+.src/app/[locale]/[[...contentPath]]/page.ts
 [source,TypeScript,options="nowrap"]
 ----
-import {GetStaticPathsResult, GetStaticPropsResult} from 'next';
-import {Context, createResponse,fetchContent,fetchContentPathsForAllLocales, FetchContentResult} from "@enonic/nextjs-adapter";
-
-export async function getStaticProps(context: Context): Promise<GetStaticPropsResult<FetchContentResult>> {     // <1>
-    const path = context.params?.contentPath || [];
-    console.info(`Accessing static page (locale=${context.locale}) ${context.preview ? '(preview) ' : ''}at: ${path}`);
-
-    const props = await fetchContent(path, context);                            // <2>
-
-    // HTTP 500
-    if (props.error && props.error.code === '500') {
-        throw props.error
-    }
-
-    return createResponse(props, context);                                      // <3>
-}
-
-export async function getStaticPaths(): Promise<GetStaticPathsResult<any>> {    // <4>
-    const paths = await fetchContentPathsForAllLocales('\${site}/');            // <5>
-    return {
-        paths: paths,
-        fallback: 'blocking',
-    };
-}
+include::{sourcedir}/page.tsx[]
 ----
 
-<1> Next.js method indicating that we want the page to be rendered statically
-<2> Next.XP method for fetching content from Enonic XP by path
-<3> Next.XP method for creating Next.js response based on results of fetchContent method
-<4> Next.js method to collect paths we want to be static
-<5> Next.XP method for getting paths of all supported contents for every configured locale. `${site}` will be substituted with the actual site name.
-
-As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !
-
-== Optional task: Convert to Server Side Rendering (SSR)
-
-Next.js also supports dynamic rendering aka Server Side Rendering (SSR), which may be more useful for certain types of applications/websites.
-
-You may easily convert your front-end into SSR by performing the following changes to the content handler:
-
-. renaming `getStaticProps` to `getServerSideProps`
-. setting  `isStatic` parameter to `false` in the `createResponse` method
-. removing the `getStaticPaths` method.
-
-In this mode Next.js will render the page on every request, while still using the same Next.XP methods for fetching data from Enonic XP.
-More about SSR https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering[here].
+As you can see, Next.XP provides methods to create static pages, but the best part is that it chooses the best rendering and caching scheme based on what your code is doing !
 
 With prod mode and revalidation sorted out, let's see how to add <<i18n#, multi-language>> support.
