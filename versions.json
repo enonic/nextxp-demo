@@ -2,8 +2,11 @@
   "versions": [
     {
       "label": "1.x",
-      "checkout": "7eee6d7840feca4f9dc0667ae5ca49a537cbc903",
-      "latest": false
+      "checkout": "7eee6d7840feca4f9dc0667ae5ca49a537cbc903"
+    },
+    {
+      "label": "next",
+      "checkout": "issue-813"
     },
     {
       "label": "stable",
