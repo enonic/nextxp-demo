@@ -1,11 +1,10 @@
-import React from 'react';
 import {fetchContent, fetchContentPathsForAllLocales, FetchContentResult, validateData} from "@enonic/nextjs-adapter";
 import MainView from '@enonic/nextjs-adapter/views/MainView';
 
-import "@enonic/nextjs-adapter/baseMappings";
 import "../../../components/_mappings";
-import {draftMode} from 'next/headers';
 import {Metadata} from 'next';
+import {draftMode} from 'next/headers';
+import React from 'react';
 
 export const dynamic = 'auto'
 export const dynamicParams = true  // show 404 for missing in cache pages
