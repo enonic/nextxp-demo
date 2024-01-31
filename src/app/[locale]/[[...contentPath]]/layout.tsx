@@ -1,6 +1,6 @@
-import {fetchContent, getAsset, I18n, LocaleContextProvider, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
+import {fetchContent, getAsset, I18n, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
+import {LocaleContextProvider} from '@enonic/nextjs-adapter/client';
 import StaticContent from '@enonic/nextjs-adapter/views/StaticContent';
-import {draftMode} from 'next/headers';
 import {ReactNode} from 'react';
 
 import '../../../styles/globals.css';
@@ -16,27 +16,19 @@ type LayoutProps = {
 
 export default async function PageLayout({params, children}: LayoutProps) {
 
-    const {isEnabled: draft} = draftMode();
-    const start = Date.now();
-    console.info(`Accessing layout ${draft ? ' (draft)' : ''}`, params);
-
     const {meta} = await fetchContent(params);
-
-    const duration = Date.now() - start;
-    console.info(`Layout fetch took ${duration} ms`);
 
     const isEdit = meta?.renderMode === RENDER_MODE.EDIT;
 
     // Component rendering - for component updates in Content Studio without reloading page
     if (meta.requestType === XP_REQUEST_TYPE.COMPONENT) {
-        return <StaticContent condition={isEdit}>
-            {
-                meta.renderMode === RENDER_MODE.NEXT ?
-                    // don't wrap it in direct next access because we want to show 1 component on the page
-                children :
-                <details data-single-component-output="true">{children}</details>
-            }
-        </StaticContent>;
+        // don't wrap it in direct next access because we want to show 1 component on the page
+        const content: ReactNode =
+            meta.renderMode === RENDER_MODE.NEXT ?
+            children :
+            <details data-single-component-output="true">{children}</details>
+
+        return <StaticContent condition={isEdit}>{content}</StaticContent>;
     }
 
     return (
