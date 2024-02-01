@@ -6,52 +6,58 @@
 
 IMPORTANT: Guillotine version 7 is required if you need to modify graphql schema in your application.
 
-== Upgrading from v1.x
+== Upgrading from v2.x
 
-. Update env vars to:
+. You need to use Next.js app router to be able to use v3.x.
+See https://nextjs.org/docs/pages/building-your-application/upgrading/app-router-migration[upgrade instructions] from pages router here.
 
-    APP_NAME -> ENONIC_APP_NAME
-    remove CONTENT_API_MASTER
-    remove CONTENT_API_DRAFT
-    add ENONIC_API
-    API_TOKEN -> ENONIC_API_TOKEN
-    remove SITE_KEY
-    add ENONIC_PROJECTS=<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
+. `_renderable` page is now an API route at `src/api/renderable/route.ts`.
 
-. Add i18n config block to next.config.js
-
-    i18n: {
-        locales: ['en', 'no'],
-        defaultLocale: 'en',
-    }
-
-. Remove `lib-nextxp` dependency from your Enonic XP app build.gradle file
-. Install `Next.XP` application from Enonic Market
-. Create config file named `_com.enonic.app.nextxp.cfg_` in `_<xp-home>/config/_` folder to change default values and add more configurations:
+. `@enonic/nextjs-adapter` methods renamed:
 +
-[source,properties]
+getLocaleProjectConfig() -> getProjectLocaleConfig()
++
+getProjectLocaleConfigById -> getProjectLocaleConfigById()
+
+. `@enonic/nextjs-adapter` exports rearranged:
++
+Most of the exports are now available from `@enonic/nextjs-adapter` package root.
+Client-only exports are available from `@enonic/nextjs-adapter/client` package.
+Views are available under `@enonic/nextjs-adapter/views/<ViewName>`.
+
+. `ENONIC_PROJECTS` env var syntax change:
++
+.Language is now required for every project config:
+
+    ENONIC_PROJECTS=<lang>:<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
++
+TIP: First config in the list is used as default.
++
+. `next.config.js` config changes:
++
+.Remove i18n block from next.js config:
+[source,language="javascript"]
 ----
-# uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...
+i18n: {
+    locales: ['en', 'no'],
+    defaultLocale: 'en',
+}
 ----
 +
-NOTE: Remember to update property values with your own data
+.Add phrases block to webpack config:
+[source,language="javascript"]
+----
+config.resolve.alias = {
+    ...config.resolve.alias,
+    "@phrases": path.resolve(__dirname, "./src/phrases"),
+}
+----
 
-. remove `lib-guillotine` dependency from build.gradle file of your Enonic XP app
-. install `Guillotine` application from Enonic Market
-+
-TIP: Use Guillotine 7 or higher if you need to extend the graphql schema
+. *Add* `src/phrases` folder to your project root.
+This folder should contain static translations for every language from `ENONIC_PROJECTS` env var in the following format: `src/phrases/<lang>.json`
 
-. Add `Next.XP` application to your site in every layer and save it
-. Default configuration will be used automatically for each site.
-You can change it by going to `Next.XP` application config in each site and selecting named configurations.
+    src/phrases/en.json
+    src/phrases/no.json
+
+. Middleware file has been updated to support new i18n config.
+If you have custom middleware, you need to update it to support new i18n config.
