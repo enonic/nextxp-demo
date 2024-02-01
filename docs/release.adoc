@@ -10,7 +10,7 @@ This includes support for pages and layouts, route groups, parallel and intercep
 
 === Improved Next.js localization
 
-In addition to the data localization, Next.XP now supports localization of the static texts both in client and server components.
+In addition to localization of content, Next.XP now supports localization of static texts both in client and server components.
 Use `useLocaleContext` hook in client-side components and `I18n` in server-side ones.
 
 === Major nextjs-adapter refactoring
