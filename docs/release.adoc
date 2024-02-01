@@ -15,7 +15,7 @@ Use `useLocaleContext` hook in client-side components and `I18n` in server-side 
 
 === Major nextjs-adapter refactoring
 
-In order to support the new app router, the nextjs-adapter has been substantially refactored.
+In order to support the new app router, `@enonic/nextjs-adapter` has been substantially refactored.
 
 === Other improvements
 
