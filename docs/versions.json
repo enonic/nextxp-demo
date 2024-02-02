@@ -6,7 +6,7 @@
     },
     {
       "label": "next",
-      "checkout": "issue-813"
+      "checkout": "next3"
     },
     {
       "label": "stable",

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "master"
-      - "issue-813"
+      - "next3"
     paths:
       - 'docs/**'
   workflow_dispatch:
