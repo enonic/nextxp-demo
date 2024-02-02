@@ -549,8 +549,8 @@ Make sure to use <code>src/components/pages</code>, not <code>src/pages</code>!
 <div class="listingblock">
 <div class="title">src/components/pages/Main.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import type {PageProps} from '@enonic/nextjs-adapter';
+import React from 'react'
 import RegionsView from '@enonic/nextjs-adapter/views/Region';
 
 const MainPage = (props: PageProps) =&gt; {
@@ -694,7 +694,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-30 13:05:37 UTC
+Last updated 2024-02-02 09:30:36 UTC
 </div>
 </div>
 </body>

@@ -440,11 +440,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_xp_demo_2">Next.XP Demo 2</a>
+<li><a href="#next_xp_demo_3">Next.XP Demo 3</a>
 <ul class="sectlevel2">
-<li><a href="#support_for_shortcuts">Support for shortcuts</a></li>
-<li><a href="#support_next_js_localization">Support Next.js localization</a></li>
-<li><a href="#changes_to_nextjs_urlsecret_configuration">Changes to nextjs url/secret configuration</a></li>
+<li><a href="#app_router_structure">App router structure</a></li>
+<li><a href="#improved_next_js_localization">Improved Next.js localization</a></li>
+<li><a href="#major_nextjs_adapter_refactoring">Major nextjs-adapter refactoring</a></li>
 <li><a href="#other_improvements">Other improvements</a></li>
 </ul>
 </li>
@@ -453,29 +453,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="next_xp_demo_2"><a class="link" href="#next_xp_demo_2">Next.XP Demo 2</a></h2>
+<h2 id="next_xp_demo_3"><a class="link" href="#next_xp_demo_3">Next.XP Demo 3</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="support_for_shortcuts"><a class="link" href="#support_for_shortcuts">Support for shortcuts</a></h3>
+<h3 id="app_router_structure"><a class="link" href="#app_router_structure">App router structure</a></h3>
 <div class="paragraph">
-<p>Next.XP now supports base:shortcut content types.
-Note, that shortcuts are not displayed in Page Editor because there is nothing to edit.</p>
+<p>Next.js' app router is now default folder structure for Next.XP projects.
+This includes support for pages and layouts, route groups, parallel and intercepting routes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="support_next_js_localization"><a class="link" href="#support_next_js_localization">Support Next.js localization</a></h3>
+<h3 id="improved_next_js_localization"><a class="link" href="#improved_next_js_localization">Improved Next.js localization</a></h3>
 <div class="paragraph">
-<p>You can now use multi-language Next.js projects with Next.XP, both in Content Studio and stand-alone.
-All that is needed for that, on top of the <code>i18n</code> section in <code>next.config.js</code>, is installing <code>guillotine</code> application (if you don&#8217;t have it already) and adding a new environmental variable called <code>ENONIC_PROJECTS</code>.
-You can read more in the <a href="#upgrading">upgrade section</a>.</p>
+<p>In addition to localization of content, Next.XP now supports localization of static texts both in client and server components.
+Use <code>useLocaleContext</code> hook in client-side components and <code>I18n</code> in server-side ones.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="changes_to_nextjs_urlsecret_configuration"><a class="link" href="#changes_to_nextjs_urlsecret_configuration">Changes to nextjs url/secret configuration</a></h3>
+<h3 id="major_nextjs_adapter_refactoring"><a class="link" href="#major_nextjs_adapter_refactoring">Major nextjs-adapter refactoring</a></h3>
 <div class="paragraph">
-<p>There is no more url and secret inputs in the next.xp application configuration.
-Instead, there is a dropdown allowing to select named configuration from the app-nextxp configuration file.
-Format of that file has also been changed to support that.</p>
+<p>In order to support the new app router, <code>@enonic/nextjs-adapter</code> has been substantially refactored.</p>
 </div>
 </div>
 <div class="sect2">
@@ -483,16 +480,10 @@ Format of that file has also been changed to support that.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Static generation for every locale</p>
+<p><code>next/Link</code> component is now used for all internal links</p>
 </li>
 <li>
-<p>Static paths query is non-recursive now and queries all content in one request per-repository</p>
-</li>
-<li>
-<p>You can configure different site names for different locales</p>
-</li>
-<li>
-<p>All environmental variabales now have <code>ENONIC_</code> prefix to avoid collisions</p>
+<p><code>getAsset</code> method for static assets</p>
 </li>
 </ul>
 </div>
@@ -502,7 +493,7 @@ Format of that file has also been changed to support that.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-30 13:05:36 UTC
+Last updated 2024-02-02 09:30:35 UTC
 </div>
 </div>
 </body>

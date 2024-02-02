@@ -441,7 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#guillotine_application">Guillotine application</a></li>
-<li><a href="#upgrading_from_v1_x">Upgrading from v1.x</a></li>
+<li><a href="#upgrading_from_v2_x">Upgrading from v2.x</a></li>
 </ul>
 </div>
 </div>
@@ -464,77 +464,42 @@ Guillotine version 7 is required if you need to modify graphql schema in your ap
 </div>
 </div>
 <div class="sect1">
-<h2 id="upgrading_from_v1_x"><a class="link" href="#upgrading_from_v1_x">Upgrading from v1.x</a></h2>
+<h2 id="upgrading_from_v2_x"><a class="link" href="#upgrading_from_v2_x">Upgrading from v2.x</a></h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Update env vars to:</p>
+<p>You need to use Next.js app router to be able to use v3.x.
+See <a href="https://nextjs.org/docs/pages/building-your-application/upgrading/app-router-migration">upgrade instructions</a> from pages router here.</p>
+</li>
+<li>
+<p><code>_renderable</code> page is now an API route at <code>src/api/renderable/route.ts</code>.</p>
+</li>
+<li>
+<p><code>@enonic/nextjs-adapter</code> methods renamed:</p>
+<div class="paragraph">
+<p>getLocaleProjectConfig() &#8594; getProjectLocaleConfig()</p>
+</div>
+<div class="paragraph">
+<p>getProjectLocaleConfigById &#8594; getProjectLocaleConfigById()</p>
+</div>
+</li>
+<li>
+<p><code>@enonic/nextjs-adapter</code> exports rearranged:</p>
+<div class="paragraph">
+<p>Most of the exports are now available from <code>@enonic/nextjs-adapter</code> package root.
+Client-only exports are available from <code>@enonic/nextjs-adapter/client</code> package.
+Views are available under <code>@enonic/nextjs-adapter/views/&lt;ViewName&gt;</code>.</p>
+</div>
+</li>
+<li>
+<p><code>ENONIC_PROJECTS</code> env var syntax change:</p>
 <div class="literalblock">
+<div class="title">Language is now required for every project config:</div>
 <div class="content">
-<pre>APP_NAME -&gt; ENONIC_APP_NAME
-remove CONTENT_API_MASTER
-remove CONTENT_API_DRAFT
-add ENONIC_API
-API_TOKEN -&gt; ENONIC_API_TOKEN
-remove SITE_KEY
-add ENONIC_PROJECTS=&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
+<pre>ENONIC_PROJECTS=&lt;lang&gt;:&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
 </div>
 </div>
-</li>
-<li>
-<p>Add i18n config block to next.config.js</p>
-<div class="literalblock">
-<div class="content">
-<pre>i18n: {
-    locales: ['en', 'no'],
-    defaultLocale: 'en',
-}</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Remove <code>lib-nextxp</code> dependency from your Enonic XP app build.gradle file</p>
-</li>
-<li>
-<p>Install <code>Next.XP</code> application from Enonic Market</p>
-</li>
-<li>
-<p>Create config file named <code><em>com.enonic.app.nextxp.cfg</em></code> in <code><em>&lt;xp-home&gt;/config/</em></code> folder to change default values and add more configurations:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Remember to update property values with your own data
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>remove <code>lib-guillotine</code> dependency from build.gradle file of your Enonic XP app</p>
-</li>
-<li>
-<p>install <code>Guillotine</code> application from Enonic Market</p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -542,18 +507,46 @@ Remember to update property values with your own data
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Use Guillotine 7 or higher if you need to extend the graphql schema
+First config in the list is used as default.
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>Add <code>Next.XP</code> application to your site in every layer and save it</p>
+<p><code>next.config.js</code> config changes:</p>
+<div class="listingblock">
+<div class="title">Remove i18n block from next.js config:</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">i18n: {
+    locales: ['en', 'no'],
+    defaultLocale: 'en',
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Add phrases block to webpack config:</div>
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">config.resolve.alias = {
+    ...config.resolve.alias,
+    "@phrases": path.resolve(__dirname, "./src/phrases"),
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Default configuration will be used automatically for each site.
-You can change it by going to <code>Next.XP</code> application config in each site and selecting named configurations.</p>
+<p><strong>Add</strong> <code>src/phrases</code> folder to your project root.
+This folder should contain static translations for every language from <code>ENONIC_PROJECTS</code> env var in the following format: <code>src/phrases/&lt;lang&gt;.json</code></p>
+<div class="literalblock">
+<div class="content">
+<pre>src/phrases/en.json
+src/phrases/no.json</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Middleware file has been updated to support new i18n config.
+If you have custom middleware, you need to update it to support new i18n config.</p>
 </li>
 </ol>
 </div>
@@ -562,7 +555,7 @@ You can change it by going to <code>Next.XP</code> application config in each si
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-30 13:05:36 UTC
+Last updated 2024-02-02 09:30:35 UTC
 </div>
 </div>
 </body>
