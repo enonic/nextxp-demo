@@ -498,17 +498,26 @@ Next.js supports both client-side rendering and <a href="https://nextjs.org/docs
 <div class="listingblock">
 <div class="title">Next project files:</div>
 <div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">.env <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlight"><code class="language-files" data-lang="files">.env                                <i class="conum" data-value="1"></i><b>(1)</b>
 src/
-    components/ <i class="conum" data-value="2"></i><b>(2)</b>
-    pages/
-        [[...contentPath]].tsx <i class="conum" data-value="3"></i><b>(3)</b>
-        _app.tsx <i class="conum" data-value="4"></i><b>(4)</b>
-        _document.tsx <i class="conum" data-value="5"></i><b>(5)</b>
-        _renderable.tsx
-        api/ <i class="conum" data-value="6"></i><b>(6)</b>
-            revalidate.ts
-            preview.ts</code></pre>
+    middleware.ts                   <i class="conum" data-value="2"></i><b>(2)</b>
+    components/                     <i class="conum" data-value="3"></i><b>(3)</b>
+    phrases/                        <i class="conum" data-value="4"></i><b>(4)</b>
+        en.json
+    app/
+        [locale]
+            [[...contentPath]]/
+                page.tsx            <i class="conum" data-value="5"></i><b>(5)</b>
+            layout.tsx              <i class="conum" data-value="6"></i><b>(6)</b>
+            error.tsx               <i class="conum" data-value="7"></i><b>(7)</b>
+            not-found.tsx           <i class="conum" data-value="8"></i><b>(8)</b>
+        api/                        <i class="conum" data-value="9"></i><b>(9)</b>
+            preview/
+                route.tsx
+            renderable/
+                route.tsx
+            revalidate/
+                route.tsx</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -519,26 +528,35 @@ src/
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Contains your implementation of CMS components</td>
+<td>Middleware file that routes requests based on locale</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.</td>
+<td>Contains your implementation of CMS components</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Invoked on every request.
-Add common structures here (eg. <code>&lt;head&gt;</code> etc), but be careful not to remove functionality needed by Content Studio</td>
+<td>Phrase files for multi-language support</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Vanilla Next.js file that outlines the basic document structure of all pages.</td>
+<td>The main rendering file, catching all requests satisfying the pattern <code>/[locale]/[[&#8230;&#8203;contentPath]]</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>These files support preview mode and regeneration of cached pages</td>
+<td>Layout file that wraps all pages and adds common structures (eg. <code>&lt;Header&gt;</code>, <code>&lt;LocaleContextProvider&gt;</code>, etc.)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Error page handler</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Not found page handler</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Folder containing API routes</td>
 </tr>
 </table>
 </div>
@@ -568,7 +586,7 @@ ENONIC_API_TOKEN=mySecretKey
 ENONIC_APP_NAME=com.example.myproject
 
 # Enonic XP projects configuration for different locales
-ENONIC_PROJECTS=moviedb/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
+ENONIC_PROJECTS=en:intro/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
 
 # Absolute URL to Content API
 ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
@@ -708,7 +726,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-02 11:49:10 UTC
+Last updated 2024-02-02 12:18:37 UTC
 </div>
 </div>
 </body>
