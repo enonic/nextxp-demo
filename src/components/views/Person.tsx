@@ -1,11 +1,11 @@
 import React from 'react'
-import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
-import Link from 'next/link';
+import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
 
 const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
+    const {_path} = parent;
 
     return (
         <>
@@ -23,7 +23,7 @@ const Person = (props: FetchContentResult) => {
                     ))
                 }
             </div>
-            <p><Link href={getUrl(`/${parent._path}`, meta)}>{I18n.localize('back')}</Link></p>
+            <p><a href={getUrl(_path, meta)}>Back to Persons</a></p>
         </>
     )
 }
