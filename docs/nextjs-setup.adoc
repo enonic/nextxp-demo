@@ -30,28 +30,37 @@ The following file structure should now exist within your new project folder:
 .Next project files:
 [source,files]
 ----
-.env // <1>
+.env                                // <1>
 src/
-    components/ // <2>
-    pages/
-        [[...contentPath]].tsx // <3>
-        _app.tsx // <4>
-        _document.tsx // <5>
-        _renderable.tsx
-        api/ // <6>
-            revalidate.ts
-            preview.ts
+    middleware.ts                   // <2>
+    components/                     // <3>
+    phrases/                        // <4>
+        en.json
+    app/
+        [locale]
+            [[...contentPath]]/
+                page.tsx            // <5>
+            layout.tsx              // <6>
+            error.tsx               // <7>
+            not-found.tsx           // <8>
+        api/                        // <9>
+            preview/
+                route.tsx
+            renderable/
+                route.tsx
+            revalidate/
+                route.tsx
 ----
 
 <1> Environment variables are placed in this file
-<2> Contains your implementation of CMS components
-<3> The fallback next.js router.
-Enables dynamic rendering based on content in the CMS.
-File name is not a typo, but Next.js syntax that makes it catch all HTTP requests.
-<4> Invoked on every request.
-Add common structures here (eg. `<head>` etc), but be careful not to remove functionality needed by Content Studio
-<5> Vanilla Next.js file that outlines the basic document structure of all pages.
-<6> These files support preview mode and regeneration of cached pages
+<2> Middleware file that routes requests based on locale
+<3> Contains your implementation of CMS components
+<4> Phrase files for multi-language support
+<5> The main rendering file, catching all requests satisfying the pattern `/[locale]/[[...contentPath]]`
+<6> Layout file that wraps all pages and adds common structures (eg. `<Header>`, `<LocaleContextProvider>`, etc.)
+<7> Error page handler
+<8> Not found page handler
+<9> Folder containing API routes
 
 
 == Task: Configure application
@@ -72,7 +81,7 @@ ENONIC_API_TOKEN=mySecretKey
 ENONIC_APP_NAME=com.example.myproject
 
 # Enonic XP projects configuration for different locales
-ENONIC_PROJECTS=moviedb/hmdb <1>
+ENONIC_PROJECTS=en:intro/hmdb <1>
 
 # Absolute URL to Content API
 ENONIC_API=http://127.0.0.1:8080/site <2>
