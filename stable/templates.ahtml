@@ -484,8 +484,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="title">src/components/parts/MovieDetails.tsx</div>
 <div class="content">
 <pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData, PartProps} from '@enonic/nextjs-adapter';
-import Link from 'next/link';
+import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
+import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 
 
 export const getMovie = `
@@ -550,7 +550,7 @@ const MovieView = (props: PartProps) =&gt; {
                 {data?.cast &amp;&amp; &lt;Cast cast={data.cast} meta={meta}/&gt;}
             &lt;/div&gt;
             &lt;p&gt;
-                &lt;Link href={getUrl(`/${parent._path}`, meta)}&gt;{I18n.localize('back')}&lt;/Link&gt;
+                &lt;a href={getUrl(parent._path, meta)}&gt;Back to Movies&lt;/a&gt;
             &lt;/p&gt;
         &lt;/&gt;
     );
@@ -639,11 +639,9 @@ const CastMember = (props: CastMemberProps &amp; { meta: MetaData }) =&gt; {
             }
             &lt;div&gt;
                 &lt;p&gt;{character}&lt;/p&gt;
-                &lt;p&gt;
-                    &lt;Link href={getUrl(_path, meta)}&gt;
-                        {displayName}
-                    &lt;/Link&gt;
-                &lt;/p&gt;
+                &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;
+                    {displayName}
+                &lt;/a&gt;&lt;/p&gt;
             &lt;/div&gt;
         &lt;/li&gt;
     );
@@ -721,7 +719,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-02 12:18:38 UTC
+Last updated 2024-02-06 11:01:51 UTC
 </div>
 </div>
 </body>

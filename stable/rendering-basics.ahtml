@@ -590,13 +590,13 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <div class="title">src/components/views/Person.tsx</div>
 <div class="content">
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
-import Link from 'next/link';
+import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
 
 const Person = (props: FetchContentResult) =&gt; {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
+    const {_path} = parent;
 
     return (
         &lt;&gt;
@@ -614,7 +614,7 @@ const Person = (props: FetchContentResult) =&gt; {
                     ))
                 }
             &lt;/div&gt;
-            &lt;p&gt;&lt;Link href={getUrl(`/${parent._path}`, meta)}&gt;{I18n.localize('back')}&lt;/Link&gt;&lt;/p&gt;
+            &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;Back to Persons&lt;/a&gt;&lt;/p&gt;
         &lt;/&gt;
     )
 }
@@ -799,7 +799,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-02 12:18:38 UTC
+Last updated 2024-02-06 11:01:51 UTC
 </div>
 </div>
 </body>

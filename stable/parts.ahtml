@@ -544,8 +544,8 @@ The part will appear without making any changes to the front-end, this is becaus
 <div class="title">src/components/parts/ChildList.tsx</div>
 <div class="content">
 <pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
-import {Context, PartProps, VariablesGetterResult} from '@enonic/nextjs-adapter';
-import Link from 'next/link';
+import {Context, getUrl, VariablesGetterResult} from '@enonic/nextjs-adapter';
+import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
 
 const ChildList = (props: PartProps) =&gt; {
     const {data, meta} = props;
@@ -564,7 +564,9 @@ const ChildList = (props: PartProps) =&gt; {
                 &lt;ul&gt;{
                     children.map((child: any, i: number) =&gt; (
                         &lt;li key={i}&gt;
-                            &lt;Link href={child._path}&gt;{child.displayName}&lt;/Link&gt;
+                            &lt;a href={getUrl(child._path, meta)}&gt;
+                                {child.displayName}
+                            &lt;/a&gt;
                         &lt;/li&gt;
                     ))
                 }&lt;/ul&gt;
@@ -726,7 +728,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-02 12:18:38 UTC
+Last updated 2024-02-06 11:01:51 UTC
 </div>
 </div>
 </body>

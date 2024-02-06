@@ -440,19 +440,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#xp-at-a-glance">Enonic at a glance</a>
-<ul class="sectlevel2">
-<li><a href="#enonic_apps">Enonic apps</a></li>
-<li><a href="#content">Content</a></li>
-</ul>
-</li>
-<li><a href="#the_movie_database">The Movie Database</a>
-<ul class="sectlevel2">
 <li><a href="#task_install_the_enonic_cli">Task: Install the Enonic CLI</a></li>
 <li><a href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></li>
-<li><a href="#task_create_and_deploy_an_app">Task: Create and deploy an app</a></li>
-</ul>
-</li>
+<li><a href="#task_create_and_deploy_your_app">Task: Create and deploy your app</a></li>
 <li><a href="#task_open_admin_dashboard">Task: Open Admin dashboard</a></li>
 <li><a href="#task_open_content_studio">Task: Open Content Studio</a></li>
 </ul>
@@ -462,96 +452,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter, we will create an Enonic app based on the <a href="https://market.enonic.com/vendors/enonic/introduction"><code>Introduction</code></a> starter kit and launch a local development environment of the platform.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-For an in-depth tutorial on Enonic, visit the official <a href="https://developer.enonic.com/guides/developer-101/xp7">Enonic Developer 101</a> guide.
-</td>
-</tr>
-</table>
+<p>In this chapter we will create create a local Enonic developer environment - aka sandbox, and an Enonic app based on the <a href="https://market.enonic.com/vendors/enonic/introduction"><code>Introduction app</code></a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="xp-at-a-glance"><a class="link" href="#xp-at-a-glance">Enonic at a glance</a></h2>
+<h2 id="task_install_the_enonic_cli"><a class="link" href="#task_install_the_enonic_cli">Task: Install the Enonic CLI</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Our platform is called "Enonic XP" (or simply "Enonic").</p>
-</div>
-<div class="sect2">
-<h3 id="enonic_apps"><a class="link" href="#enonic_apps">Enonic apps</a></h3>
-<div class="paragraph">
-<p>Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/apps"><strong>applications</strong></a> in a single platform instance.</p>
-</div>
-<div class="paragraph">
-<p>Discover ready-to-run applications on <a href="https://market.enonic.com/">Enonic Market</a>, or build your own. You will create an app of your own in this tutorial.</p>
-</div>
-<div class="paragraph">
-<p>An application typically provides specific functionality. It may for instance produce everything needed for a large website, or provide specific microservices, such as an <strong>API</strong>. An app is given a unique <a href="#new-project"><strong>app name</strong></a> when it&#8217;s built.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Useful terminology: A <strong>sandbox</strong> is a local instance of Enonic XP platform running on your PC/laptop. Once an app is built, it can be <strong>deployed</strong> to the sandbox - where it will be started and made available.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="content"><a class="link" href="#content">Content</a></h3>
-<div class="paragraph">
-<p>Apps typically ship with one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/content"><strong>content types</strong></a>. Content types typically define data structures, JSON style. Each content type gets a unique name which is automatically pre-fixed with the app-name. e.g. <code>&lt;appName&gt;:&lt;contentTypeName&gt;</code>.</p>
-</div>
-<div class="paragraph">
-<p>Content types are used to create <strong>content items</strong>. Content is commonly created and handled via Enonic&#8217;s <a href="https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet"><strong>Content Studio</strong></a>. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.</p>
-</div>
-<div class="paragraph">
-<p>Each content items has a unique <strong>name</strong> within it&#8217;s path - similar to files and folders in a filesystem. It also has a human-friendly display name.</p>
-</div>
-<div class="paragraph">
-<p>Content items exist in two different <a href="https://developer.enonic.com/docs/xp/stable/storage/branches"><strong>branches</strong></a>. When creating or editing in Content Studio, you&#8217;re always working in the <code>draft</code> branch. When published, changes will be copied to the <code>master</code> branch.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="the_movie_database"><a class="link" href="#the_movie_database">The Movie Database</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With Enonic, you can obviously create your own content model from scratch, but to save time you&#8217;ll be using <a href="https://market.enonic.com/vendors/enonic/intro">Introduction app</a> as a template.</p>
-</div>
-<div class="paragraph">
-<p>This app ships with a pre-defined content-model, and sample content from the cinematic industry.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s get going!</p>
-</div>
-<div class="sect2">
-<h3 id="task_install_the_enonic_cli"><a class="link" href="#task_install_the_enonic_cli">Task: Install the Enonic CLI</a></h3>
 <div class="paragraph">
 <p><a href="https://developer.enonic.com/start"><strong>Install the Enonic CLI</strong></a> (follow link for instructions).</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="task_create_and_start_a_sandbox"><a class="link" href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></h3>
+</div>
+<div class="sect1">
+<h2 id="task_create_and_start_a_sandbox"><a class="link" href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a sandbox called <code>mysandbox</code> by running this command in your terminal:</p>
+<p>Create a sandbox called <code>nxptutorial</code> by running this command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic sandbox create mysandbox -t essentials -f</pre>
+<pre>enonic sandbox create nxptutorial -t essentials -f</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -571,7 +493,7 @@ Useful terminology: A <strong>sandbox</strong> is a local instance of Enonic XP 
 <p>Start the sandbox with this command:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic sandbox start mysandbox --dev</pre>
+<pre>enonic sandbox start nxptutorial --dev</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -590,8 +512,10 @@ Dev mode optimizes the development process.
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="task_create_and_deploy_an_app"><a class="link" href="#task_create_and_deploy_an_app">Task: Create and deploy an app</a></h3>
+</div>
+<div class="sect1">
+<h2 id="task_create_and_deploy_your_app"><a class="link" href="#task_create_and_deploy_your_app">Task: Create and deploy your app</a></h2>
+<div class="sectionbody">
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -599,7 +523,7 @@ Dev mode optimizes the development process.
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Let the sandbox run in the first terminal window, and open a new terminal window for the following commands.
+Leave the sandbox running in the first terminal window, and open a new terminal window for the following commands.
 </td>
 </tr>
 </table>
@@ -610,7 +534,7 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 <p><strong>Create a new project</strong> using the <code>Introduction</code> app as a starter, by running the following command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox</pre>
+<pre>enonic project create -r tutorial-intro -n tutorial.nxp -d nxp -v 1.0.0 --sb nxptutorial</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -622,13 +546,13 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 <p>use the GitHub repo <code>github.com/enonic/tutorial-intro</code> as a starter</p>
 </li>
 <li>
-<p>to create an app called <code>com.example.myproject</code> with version <code>1.0.0</code></p>
+<p>to create an app called <code>tutorial.nxp</code> with version <code>1.0.0</code></p>
 </li>
 <li>
-<p>in the directory <code>myproject</code></p>
+<p>in the directory <code>nxp</code></p>
 </li>
 <li>
-<p>and link it to <code>mysandbox</code> which you created earlier</p>
+<p>and link it to the <code>nxptutorial</code> sandbox which you created earlier</p>
 </li>
 </ul>
 </div>
@@ -640,7 +564,7 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>cd myproject
+<pre>cd nxp
 enonic dev</pre>
 </div>
 </div>
@@ -670,7 +594,6 @@ Waiting for changes to input files...</pre>
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -773,14 +696,14 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 <p><strong>Congrats on setting up the Enonic development environment</strong></p>
 </div>
 <div class="paragraph">
-<p>With the SDK running, lets have a look at <a href="api-primer.ahtml">the API</a>.</p>
+<p>With the Enonic environment up and running, lets have a look at <a href="api-primer.ahtml">the GraphQL API</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-02 12:18:37 UTC
+Last updated 2024-02-06 11:01:50 UTC
 </div>
 </div>
 </body>
