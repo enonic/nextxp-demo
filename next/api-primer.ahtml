@@ -494,7 +494,7 @@ New to GraphQL as well? Check out the <a href="https://graphql.org/">GraphQL doc
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The API can be accessed directly following URL: <a href="http://localhost:8080/site/hmdb" target="_blank" rel="noopener">http://localhost:8080/site/hmdb</a>.</p>
+<p>The API can be accessed directly following URL: <a href="http://localhost:8080/site/intro" target="_blank" rel="noopener">http://localhost:8080/site/intro</a>.</p>
 </div>
 <div class="paragraph">
 <p><code>hmdb</code> is the name of your Content Studio project.</p>
@@ -746,14 +746,14 @@ The fully-qualified content type name is used, dots are replaced with underscore
 </ol>
 </div>
 <div class="paragraph">
-<p>Moving forward, you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
+<p>In the next chapter you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 11:16:36 UTC
+Last updated 2024-02-06 12:31:03 UTC
 </div>
 </div>
 </body>
