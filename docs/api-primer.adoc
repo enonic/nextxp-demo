@@ -1,29 +1,27 @@
-= Getting to know the API
+= Getting to know the GraphQL API
 :toc: right
 :imagesdir: media/
 
-== Headless API
+In this chapter you will get a quick introduction to Enonic's GraphQL API - aka Guillotine. It is the point of integration between Next.js and Enonic.
 
-Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content. The API is highly flexible and customizable. For a deep dive, visit the link:https://developer.enonic.com/docs/guillotine/stable[Guillotine documentation].
+== Intro
 
-TIP: New to GraphQL? Check out the link:https://graphql.org/[GraphQL documentation]
+Enonic provides a ridiculously flexible GraphQL API that dynamically reflects changes in your applications and content. Like Content Studio, the  https://developer.enonic.com/docs/guillotine/stable[Guillotine app] (and its API) was automatically downloaded and installed when you created your sandbox.
 
-== Task: Open the GraphQL playground
+TIP: New to GraphQL as well? Check out the link:https://graphql.org/[GraphQL documentation]
 
-The headless API is provided by the app called Guillotine which was automatically installed as a part of the "Essentials" template you used for a new sandbox in the previous chapter.
+== Task: GraphQL Playground
 
-You can verify that Guillotine is working by opening `Query Playground` from the Content Studio's menu (GraphQL icon in the menu on the left-hand side).
+For every content project in your sandbox, you will automatically get an API. By clicking the `GraphQL Playground` icon in your Content Studio menu, you should see the following
 +
 image:content-studio-guillotine.png[title="Browsing the Guillotine API using Query Playground",width=1440px]
 
-== Accessing the API externally
+[NOTE]
+====
+The API can be accessed directly following URL: http://localhost:8080/site/hmdb[http://localhost:8080/site/hmdb^].
 
-Guillotine application creates a graphQL API endpoint for every site that it is added to.
-So if your Enonic XP is running on `http://localhost:8080`, you will get the following URLs for every site with Guillotine app added:
-
- http://localhost:8080/site/[project-name]/[branch-name]
-
-where `branch-name` can only be `draft` or `master`, with `draft` being protected by authentication.
+`hmdb` is the name of your Content Studio project.
+====
 
 == Task: Run a simple query
 

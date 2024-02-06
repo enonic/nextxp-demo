@@ -2,80 +2,46 @@
 :toc: right
 :imagesdir: media/
 
-In this chapter, we will create an Enonic app based on the https://market.enonic.com/vendors/enonic/introduction[`Introduction`] starter kit and launch a local development environment of the platform.
+In this chapter we will create create a local Enonic developer environment - aka sandbox, and an Enonic app based on the https://market.enonic.com/vendors/enonic/introduction[`Introduction app`].
 
-TIP: For an in-depth tutorial on Enonic, visit the official link:https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101] guide.
+== Task: Install the Enonic CLI
 
-[[xp-at-a-glance]]
-== Enonic at a glance
+https://developer.enonic.com/start[*Install the Enonic CLI*] (follow link for instructions).
 
-Our platform is called "Enonic XP" (or simply "Enonic").
+== Task: Create and start a sandbox
 
-=== Enonic apps
-Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more link:https://developer.enonic.com/guides/developer-101/xp7/apps[**applications**] in a single platform instance.
-
-Discover ready-to-run applications on link:https://market.enonic.com/[Enonic Market], or build your own. You will create an app of your own in this tutorial.
-
-An application typically provides specific functionality. It may for instance produce everything needed for a large website, or provide specific microservices, such as an **API**. An app is given a unique <<#new-project, **app name**>> when it's built.
-
-TIP: Useful terminology: A **sandbox** is a local instance of Enonic XP platform running on your PC/laptop. Once an app is built, it can be **deployed** to the sandbox - where it will be started and made available.
-
-=== Content
-
-Apps typically ship with one or more link:https://developer.enonic.com/guides/developer-101/xp7/content[**content types**]. Content types typically define data structures, JSON style. Each content type gets a unique name which is automatically pre-fixed with the app-name. e.g. `<appName>:<contentTypeName>`.
-
-Content types are used to create **content items**. Content is commonly created and handled via Enonic's link:https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet[**Content Studio**]. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.
-
-Each content items has a unique **name** within it's path - similar to files and folders in a filesystem. It also has a human-friendly display name.
-
-Content items exist in two different link:https://developer.enonic.com/docs/xp/stable/storage/branches[**branches**]. When creating or editing in Content Studio, you're always working in the `draft` branch. When published, changes will be copied to the `master` branch.
-
-== The Movie Database
-
-With Enonic, you can obviously create your own content model from scratch, but to save time you'll be using link:https://market.enonic.com/vendors/enonic/intro[Introduction app] as a template.
-
-This app ships with a pre-defined content-model, and sample content from the cinematic industry.
-
-Let's get going!
-
-=== Task: Install the Enonic CLI
-
-link:https://developer.enonic.com/start[**Install the Enonic CLI**] (follow link for instructions).
-
-=== Task: Create and start a sandbox
-
-. Create a sandbox called `mysandbox` by running this command in your terminal:
+. Create a sandbox called `nxptutorial` by running this command in your terminal:
 +
-  enonic sandbox create mysandbox -t essentials -f
+  enonic sandbox create nxptutorial -t essentials -f
 +
 NOTE: `-f` flag will force using the most recent release of Enonic XP.
 +
 . Start the sandbox with this command:
 +
-  enonic sandbox start mysandbox --dev
+  enonic sandbox start nxptutorial --dev
 +
 NOTE: Dev mode optimizes the development process.
 
-=== Task: Create and deploy an app
+== Task: Create and deploy your app
 
-IMPORTANT: Let the sandbox run in the first terminal window, and open a new terminal window for the following commands.
+IMPORTANT: Leave the sandbox running in the first terminal window, and open a new terminal window for the following commands.
 
-. **Create a new project** using the `Introduction` app as a starter, by running the following command in your terminal:
+. *Create a new project* using the `Introduction` app as a starter, by running the following command in your terminal:
 +
- enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox
+ enonic project create -r tutorial-intro -n tutorial.nxp -d nxp -v 1.0.0 --sb nxptutorial
 +
 This command will:
 
 * use the GitHub repo `github.com/enonic/tutorial-intro` as a starter
-* to create an app called `com.example.myproject` with version `1.0.0`
-* in the directory `myproject`
-* and link it to `mysandbox` which you created earlier
+* to create an app called `tutorial.nxp` with version `1.0.0`
+* in the directory `nxp`
+* and link it to the `nxptutorial` sandbox which you created earlier
 
-. **Deploy the application**
+. *Deploy the application*
 +
 Assuming `mysandbox` is still running in another Terminal window, run these commands:
 
-  cd myproject
+  cd nxp
   enonic dev
 
 The last command will build and deploy the app to `mysandbox`, then start watching for changes in the code to automatically rebuild as you work on it.
@@ -125,6 +91,6 @@ image:content-studio-moviedb.png[title="Movie DB in Content Studio", width=1440p
 
 NOTE: Some of the content items will have a default preview. That's okay for now - you'll customize the preview later.
 
-**Congrats on setting up the Enonic development environment**
+*Congrats on setting up the Enonic development environment*
 
-With the SDK running, lets have a look at <<api-primer#, the API>>.
+With the Enonic environment up and running, lets have a look at <<api-primer#, the GraphQL API>>.
