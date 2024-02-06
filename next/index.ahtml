@@ -448,10 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP.</p>
-</div>
-<div class="paragraph">
-<p>You may also skip the tutorial and try out a <a href="demo.ahtml">demo of Next.XP</a>.</p>
+<p>This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. You may alternatively <a href="demo.ahtml">skip the tutorial and try out a demo of Next.XP</a> instead.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -529,7 +526,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 11:01:50 UTC
+Last updated 2024-02-06 11:16:36 UTC
 </div>
 </div>
 </body>

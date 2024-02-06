@@ -452,7 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will create create a local Enonic developer environment - aka sandbox, and an Enonic app based on the <a href="https://market.enonic.com/vendors/enonic/introduction"><code>Introduction app</code></a>.</p>
+<p>In this chapter you will create create a local Enonic developer environment, create and deploy an Enonic app.</p>
 </div>
 </div>
 </div>
@@ -560,7 +560,7 @@ Leave the sandbox running in the first terminal window, and open a new terminal 
 <li>
 <p><strong>Deploy the application</strong></p>
 <div class="paragraph">
-<p>Assuming <code>mysandbox</code> is still running in another Terminal window, run these commands:</p>
+<p>To build and run your application, execute these commands:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -572,7 +572,7 @@ enonic dev</pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>The last command will build and deploy the app to <code>mysandbox</code>, then start watching for changes in the code to automatically rebuild as you work on it.</p>
+<p>The last command will build and deploy the app to the sandbox, and then start watching for changes in the code to automatically rebuild as you work on it.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -628,7 +628,7 @@ Waiting for changes to input files...</pre>
 </table>
 </div>
 <div class="paragraph">
-<p>Click btn:[Log In as Guest] to open the XP admin dashboard. You should now see the following:</p>
+<p>Click <b class="button">Log In as Guest</b> to open the XP admin dashboard. You should now see the following:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -660,7 +660,7 @@ If things don&#8217;t look exactly the same, don&#8217;t worry. In every new ver
 <p><a href="https://market.enonic.com/vendors/enonic/content-studio" target="_blank" rel="noopener">Content Studio</a> is the editorial interface used to create and manage content. It was pre-installed from <a href="https://market.enonic.com" target="_blank" rel="noopener">Enonic Market</a> as a part of the <code>Essentials</code> template when you started the sandbox, and can now be accessed from the XP menu.</p>
 </div>
 <div class="paragraph">
-<p><strong>Click btn:[Content Studio]</strong> in the XP menu to launch it.</p>
+<p><strong>Click <b class="button">Content Studio</b></strong> in the XP menu to launch it.</p>
 </div>
 <div class="paragraph">
 <p>The first time your application was deployed to the sandbox, it automatically created a content project called <code>Intro Project</code> and populated it with content. Since this is the only available project at the moment, Content Studio will automatically open it, revealing the list of sample content items.</p>
@@ -703,7 +703,7 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 11:01:50 UTC
+Last updated 2024-02-06 11:16:36 UTC
 </div>
 </div>
 </body>
