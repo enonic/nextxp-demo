@@ -18,7 +18,7 @@ image:content-studio-guillotine.png[title="Browsing the Guillotine API using Que
 
 [NOTE]
 ====
-The API can be accessed directly following URL: http://localhost:8080/site/hmdb[http://localhost:8080/site/hmdb^].
+The API can be accessed directly following URL: http://localhost:8080/site/intro[http://localhost:8080/site/intro^].
 
 `hmdb` is the name of your Content Studio project.
 ====
@@ -180,4 +180,4 @@ Run the query in the Playground. It should produce a complete set of data - whic
 All in all, this allows for fetching deep and rich content data in a single API request.
 
 
-Moving forward, you'll get introduced to <<sites#, the concept of sites>>.
+In the next chapter you'll get introduced to <<sites#, the concept of sites>>.
