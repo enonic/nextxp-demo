@@ -2,9 +2,7 @@
 :toc: right
 :imagesdir: media/
 
-This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. 
-
-You may also skip the tutorial and try out a <<demo#, demo of Next.XP>>.
+This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. You may alternatively <<demo#,skip the tutorial and try out a demo of Next.XP>> instead.
 
 [NOTE]
 ====

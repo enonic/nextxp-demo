@@ -1,8 +1,9 @@
 = Setting up Enonic
 :toc: right
 :imagesdir: media/
+:experimental:
 
-In this chapter we will create create a local Enonic developer environment - aka sandbox, and an Enonic app based on the https://market.enonic.com/vendors/enonic/introduction[`Introduction app`].
+In this chapter you will create create a local Enonic developer environment, create and deploy an Enonic app.
 
 == Task: Install the Enonic CLI
 
@@ -39,12 +40,12 @@ This command will:
 
 . *Deploy the application*
 +
-Assuming `mysandbox` is still running in another Terminal window, run these commands:
+To build and run your application, execute these commands:
 
   cd nxp
   enonic dev
 
-The last command will build and deploy the app to `mysandbox`, then start watching for changes in the code to automatically rebuild as you work on it.
+The last command will build and deploy the app to the sandbox, and then start watching for changes in the code to automatically rebuild as you work on it.
 
 [NOTE]
 ====
