@@ -54,7 +54,7 @@ Feel free to study the code in `src/middleware.ts` to get a better understanding
 [source,Properties]
 ----
 // ...
-ENONIC_PROJECTS=en:intro/hmdb,no:intro-no/hmdb
+ENONIC_MAPPINGS=en:intro/hmdb,no:intro-no/hmdb
 // ...
 ----
 +
@@ -186,7 +186,7 @@ Here is how you can localize texts in your views:
 ----
 'use client';
 
-import {useLocaleContext} from '@enonic/nextjs-adapter';
+import {useLocaleContext} from '@enonic/nextjs-adapter/client';
 
 export default function ClientSideComponent() {
     const {locale, localize} = useLocaleContext();

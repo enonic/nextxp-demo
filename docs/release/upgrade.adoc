@@ -21,15 +21,18 @@ getProjectLocaleConfigById -> getProjectLocaleConfigById()
 
 . `@enonic/nextjs-adapter` exports rearranged:
 +
-Most of the exports are now available from `@enonic/nextjs-adapter` package root.
+Exports working both on the server and client sides are now available from `@enonic/nextjs-adapter` package root.
 Client-only exports are available from `@enonic/nextjs-adapter/client` package.
-Views are available under `@enonic/nextjs-adapter/views/<ViewName>`.
+Server-only exports are available from `@enonic/nextjs-adapter/server` package.
+Views are available at `@enonic/nextjs-adapter/views/<ViewName>`.
 
-. `ENONIC_PROJECTS` env var syntax change:
+. `ENONIC_PROJECTS` environmental variable change:
++
+ ENONIC_PROJECTS -> ENONIC_MAPPINGS
 +
 .Language is now required for every project config:
 
-    ENONIC_PROJECTS=<lang>:<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
+    ENONIC_MAPPINGS=<lang>:<repo-name>/site/path[,<lang>:<repo-name>/site/path,...]
 +
 TIP: First config in the list is used as default.
 +
@@ -54,7 +57,7 @@ config.resolve.alias = {
 ----
 
 . *Add* `src/phrases` folder to your project root.
-This folder should contain static translations for every language from `ENONIC_PROJECTS` env var in the following format: `src/phrases/<lang>.json`
+This folder should contain static translations for every language from `ENONIC_MAPPINGS` env var in the following format: `src/phrases/<lang>.json`
 
     src/phrases/en.json
     src/phrases/no.json
