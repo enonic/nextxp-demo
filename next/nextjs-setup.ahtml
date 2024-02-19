@@ -586,7 +586,7 @@ ENONIC_API_TOKEN=mySecretKey
 ENONIC_APP_NAME=com.example.myproject
 
 # Enonic XP projects configuration for different locales
-ENONIC_PROJECTS=en:intro/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
+ENONIC_MAPPINGS=en:intro/hmdb <i class="conum" data-value="1"></i><b>(1)</b>
 
 # Absolute URL to Content API
 ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
@@ -605,7 +605,7 @@ More about it in <a href="i18n.ahtml">multi-language</a> support.
 <div class="paragraph">
 <p>We don&#8217;t need to specify the project and branch parts here, as the Enonic Adapter will automatically add these based on the runtime environment.
 For example, when serving the preview for Content Studio, the project will be set to the currently opened one, and the branch will be set to <code>draft</code>.
-On the other side, when serving a live site, the project will be set based on contents of <code>ENONIC_PROJECTS</code> variable and current locale, and the branch will be set to <code>master</code>.</p>
+On the other side, when serving a live site, the project will be set based on contents of <code>ENONIC_MAPPINGS</code> variable and current locale, and the branch will be set to <code>master</code>.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -726,7 +726,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 12:31:03 UTC
+Last updated 2024-02-19 08:44:26 UTC
 </div>
 </div>
 </body>

@@ -548,7 +548,7 @@ Feel free to study the code in <code>src/middleware.ts</code> to get a better un
 <div class="title">.env</div>
 <div class="content">
 <pre class="highlight"><code class="language-Properties" data-lang="Properties">// ...
-ENONIC_PROJECTS=en:intro/hmdb,no:intro-no/hmdb
+ENONIC_MAPPINGS=en:intro/hmdb,no:intro-no/hmdb
 // ...</code></pre>
 </div>
 </div>
@@ -768,7 +768,7 @@ Here is how you can localize texts in your views:</p>
 <div class="content">
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">'use client';
 
-import {useLocaleContext} from '@enonic/nextjs-adapter';
+import {useLocaleContext} from '@enonic/nextjs-adapter/client';
 
 export default function ClientSideComponent() {
     const {locale, localize} = useLocaleContext();
@@ -818,7 +818,7 @@ export default function ServerSideComponent() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 12:31:03 UTC
+Last updated 2024-02-19 08:44:26 UTC
 </div>
 </div>
 </body>

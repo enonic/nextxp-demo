@@ -616,7 +616,8 @@ You should also be able to tell from the Next.js log that the revalidation was t
 <div class="listingblock">
 <div class="title">src/app/[locale]/[[&#8230;&#8203;contentPath]]/page.ts</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {fetchContent, fetchContentPathsForAllLocales, FetchContentResult, validateData} from "@enonic/nextjs-adapter";
+<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {FetchContentResult, validateData} from "@enonic/nextjs-adapter";
+import {fetchContent, fetchContentPathsForAllLocales} from "@enonic/nextjs-adapter/server";
 import MainView from '@enonic/nextjs-adapter/views/MainView';
 
 import "../../../components/_mappings";
@@ -679,7 +680,7 @@ export async function generateStaticParams(props: { params: PageProps }): Promis
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 12:31:03 UTC
+Last updated 2024-02-19 08:44:26 UTC
 </div>
 </div>
 </body>

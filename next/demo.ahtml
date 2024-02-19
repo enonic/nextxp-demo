@@ -547,7 +547,7 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
 </li>
 <li>
-<p>ENONIC_PROJECTS: /hmdb/hmdb</p>
+<p>ENONIC_MAPPINGS: /hmdb/hmdb</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -672,7 +672,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 12:31:03 UTC
+Last updated 2024-02-19 08:44:26 UTC
 </div>
 </div>
 </body>

@@ -487,17 +487,23 @@ See <a href="https://nextjs.org/docs/pages/building-your-application/upgrading/a
 <li>
 <p><code>@enonic/nextjs-adapter</code> exports rearranged:</p>
 <div class="paragraph">
-<p>Most of the exports are now available from <code>@enonic/nextjs-adapter</code> package root.
+<p>Exports working both on the server and client sides are now available from <code>@enonic/nextjs-adapter</code> package root.
 Client-only exports are available from <code>@enonic/nextjs-adapter/client</code> package.
-Views are available under <code>@enonic/nextjs-adapter/views/&lt;ViewName&gt;</code>.</p>
+Server-only exports are available from <code>@enonic/nextjs-adapter/server</code> package.
+Views are available at <code>@enonic/nextjs-adapter/views/&lt;ViewName&gt;</code>.</p>
 </div>
 </li>
 <li>
-<p><code>ENONIC_PROJECTS</code> env var syntax change:</p>
+<p><code>ENONIC_PROJECTS</code> environmental variable change:</p>
+<div class="literalblock">
+<div class="content">
+<pre>ENONIC_PROJECTS -&gt; ENONIC_MAPPINGS</pre>
+</div>
+</div>
 <div class="literalblock">
 <div class="title">Language is now required for every project config:</div>
 <div class="content">
-<pre>ENONIC_PROJECTS=&lt;lang&gt;:&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
+<pre>ENONIC_MAPPINGS=&lt;lang&gt;:&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -536,7 +542,7 @@ First config in the list is used as default.
 </li>
 <li>
 <p><strong>Add</strong> <code>src/phrases</code> folder to your project root.
-This folder should contain static translations for every language from <code>ENONIC_PROJECTS</code> env var in the following format: <code>src/phrases/&lt;lang&gt;.json</code></p>
+This folder should contain static translations for every language from <code>ENONIC_MAPPINGS</code> env var in the following format: <code>src/phrases/&lt;lang&gt;.json</code></p>
 <div class="literalblock">
 <div class="content">
 <pre>src/phrases/en.json
@@ -555,7 +561,7 @@ If you have custom middleware, you need to update it to support new i18n config.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-06 12:31:03 UTC
+Last updated 2024-02-19 08:44:26 UTC
 </div>
 </div>
 </body>
