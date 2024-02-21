@@ -15,10 +15,24 @@ See https://nextjs.org/docs/pages/building-your-application/upgrading/app-router
 
 . `@enonic/nextjs-adapter` methods renamed:
 +
-getLocaleProjectConfig() -> getProjectLocaleConfig()
-+
-getProjectLocaleConfigById -> getProjectLocaleConfigById()
+- getLocaleProjectConfig() -> getProjectLocaleConfig()
+- getProjectLocaleConfigById -> getProjectLocaleConfigById()
 
+. `@enonic/nextjs-adapter` method signature changes:
+- `fetchFromApi` method changed to :
++
+ fetchFromApi(
+    apiUrl: string,
+    projectConfig: ProjectLocaleConfig,
+    options?: FetchOptions): Promise<GuillotineResponseJson>
++
+- `fetchGuillotine` method signature changes:
++
+ fetchGuillotine(
+    contentApiUrl: string,
+    projectConfig: ProjectLocaleConfig,
+    options?: FetchOptions): Promise<GuillotineResult>
++
 . `@enonic/nextjs-adapter` exports rearranged:
 +
 Exports working both on the server and client sides are now available from `@enonic/nextjs-adapter` package root.
