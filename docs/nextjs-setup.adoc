@@ -67,10 +67,10 @@ src/
 
 By default, the configuration should work for your setup, but have a look to be sure:
 
-. Verify your configuration
-+
+Verify your configuration
+
 The following configuration values should match your environment
-+
+
 ..env extract:
 [source,files]
 ----
@@ -86,17 +86,11 @@ ENONIC_MAPPINGS=en:intro/hmdb <1>
 # Absolute URL to Content API
 ENONIC_API=http://127.0.0.1:8080/site <2>
 ----
-+
-<1> XP projects configuration.
-More about it in <<i18n#, multi-language>> support.
-<2>Base URL of the Guillotine API discussed in <<api-primer#, the API>>, but without project and branch parts.
-+
-We don't need to specify the project and branch parts here, as the Enonic Adapter will automatically add these based on the runtime environment.
-For example, when serving the preview for Content Studio, the project will be set to the currently opened one, and the branch will be set to `draft`.
-On the other side, when serving a live site, the project will be set based on contents of `ENONIC_MAPPINGS` variable and current locale, and the branch will be set to `master`.
-+
 
-TIP: The configuration values can be overridden later when deplying your app to a live server.
+<1> Mapping an XP project (intro) and site (/hmdb) to the Next.js router.
+<2> Base URL of the Guillotine API, but without project and branch.
+
+TIP: These configuration values can be overridden later when deplying your app to a live server.
 
 == Task: Boot the server
 
