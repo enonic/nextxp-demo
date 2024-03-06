@@ -570,10 +570,9 @@ src/
 <div class="paragraph">
 <p>By default, the configuration should work for your setup, but have a look to be sure:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
+<div class="paragraph">
 <p>Verify your configuration</p>
+</div>
 <div class="paragraph">
 <p>The following configuration values should match your environment</p>
 </div>
@@ -597,14 +596,11 @@ ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>XP projects configuration.
-More about it in <a href="i18n.ahtml">multi-language</a> support.
-&lt;2&gt;Base URL of the Guillotine API discussed in <a href="api-primer.ahtml">the API</a>, but without project and branch parts.
-<div class="paragraph">
-<p>We don&#8217;t need to specify the project and branch parts here, as the Enonic Adapter will automatically add these based on the runtime environment.
-For example, when serving the preview for Content Studio, the project will be set to the currently opened one, and the branch will be set to <code>draft</code>.
-On the other side, when serving a live site, the project will be set based on contents of <code>ENONIC_MAPPINGS</code> variable and current locale, and the branch will be set to <code>master</code>.</p>
-</div></td>
+<td>Mapping an XP project (intro) and site (/hmdb) to the Next.js router.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Base URL of the Guillotine API, but without project and branch.</td>
 </tr>
 </table>
 </div>
@@ -615,13 +611,10 @@ On the other side, when serving a live site, the project will be set based on co
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The configuration values can be overridden later when deplying your app to a live server.
+These configuration values can be overridden later when deplying your app to a live server.
 </td>
 </tr>
 </table>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -727,7 +720,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-21 12:54:24 UTC
+Last updated 2024-03-06 07:34:41 UTC
 </div>
 </div>
 </body>
