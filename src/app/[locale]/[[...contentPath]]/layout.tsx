@@ -29,7 +29,11 @@ export default async function PageLayout({params, children}: LayoutProps) {
             children :
             <details data-single-component-output="true">{children}</details>
 
-        return <StaticContent condition={isEdit}>{content}</StaticContent>;
+        return (
+            <LocaleContextProvider locale={params.locale}>
+                <StaticContent condition={isEdit}>{content}</StaticContent>
+            </LocaleContextProvider>
+        );
     }
 
     return (
