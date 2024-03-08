@@ -22,7 +22,7 @@ To complete this section, we'll need one final part for listing movie details. T
 </part>
 ----
 +
-. **Redeploy** the Enonic app (happens automatically if you started sandbox with `--dev` flag).
+. **Redeploy** the Enonic app (happens automatically if you started `enonic project dev`).
 +
 . **Add the Movie query and view** in Next.
 +

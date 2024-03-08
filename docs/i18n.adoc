@@ -85,7 +85,7 @@ Content Studio should automatically be able to detect the correct Next.js locale
 +
 . *Translate the site content* by selecting the site content, then click `localize` (rather than edit..). This effectively takes you to the edit form. You may now show off your skills while translating the page to Norwegian.
 +
-Once finished, click `Mark as Ready` and proceed to publish the entire site structure.
+. Once finished, click `Mark as Ready` and proceed to *publish the entire site* structure.
 +
 [TIP]
 ====
@@ -150,7 +150,7 @@ export default async function Page({params}: { params: PageProps }) {
 }
 ----
 
-. Result of `fetchContent()` call from `@enonic/nextjs-adapter` contains `MetaData` object (available in every view) that includes `locale` and `defaultLocale` along with other calculated runtime data:
+. Result of `fetchContent()` call from `@enonic/nextjs-adapter/server` contains `MetaData` object (available in every view) that includes `locale` and `defaultLocale` along with other calculated runtime data:
 +
 [source,TypeScript,options="nowrap"]
 ----

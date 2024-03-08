@@ -29,7 +29,7 @@ IMPORTANT: Leave the sandbox running in the first terminal window, and open a ne
 
 . *Create a new project* using the `Introduction` app as a starter, by running the following command in your terminal:
 +
- enonic project create -r tutorial-intro -n tutorial.nxp -d nxp -v 1.0.0 --sb nxptutorial
+ enonic create tutorial.nxp -r tutorial-intro --sb nxptutorial -f
 +
 This command will:
 

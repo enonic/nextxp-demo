@@ -43,7 +43,7 @@ Run this simple query that retrieves the ID and displayName of some movies:
             boolean: {
               must:[
                 {term: {field: "valid", value: {boolean:true}}}
-                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+                {term: {field: "type", value: {string: "tutorial.nxp:movie"}}}
               ]
             }
           }
@@ -59,7 +59,7 @@ Run this simple query that retrieves the ID and displayName of some movies:
 }
 ----
 +
-NOTE: `com.example.myproject` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app.
+NOTE: `tutorial.nxp` refers to the name of the application you created in the previous chapter. `movie` is a specific content type within the app.
 +
 . **View the Result**
 +
@@ -131,7 +131,7 @@ query($path:ID!){
     get(key:$path) {
       type
       displayName
-      ... on com_example_myproject_Movie {
+      ... on tutorial_nxp_Movie {
         data {
           subtitle
           abstract
@@ -146,7 +146,7 @@ query($path:ID!){
             character
             actor {
               displayName
-              ... on com_example_myproject_Person {
+              ... on tutorial_nxp_Person {
                 _path
                 data {
                   photos {

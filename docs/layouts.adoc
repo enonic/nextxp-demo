@@ -28,7 +28,7 @@ Adding layouts is more or less identical to pages and parts. Simply follow the s
 +
 NOTE: Just like a page, layouts may declare named regions.
 +
-When completed, as always *redeploy the Enonic app* (happens automatically if you started sandbox with `--dev` flag).
+When completed, as always *redeploy the Enonic app* (happens automatically if you started `enonic project dev`).
 
 == Task: Add layout rendering to the front-end
 
