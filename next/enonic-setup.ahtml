@@ -535,7 +535,7 @@ Leave the sandbox running in the first terminal window, and open a new terminal 
 <p><strong>Create a new project</strong> using the <code>Introduction</code> app as a starter, by running the following command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic project create -r tutorial-intro -n tutorial.nxp -d nxp -v 1.0.0 --sb nxptutorial</pre>
+<pre>enonic create tutorial.nxp -r tutorial-intro --sb nxptutorial -f</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -704,7 +704,7 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-06 07:34:41 UTC
+Last updated 2024-03-11 08:13:28 UTC
 </div>
 </div>
 </body>

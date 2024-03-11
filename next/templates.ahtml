@@ -477,7 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p><strong>Redeploy</strong> the Enonic app (happens automatically if you started sandbox with <code>--dev</code> flag).</p>
+<p><strong>Redeploy</strong> the Enonic app (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add the Movie query and view</strong> in Next.</p>
@@ -725,7 +725,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-06 07:34:41 UTC
+Last updated 2024-03-11 08:13:28 UTC
 </div>
 </div>
 </body>

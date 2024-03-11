@@ -501,7 +501,7 @@ This means editors can configure it - sorting the items Ascending or Descending.
 </div>
 </li>
 <li>
-<p><strong>Build and deploy your Enonic app</strong> once more to make the new part available in Content Studio.</p>
+<p><strong>Build and deploy your Enonic app</strong> once more to make the new part available in Content Studio (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add parts to the page</strong></p>
@@ -674,7 +674,7 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 </div>
 </li>
 <li>
-<p><strong>Redeploy</strong> the Enonic app and add the part to your page (happens automatically if you started sandbox with <code>--dev</code> flag).</p>
+<p><strong>Redeploy</strong> the Enonic app and add the part to your page (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add the heading component in Next.js</strong>.</p>
@@ -727,7 +727,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-06 07:34:41 UTC
+Last updated 2024-03-11 08:13:28 UTC
 </div>
 </div>
 </body>

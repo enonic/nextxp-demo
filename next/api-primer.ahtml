@@ -531,7 +531,7 @@ Run this simple query that retrieves the ID and displayName of some movies:</p>
             boolean: {
               must:[
                 {term: {field: "valid", value: {boolean:true}}}
-                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+                {term: {field: "type", value: {string: "tutorial.nxp:movie"}}}
               ]
             }
           }
@@ -554,7 +554,7 @@ Run this simple query that retrieves the ID and displayName of some movies:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>com.example.myproject</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
+<code>tutorial.nxp</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
 </td>
 </tr>
 </table>
@@ -685,7 +685,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
     get(key:$path) {
       type
       displayName
-      ... on com_example_myproject_Movie {
+      ... on tutorial_nxp_Movie {
         data {
           subtitle
           abstract
@@ -700,7 +700,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
             character
             actor {
               displayName
-              ... on com_example_myproject_Person {
+              ... on tutorial_nxp_Person {
                 _path
                 data {
                   photos {
@@ -754,7 +754,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-06 07:34:41 UTC
+Last updated 2024-03-11 08:13:28 UTC
 </div>
 </div>
 </body>

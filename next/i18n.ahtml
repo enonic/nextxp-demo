@@ -615,9 +615,9 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 </li>
 <li>
 <p><strong>Translate the site content</strong> by selecting the site content, then click <code>localize</code> (rather than edit..). This effectively takes you to the edit form. You may now show off your skills while translating the page to Norwegian.</p>
-<div class="paragraph">
-<p>Once finished, click <code>Mark as Ready</code> and proceed to publish the entire site structure.</p>
-</div>
+</li>
+<li>
+<p>Once finished, click <code>Mark as Ready</code> and proceed to <strong>publish the entire site</strong> structure.</p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -723,7 +723,7 @@ export default async function Page({params}: { params: PageProps }) {
 </div>
 </li>
 <li>
-<p>Result of <code>fetchContent()</code> call from <code>@enonic/nextjs-adapter</code> contains <code>MetaData</code> object (available in every view) that includes <code>locale</code> and <code>defaultLocale</code> along with other calculated runtime data:</p>
+<p>Result of <code>fetchContent()</code> call from <code>@enonic/nextjs-adapter/server</code> contains <code>MetaData</code> object (available in every view) that includes <code>locale</code> and <code>defaultLocale</code> along with other calculated runtime data:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {PageComponent, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
@@ -819,7 +819,7 @@ export default function ServerSideComponent() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-06 07:34:41 UTC
+Last updated 2024-03-11 08:13:28 UTC
 </div>
 </div>
 </body>
