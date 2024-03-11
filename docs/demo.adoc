@@ -34,9 +34,9 @@ Vercel are the makers of Next.js, and you'll be using their service to host the 
 +
 * ENONIC_API: <URL to Enonic API>
 * ENONIC_API_TOKEN: <yourSecret>
-* ENONIC_MAPPINGS: /hmdb/hmdb
+* ENONIC_MAPPINGS: en:hmdb/hmdb
 +
-NOTE: The PROJECTS variable defines /<projectname>/<site-path> to tell the Front-end which site to use.
+NOTE: The MAPPINGS variable defines <locale>:<projectname>/<site-path> to tell the Front-end which project + site to use.
 +
 . After deploying, the Vercel app should render the front page:
 +
