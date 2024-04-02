@@ -4,7 +4,7 @@
 
 In this chapter, we will create an Enonic app based on the https://market.enonic.com/vendors/enonic/introduction[`Introduction`] starter kit and launch a local development environment of the platform.
 
-TIP: For an in-depth tutorial on Enonic, visit the official link:https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101] guide.
+TIP: For an in-depth tutorial on Enonic, visit the official link:https://developer.enonic.com/docs/developer-101/[Enonic Developer 101] guide.
 
 [[xp-at-a-glance]]
 == Enonic at a glance
@@ -12,7 +12,7 @@ TIP: For an in-depth tutorial on Enonic, visit the official link:https://develop
 Our platform is called "Enonic XP" (or simply "Enonic").
 
 === Enonic apps
-Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more link:https://developer.enonic.com/guides/developer-101/xp7/apps[**applications**] in a single platform instance.
+Enonic applications are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more link:https://developer.enonic.com/docs/developer-101/stable/apps[**applications**] in a single platform instance.
 
 Discover ready-to-run applications on link:https://market.enonic.com/[Enonic Market], or build your own. You will create an app of your own in this tutorial.
 
@@ -22,7 +22,7 @@ TIP: Useful terminology: A **sandbox** is a local instance of Enonic XP platform
 
 === Content
 
-Apps typically ship with one or more link:https://developer.enonic.com/guides/developer-101/xp7/content[**content types**]. Content types typically define data structures, JSON style. Each content type gets a unique name which is automatically pre-fixed with the app-name. e.g. `<appName>:<contentTypeName>`.
+Apps typically ship with one or more link:https://developer.enonic.com/docs/developer-101/stable/content-studio#what_are_content_types[**content types**]. Content types typically define data structures, JSON style. Each content type gets a unique name which is automatically pre-fixed with the app-name. e.g. `<appName>:<contentTypeName>`.
 
 Content types are used to create **content items**. Content is commonly created and handled via Enonic's link:https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet[**Content Studio**]. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.
 
@@ -32,7 +32,7 @@ Content items exist in two different link:https://developer.enonic.com/docs/xp/s
 
 == The Movie Database
 
-With Enonic, you can obviously create your own content model from scratch, but to save time you'll be using link:https://market.enonic.com/vendors/enonic/intro[Introduction app] as a template.
+With Enonic, you can obviously create your own content model from scratch, but to save time you'll be using the link:https://market.enonic.com/vendors/enonic/headless-movie-site[Introduction app] as a template.
 
 This app ships with a pre-defined content-model, and sample content from the cinematic industry.
 
