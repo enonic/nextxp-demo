@@ -470,7 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://nextjs.org/"><strong>Next.js</strong></a> runs on top of <a href="https://nodejs.org/en/">Node.js</a>, and provides a shrink-wrapped approach to building sites using the <a href="https://reactjs.org/">React framework</a>.
-Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/basic-features/´pages#static-generation-recommended">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
+Next.js supports both client-side rendering and <a href="https://nextjs.org/docs/pages/building-your-application/rendering">Server side rendering</a>, as well as pre-generation of static HTML files.</p>
 </div>
 </div>
 </div>
@@ -709,7 +709,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-02 13:43:50 UTC
+Last updated 2024-04-04 07:25:44 UTC
 </div>
 </div>
 </body>
