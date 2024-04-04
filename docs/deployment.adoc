@@ -127,6 +127,6 @@ image:live.png[title="Content rendered on the live server", width=1033px]
 There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:
 
 * https://developer.enonic.com[Enonic Developer portal]
-* https://developer.enonic.com/guides/developer-101/xp7[Enonic Developer 101]
+* https://developer.enonic.com/docs/developer-101/stable[Enonic Developer 101]
 
 
