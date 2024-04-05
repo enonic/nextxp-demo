@@ -2,6 +2,8 @@ import {Context, PartProps, VariablesGetterResult} from '@enonic/nextjs-adapter'
 import Link from 'next/link';
 import React from 'react'
 
+const FORBIDDEN_TYPES_REGEXP = "^media:.*|portal:fragment|portal:template-folder|portal:page-template$";
+
 const ChildList = (props: PartProps) => {
     const {data, meta} = props;
     const children = data.get.children;
@@ -43,6 +45,7 @@ export const getChildList = {
                       _path(type: siteRelative)
                       _id
                       displayName
+                      type
                   }
                 }
               }
@@ -56,7 +59,10 @@ export const getChildList = {
     }
 };
 
-export async function childListProcessor(common: any, context?: Context, config?: any): Promise<any> {
-    common.modifiedBy = 'childListProcessor';
-    return common;
+export async function childListProcessor(data: any, context?: Context, config?: any): Promise<any> {
+
+    // exclude forbidden types
+    data.get.children = data.get.children?.filter((child: any) => !child.type.match(FORBIDDEN_TYPES_REGEXP));
+
+    return data;
 }
