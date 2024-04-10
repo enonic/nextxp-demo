@@ -544,9 +544,11 @@ The part will appear without making any changes to the front-end, this is becaus
 <div class="listingblock">
 <div class="title">src/components/parts/ChildList.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
-import {Context, PartProps, VariablesGetterResult} from '@enonic/nextjs-adapter';
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import {Context, PartProps, VariablesGetterResult} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
+import React from 'react'
+
+const FORBIDDEN_TYPES_REGEXP = "^media:.*|portal:fragment|portal:template-folder|portal:page-template$";
 
 const ChildList = (props: PartProps) =&gt; {
     const {data, meta} = props;
@@ -565,7 +567,7 @@ const ChildList = (props: PartProps) =&gt; {
                 &lt;ul&gt;{
                     children.map((child: any, i: number) =&gt; (
                         &lt;li key={i}&gt;
-                            &lt;Link href={child._path}&gt;{child.displayName}&lt;/Link&gt;
+                            &lt;Link href={meta.baseUrl + child._path}&gt;{child.displayName}&lt;/Link&gt;
                         &lt;/li&gt;
                     ))
                 }&lt;/ul&gt;
@@ -589,6 +591,7 @@ export const getChildList = {
                       _path(type: siteRelative)
                       _id
                       displayName
+                      type
                   }
                 }
               }
@@ -602,9 +605,12 @@ export const getChildList = {
     }
 };
 
-export async function childListProcessor(common: any, context?: Context, config?: any): Promise&lt;any&gt; {
-    common.modifiedBy = 'childListProcessor';
-    return common;
+export async function childListProcessor(data: any, context?: Context, config?: any): Promise&lt;any&gt; {
+
+    // exclude forbidden types
+    data.get.children = data.get.children?.filter((child: any) =&gt; !child.type.match(FORBIDDEN_TYPES_REGEXP));
+
+    return data;
 }</code></pre>
 </div>
 </div>
@@ -727,7 +733,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-04 07:25:43 UTC
+Last updated 2024-04-10 06:15:51 UTC
 </div>
 </div>
 </body>
