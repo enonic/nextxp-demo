@@ -546,49 +546,16 @@ Useful terminology: A <strong>sandbox</strong> is a local instance of Enonic XP 
 </div>
 <div class="sect2">
 <h3 id="task_create_and_start_a_sandbox"><a class="link" href="#task_create_and_start_a_sandbox">Task: Create and start a sandbox</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create a sandbox called <code>mysandbox</code> by running this command in your terminal:</p>
-<div class="literalblock">
-<div class="content">
-<pre>enonic sandbox create mysandbox -t essentials -f</pre>
+<div class="paragraph">
+<p><strong>Create and start a sandbox</strong> called <code>mysandbox</code> by running this command in your terminal:</p>
 </div>
+<div class="paragraph">
+<p>+
+  enonic sandbox create mysandbox -t essentials -f</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>-f</code> flag will force using the most recent release of Enonic XP.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Start the sandbox with this command:</p>
-<div class="literalblock">
-<div class="content">
-<pre>enonic sandbox start mysandbox --dev</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Dev mode optimizes the development process.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
+<div class="paragraph">
+<p>+
+NOTE: <code>-f</code> forces the use of default values for remaining options</p>
 </div>
 </div>
 <div class="sect2">
@@ -611,7 +578,7 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 <p><strong>Create a new project</strong> using the <code>Introduction</code> app as a starter, by running the following command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox</pre>
+<pre>enonic create com.example.myproject -r tutorial-intro -s mysandbox</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -623,13 +590,10 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 <p>use the GitHub repo <code>github.com/enonic/tutorial-intro</code> as a starter</p>
 </li>
 <li>
-<p>to create an app called <code>com.example.myproject</code> with version <code>1.0.0</code></p>
+<p>to create an app called <code>com.example.myproject</code></p>
 </li>
 <li>
-<p>in the directory <code>myproject</code></p>
-</li>
-<li>
-<p>and link it to <code>mysandbox</code> which you created earlier</p>
+<p>and link it to <code>mysandbox</code></p>
 </li>
 </ul>
 </div>
@@ -641,7 +605,7 @@ Let the sandbox run in the first terminal window, and open a new terminal window
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>cd myapp
+<pre>cd myproject
 enonic dev</pre>
 </div>
 </div>
@@ -781,7 +745,7 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-10 06:15:52 UTC
+Last updated 2024-04-15 15:50:17 UTC
 </div>
 </div>
 </body>
