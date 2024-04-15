@@ -44,17 +44,11 @@ link:https://developer.enonic.com/start[**Install the Enonic CLI**] (follow link
 
 === Task: Create and start a sandbox
 
-. Create a sandbox called `mysandbox` by running this command in your terminal:
+*Create and start a sandbox* called `mysandbox` by running this command in your terminal:
 +
   enonic sandbox create mysandbox -t essentials -f
 +
-NOTE: `-f` flag will force using the most recent release of Enonic XP.
-+
-. Start the sandbox with this command:
-+
-  enonic sandbox start mysandbox --dev
-+
-NOTE: Dev mode optimizes the development process.
+NOTE: `-f` forces the use of default values for remaining options
 
 === Task: Create and deploy an app
 
@@ -62,20 +56,19 @@ IMPORTANT: Let the sandbox run in the first terminal window, and open a new term
 
 . **Create a new project** using the `Introduction` app as a starter, by running the following command in your terminal:
 +
- enonic project create -r tutorial-intro -n com.example.myproject -d myproject -v 1.0.0 --sb mysandbox
+ enonic create com.example.myproject -r tutorial-intro -s mysandbox
 +
 This command will:
 
 * use the GitHub repo `github.com/enonic/tutorial-intro` as a starter
-* to create an app called `com.example.myproject` with version `1.0.0`
-* in the directory `myproject`
-* and link it to `mysandbox` which you created earlier
+* to create an app called `com.example.myproject`
+* and link it to `mysandbox`
 
 . **Deploy the application**
 +
 Assuming `mysandbox` is still running in another Terminal window, run these commands:
 
-  cd myapp
+  cd myproject
   enonic dev
 
 The last command will build and deploy the app to `mysandbox`, then start watching for changes in the code to automatically rebuild as you work on it.
