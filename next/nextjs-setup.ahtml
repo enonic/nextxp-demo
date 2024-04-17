@@ -648,8 +648,31 @@ npm run dev</pre>
 <div class="paragraph">
 <p>If Next boots without errors, point your browser to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> to see the glorious result.</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-debug.png" alt="content debug" width="767px" title="Application root page, showing debugging details"></span></p>
+<div class="listingblock">
+<div class="title">Application root page, showing debugging details</div>
+<div class="content">
+<pre class="highlight"><code>Page:
+{
+  "type": "page",
+  "path": "/"
+}
+Common:
+{
+  "get": {
+    "displayName": "hmdb",
+    "_id": "3584c396-25cb-497e-b1f4-dc2bf0de4b5a",
+    "type": "portal:site",
+    "dataAsJson": {
+      "description": null
+    },
+    "xAsJson": {}
+  },
+  "getSite": {
+    "displayName": "hmdb",
+    "_path": "/hmdb"
+  }
+}</code></pre>
+</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -679,9 +702,57 @@ npm run dev</pre>
 <div class="paragraph">
 <p>Using the Movie Se7en as an example:</p>
 </div>
-<div class="paragraph">
+<div class="listingblock">
 <div class="title">Result when visiting <a href="http://localhost:3000/movies/se7en" target="_blank" rel="noopener">http://localhost:3000/movies/se7en</a></div>
-<p><span class="image"><img src="media/se7en-debug.png" alt="se7en debug" width="766px" title="Default render: movie content item The Godfather"></span></p>
+<div class="content">
+<pre class="highlight"><code>Page:
+{
+  "type": "page",
+  "path": "/"
+}
+Common:
+{
+  "get": {
+    "displayName": "Se7en",
+    "_id": "1cb3dbf4-31d1-4e8a-816a-8cf891de7ad6",
+    "type": "tutorial.nxp:movie",
+    "dataAsJson": {
+      "trailer": "https://youtu.be/znmZoVkCjpI",
+      "cast": [
+        {
+          "actor": "6414dc62-a3a1-4772-961f-06cb85b1bbb7",
+          "character": "Somerset"
+        },
+        {
+          "actor": "3a7b833f-3c37-4d55-88ae-cea21c556c68",
+          "character": "Mills"
+        }
+      ],
+      "website": null,
+      "release": "1995-09-22",
+      "subtitle": "Chilling thriller with a plot beyond belief",
+      "abstract": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.",
+      "photos": [
+        "6ca58af1-6810-4fae-b51b-f70e01fc4c17",
+        "5cb115db-eb1c-4314-8376-2cb711dea5bd"
+      ]
+    },
+    "xAsJson": {
+      "tutorial-nxp": {
+        "SoMe": {
+          "twitter": null,
+          "imdb": "https://www.imdb.com/title/tt0114369/",
+          "instagram": null
+        }
+      }
+    }
+  },
+  "getSite": {
+    "displayName": "hmdb",
+    "_path": "/hmdb"
+  }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <div class="title">Se7en as seen in Content Studio - internal path is <code>/hmdb/movies/se7en</code></div>
@@ -720,7 +791,7 @@ npm run dev</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-15 15:50:17 UTC
+Last updated 2024-04-17 15:47:38 UTC
 </div>
 </div>
 </body>

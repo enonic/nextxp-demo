@@ -548,7 +548,7 @@ Both Enonic and Next.js are open source software projects and can be deployed mo
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create a new route called "API"</strong> from <code>Solution</code> &#8594; <code>Routes</code>.</p>
+<p><strong>Create a new ingress called "API"</strong> from <code>Solution</code> &#8594; <code>Ingresses</code>.</p>
 <div class="paragraph">
 <p>Use the following settings:</p>
 </div>
@@ -792,7 +792,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-15 15:50:17 UTC
+Last updated 2024-04-17 15:47:38 UTC
 </div>
 </div>
 </body>
