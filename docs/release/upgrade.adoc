@@ -15,8 +15,8 @@ See https://nextjs.org/docs/pages/building-your-application/upgrading/app-router
 
 . `@enonic/nextjs-adapter` methods renamed:
 +
-- getLocaleProjectConfig() -> getProjectLocaleConfig()
-- getProjectLocaleConfigById -> getProjectLocaleConfigById()
+- getLocaleProjectConfig() -> getLocaleMapping()
+- getProjectLocaleConfigById -> getLocaleMappingById()
 
 . `@enonic/nextjs-adapter` method signature changes:
 - `fetchFromApi` method changed to :

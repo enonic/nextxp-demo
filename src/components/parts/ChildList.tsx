@@ -10,6 +10,8 @@ const ChildList = (props: PartProps) => {
     if (!children || children.length === 0) {
         return null;
     }
+    const prefix = meta.baseUrl +
+                   (meta.locale && meta.locale !== meta.defaultLocale ? meta.locale + '/' : '');
     return (
         <main style={{
             margin: `0 auto`,
@@ -21,7 +23,7 @@ const ChildList = (props: PartProps) => {
                 <ul>{
                     children.map((child: any, i: number) => (
                         <li key={i}>
-                            <Link href={meta.baseUrl + child._path}>{child.displayName}</Link>
+                            <Link href={prefix + child._path}>{child.displayName}</Link>
                         </li>
                     ))
                 }</ul>
