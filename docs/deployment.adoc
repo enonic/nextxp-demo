@@ -44,7 +44,7 @@ enonic cloud app install
 
 The purpose of routes is to expose APIs and other endpoints in Enonic XP like `:8080/site/<project>/<branch>` to the internet.
 
-. **Create a new route called "API"** from `Solution` -> `Routes`.
+. **Create a new ingress called "API"** from `Solution` -> `Ingresses`.
 +
 Use the following settings:
 +
