@@ -481,10 +481,10 @@ See <a href="https://nextjs.org/docs/pages/building-your-application/upgrading/a
 <div class="ulist">
 <ul>
 <li>
-<p>getLocaleProjectConfig() &#8594; getProjectLocaleConfig()</p>
+<p>getLocaleProjectConfig() &#8594; getLocaleMapping()</p>
 </li>
 <li>
-<p>getProjectLocaleConfigById &#8594; getProjectLocaleConfigById()</p>
+<p>getProjectLocaleConfigById &#8594; getLocaleMappingById()</p>
 </li>
 </ul>
 </div>
@@ -595,7 +595,7 @@ If you have custom middleware, you need to update it to support new i18n config.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-17 15:47:38 UTC
+Last updated 2024-04-18 08:02:45 UTC
 </div>
 </div>
 </body>
