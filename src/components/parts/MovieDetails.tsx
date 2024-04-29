@@ -1,6 +1,6 @@
 import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
-import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData, PartProps} from '@enonic/nextjs-adapter';
+import Link from 'next/link';
 
 
 export const getMovie = `
@@ -65,7 +65,7 @@ const MovieView = (props: PartProps) => {
                 {data?.cast && <Cast cast={data.cast} meta={meta}/>}
             </div>
             <p>
-                <a href={getUrl(parent._path, meta)}>Back to Movies</a>
+                <Link href={getUrl(`/${parent._path}`, meta)}>{I18n.localize('back')}</Link>
             </p>
         </>
     );
@@ -154,9 +154,11 @@ const CastMember = (props: CastMemberProps & { meta: MetaData }) => {
             }
             <div>
                 <p>{character}</p>
-                <p><a href={getUrl(_path, meta)}>
-                    {displayName}
-                </a></p>
+                <p>
+                    <Link href={getUrl(_path, meta)}>
+                        {displayName}
+                    </Link>
+                </p>
             </div>
         </li>
     );

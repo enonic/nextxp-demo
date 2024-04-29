@@ -1,11 +1,15 @@
-const withTM = require('next-transpile-modules')(['@enonic/nextjs-adapter']);
-const withEnonicCache = require('@enonic/nextjs-adapter/server').withEnonicCache;
+/** @type {import('next').NextConfig} */
+const path = require('path');
 
-function getEnonicWebpackConfig(config) {
+function getEnonicWebpackConfig(config, {buildId, dev, isServer, defaultLoaders, nextRuntime, webpack}) {
     config.resolve.fallback = {
         ...config.resolve.fallback,
         // client-side resolution for node modules
         fs: false
+    }
+    config.resolve.alias = {
+        ...config.resolve.alias,
+        "@phrases": path.resolve(__dirname, "./src/phrases"),
     }
     return config;
 }
@@ -27,12 +31,10 @@ async function getEnonicHeaders() {
 
 const config = {
     reactStrictMode: true,
-    i18n: {
-        locales: ['en', 'no'],
-        defaultLocale: 'en',
-    },
+    trailingSlash: false,
+    transpilePackages: ['@enonic/nextjs-adapter'],
     webpack: getEnonicWebpackConfig,
     headers: getEnonicHeaders,
 };
 
-module.exports = withTM(withEnonicCache(config));
+module.exports = config;

@@ -22,7 +22,7 @@ To complete this section, we'll need one final part for listing movie details. T
 </part>
 ----
 +
-. **Redeploy** the Enonic app.
+. **Redeploy** the Enonic app (happens automatically if you started `enonic project dev`).
 +
 . **Add the Movie query and view** in Next.
 +
@@ -70,6 +70,8 @@ This will create a new page template content item, and open it in a new tab for 
 +
 image:movie-template.png[title="Content item of type template, configure to support movie items",width=1440px]
 +
-. Try visiting other movie items to **verify they now automatically render**.PS!Don't forget to publish the changes and the new page template.
+. Try visiting other movie items to **verify they now automatically render**.
++
+**PS!** Don't forget to publish the changes and the new page template.
 
 With templates sorted out, let's dive into  <<static.adoc#, production mode and page revalidation>>.

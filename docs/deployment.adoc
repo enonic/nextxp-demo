@@ -36,7 +36,7 @@ enonic cloud app install
 ----
 +
 . **Verify that the app was installed** from `Solution` -> `Applications` in the Enonic Console.
-. From XP Admin, **open Content Studio** to verify that your app automatically initialized the `Movie DB` project and imported content on the server, just like on your local machine.
+. From XP Admin, **open Content Studio** to verify that your app automatically initialized the `Intro` project and imported content on the server, just like on your local machine.
 . Just like <<sites#, you did it locally>> , **create a new site** called `Hmdb` and move all imported content there.
 . Lastly, remember to create a localized version of the site <<i18n#, as you did before>>.
 
@@ -44,11 +44,11 @@ enonic cloud app install
 
 The purpose of routes is to expose APIs and other endpoints in Enonic XP like `:8080/site/<project>/<branch>` to the internet.
 
-. **Create a new route called "API"** from `Solution` -> `Routes`.
+. **Create a new ingress called "API"** from `Solution` -> `Ingresses`.
 +
 Use the following settings:
 +
-Internal path:: `/site`
+Target path:: `/site`
 Public path:: `/api`
 ID provider:: -empty-
 +
@@ -73,9 +73,10 @@ You are now ready to deploy the the front-end application.
 . Create a new project `enonic-tutorial` and connect it to the repo you created in the previous step.
 . **Add the following environment variables** to the project (name: value):
 +
+* ENONIC_APP_NAME: <enonic app name (`tutorial.nxp` in this guide)>
 * ENONIC_API: <enonic route URL>
 * ENONIC_API_TOKEN: <yourSecret>
-* ENONIC_PROJECTS: moviedb/hmdb,no:moviedb-no/hmdb
+* ENONIC_MAPPINGS: en:intro/hmdb,no:intro-no/hmdb
 
 . **Verify the result**.
 The front-page of your app should now display a 404 - as you haven't published any content yet.

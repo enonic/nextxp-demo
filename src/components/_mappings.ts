@@ -1,15 +1,15 @@
-import {APP_NAME} from '@enonic/nextjs-adapter'
-import {ComponentRegistry} from "@enonic/nextjs-adapter/ComponentRegistry";
-import Person from './views/Person';
-import getPerson from './queries/getPerson';
+import {APP_NAME, ComponentRegistry} from '@enonic/nextjs-adapter'
+import TwoColumnLayout from './layouts/TwoColumnLayout';
 import MainPage from './pages/Main';
 import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
 import Heading from './parts/Heading';
 import MovieDetails, {getMovie} from './parts/MovieDetails';
-import TwoColumnLayout from './layouts/TwoColumnLayout';
 import {commonQuery, commonVariables} from './queries/common';
-import PanelMacro from './macros/PanelMacro';
-
+import getPerson from './queries/getPerson';
+import Person from './views/Person';
+// import PanelMacro from './macros/PanelMacro';
+// Remember to import base mappings
+import "@enonic/nextjs-adapter/baseMappings";
 
 // You can set common query for all views here
 ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);

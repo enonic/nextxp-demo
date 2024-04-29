@@ -35,7 +35,7 @@ We'll start off by adding a simple component that lists child items in the tree 
 NOTE: This component also contains a form, similar to content types.
 This means editors can configure it - sorting the items Ascending or Descending.
 +
-. **Build and deploy your Enonic app** once more to make the new part available in Content Studio.
+. **Build and deploy your Enonic app** once more to make the new part available in Content Studio (happens automatically if you started `enonic project dev`).
 +
 . **Add parts to the page**
 +
@@ -108,7 +108,7 @@ This part definition includes a form, with an link:https://developer.enonic.com/
 </part>
 ----
 +
-. **Redeploy** the Enonic app and add the part to your page
+. **Redeploy** the Enonic app and add the part to your page (happens automatically if you started `enonic project dev`).
 +
 . **Add the heading component in Next.js**.
 +

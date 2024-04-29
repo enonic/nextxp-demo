@@ -2,24 +2,21 @@
 :toc: right
 :imagesdir: media/
 
-This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. 
-
-NOTE: **Looking for a demo?** Try out a <<demo#, live version of Next.XP>>.
-
-== Intro
-
-Next.XP provides an opinionated out-of-the-box integration between Enonic XP and Next.js for building websites.
- 
-It offers content editors a familiar and hassle-free way of working with content, using structured content, component based landing pages, and extensive control over the site's URL structure.
-
-TIP: Looking to access and use Enonic's API directly? Check out the https://developer.enonic.com/docs/intro[Introduction guide], or the in-depth https://developer.enonic.com/docs/developer-101[developer 101 tutorial].
-
-image:cloud-preview.png[title="Editors enjoy WYSIWYG editing and live preview, combined with statically generated pages",width=1419px]
+This is a step-by-step tutorial on building and managing Next.js sites, using Enonic as your backend. The combined set of software and tools used in this tutorial is simply called Next.XP. You may alternatively <<demo#,skip the tutorial and try out a demo of Next.XP>> instead.
 
 [NOTE]
 ====
-This tutorial assumes you are somewhat familiar with link:https://nextjs.org/[Next.js]. Experience with Enonic is nice, but not required. Visit our https://developer.enonic.com/docs/tutorials[Tutorials] for an introduction to Enonic.
+*Requirements*: We recommend that you complete the https://developer.enonic.com/docs/intro/stable[introduction to Enonic] before embarking on this tutorial. Experience with link:https://nextjs.org/[Next.js] is nice, but not required.  
 ====
+
+== Intro
+
+Next.XP is an opinionated out-of-the-box integration between Enonic XP and Next.js - ideal for building and maintaining websites.
+ 
+It offers content editors a familiar and hassle-free way of working with content, using structured content, component based landing pages, and extensive control over the site's URL structure.
+
+image:cloud-preview.png[title="Editors enjoy WYSIWYG editing and live preview, combined with statically generated pages",width=1419px]
+
 
 You will complete the following steps:
 
