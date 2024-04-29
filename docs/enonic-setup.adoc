@@ -15,13 +15,7 @@ https://developer.enonic.com/start[*Install the Enonic CLI*] (follow link for in
 +
   enonic sandbox create nxptutorial -t essentials -f
 +
-NOTE: `-f` flag will force using the most recent release of Enonic XP.
-+
-. Start the sandbox with this command:
-+
-  enonic sandbox start nxptutorial --dev
-+
-NOTE: Dev mode optimizes the development process.
+NOTE: `-f` forces the use of default values for remaining options
 
 == Task: Create and deploy your app
 
@@ -29,14 +23,13 @@ IMPORTANT: Leave the sandbox running in the first terminal window, and open a ne
 
 . *Create a new project* using the `Introduction` app as a starter, by running the following command in your terminal:
 +
- enonic create tutorial.nxp -r tutorial-intro --sb nxptutorial -f
+ enonic create tutorial.nxp -r tutorial-intro --s nxptutorial -f
 +
 This command will:
 
 * use the GitHub repo `github.com/enonic/tutorial-intro` as a starter
-* to create an app called `tutorial.nxp` with version `1.0.0`
-* in the directory `nxp`
-* and link it to the `nxptutorial` sandbox which you created earlier
+* to create an app called `tutorial.nxp`
+* and link it to the `nxptutorial`
 
 . *Deploy the application*
 +
