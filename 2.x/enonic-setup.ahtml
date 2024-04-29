@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Release Notes</title>
+<title>Setting up Enonic</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,56 +437,215 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Release Notes</h1>
+<h1>Setting up Enonic</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#next_xp_demo_3">Next.XP Demo 3</a>
+<li><a href="#xp-at-a-glance">Enonic at a glance</a>
 <ul class="sectlevel2">
-<li><a href="#app_router_structure">App router structure</a></li>
-<li><a href="#improved_next_js_localization">Improved Next.js localization</a></li>
-<li><a href="#major_nextjs_adapter_refactoring">Major nextjs-adapter refactoring</a></li>
-<li><a href="#other_improvements">Other improvements</a></li>
+<li><a href="#enonic_apps">Enonic apps</a></li>
+<li><a href="#content">Content</a></li>
+</ul>
+</li>
+<li><a href="#the_movie_database">The Movie Database</a>
+<ul class="sectlevel2">
+<li><a href="#task_create_application_from_starter">Task: Create application from starter</a></li>
+<li><a href="#task_install_content_studio">Task: Install Content Studio</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="next_xp_demo_3"><a class="link" href="#next_xp_demo_3">Next.XP Demo 3</a></h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="app_router_structure"><a class="link" href="#app_router_structure">App router structure</a></h3>
 <div class="paragraph">
-<p>Next.js' app router is now default folder structure for Next.XP projects.
-This includes support for pages and layouts, route groups, parallel and intercepting routes.</p>
+<p>In this chapter, we will create an Enonic app based on the <code>Movie DB</code> project and launch a local development environment of the platform.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For an in-depth tutorial on Enonic, visit the official <a href="https://developer.enonic.com/guides/developer-101/xp7">Enonic Developer 101</a> guide.
+</td>
+</tr>
+</table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="improved_next_js_localization"><a class="link" href="#improved_next_js_localization">Improved Next.js localization</a></h3>
+</div>
+<div class="sect1">
+<h2 id="xp-at-a-glance"><a class="link" href="#xp-at-a-glance">Enonic at a glance</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>In addition to localization of content, Next.XP now supports localization of static texts both in client and server components.
-Use <code>useLocaleContext</code> hook in client-side components and <code>I18n</code> in server-side ones.</p>
-</div>
+<p>Our platform is called Enonic XP (XP, or Enonic for short).</p>
 </div>
 <div class="sect2">
-<h3 id="major_nextjs_adapter_refactoring"><a class="link" href="#major_nextjs_adapter_refactoring">Major nextjs-adapter refactoring</a></h3>
+<h3 id="enonic_apps"><a class="link" href="#enonic_apps">Enonic apps</a></h3>
 <div class="paragraph">
-<p>In order to support the new app router, <code>@enonic/nextjs-adapter</code> has been substantially refactored.</p>
+<p>Enonic apps are essentially how you extend and customize the platform. Enonic XP allows you to install and run one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/apps"><strong>applications</strong></a> in a single platform instance.</p>
+</div>
+<div class="paragraph">
+<p>Discover ready to run applications on <a href="https://market.enonic.com/">Enonic Market</a>, or build your own. You will create an app of your own in this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>An app may provide specific functionality. It may for instance produce everything needed for a large website, or provide smaller specific services, such as an <strong>API</strong>. An app is given a unique <a href="#new-project"><strong>app name</strong></a> when it&#8217;s built.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Useful terminology: A <strong>sandbox</strong> is a local Enonic development server running on your laptop. Once an app is built, it can be <strong>deployed</strong> to the sandbox - where it will be started and made available.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="other_improvements"><a class="link" href="#other_improvements">Other improvements</a></h3>
-<div class="ulist">
-<ul>
+<h3 id="content"><a class="link" href="#content">Content</a></h3>
+<div class="paragraph">
+<p>Apps typically ship with one or more <a href="https://developer.enonic.com/guides/developer-101/xp7/content"><strong>content types</strong></a>. Content types typically define data structures, JSON style. Each content type gets a unique name which is automatically pre-fixed with the app-name. e.g. <code>&lt;appName&gt;:&lt;contentTypeName&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Content types are used to create <strong>content items</strong>. Content is commonly created and handled via Enonic&#8217;s <a href="https://enonic.com/blog/publishing-power-enonic-content-studio-cheat-sheet"><strong>Content Studio</strong></a>. Content may be organised in tree structures, which can be useful both for internal, and external purposes - as you will see in this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>Each content items has a unique <strong>name</strong> within it&#8217;s path - similar to files and folders in a filesystem. It alsho has a human-friendly displayName.</p>
+</div>
+<div class="paragraph">
+<p>Content items can exist in two different <a href="https://developer.enonic.com/docs/xp/stable/storage/branches"><strong>branches</strong></a>: When creating or editing in Content Studio, you&#8217;re always working in the <code>draft</code> branch. When publishing, new items and changes are copied to the <code>master</code> branch.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the_movie_database"><a class="link" href="#the_movie_database">The Movie Database</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With Enonic, you may obviously create your own content model from scratch, but to save time, you&#8217;ll be using <a href="https://market.enonic.com/vendors/enonic/movie-db">The Movie Database</a> as a template.</p>
+</div>
+<div class="paragraph">
+<p>The movie DB ships with a pre-defined content-model, and sample content from the cinematic sphere.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s get going!</p>
+</div>
+<div class="sect2">
+<h3 id="task_create_application_from_starter"><a class="link" href="#task_create_application_from_starter">Task: Create application from starter</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><code>next/Link</code> component is now used for all internal links</p>
+<p><a href="https://developer.enonic.com/start"><strong>Install the Enonic CLI</strong></a> (follow link for instructions).</p>
 </li>
 <li>
-<p><code>getAsset</code> method for static assets</p>
+<p><strong>Create a new project</strong> using the "The Movie DB" as your template:</p>
+<div class="paragraph">
+<p>Run the following command from your terminal</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>enonic project create -r app-moviedb</pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Stick with the standard values and keep the suggested project name <code>com.example.myproject</code> for the examples in the tutorial to work properly.
+This will be referred to as <strong>app name</strong> later in this tutorial.
+</td>
+</tr>
+</table>
+</div>
 </li>
-</ul>
+<li>
+<p><strong>Deploy the application</strong></p>
+<div class="paragraph">
+<p>Run these commands to build and deploy the app:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>cd myproject/
+enonic project deploy</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When asked to create a sandbox (a local developer instance of Enonic XP), just give it a name i.e. <code>next-tutorial</code> and go with the default values.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When the sandbox has started, it outputs some server logs, and the sample content gets imported automatically.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="task_install_content_studio"><a class="link" href="#task_install_content_studio">Task: Install Content Studio</a></h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You don&#8217;t have to create a user in the Sandbox for this tutorial:
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Navigate to <a href="http://localhost:8080/admin" target="_blank" rel="noopener">http://localhost:8080/admin</a> and login without creating a user.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install <strong>Content Studio</strong> from the <code>top right XP menu</code> &#8594; <code>Applications</code> &#8594; <code>Install</code> and search for "Content Studio".</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/applications-cs-install.png" alt="applications cs install" width="808px" title="Installing Content Studio"></span></p>
+</div>
+</li>
+<li>
+<p><strong>Open Content Studio</strong> from <code>XP menu</code> &#8594; <code>Content Studio</code>. Choose the <code>Movie DB</code> project if asked to select a project. You should now see something like this:</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-moviedb.png" alt="content studio moviedb" width="1440px" title="Movie DB in Content Studio"></span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+when clicking on the content items, some will have a default preview. That&#8217;s okay for now - you&#8217;ll customize the preview later.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Congrats on setting up the Enonic development environment</strong></p>
+</div>
+<div class="paragraph">
+<p>With the SDK running, lets have a look at <a href="api-primer.ahtml">the API</a>.</p>
 </div>
 </div>
 </div>
@@ -494,7 +653,7 @@ Use <code>useLocaleContext</code> hook in client-side components and <code>I18n<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

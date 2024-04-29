@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Rendering basics</title>
+<meta name="author" content="Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.">
+<title>Next.XP TL;DR</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,43 +438,72 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Rendering basics</h1>
+<h1>Next.XP TL;DR</h1>
+<div class="details">
+<span id="author" class="author">Skip to the end of the tutorial. You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#dev_mode_rendering">Dev mode rendering</a></li>
-<li><a href="#task_get_person_content">Task: Get person content</a></li>
-<li><a href="#task_add_person_template">Task: Add person template</a></li>
-<li><a href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></li>
-<li><a href="#the_common_query">The common query</a></li>
+<li><a href="#tldr">tl;dr</a>
+<ul class="sectlevel2">
+<li><a href="#1_setup_enonic">1. Setup Enonic</a></li>
+<li><a href="#2_create_git_repo">2. Create Git repo</a></li>
+<li><a href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></li>
+<li><a href="#4_activate_preview">4. Activate preview</a></li>
+</ul>
+</li>
+<li><a href="#how_does_it_work">How does it work?</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this chapter we will look into the basic rendering mechanisms, and add some custom rendering to our app as well.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="dev_mode_rendering"><a class="link" href="#dev_mode_rendering">Dev mode rendering</a></h2>
+<h2 id="tldr"><a class="link" href="#tldr">tl;dr</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As you have seen during the setup of Next, each content item automatically map to a page listing available props. These props are fetched by the so-called Enonic Adapter.</p>
+<p>Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.</p>
+</div>
+<div class="sect2">
+<h3 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1. Setup Enonic</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://enonic.com/sign-up" class="bare">https://enonic.com/sign-up</a></p>
+</li>
+<li>
+<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.XP Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
+</li>
+<li>
+<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> route, you will need it later.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Visiting the API link will give you a 404 page, because the GraphQL APIs are located on /draft and /master respectively. Also, GraphQL communicates via HTTP <code>POST</code> rather than <code>GET</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2. Create Git repo</a></h3>
+<div class="paragraph">
+<p>To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.</p>
 </div>
 <div class="paragraph">
-<p>By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which React template is actually applied.</p>
+<p>Vercel uses this access to automatically fetch and build the app based on events. The write permission is used to setup the required webhooks etc in Github.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_get_person_content"><a class="link" href="#task_get_person_content">Task: Get person content</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Let&#8217;s build our first component - starting with rendring of "person" content types:</p>
-</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone or fork <a href="https://github.com/enonic/nextxp-demo/" class="bare">https://github.com/enonic/nextxp-demo/</a> to your personal Github/Bitbucket/Gitlab account.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -481,51 +511,63 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The full name of your content type should now be <code>com.example.myproject:person</code> If you used a different name when creating the Enonic app, update the <code>.env</code> file in your Next.js app to reflect this.
+If you are using Github, simply press the <code>Fork</code> button at the top right.
 </td>
 </tr>
 </table>
 </div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3. Deploy the Next.js front-end</a></h3>
+<div class="paragraph">
+<p>Vercel are the makers of Next.js, and you&#8217;ll be using their service to host the front-end.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add query</strong> by creating the following file in your front-end application</p>
-<div class="listingblock">
-<div class="title">src/components/queries/getPerson.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
-
-const getPerson = `
-query($path:ID!){
-  guillotine {
-    get(key:$path) {
-      displayName
-      ... on ${APP_NAME_UNDERSCORED}_Person {
-        data {
-          bio
-          dateofbirth
-          photos {
-           ... on media_Image {
-              imageUrl: imageUrl(type: absolute, scale: "width(500)")
-              attachments {
-                name
-              }
-            }
-          }
-        }
-      }
-      parent {
-        _path(type: siteRelative)
-      }
-    }
-  }
-}`;
-
-export default getPerson;</code></pre>
+<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
+</li>
+<li>
+<p>Create a new project i.e. <code>enonic-demo</code>, and follow the steps to connect it to the Git repo you created in step 2.</p>
+</li>
+<li>
+<p><strong>Add environment variables</strong> telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ENONIC_API: &lt;URL to Enonic API&gt;</p>
+</li>
+<li>
+<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
+</li>
+<li>
+<p>ENONIC_PROJECTS: /hmdb/hmdb</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The PROJECTS variable defines which content project and site to access in Enonic.
+</td>
+</tr>
+</table>
 </div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>After deploying, the Vercel app should render the front page:</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/front-page.png" alt="front page" width="1003px" title="Front page showing some text, links and a picture"></span></p>
 </div>
 <div class="paragraph">
-<p>This file defines a graphQL query 'getPerson' that will fetch data from the Enonic API.</p>
+<p>Make a note of the application URL, you will need it when setting up the preview later.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -534,146 +576,50 @@ export default getPerson;</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You may validate the query by copying it to the GraphQL playground. Replace <code>APP_NAME_UNDERSCORED</code> with <code>com_example_myproject</code> and set a query variable, try this for instance:
-  <code>{"path": "/hmdb/persons/brad-pitt"}`</code>
+Check the Vercel function logs if you are not getting the expected result.
 </td>
 </tr>
 </table>
 </div>
 </li>
-<li>
-<p><strong>Add the following imports</strong> to component mappings file:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import getPerson from './queries/getPerson';
-import {APP_NAME} from '@enonic/nextjs-adapter';</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Then <strong>Register the query</strong> in the same file:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
-ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPerson,
-    view: PropsView
-});</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Check the result</strong></p>
-<div class="paragraph">
-<p>By visiting a person item - like <code><a href="http://localhost:3000/persons/morgan-freeman" target="_blank" rel="noopener">http://localhost:3000/persons/morgan-freeman</a></code> you should now see data props being listed in the view.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-props.png" alt="morgan freeman props" width="767px" title="Page showing data props for Morgan Freeman content item"></span></p>
-</div>
-</li>
 </ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="task_add_person_template"><a class="link" href="#task_add_person_template">Task: Add person template</a></h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="4_activate_preview"><a class="link" href="#4_activate_preview">4. Activate preview</a></h3>
 <div class="paragraph">
-<p>With fresh content available, it&#8217;s time to make things shine:</p>
+<p>With the front-end running, it is time to enable preview in Content Studio.</p>
+</div>
+<div class="paragraph">
+<p>The fastest way to try it out goes as follows:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add view</strong> by creating the following file in your Next.js application</p>
-<div class="listingblock">
-<div class="title">src/components/views/Person.tsx</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
-import Link from 'next/link';
-
-const Person = (props: FetchContentResult) =&gt; {
-    const {displayName, data, parent} = props.data?.get as any;
-    const {bio, photos} = data;
-    const meta = props.meta;
-
-    return (
-        &lt;&gt;
-            &lt;div&gt;
-                &lt;h2&gt;{displayName}&lt;/h2&gt;
-                &lt;p&gt;{bio}&lt;/p&gt;
-                {
-                    photos.map((photo: any, i: number) =&gt; (
-                        &lt;img key={i}
-                             src={getUrl(photo.imageUrl, meta)}
-                             title={getTitle(photo, displayName)}
-                             alt={getTitle(photo, displayName)}
-                             width="500"
-                        /&gt;
-                    ))
-                }
-            &lt;/div&gt;
-            &lt;p&gt;&lt;Link href={getUrl(`/${parent._path}`, meta)}&gt;{I18n.localize('back')}&lt;/Link&gt;&lt;/p&gt;
-        &lt;/&gt;
-    )
-}
-
-export default Person;
-
-function getTitle(photo: any, displayName: string) {
-    return (photo.attachments || [])[0].name || displayName;
-}</code></pre>
-</div>
-</div>
+<p><strong>Launch Enonic XP admin</strong> from the solution dashboard.</p>
+</li>
+<li>
+<p><strong>Open Content Studio</strong> from the top right <code>XP menu &#8594; Content Studio</code>.</p>
+</li>
+<li>
+<p>Choose the <code>Headless Movie DB</code> project, then click the root item in the tree structure <code>/hmdb</code> and click <code>Edit</code>.</p>
 <div class="paragraph">
-<p>This file defines a react view <code>Person</code> that will use the props from the query to render the person.</p>
+<p><span class="image"><img src="media/content-studio-edit-site.png" alt="content studio edit site" width="650px" title="Select and edit the site"></span></p>
 </div>
 </li>
 <li>
-<p><strong>Register Person view</strong> by adding the following import to the component mappings:</p>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import Person from './views/Person';</code></pre>
-</div>
-</div>
+<p>Add the <code>Next.XP</code> app to the list of applications on the site. It will override the default preview for the content within the site.</p>
 <div class="paragraph">
-<p>And then update the component mapping you created earlier to use the new view:</p>
-</div>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
-ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPerson,
-    view: Person
-});</code></pre>
-</div>
+<p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="779px" title="Add the Next.XP application to the site."></span></p>
 </div>
 </li>
 <li>
-<p><strong>Check the result</strong> - The page should automatically reload once the changes have been saved</p>
+<p>After saving, the preview should update to show your front-end.</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-render.png" alt="morgan freeman render" width="768px" title="Person rendering with query and view"></span></p>
+<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
 </div>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>The content type mapping applies to every <code>person</code> content item in the site, regardless of it&#8217;s location in the hierarchy. Try looking at some other persons, eg. <a href="http://localhost:3000/persons/uma-thurman" target="_blank" rel="noopener">http://localhost:3000/persons/uma-thurman</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_add_custom_header_and_footer"><a class="link" href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Adding some styles, a header and a footer will make the site more interesting visually. Next.js provides a handy solution to this problem.</p>
-</div>
-<div class="paragraph">
-<p>The <code>src/app/layout.tsx</code> file is called root layout, and by modifying it we can inject the same header and footer components to all pages generated by Next.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -682,120 +628,37 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Sample header and footer views are already included in the starter under /<code>src/components/views</code>, so all we need to do is put them to work.
+<div class="paragraph">
+<p>For production use, we recommend moving the configuration to the solution console - <a href="deployment.ahtml">as described here</a>.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Update <code>src/app/[locale]/[[&#8230;&#8203;contentPath]]/layout.tsx`</code> with the following changes:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Add these imports</strong></p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import Header from '../../../components/views/Header';
-import Footer from '../../../components/views/Footer';
-import {getAsset} from '@enonic/nextjs-adapter';</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>And at the bottom of the file <strong>replace the entire return function</strong>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-typescriptjsx" data-lang="typescriptjsx">    return (
-        &lt;LocaleContextProvider locale={params.locale}&gt;
-            &lt;StaticContent condition={isEdit}&gt;
-                &lt;main&gt;{children}&lt;/main&gt;
-            &lt;/StaticContent&gt;
-        &lt;/LocaleContextProvider&gt;
-    )</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>with this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-typescriptjsx" data-lang="typescriptjsx">    return (
-        &lt;LocaleContextProvider locale={params.locale}&gt;
-            &lt;StaticContent condition={isEdit}&gt;
-                &lt;Header meta={meta} title={I18n.localize('title')} logoUrl={getAsset('/images/xp-shield.svg', meta)}/&gt;
-                &lt;main&gt;{children}&lt;/main&gt;
-                &lt;Footer/&gt;
-            &lt;/StaticContent&gt;
-        &lt;/LocaleContextProvider&gt;
-    )</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Pay attention to the <code>getAsset()</code> function.
-It ensures that links to assets are working seamlessly in Next.js, as well as in Content Studio preview mode - as you will see later.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Morgan Freeman&#8217;s page should now look like this</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/morgan-freeman-header-footer.png" alt="morgan freeman header footer" width="768px" title="Rendering with header and footer"></span></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="the_common_query"><a class="link" href="#the_common_query">The common query</a></h2>
+<h2 id="how_does_it_work"><a class="link" href="#how_does_it_work">How does it work?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You may have noticed the <code>Common</code> props appearing in the various prop views - these originate from the the following statement in the mappings:</p>
-</div>
-<div class="listingblock">
-<div class="title">src/components/_mappings.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">...
-
-// Common query
-ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
-
-...</code></pre>
-</div>
+<p>The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode.</p>
 </div>
 <div class="paragraph">
-<p>The result of this query is available across all components on the page, and may be useful if you want to fetch data for the page itself, or to be used across multiple components. Feel free to adapt it to your requirements.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you do not need any common props, remove it from the mappings to optimize performance.
-</td>
-</tr>
-</table>
+<p>Your edits will only be visible in Content Studio, until published.</p>
 </div>
 <div class="paragraph">
-<p>With the basic rendering completed, in the following chapter, you&#8217;ll add <a href="preview.ahtml">preview support to Content Studio</a>.</p>
+<p>When publishing changes, Next.XP will automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
+</div>
+<div class="paragraph">
+<p>Congratulations, you now have a Next.js site powered by Enonic! 🚀</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

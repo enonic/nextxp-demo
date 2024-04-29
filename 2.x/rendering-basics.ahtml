@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Getting to know the GraphQL API</title>
+<title>Rendering basics</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,15 +437,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Getting to know the GraphQL API</h1>
+<h1>Rendering basics</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#intro">Intro</a></li>
-<li><a href="#task_graphql_playground">Task: GraphQL Playground</a></li>
-<li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
-<li><a href="#task_query_variables">Task: Query variables</a></li>
-<li><a href="#task_type_introspection">Task: Type introspection</a></li>
+<li><a href="#dev_mode_rendering">Dev mode rendering</a></li>
+<li><a href="#task_get_person_content">Task: Get person content</a></li>
+<li><a href="#task_add_person_template">Task: Add person template</a></li>
+<li><a href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></li>
+<li><a href="#the_common_query">The common query</a></li>
 </ul>
 </div>
 </div>
@@ -453,15 +453,79 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will get a quick introduction to Enonic&#8217;s GraphQL API - aka Guillotine. It is the point of integration between Next.js and Enonic.</p>
+<p>In this chapter we will look into the basic rendering mechanisms, and add some custom rendering to our app as well.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro"><a class="link" href="#intro">Intro</a></h2>
+<h2 id="dev_mode_rendering"><a class="link" href="#dev_mode_rendering">Dev mode rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic provides a ridiculously flexible GraphQL API that dynamically reflects changes in your applications and content. Like Content Studio, the  <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine app</a> (and its API) was automatically downloaded and installed when you created your sandbox.</p>
+<p>As you have seen during the setup of Next, each content item automatically map to a page listing available props. These props are fetched by the so-called Enonic Adapter.</p>
+</div>
+<div class="paragraph">
+<p>By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which React template is actually applied.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_get_person_content"><a class="link" href="#task_get_person_content">Task: Get person content</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s build our first component - starting with rendring of "person" content types:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The full name of your content type should now be <code>com.example.myproject:person</code> If you used a different name when creating the Enonic app, update the <code>.env</code> file in your Next.js app to reflect this.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Add query</strong> by creating the following file in your front-end application</p>
+<div class="listingblock">
+<div class="title">src/components/queries/getPerson.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
+
+const getPerson = `
+query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      displayName
+      ... on ${APP_NAME_UNDERSCORED}_Person {
+        data {
+          bio
+          dateofbirth
+          photos {
+           ... on media_Image {                                             
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
+              attachments {                                                 
+                name
+              }
+            }
+          }
+        }
+      }
+      parent {
+        _path(type: siteRelative)                                                           
+      }
+    }
+  }
+}`;
+
+export default getPerson;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file defines a graphQL query 'getPerson' that will fetch data from the Enonic API.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -470,101 +534,43 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-New to GraphQL as well? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_graphql_playground"><a class="link" href="#task_graphql_playground">Task: GraphQL Playground</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For every content project in your sandbox, you will automatically get an API. By clicking the <code>GraphQL Playground</code> icon in your Content Studio menu, you should see the following</p>
-</div>
-<div class="paragraph">
-<p>+
-<span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The API can be accessed directly following URL: <a href="http://localhost:8080/site/intro" target="_blank" rel="noopener">http://localhost:8080/site/intro</a>.</p>
-</div>
-<div class="paragraph">
-<p><code>hmdb</code> is the name of your Content Studio project.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_run_a_simple_query"><a class="link" href="#task_run_a_simple_query">Task: Run a simple query</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Query playground lets us browse and use the API directly.
-Use the left hand field to type/paste in queries, press the "play" button to <strong>run the query</strong>, and the result will be presented in the right hand field.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Query movies</strong>:</p>
-<div class="paragraph">
-<p>One of the objectives in this tutorial is listing and presenting movie details.
-Run this simple query that retrieves the ID and displayName of some movies:</p>
-</div>
-<div class="listingblock">
-<div class="title">Query to fetch movies from the Headless API:</div>
-<div class="content">
-<pre class="highlight"><code class="language-graphql" data-lang="graphql">{
-    guillotine {
-        queryDsl(
-          query: {
-            boolean: {
-              must:[
-                {term: {field: "valid", value: {boolean:true}}}
-                {term: {field: "type", value: {string: "tutorial.nxp:movie"}}}
-              ]
-            }
-          }
-          sort: {
-          	field:"displayName"
-          	direction:ASC
-        	}
-        ) {
-            id: _id
-            displayName
-        }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>tutorial.nxp</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
+You may validate the query by copying it to the GraphQL playground. Replace <code>APP_NAME_UNDERSCORED</code> with <code>com_example_myproject</code> and set a query variable, try this for instance:
+  <code>{"path": "/hmdb/persons/brad-pitt"}`</code>
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p><strong>View the Result</strong></p>
+<p><strong>Add the following imports</strong> to component mappings file:</p>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import getPerson from './queries/getPerson';
+import {APP_NAME} from '@enonic/nextjs-adapter';</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Then <strong>Register the query</strong> in the same file:</p>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
+ComponentRegistry.addContentType(`${APP_NAME}:person`, {
+    query: getPerson,
+    view: PropsView
+});</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Check the result</strong></p>
 <div class="paragraph">
-<p>After executing the query, you should get a result in the right hand response panel.
-<span class="image"><img src="media/content-studio-basic-query.png" alt="content studio basic query" width="1440px" title="Running a query for movies in Query Playground"></span></p>
+<p>By visiting a person item - like <code><a href="http://localhost:3000/persons/morgan-freeman" target="_blank" rel="noopener">http://localhost:3000/persons/morgan-freeman</a></code> you should now see data props being listed in the view.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/morgan-freeman-props.png" alt="morgan freeman props" width="767px" title="Page showing data props for Morgan Freeman content item"></span></p>
 </div>
 </li>
 </ol>
@@ -572,189 +578,229 @@ Run this simple query that retrieves the ID and displayName of some movies:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_query_variables"><a class="link" href="#task_query_variables">Task: Query variables</a></h2>
+<h2 id="task_add_person_template"><a class="link" href="#task_add_person_template">Task: Add person template</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In addition to the query itself, GraphQL also supports optional <code>query variables</code>.
-Query variables enable you to re-use the same query, but for instance fetch different content each time.</p>
+<p>With fresh content available, it&#8217;s time to make things shine:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add query</strong> to the GraphQL playground:</p>
+<p><strong>Add view</strong> by creating the following file in your Next.js application</p>
 <div class="listingblock">
+<div class="title">src/components/views/Person.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){               <i class="conum" data-value="1"></i><b>(1)</b>
-  guillotine {
-    get(key:$path) {            <i class="conum" data-value="2"></i><b>(2)</b>
-      type
-      _id
-      displayName
-    }
-  }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>path</code> is declared (with a <code>$</code> marking it as a variable in the query). The declaration includes its type (<code>ID</code>), and a <code>!</code> marking it as a <em>required</em> parameter).</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The <code>path</code> variable here used as the value of the <code>key</code> parameter, passed to the <code>get</code> field.</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p><strong>Add query Variables</strong>. In the bottom left of Query Playground, you will find a the `Query variables`tab. Add the following JSON to the field.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Tthe <code>path</code> field in the JSON corresponds to the <code>$path</code> in the query string above:
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
-    "path": "/movies/se7en"
-}</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Run the query</strong> to validate that the parameter working as expected.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_type_introspection"><a class="link" href="#task_type_introspection">Task: Type introspection</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The queries above only specify fields like <code>_id</code> and <code>displayName</code> for each content found. These are general fields in the CMS, available across all content types.</p>
-</div>
-<div class="paragraph">
-<p>Content types may also define their own <a href="https://developer.enonic.com/docs/xp/stable/cms/content-types">custom fields</a>. These are stored under the <code>data</code> field. In the headless API, deeper data and functionality belonging to a content type is accessed through <strong>introspection</strong>.</p>
-</div>
-<div class="paragraph">
-<p>For example, you may introspect the fields that are exclusive to the <code>com.example.myproject:movie</code> content type like this:</p>
-</div>
-<div class="listingblock">
-<div class="title">Content type introspection:</div>
-<div class="content">
-<pre class="highlight nowrap"><code>... on com_example_myproject_Movie</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The fully-qualified content type name is used, dots are replaced with underscores, and the name is capitalized <code>Movie</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Fetch a complex data set</strong></p>
-<div class="paragraph">
-<p>Lets get content for a movie, the referenced <em>image</em> items <code>media:image</code> and <em>person</em> items <code>com.example.myproject:person</code> in a single query:</p>
-</div>
-<div class="paragraph">
-<p>Paste this query into the GraphQL Playground:</p>
-</div>
-<div class="listingblock">
-<div class="title">A query with nested introspections</div>
-<div class="content">
-<pre class="highlight"><code class="language-graphql" data-lang="graphql">query($path:ID!){
-  guillotine {
-    get(key:$path) {
-      type
-      displayName
-      ... on tutorial_nxp_Movie {
-        data {
-          subtitle
-          abstract
-          trailer
-          release
-          photos {
-            ... on media_Image {
-                imageUrl: imageUrl(type: absolute, scale: "width(500)")
-            }
-          }
-          cast {
-            character
-            actor {
-              displayName
-              ... on tutorial_nxp_Person {
-                _path
-                data {
-                  photos {
-                    ... on media_Image {
-                      imageUrl: imageUrl(type: absolute, scale: "block(100,100)")
-                    }
-                  }
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
+import {FetchContentResult, getUrl} from '@enonic/nextjs-adapter';
+
+const Person = (props: FetchContentResult) =&gt; {
+    const {displayName, data, parent} = props.data?.get as any;
+    const {bio, photos} = data;
+    const meta = props.meta;
+    const {_path} = parent;
+
+    return (
+        &lt;&gt;
+            &lt;div&gt;
+                &lt;h2&gt;{displayName}&lt;/h2&gt;
+                &lt;p&gt;{bio}&lt;/p&gt;
+                {
+                    photos.map((photo: any, i: number) =&gt; (
+                        &lt;img key={i}
+                             src={getUrl(photo.imageUrl, meta)}
+                             title={getTitle(photo, displayName)}
+                             alt={getTitle(photo, displayName)}
+                             width="500"
+                        /&gt;
+                    ))
                 }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+            &lt;/div&gt;
+            &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;Back to Persons&lt;/a&gt;&lt;/p&gt;
+        &lt;/&gt;
+    )
+}
+
+export default Person;
+
+function getTitle(photo: any, displayName: string) {
+    return (photo.attachments || [])[0].name || displayName;
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Notice how <code>imageUrl</code> is requested with parameters of its own? Type introspections can expose certain <a href="https://developer.enonic.com/docs/guillotine/stable/api">functions for processing data</a> before returning it.</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This file defines a react view <code>Person</code> that will use the props from the query to render the person.</p>
 </div>
 </li>
 <li>
-<p>Keep the <strong>query variables</strong> from the previous step:</p>
+<p><strong>Register Person view</strong> by adding the following import to the component mappings:</p>
 <div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
-    "path": "/movies/se7en"
-}</code></pre>
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import Person from './views/Person';</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.</p>
+<p>And then update the component mapping you created earlier to use the new view:</p>
 </div>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">// Content type mappings
+ComponentRegistry.addContentType(`${APP_NAME}:person`, {
+    query: getPerson,
+    view: Person
+});</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Check the result</strong> - The page should automatically reload once the changes have been saved</p>
 <div class="paragraph">
-<p>All in all, this allows for fetching deep and rich content data in a single API request.</p>
+<p><span class="image"><img src="media/morgan-freeman-render.png" alt="morgan freeman render" width="768px" title="Person rendering with query and view"></span></p>
 </div>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>In the next chapter you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
+<p>The content type mapping applies to every <code>person</code> content item in the site, regardless of it&#8217;s location in the hierarchy. Try looking at some other persons, eg. <a href="http://localhost:3000/persons/uma-thurman" target="_blank" rel="noopener">http://localhost:3000/persons/uma-thurman</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_add_custom_header_and_footer"><a class="link" href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Adding some styles, a header and a footer will make the site more interesting visually. Next.js provides a handy solution to this problem.</p>
+</div>
+<div class="paragraph">
+<p>The <code>_app.tsx</code> file initializes the React pipeline, and by modifying it we can inject the same header and footer components to all pages generated by Next.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Sample header and footer views are already included in the starter under /<code>src/components/views</code>, so all we need to do is put them to work.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Update <code>src/pages/_app.tsx`</code> with the following changes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Add these imports</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import Header from '../components/views/Header';
+import Footer from '../components/views/Footer';
+import {getUrl} from '@enonic/nextjs-adapter';</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>And at the bottom of the file <strong>replace the entire return function</strong>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
+    &lt;StaticContent condition={isEdit}&gt;
+        &lt;Component {...pageProps} /&gt;
+    &lt;/StaticContent&gt;
+);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
+    &lt;StaticContent condition={isEdit}&gt;
+        &lt;Header
+            title="🔥 Next.XP"
+            logoUrl={getUrl('/images/xp-shield.svg', pageProps.meta)}
+            meta={pageProps.meta}
+        /&gt;
+            &lt;main style={{
+                margin: `0 auto`,
+                maxWidth: 960,
+                padding: `0 1rem`,
+            }}&gt;
+                &lt;Component {...pageProps} /&gt;
+            &lt;/main&gt;
+        &lt;Footer/&gt;
+    &lt;/StaticContent&gt;
+);</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Pay attention to the <code>getUrl()</code> function. It ensures that links to assets and pages are working seamlessly in Next.js, as well as in Content Studio preview mode - as you will see later.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Morgan Freeman&#8217;s page should now look like this</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/morgan-freeman-header-footer.png" alt="morgan freeman header footer" width="768px" title="Rendering with header and footer"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the_common_query"><a class="link" href="#the_common_query">The common query</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You may have noticed the <code>Common</code> props appearing in the various prop views - these originate from the the following statement in the mappings:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/_mappings.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">...
+
+// Common query
+ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
+
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of this query is available across all components on the page, and may be useful if you want to fetch data for the page itself, or to be used across multiple components. Feel free to adapt it to your requirements.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you do not need any common props, remove it from the mappings to optimize performance.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With the basic rendering completed, in the following chapter, you&#8217;ll add <a href="preview.ahtml">preview support to Content Studio</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

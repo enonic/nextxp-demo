@@ -527,7 +527,7 @@ Both Enonic and Next.js are open source software projects and can be deployed mo
 <p><strong>Verify that the app was installed</strong> from <code>Solution</code> &#8594; <code>Applications</code> in the Enonic Console.</p>
 </li>
 <li>
-<p>From XP Admin, <strong>open Content Studio</strong> to verify that your app automatically initialized the <code>Movie DB</code> project and imported content on the server, just like on your local machine.</p>
+<p>From XP Admin, <strong>open Content Studio</strong> to verify that your app automatically initialized the <code>Intro</code> project and imported content on the server, just like on your local machine.</p>
 </li>
 <li>
 <p>Just like <a href="sites.ahtml">you did it locally</a> , <strong>create a new site</strong> called <code>Hmdb</code> and move all imported content there.</p>
@@ -548,13 +548,13 @@ Both Enonic and Next.js are open source software projects and can be deployed mo
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create a new route called "API"</strong> from <code>Solution</code> &#8594; <code>Routes</code>.</p>
+<p><strong>Create a new ingress called "API"</strong> from <code>Solution</code> &#8594; <code>Ingresses</code>.</p>
 <div class="paragraph">
 <p>Use the following settings:</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Internal path</dt>
+<dt class="hdlist1">Target path</dt>
 <dd>
 <p><code>/site</code></p>
 </dd>
@@ -625,13 +625,16 @@ The URL should look something like this: <code><a href="https://account-solution
 <div class="ulist">
 <ul>
 <li>
+<p>ENONIC_APP_NAME: &lt;enonic app name (<code>tutorial.nxp</code> in this guide)&gt;</p>
+</li>
+<li>
 <p>ENONIC_API: &lt;enonic route URL&gt;</p>
 </li>
 <li>
 <p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
 </li>
 <li>
-<p>ENONIC_PROJECTS: moviedb/hmdb,no:moviedb-no/hmdb</p>
+<p>ENONIC_MAPPINGS: en:intro/hmdb,no:intro-no/hmdb</p>
 </li>
 </ul>
 </div>
@@ -789,7 +792,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

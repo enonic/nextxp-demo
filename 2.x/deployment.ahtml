@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Internationalization</title>
+<title>Deploying to production</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,17 +437,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Internationalization</h1>
+<h1>Deploying to production</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#task_create_a_layered_project">Task: Create a layered project</a></li>
-<li><a href="#task_set_up_i18n_in_next_js">Task: Set up i18n in Next.js</a></li>
-<li><a href="#task_translate_and_publish">Task: Translate and publish</a></li>
-<li><a href="#multi_front_end_setup">Multi front-end setup</a></li>
-<li><a href="#accessing_locale_in_views">Accessing locale in views</a></li>
-<li><a href="#localizing_the_views">Localizing the views</a></li>
+<li><a href="#task_sign_up_to_enonic">Task: Sign up to Enonic</a></li>
+<li><a href="#task_install_your_app">Task: Install your app</a></li>
+<li><a href="#task_expose_api_via_route">Task: Expose API via route</a></li>
+<li><a href="#task_add_your_front_end_to_git">Task: Add your front-end to Git</a></li>
+<li><a href="#task_deploy_next_app">Task: Deploy Next app</a></li>
+<li><a href="#task_link_content_studio_to_vercel">Task: Link Content Studio to Vercel</a></li>
+<li><a href="#task_publish_a_page">Task: Publish a page</a></li>
+<li><a href="#summary_and_whats_next">Summary, and whats Next?</a></li>
 </ul>
 </div>
 </div>
@@ -455,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will learn what it takes to support multi-language for your site.</p>
+<p>In this chapter you will launch cloud instances of both Enonic and Next - link them together, and see the glorious result.</p>
 </div>
 </div>
 </div>
@@ -463,106 +465,180 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Next.js has native multi-language support, allowing your projects to switch language on the fly.</p>
+<p>To complete this chapter, you&#8217;ll be using Enonic to host the XP side of things, and Vercel for the front-end - Vercel are the makers of Next.js.</p>
 </div>
-<div class="paragraph">
-<p>To back this, Content Studio has a feature called content layering.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Both Enonic and Next.js are open source software projects and can be deployed more or less anywhere. Have a look at the <a href="https://developer.enonic.com/docs/hosting">Enonic platform hosting page</a> for more details.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_create_a_layered_project"><a class="link" href="#task_create_a_layered_project">Task: Create a layered project</a></h2>
+<h2 id="task_sign_up_to_enonic"><a class="link" href="#task_sign_up_to_enonic">Task: Sign up to Enonic</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To demonstrate multi-language, you first need to activate support for translating your content in Content Studio. In our case, let&#8217;s try Norwegian.</p>
+<p>Create an account to get a free developer instance of Enonic XP</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create a new project</strong> in Content Studio by clicking on the <code>Settings</code> cog icon, on the left-hand side of the grid. You will be presented with the currently available projects:</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-settings.png" alt="content studio settings" width="1024px" title="Project list"></span></p>
+<p><strong>Sign up</strong> for a <a href="https://enonic.com/sign-up">free developer account</a>.</p>
+</li>
+<li>
+<p><strong>Create a new solution using the <code>CMS essentials</code> template</strong>. This will install applications like <code>Content Studio</code> and <code>Guillotine</code> automatically.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>Click <code>New&#8230;&#8203;</code> button, and select type <code>Layer</code>. Then choose the <code>Movie DB</code> project as the parent</p>
+<p>When the new solution has started, launch <code>Enonic XP Admin</code> to verify that everything is up and running.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_install_your_app"><a class="link" href="#task_install_your_app">Task: Install your app</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Connect Enonic CLI to the cloud</strong> by running this command, and follow the instructions:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic cloud login</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Install your enonic app</strong> directly from the app folder by running this command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic cloud app install</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Verify that the app was installed</strong> from <code>Solution</code> &#8594; <code>Applications</code> in the Enonic Console.</p>
+</li>
+<li>
+<p>From XP Admin, <strong>open Content Studio</strong> to verify that your app automatically initialized the <code>Movie DB</code> project and imported content on the server, just like on your local machine.</p>
+</li>
+<li>
+<p>Just like <a href="sites.ahtml">you did it locally</a> , <strong>create a new site</strong> called <code>Hmdb</code> and move all imported content there.</p>
+</li>
+<li>
+<p>Lastly, remember to create a localized version of the site <a href="i18n.ahtml">as you did before</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_expose_api_via_route"><a class="link" href="#task_expose_api_via_route">Task: Expose API via route</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="media/content-studio-create-layer.png" alt="content studio create layer" width="1024px" title="Layered project type"></span></p>
+<p>The purpose of routes is to expose APIs and other endpoints in Enonic XP like <code>:8080/site/&lt;project&gt;/&lt;branch&gt;</code> to the internet.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create a new route called "API"</strong> from <code>Solution</code> &#8594; <code>Routes</code>.</p>
 <div class="paragraph">
-<p>Fill in the rest of the form, using the following values:</p>
+<p>Use the following settings:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Internal path</dt>
+<dd>
+<p><code>/site</code></p>
+</dd>
+<dt class="hdlist1">Public path</dt>
+<dd>
+<p><code>/api</code></p>
+</dd>
+<dt class="hdlist1">ID provider</dt>
+<dd>
+<p>-empty-</p>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p><strong>Make a note of the route URL</strong> - you will find it in the route details.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The URL should look something like this: <code><a href="https://account-solution-environment.enonic.net/api" class="bare">https://account-solution-environment.enonic.net/api</a></code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_add_your_front_end_to_git"><a class="link" href="#task_add_your_front_end_to_git">Task: Add your front-end to Git</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vercel (which will be hosting your front-end) will need write access to a Git repo with your code.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create a new Git repo</strong> - Vercel supports Github, Gitlab and Bitbucket.</p>
+</li>
+<li>
+<p><strong>Commit and push</strong> your Next.js app files to the new repo.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_deploy_next_app"><a class="link" href="#task_deploy_next_app">Task: Deploy Next app</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You are now ready to deploy the the front-end application.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
+</li>
+<li>
+<p>Create a new project <code>enonic-tutorial</code> and connect it to the repo you created in the previous step.</p>
+</li>
+<li>
+<p><strong>Add the following environment variables</strong> to the project (name: value):</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Name</strong>: <code>Film DB</code></p>
+<p>ENONIC_API: &lt;enonic route URL&gt;</p>
 </li>
 <li>
-<p><strong>Identifier</strong>: <code>intro-no</code></p>
+<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
 </li>
 <li>
-<p><strong>Language</strong>: <code>norsk (no)</code></p>
-</li>
-<li>
-<p><strong>Access mode</strong>: <code>Public</code></p>
-</li>
-<li>
-<p>Other fields may be skipped</p>
-<div class="paragraph">
-<p>After saving and closing the wizard, the new project should appear in the list.</p>
-</div>
+<p>ENONIC_PROJECTS: moviedb/hmdb,no:moviedb-no/hmdb</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Verify the new layer</strong> by going back to the content list (via the pencil icon), and then switching context using the context selector in the top bar.</p>
-<div class="paragraph">
-<p>After switching context, you should see the following:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-filmdb.png" alt="content studio filmdb" width="1024px" title="Film DB project"></span></p>
-</div>
-</li>
-<li>
-<p>Finally <strong>publish the project</strong> by clicking the <code>Publish</code> button in the top bar.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_set_up_i18n_in_next_js"><a class="link" href="#task_set_up_i18n_in_next_js">Task: Set up i18n in Next.js</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Next, let&#8217;s turn on multi-language support in Next.js.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>This template comes with middleware configured to do language detection and redirection.
-Feel free to study the code in <code>src/middleware.ts</code> to get a better understanding of how it works.</p>
-</li>
-<li>
-<p>But you need to <strong>configure the Enonic adapter</strong>, by specifying which content project to use for each locale:</p>
-<div class="listingblock">
-<div class="title">.env</div>
-<div class="content">
-<pre class="highlight"><code class="language-Properties" data-lang="Properties">// ...
-ENONIC_MAPPINGS=en:intro/hmdb,no:intro-no/hmdb
-// ...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s break down the syntax.</p>
-</div>
-<div class="paragraph">
-<p>For each comma separated entry, you will find the following pattern: <code>&lt;locale&gt;:&lt;repository&gt;/&lt;sitekey&gt;</code>.
-In the example above <code>en:intro/hmdb</code> and <code>no:intro-no/hmdb</code>.</p>
-</div>
-<div class="paragraph">
-<p>The first entry will map to the <code>defaultLocale</code> that is used in the locale related methods in the NextJS adapter.</p>
-</div>
+<p><strong>Verify the result</strong>.
+The front-page of your app should now display a 404 - as you haven&#8217;t published any content yet.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -570,54 +646,14 @@ In the example above <code>en:intro/hmdb</code> and <code>no:intro-no/hmdb</code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The reason for repeating paths, is that the path may be different in each project/translation.
+Make a note of the URL to the Vercel app, you will need it later
 </td>
 </tr>
 </table>
 </div>
-</li>
-<li>
-<p>Next, add the static texts file for every locale to the <code>src/phrases</code> folder.
-The file name should be <code>&lt;locale&gt;.json</code>, e.g. <code>no.json</code> for Norwegian.</p>
-</li>
-<li>
-<p>Finally <strong>restart your Next.js server</strong> to pick up the changes to environment variables.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_translate_and_publish"><a class="link" href="#task_translate_and_publish">Task: Translate and publish</a></h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>As long as your preview configuration was working before you started, Content Studio should automatically be able to detect the right locale for each project.</p>
+<p><span class="image"><img src="media/404.png" alt="404" width="768px" title="Front page rendering before a site has been added to it"></span></p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You may need to restart/rebuild your Next.js server for the changes to be picked up.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>In Content Studio, <strong>Switch editing context</strong> to the <code>Film DB</code> project by toggling in the top left corner of Content Studio.</p>
-<div class="paragraph">
-<p>Content Studio should automatically be able to detect the correct Next.js locale for the project. Select an item, and you should get a preview.</p>
-</div>
-</li>
-<li>
-<p><strong>Translate the site content</strong> by selecting the site content, then click <code>localize</code> (rather than edit..). This effectively takes you to the edit form. You may now show off your skills while translating the page to Norwegian.</p>
-</li>
-<li>
-<p>Once finished, click <code>Mark as Ready</code> and proceed to <strong>publish the entire site</strong> structure.</p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -625,19 +661,10 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>Publish the entire tree</strong> by selecting the tree icon in the publishing wizard.
-<span class="image"><img src="media/content-studio-mark-as-ready.png" alt="content studio mark as ready" width="819px" title="Click tree icon to include all children"></span></p>
-</div>
+Check the Vercel function logs if you are not getting the expected result.
 </td>
 </tr>
 </table>
-</div>
-</li>
-<li>
-<p><strong>Verify that your front-end is working</strong></p>
-<div class="paragraph">
-<p>Finally, by adding <code>/no</code> (i.e. <code>localhost:4242/no</code>) to the URL of your Next.js server you should now see the published content from the Norwegian project.</p>
 </div>
 </li>
 </ol>
@@ -645,141 +672,51 @@ You may need to restart/rebuild your Next.js server for the changes to be picked
 </div>
 </div>
 <div class="sect1">
-<h2 id="multi_front_end_setup"><a class="link" href="#multi_front_end_setup">Multi front-end setup</a></h2>
+<h2 id="task_link_content_studio_to_vercel"><a class="link" href="#task_link_content_studio_to_vercel">Task: Link Content Studio to Vercel</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In some cases, you may prefer a setup where each language/market is served by a separate Next.js front-end, or you may simply have different sites accessing the same Enonic instance.</p>
+<p>With the front-end running, you can link it to Content Studio to activate the preview, and start building pages once again.</p>
 </div>
-<div class="paragraph">
-<p>Setting up Next.js to do this is just like handling a single language. To enable Content Studio preview to know which Next.js server to use, some additional configuration will be required.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Update the Next.xp configuration file</strong> for your Enonic installation by adding multiple entries:</p>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The sandbox configuration files are located in the sandbox' home directory inside your user&#8217;s root directory at <code>.enonic/sandboxes/&lt;your-sandbox-name&gt;/home/config</code>.
+To save time, you may export content from your local machine and import it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
 </td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="title">com.enonic.app.nextxp.cfg</div>
-<div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
-# nextjs.default.secret=yourSecret
-# nextjs.default.url=http://127.0.0.1:4242
-#
-# config 'someName'
-nextjs.someName.secret=yourSecret
-nextjs.someName.url=https://your.next-site.com
-#
-# config 'anotherName'
-nextjs.anotherName.secret=yourOtherSecret
-nextjs.anotherName.url=https://your.other-next-site.com
-# ...</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Assign the configuration to your site</strong> by clicking the pencil icon next to the <code>Next.XP</code> app name in the site form, and selecting it from the list of named configurations:</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-configure-nextxp.png" alt="content studio configure nextxp" width="771px" title="Form with fields for server url and nextjs token"></span></p>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="accessing_locale_in_views"><a class="link" href="#accessing_locale_in_views">Accessing locale in views</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Here are some insight on how to make further use of locales in your Next.js project.</p>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Locale is available as path parameter on the page</p>
-<div class="listingblock">
-<div class="title">src/app/[locale]/[[&#8230;&#8203;contentPath]]/page.tsx</div>
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export type PageProps = {
-    locale: string,
-    contentPath: string[],
-}
-
-export default async function Page({params}: { params: PageProps }) {
-    const {locale, contentPath} = params;
-    // ...
-}</code></pre>
-</div>
-</div>
+<p><strong>Install the Next.XP app</strong> <code>Solution</code> &#8594; <code>Applications</code> &#8594; <code>Install</code> &#8594; Search for <code>Next.XP</code>, select it an click install</p>
 </li>
 <li>
-<p>Result of <code>fetchContent()</code> call from <code>@enonic/nextjs-adapter/server</code> contains <code>MetaData</code> object (available in every view) that includes <code>locale</code> and <code>defaultLocale</code> along with other calculated runtime data:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {PageComponent, RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
-
-export interface MetaData {
-    type: string;
-    path: string;
-    requestType: XP_REQUEST_TYPE;
-    renderMode: RENDER_MODE;
-    requestedComponent?: PageComponent;
-    canRender: boolean;
-    catchAll: boolean;
-    apiUrl: string;
-    baseUrl: string;
-    locale: string;
-    defaultLocale: string;
-}</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
+<p><strong>Add configuration</strong>.</p>
 <div class="paragraph">
-<p>You can also use <code>I18n.getLocale()</code> and <code>useLocaleContext()</code> to access locale in server-side and client-side components respectively.</p>
+<p><span class="image"><img src="media/console-configure-app.png" alt="console configure app" width="769px" title="Configure the Next.XP application in the solution console"></span></p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="localizing_the_views"><a class="link" href="#localizing_the_views">Localizing the views</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>So far we have only localized the content.
-Here is how you can localize texts in your views:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Remember, we added file for every locale to the <code>src/phrases</code> folder earlier ?</p>
-</li>
-<li>
-<p>Use <code>useLocaleContext</code> from <code>@enonic/nextjs-adapter</code> to access current locale in client-side components:</p>
 <div class="listingblock">
+<div class="title">Add the following lines to the app config field to override the default values:</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">'use client';
-
-import {useLocaleContext} from '@enonic/nextjs-adapter/client';
-
-export default function ClientSideComponent() {
-    const {locale, localize} = useLocaleContext();
-    const localizedText = localize('text.key');
-    // ...
-}</code></pre>
+<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.url = &lt;Vercel application URL&gt;
+nextjs.default.secret = &lt;yourSecret&gt;</code></pre>
 </div>
 </div>
-</li>
-</ol>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Remember, you can also create named configurations if needed.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -788,38 +725,71 @@ export default function ClientSideComponent() {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The <code>useLocaleContext</code> hook is only available in client-side components.
+If you imported content from your local environment, the following two steps can be skipped
 </td>
 </tr>
 </table>
 </div>
+</li>
+<li>
+<p><strong>Add the Next.XP app to the site</strong> to activate preview.</p>
+</li>
+<li>
+<p><strong>Save and verify</strong> that the configuration is working by testing the Content Studio preview.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_publish_a_page"><a class="link" href="#task_publish_a_page">Task: Publish a page</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It&#8217;s time to test that everything is working.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>In server-side components, you can use <code>I18n.getLocale()</code> from <code>@enonic/nextjs-adapter</code> todo the same:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {I18n} from '@enonic/nextjs-adapter';
-
-export default function ServerSideComponent() {
-    const locale = I18n.getLocale();
-    const localizedText = I18n.localize('text.key');
-    // ...
-}</code></pre>
+<p>If you did not import content, <strong>create the front-page</strong> (once again) by using the page editor. Maybe something like this will do?</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
 </div>
+</li>
+<li>
+<p><strong>Go live</strong> by publishing the new page, and verify that your live site gets updated. Voila!</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/live.png" alt="live" width="1033px" title="Content rendered on the live server"></span></p>
 </div>
 </li>
 </ol>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary_and_whats_next"><a class="link" href="#summary_and_whats_next">Summary, and whats Next?</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Now that we have everything working, it&#8217;s about time you <a href="deployment.ahtml">deploy to live servers</a>.</p>
+<p>🎉 Congratulations 🥳 - You&#8217;ve reached the end of this tutorial - we hope you enjoyed it!</p>
+</div>
+<div class="paragraph">
+<p>There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://developer.enonic.com">Enonic Developer portal</a></p>
+</li>
+<li>
+<p><a href="https://developer.enonic.com/guides/developer-101/xp7">Enonic Developer 101</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

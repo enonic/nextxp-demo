@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Sites</title>
+<title>Upgrading</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,41 +435,107 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-right">
+<body id="upgrading" class="article toc2 toc-right">
 <div id="header">
-<h1>Sites</h1>
+<h1>Upgrading</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#task_creating_the_site">Task: Creating the site</a></li>
-<li><a href="#add_content">Add content</a></li>
-<li><a href="#task_site_contextual_queries">Task: Site contextual queries</a></li>
+<li><a href="#guillotine_application">Guillotine application</a></li>
+<li><a href="#upgrading_from_v1_x">Upgrading from v1.x</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="guillotine_application"><a class="link" href="#guillotine_application">Guillotine application</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>In this chapter, you&#8217;ll build a tree structure of your content, with a site item at the root + learn about a handy trick for the GraphQL API.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Guillotine version 7 is required if you need to modify graphql schema in your application.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<h2 id="upgrading_from_v1_x"><a class="link" href="#upgrading_from_v1_x">Upgrading from v1.x</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Next.XP is built to provide complete control over a website, including landing pages and the URL structure. For this use-case, Content Studio&#8217;s tree structure will come in handy.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update env vars to:</p>
+<div class="literalblock">
+<div class="content">
+<pre>APP_NAME -&gt; ENONIC_APP_NAME
+remove CONTENT_API_MASTER
+remove CONTENT_API_DRAFT
+add ENONIC_API
+API_TOKEN -&gt; ENONIC_API_TOKEN
+remove SITE_KEY
+add ENONIC_PROJECTS=&lt;repo-name&gt;/site/path[,&lt;lang&gt;:&lt;repo-name&gt;/site/path,...]</pre>
 </div>
 </div>
+</li>
+<li>
+<p>Add i18n config block to next.config.js</p>
+<div class="literalblock">
+<div class="content">
+<pre>i18n: {
+    locales: ['en', 'no'],
+    defaultLocale: 'en',
+}</pre>
 </div>
-<div class="sect1">
-<h2 id="task_creating_the_site"><a class="link" href="#task_creating_the_site">Task: Creating the site</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Next.XP needs a root content item. This item will act as the front-page of your site.</p>
 </div>
+</li>
+<li>
+<p>Remove <code>lib-nextxp</code> dependency from your Enonic XP app build.gradle file</p>
+</li>
+<li>
+<p>Install <code>Next.XP</code> application from Enonic Market</p>
+</li>
+<li>
+<p>Create config file named <code><em>com.enonic.app.nextxp.cfg</em></code> in <code><em>&lt;xp-home&gt;/config/</em></code> folder to change default values and add more configurations:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-properties" data-lang="properties"># uncomment to override default values
+# nextjs.default.secret=yourSecret
+# nextjs.default.url=http://127.0.0.1:4242
+#
+# config 'someName'
+nextjs.someName.secret=yourSecret
+nextjs.someName.url=https://your.next-site.com
+#
+# config 'anotherName'
+nextjs.anotherName.secret=yourOtherSecret
+nextjs.anotherName.url=https://your.other-next-site.com
+# ...</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Remember to update property values with your own data
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>remove <code>lib-guillotine</code> dependency from build.gradle file of your Enonic XP app</p>
+</li>
+<li>
+<p>install <code>Guillotine</code> application from Enonic Market</p>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -477,174 +543,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Before you continue, clear all selections in the Content Studio list view (this way the site content will be placed on the project root).
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Create a new item</strong> by clicking <code>New</code> in Content Studio toolbar, then select the <code>Site</code> content type. This will open the content editor in a new tab.</p>
-</li>
-<li>
-<p><strong>Give the site a name</strong> by filling in a display name for the site, "HMDB" (short for Headless Movie DB) will do fine.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you choose a different name, make sure the site path name (seen below the Display name) is set to <code>hmdb</code> - as this will be used throughout the tutorial.
+Use Guillotine 7 or higher if you need to extend the graphql schema
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p><strong>Add your app</strong> to the site - by selecting it in the <code>Applications</code> form field.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Sites acts as scopes in the content structure. By adding an app to the site, you effectively allow editors to create content based on the app within this scope.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-create-site.png" alt="content studio create site" width="1024px" title="Give the site a name, and add the Movie DB app"></span></p>
-</div>
-<div class="paragraph">
-<p>When completed, your form should look something like this, and you can now press <code>Save</code> in the toolbar.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This will leave the item in <code>In progress</code> state, which is ok for now.
-</td>
-</tr>
-</table>
-</div>
+<p>Add <code>Next.XP</code> application to your site in every layer and save it</p>
+</li>
+<li>
+<p>Default configuration will be used automatically for each site.
+You can change it by going to <code>Next.XP</code> application config in each site and selecting named configurations.</p>
 </li>
 </ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="add_content"><a class="link" href="#add_content">Add content</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To quickly get some content and structure within the site, let&#8217;s move the Movie DB content into the site.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Select the folders</strong> in the list, and click <code>Move</code> from the toolbar.</p>
-</li>
-<li>
-<p><strong>Selecting the <code>HMDB</code> site</strong> as the target and click <code>Move</code> once more.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-move.png" alt="content studio move" width="1024px" title="Move the folder into the site"></span></p>
-</div>
-</li>
-<li>
-<p>Wrap up by <strong>publishing the changes</strong>. Select the site (root item) in the tree structure, and click <code>Mark as ready&#8230;&#8203;</code> in the top right action button. This will bring up the Publishing Wizard.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-mark-as-ready.png" alt="content studio mark as ready" width="1024px" title="Mark as ready"></span></p>
-</div>
-</li>
-<li>
-<p>To <strong>publish the entire new tree structure</strong> select the hierarchy icon to the left of the site. This will expand to include all items that have been moved as well. Then click <code>Publish Now</code></p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-publish.png" alt="content studio publish" width="1024px" title="Publish entire tree structure"></span></p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Sweet, you should now have a site with content and a basic tree structure.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_site_contextual_queries"><a class="link" href="#task_site_contextual_queries">Task: Site contextual queries</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In GraphQL queries, you may use a so-called "site context". This is activated by passing an HTTP header along with the query.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Specify header</p>
-<div class="paragraph">
-<p>Back in Query Playground, open the <code>Request Headers</code> panel at the bottom, and add the following configuration:</p>
-</div>
-<div class="listingblock">
-<div class="title">Configure HTTP headers</div>
-<div class="content">
-<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
-  "X-Guillotine-SiteKey": "/hmdb"
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-SiteKey can be either path, or the site&#8217;s unique ID. A benefit of using the ID is that you can change the name and path of the site, without affecting your queries.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Run a query with the site context</p>
-<div class="paragraph">
-<p>One of the new features you get from the site context is the <code>${site}</code> placeholder, which can be used in paths. Update your Query Variables as follows, and run the movie query from the previous chapter once more:</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{
-    "path": "${site}/movies/se7en"
-}</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Here, <code>${site}</code> will resolve to the path of the site and expand - in this case the full path will be expanded to <code>/hmdb/movies/se7en</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Coming up - get your <a href="nextjs-setup.ahtml">your Next.js developer environment</a> up and running.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

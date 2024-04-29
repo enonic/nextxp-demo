@@ -528,7 +528,7 @@ The definition of the region <code>main</code>, allows Content Studio editors to
 </table>
 </div>
 <div class="paragraph">
-<p><strong>Redeploy the Enonic app</strong> to register the page component.</p>
+<p><strong>Redeploy the Enonic app</strong> to register the page component (happens automatically if you started <code>enonic project dev</code>).</p>
 </div>
 </li>
 <li>
@@ -550,8 +550,8 @@ Make sure to use <code>src/components/pages</code>, not <code>src/pages</code>!
 <div class="listingblock">
 <div class="title">src/components/pages/Main.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {PageProps} from '@enonic/nextjs-adapter/views/BasePage';
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import type {PageProps} from '@enonic/nextjs-adapter';
+import React from 'react'
 import RegionsView from '@enonic/nextjs-adapter/views/Region';
 
 const MainPage = (props: PageProps) =&gt; {
@@ -593,6 +593,7 @@ The &lt;RegionsView&gt; element is referring to the 'main' region we defined in 
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import MainPage from './pages/Main';
+import {APP_NAME} from '@enonic/nextjs-adapter';
 
 // Page mappings
 ComponentRegistry.addPage(`${APP_NAME}:main`, {
@@ -695,7 +696,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

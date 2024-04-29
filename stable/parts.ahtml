@@ -501,7 +501,7 @@ This means editors can configure it - sorting the items Ascending or Descending.
 </div>
 </li>
 <li>
-<p><strong>Build and deploy your Enonic app</strong> once more to make the new part available in Content Studio.</p>
+<p><strong>Build and deploy your Enonic app</strong> once more to make the new part available in Content Studio (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add parts to the page</strong></p>
@@ -544,9 +544,11 @@ The part will appear without making any changes to the front-end, this is becaus
 <div class="listingblock">
 <div class="title">src/components/parts/ChildList.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
-import {Context, getUrl, VariablesGetterResult} from '@enonic/nextjs-adapter';
-import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import {Context, PartProps, VariablesGetterResult} from '@enonic/nextjs-adapter';
+import Link from 'next/link';
+import React from 'react'
+
+const FORBIDDEN_TYPES_REGEXP = "^media:.*|portal:fragment|portal:template-folder|portal:page-template$";
 
 const ChildList = (props: PartProps) =&gt; {
     const {data, meta} = props;
@@ -554,6 +556,8 @@ const ChildList = (props: PartProps) =&gt; {
     if (!children || children.length === 0) {
         return null;
     }
+    const prefix = meta.baseUrl +
+                   (meta.locale &amp;&amp; meta.locale !== meta.defaultLocale ? meta.locale + '/' : '');
     return (
         &lt;main style={{
             margin: `0 auto`,
@@ -565,9 +569,7 @@ const ChildList = (props: PartProps) =&gt; {
                 &lt;ul&gt;{
                     children.map((child: any, i: number) =&gt; (
                         &lt;li key={i}&gt;
-                            &lt;a href={getUrl(child._path, meta)}&gt;
-                                {child.displayName}
-                            &lt;/a&gt;
+                            &lt;Link href={prefix + child._path}&gt;{child.displayName}&lt;/Link&gt;
                         &lt;/li&gt;
                     ))
                 }&lt;/ul&gt;
@@ -591,6 +593,7 @@ export const getChildList = {
                       _path(type: siteRelative)
                       _id
                       displayName
+                      type
                   }
                 }
               }
@@ -604,9 +607,12 @@ export const getChildList = {
     }
 };
 
-export async function childListProcessor(common: any, context?: Context, config?: any): Promise&lt;any&gt; {
-    common.modifiedBy = 'childListProcessor';
-    return common;
+export async function childListProcessor(data: any, context?: Context, config?: any): Promise&lt;any&gt; {
+
+    // exclude forbidden types
+    data.get.children = data.get.children?.filter((child: any) =&gt; !child.type.match(FORBIDDEN_TYPES_REGEXP));
+
+    return data;
 }</code></pre>
 </div>
 </div>
@@ -676,7 +682,7 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 </div>
 </li>
 <li>
-<p><strong>Redeploy</strong> the Enonic app and add the part to your page</p>
+<p><strong>Redeploy</strong> the Enonic app and add the part to your page (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add the heading component in Next.js</strong>.</p>
@@ -729,7 +735,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

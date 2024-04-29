@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Getting to know the API</title>
+<title>Getting to know the GraphQL API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,13 +437,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Getting to know the API</h1>
+<h1>Getting to know the GraphQL API</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#headless_api">Headless API</a></li>
-<li><a href="#task_open_the_graphql_playground">Task: Open the GraphQL playground</a></li>
-<li><a href="#accessing_the_api_externally">Accessing the API externally</a></li>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#task_graphql_playground">Task: GraphQL Playground</a></li>
 <li><a href="#task_run_a_simple_query">Task: Run a simple query</a></li>
 <li><a href="#task_query_variables">Task: Query variables</a></li>
 <li><a href="#task_type_introspection">Task: Type introspection</a></li>
@@ -451,11 +450,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="headless_api"><a class="link" href="#headless_api">Headless API</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic provides an out-of-the-box GraphQL API that dynamically reflects changes in your applications and content. The API is highly flexible and customizable. For a deep dive, visit the <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine documentation</a>.</p>
+<p>In this chapter you will get a quick introduction to Enonic&#8217;s GraphQL API - aka Guillotine. It is the point of integration between Next.js and Enonic.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="intro"><a class="link" href="#intro">Intro</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enonic provides a ridiculously flexible GraphQL API that dynamically reflects changes in your applications and content. Like Content Studio, the  <a href="https://developer.enonic.com/docs/guillotine/stable">Guillotine app</a> (and its API) was automatically downloaded and installed when you created your sandbox.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -464,7 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
+New to GraphQL as well? Check out the <a href="https://graphql.org/">GraphQL documentation</a>
 </td>
 </tr>
 </table>
@@ -472,34 +478,31 @@ New to GraphQL? Check out the <a href="https://graphql.org/">GraphQL documentati
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_open_the_graphql_playground"><a class="link" href="#task_open_the_graphql_playground">Task: Open the GraphQL playground</a></h2>
+<h2 id="task_graphql_playground"><a class="link" href="#task_graphql_playground">Task: GraphQL Playground</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The headless API is provided by the app called Guillotine which was automatically installed as a part of the "Essentials" template you used for a new sandbox in the previous chapter.</p>
-</div>
-<div class="paragraph">
-<p>You can verify that Guillotine is working by opening <code>Query Playground</code> from the Content Studio&#8217;s menu (GraphQL icon in the menu on the left-hand side).</p>
+<p>For every content project in your sandbox, you will automatically get an API. By clicking the <code>GraphQL Playground</code> icon in your Content Studio menu, you should see the following</p>
 </div>
 <div class="paragraph">
 <p>+
 <span class="image"><img src="media/content-studio-guillotine.png" alt="content studio guillotine" width="1440px" title="Browsing the Guillotine API using Query Playground"></span></p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="accessing_the_api_externally"><a class="link" href="#accessing_the_api_externally">Accessing the API externally</a></h2>
-<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Guillotine application creates a graphQL API endpoint for every site that it is added to.
-So if your Enonic XP is running on <code><a href="http://localhost:8080" class="bare">http://localhost:8080</a></code>, you will get the following URLs for every site with Guillotine app added:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>http://localhost:8080/site/[project-name]/[branch-name]</pre>
-</div>
+<p>The API can be accessed directly following URL: <a href="http://localhost:8080/site/intro" target="_blank" rel="noopener">http://localhost:8080/site/intro</a>.</p>
 </div>
 <div class="paragraph">
-<p>where <code>branch-name</code> can only be <code>draft</code> or <code>master</code>, with <code>draft</code> being protected by authentication.</p>
+<p><code>hmdb</code> is the name of your Content Studio project.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -528,7 +531,7 @@ Run this simple query that retrieves the ID and displayName of some movies:</p>
             boolean: {
               must:[
                 {term: {field: "valid", value: {boolean:true}}}
-                {term: {field: "type", value: {string: "com.example.myproject:movie"}}}
+                {term: {field: "type", value: {string: "tutorial.nxp:movie"}}}
               ]
             }
           }
@@ -551,7 +554,7 @@ Run this simple query that retrieves the ID and displayName of some movies:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>com.example.myproject</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
+<code>tutorial.nxp</code> refers to the name of the application you created in the previous chapter. <code>movie</code> is a specific content type within the app.
 </td>
 </tr>
 </table>
@@ -682,7 +685,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
     get(key:$path) {
       type
       displayName
-      ... on com_example_myproject_Movie {
+      ... on tutorial_nxp_Movie {
         data {
           subtitle
           abstract
@@ -697,7 +700,7 @@ The fully-qualified content type name is used, dots are replaced with underscore
             character
             actor {
               displayName
-              ... on com_example_myproject_Person {
+              ... on tutorial_nxp_Person {
                 _path
                 data {
                   photos {
@@ -720,28 +723,38 @@ The fully-qualified content type name is used, dots are replaced with underscore
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Notice how <code>imageUrl</code> is requested with parameters of its own? Type introspections can expose certain <a href="https://developer.enonic.com/docs/guillotine/stable/api">functions for processing data</a> before returning it.
+<td>Notice how <code>imageUrl</code> is requested with parameters of its own? Type introspections can expose certain <a href="https://developer.enonic.com/docs/guillotine/stable/api">functions for processing data</a> before returning it.</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Keep the <strong>query variables</strong> from the previous step:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "path": "/movies/se7en"
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Run the query in the Playground. It should produce a complete set of data - which will come in handy later in this tutorial.</p>
 </div>
 <div class="paragraph">
 <p>All in all, this allows for fetching deep and rich content data in a single API request.</p>
-</div></td>
-</tr>
-</table>
 </div>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Moving forward, you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
+<p>In the next chapter you&#8217;ll get introduced to <a href="sites.ahtml">the concept of sites</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

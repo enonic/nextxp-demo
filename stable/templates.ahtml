@@ -477,7 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p><strong>Redeploy</strong> the Enonic app.</p>
+<p><strong>Redeploy</strong> the Enonic app (happens automatically if you started <code>enonic project dev</code>).</p>
 </li>
 <li>
 <p><strong>Add the Movie query and view</strong> in Next.</p>
@@ -485,8 +485,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="title">src/components/parts/MovieDetails.tsx</div>
 <div class="content">
 <pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
-import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
-import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+import {APP_NAME_UNDERSCORED, getUrl, I18n, MetaData, PartProps} from '@enonic/nextjs-adapter';
+import Link from 'next/link';
 
 
 export const getMovie = `
@@ -551,7 +551,7 @@ const MovieView = (props: PartProps) =&gt; {
                 {data?.cast &amp;&amp; &lt;Cast cast={data.cast} meta={meta}/&gt;}
             &lt;/div&gt;
             &lt;p&gt;
-                &lt;a href={getUrl(parent._path, meta)}&gt;Back to Movies&lt;/a&gt;
+                &lt;Link href={getUrl(`/${parent._path}`, meta)}&gt;{I18n.localize('back')}&lt;/Link&gt;
             &lt;/p&gt;
         &lt;/&gt;
     );
@@ -640,9 +640,11 @@ const CastMember = (props: CastMemberProps &amp; { meta: MetaData }) =&gt; {
             }
             &lt;div&gt;
                 &lt;p&gt;{character}&lt;/p&gt;
-                &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;
-                    {displayName}
-                &lt;/a&gt;&lt;/p&gt;
+                &lt;p&gt;
+                    &lt;Link href={getUrl(_path, meta)}&gt;
+                        {displayName}
+                    &lt;/Link&gt;
+                &lt;/p&gt;
             &lt;/div&gt;
         &lt;/li&gt;
     );
@@ -708,7 +710,10 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 </li>
 <li>
-<p>Try visiting other movie items to <strong>verify they now automatically render</strong>.PS!Don&#8217;t forget to publish the changes and the new page template.</p>
+<p>Try visiting other movie items to <strong>verify they now automatically render</strong>.</p>
+<div class="paragraph">
+<p><strong>PS!</strong> Don&#8217;t forget to publish the changes and the new page template.</p>
+</div>
 </li>
 </ol>
 </div>
@@ -720,7 +725,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

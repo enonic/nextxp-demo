@@ -503,7 +503,7 @@ If you choose a different name, make sure the site path name (seen below the Dis
 </div>
 </li>
 <li>
-<p><strong>Add the Movie DB app</strong> to the site - by selecting it in the <code>Applications</code> form field.</p>
+<p><strong>Add your app</strong> to the site - by selecting it in the <code>Applications</code> form field.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -644,7 +644,7 @@ Here, <code>${site}</code> will resolve to the path of the site and expand - in 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

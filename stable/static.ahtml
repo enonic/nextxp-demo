@@ -450,7 +450,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#a_look_at_the_code">A look at the code</a></li>
-<li><a href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></li>
 </ul>
 </div>
 </div>
@@ -466,10 +465,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Your NextJS front-end is configured to use Static Site Generation (SSG), which basically means you get lightning fast pages, but adds an additional compilation build step .</p>
+<p>Your NextJS front-end strives to use Static Site Generation (SSG) when possible which basically means you get lightning fast pages, but adds an additional compilation build step.</p>
 </div>
 <div class="paragraph">
-<p>For more information visit the <a href="https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation">Next.js SSG documentation</a>.</p>
+<p>For more information visit the <a href="https://nextjs.org/docs/app/building-your-application/rendering">Next.js rendering documentation</a>.</p>
 </div>
 </div>
 </div>
@@ -600,15 +599,15 @@ You should also be able to tell from the Next.js log that the revalidation was t
 <h2 id="a_look_at_the_code"><a class="link" href="#a_look_at_the_code">A look at the code</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Static Site Generation is controlled within the content page handler. There are essentially two important functions:</p>
+<p>Static Site Generation is controlled within the content page handler.</p>
+</div>
+<div class="paragraph">
+<p>And the function we are interested the most is:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>getStaticProps()</code> - instructs Next.js to render static output</p>
-</li>
-<li>
-<p><code>getStaticPaths()</code> - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.</p>
+<p><code>generateStaticParams()</code> - This function will be used by Next.js at build time to create a list of pages to compile before the server starts.</p>
 </li>
 </ul>
 </div>
@@ -616,88 +615,60 @@ You should also be able to tell from the Next.js log that the revalidation was t
 <p>Below, we explain the details of the code:</p>
 </div>
 <div class="listingblock">
-<div class="title">src/pages/[[&#8230;&#8203;contentPath]].ts</div>
+<div class="title">src/app/[locale]/[[&#8230;&#8203;contentPath]]/page.ts</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {GetStaticPathsResult, GetStaticPropsResult} from 'next';
-import {Context, createResponse,fetchContent,fetchContentPathsForAllLocales, FetchContentResult} from "@enonic/nextjs-adapter";
+<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {FetchContentResult, validateData} from "@enonic/nextjs-adapter";
+import {fetchContent, fetchContentPathsForAllLocales} from "@enonic/nextjs-adapter/server";
+import MainView from '@enonic/nextjs-adapter/views/MainView';
 
-export async function getStaticProps(context: Context): Promise&lt;GetStaticPropsResult&lt;FetchContentResult&gt;&gt; {     <i class="conum" data-value="1"></i><b>(1)</b>
-    const path = context.params?.contentPath || [];
-    console.info(`Accessing static page (locale=${context.locale}) ${context.preview ? '(preview) ' : ''}at: ${path}`);
+import "../../../components/_mappings";
+import {Metadata} from 'next';
+import {draftMode} from 'next/headers';
+import React from 'react';
 
-    const props = await fetchContent(path, context);                            <i class="conum" data-value="2"></i><b>(2)</b>
+// NB. Using this option with default value bails out static generation !!!
+// export const dynamic = 'auto'
 
-    // HTTP 500
-    if (props.error &amp;&amp; props.error.code === '500') {
-        throw props.error
-    }
+// The revalidate option is only available when using the Node.js Runtime.
+// This means using the revalidate option with runtime = 'edge' will not work.
+export const revalidate = 3600
 
-    return createResponse(props, context);                                      <i class="conum" data-value="3"></i><b>(3)</b>
+export type PageProps = {
+    locale: string,
+    contentPath: string[],
 }
 
-export async function getStaticPaths(): Promise&lt;GetStaticPathsResult&lt;any&gt;&gt; {    <i class="conum" data-value="4"></i><b>(4)</b>
-    const paths = await fetchContentPathsForAllLocales('\${site}/');            <i class="conum" data-value="5"></i><b>(5)</b>
+export default async function Page({params}: { params: PageProps }) {
+    const {isEnabled: draft} = draftMode();
+    console.info(`Accessing page${draft ? ' (draft)' : ''}`, params);
+
+    const start = Date.now();
+    const data: FetchContentResult = await fetchContent(params);
+    const duration = Date.now() - start;
+
+    console.info(`Page fetch took ${duration} ms`);
+
+    validateData(data);
+
+    return (
+        &lt;MainView {...data}/&gt;
+    )
+};
+
+export async function generateMetadata({params}: { params: PageProps }): Promise&lt;Metadata&gt; {
+    const {common} = await fetchContent(params);
     return {
-        paths: paths,
-        fallback: 'blocking',
+        title: common?.get?.displayName || 'Not found',
     };
+}
+
+export async function generateStaticParams(props: { params: PageProps }): Promise&lt;any[]&gt; {
+    return await fetchContentPathsForAllLocales('\${site}/');
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Next.js method indicating that we want the page to be rendered statically</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Next.XP method for fetching content from Enonic XP by path</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Next.XP method for creating Next.js response based on results of fetchContent method</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Next.js method to collect paths we want to be static</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Next.XP method for getting paths of all supported contents for every configured locale. <code>${site}</code> will be substituted with the actual site name.</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p>As you can see, Next.XP provides methods to create static pages, but the best part is that those methods will also work for server side rendering !</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="optional_task_convert_to_server_side_rendering_ssr"><a class="link" href="#optional_task_convert_to_server_side_rendering_ssr">Optional task: Convert to Server Side Rendering (SSR)</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Next.js also supports dynamic rendering aka Server Side Rendering (SSR), which may be more useful for certain types of applications/websites.</p>
-</div>
-<div class="paragraph">
-<p>You may easily convert your front-end into SSR by performing the following changes to the content handler:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>renaming <code>getStaticProps</code> to <code>getServerSideProps</code></p>
-</li>
-<li>
-<p>setting  <code>isStatic</code> parameter to <code>false</code> in the <code>createResponse</code> method</p>
-</li>
-<li>
-<p>removing the <code>getStaticPaths</code> method.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>In this mode Next.js will render the page on every request, while still using the same Next.XP methods for fetching data from Enonic XP.
-More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering">here</a>.</p>
+<p>As you can see, Next.XP provides methods to create static pages, but the best part is that it chooses the best rendering and caching scheme based on what your code is doing !</p>
 </div>
 <div class="paragraph">
 <p>With prod mode and revalidation sorted out, let&#8217;s see how to add <a href="i18n.ahtml">multi-language</a> support.</p>
@@ -707,7 +678,7 @@ More about SSR <a href="https://nextjs.org/docs/pages/building-your-application/
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

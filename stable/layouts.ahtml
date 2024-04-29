@@ -492,7 +492,7 @@ Just like a page, layouts may declare named regions.
 </table>
 </div>
 <div class="paragraph">
-<p>When completed, as always <strong>redeploy the Enonic app</strong>.</p>
+<p>When completed, as always <strong>redeploy the Enonic app</strong> (happens automatically if you started <code>enonic project dev</code>).</p>
 </div>
 </li>
 </ol>
@@ -512,8 +512,8 @@ Just like a page, layouts may declare named regions.
 <div class="listingblock">
 <div class="title">src/components/layouts/TwoColumnLayout.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
-import {LayoutProps} from '@enonic/nextjs-adapter/views/BaseLayout';
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import type {LayoutProps} from '@enonic/nextjs-adapter';
+import React from 'react'
 import {RegionView} from '@enonic/nextjs-adapter/views/Region';
 import styles from './TwoColumnLayout.module.css';
 
@@ -622,7 +622,7 @@ this specific layout does not need any additional data - hence no query or proce
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:22 UTC
+Last updated 2024-04-29 11:07:46 UTC
 </div>
 </div>
 </body>

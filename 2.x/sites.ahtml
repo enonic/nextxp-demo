@@ -5,8 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<meta name="author" content="Skip straight to the end of this tutorial.">
-<title>Next.XP Demo</title>
+<title>Sites</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,28 +437,38 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Next.XP Demo</h1>
-<div class="details">
-<span id="author" class="author">Skip straight to the end of this tutorial.</span><br>
-</div>
+<h1>Sites</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#what">What?</a></li>
-<li><a href="#1_setup_enonic">1 - Setup Enonic</a></li>
-<li><a href="#2_create_git_repo">2 - Create Git repo</a></li>
-<li><a href="#3_deploy_the_next_js_front_end">3 - Deploy the Next.js front-end</a></li>
-<li><a href="#4_activate_preview">4 - Activate preview</a></li>
-<li><a href="#how_does_it_work">How does it work?</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#task_creating_the_site">Task: Creating the site</a></li>
+<li><a href="#add_content">Add content</a></li>
+<li><a href="#task_site_contextual_queries">Task: Site contextual queries</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="what"><a class="link" href="#what">What?</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>You will deploy a Next.js front-end on Vercel, and back-end with content on Enonic respectively - then connect these for a fully working setup.</p>
+<p>In this chapter, you&#8217;ll build a tree structure of your content, with a site item at the root + learn about a handy trick for the GraphQL API.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next.XP is built to provide complete control over a website, including landing pages and the URL structure. For this use-case, Content Studio&#8217;s tree structure will come in handy.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_creating_the_site"><a class="link" href="#task_creating_the_site">Task: Creating the site</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next.XP needs a root content item. This item will act as the front-page of your site.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -468,44 +477,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Want to learn what is really happening? Head on to the <a href="enonic-setup.ahtml">first chapter</a> of the tutorial instead.
+Before you continue, clear all selections in the Content Studio list view (this way the site content will be placed on the project root).
 </td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="1_setup_enonic"><a class="link" href="#1_setup_enonic">1 - Setup Enonic</a></h2>
-<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Sign up for a free Enonic account</strong>: on <a href="https://www.enonic.com/sign-up" class="bare">https://www.enonic.com/sign-up</a></p>
+<p><strong>Create a new item</strong> by clicking <code>New</code> in Content Studio toolbar, then select the <code>Site</code> content type. This will open the content editor in a new tab.</p>
 </li>
 <li>
-<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.js Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
-</li>
-<li>
-<p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> ingress, you will need it later.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="2_create_git_repo"><a class="link" href="#2_create_git_repo">2 - Create Git repo</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To deploy an app on Vercel (the Next.js hosting provider), Vercel will need access to a Git repo with the app code, where you have write access.</p>
-</div>
-<div class="paragraph">
-<p>Vercel uses this access to automatically fetch and build the app based on events. The write permission is used to setup the required webhooks etc in Github.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Clone or fork <a href="https://github.com/enonic/nextxp-demo/" class="bare">https://github.com/enonic/nextxp-demo/</a> to your personal Github/Bitbucket/Gitlab account.</p>
+<p><strong>Give the site a name</strong> by filling in a display name for the site, "HMDB" (short for Headless Movie DB) will do fine.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -513,42 +496,14 @@ Want to learn what is really happening? Head on to the <a href="enonic-setup.aht
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you are using Github, simply press the <code>Fork</code> button at the top right.
+If you choose a different name, make sure the site path name (seen below the Display name) is set to <code>hmdb</code> - as this will be used throughout the tutorial.
 </td>
 </tr>
 </table>
 </div>
 </li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="3_deploy_the_next_js_front_end"><a class="link" href="#3_deploy_the_next_js_front_end">3 - Deploy the Next.js front-end</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Vercel are the makers of Next.js, and you&#8217;ll be using their service to host the front-end.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
-<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
-</li>
-<li>
-<p>Create a new project i.e. <code>enonic-demo</code>, and follow the steps to connect it to the Git repo you created in step 2.</p>
-</li>
-<li>
-<p><strong>Add environment variables</strong> telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>ENONIC_API: &lt;URL to Enonic API&gt;</p>
-</li>
-<li>
-<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
-</li>
-<li>
-<p>ENONIC_MAPPINGS: en:hmdb/hmdb</p>
+<p><strong>Add the Movie DB app</strong> to the site - by selecting it in the <code>Applications</code> form field.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -556,79 +511,16 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The MAPPINGS variable defines &lt;locale&gt;:&lt;projectname&gt;/&lt;site-path&gt; to tell the Front-end which project + site to use.
+Sites acts as scopes in the content structure. By adding an app to the site, you effectively allow editors to create content based on the app within this scope.
 </td>
 </tr>
 </table>
 </div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>After deploying, the Vercel app should render the front page:</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/front-page.png" alt="front page" width="1003px" title="Front page showing some text, links and a picture"></span></p>
+<p><span class="image"><img src="media/content-studio-create-site.png" alt="content studio create site" width="1024px" title="Give the site a name, and add the Movie DB app"></span></p>
 </div>
 <div class="paragraph">
-<p>Make a note of the Vercel application URL, you will need it when setting up the preview later.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Check the Vercel function logs if you are not getting the expected result.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="4_activate_preview"><a class="link" href="#4_activate_preview">4 - Activate preview</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With the front-end running, it is time to enable preview in Content Studio.</p>
-</div>
-<div class="paragraph">
-<p>The fastest way to try it out goes as follows:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Launch Enonic XP admin</strong> from the solution dashboard.</p>
-</li>
-<li>
-<p><strong>Open Content Studio</strong> from the top right <code>XP menu &#8594; Content Studio</code>.</p>
-</li>
-<li>
-<p>Choose the <code>Headless Movie DB</code> project, then click the root item in the tree structure <code>/hmdb</code> and click <code>Edit</code>.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-edit-site.png" alt="content studio edit site" width="650px" title="Select and edit the site"></span></p>
-</div>
-</li>
-<li>
-<p>Add the <code>Next.XP</code> app to the list of applications on the site.
-It will override the default preview for the content within the site.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/content-studio-add-nextxp.png" alt="content studio add nextxp" width="779px" title="Add the Next.XP application to the site."></span></p>
-</div>
-</li>
-<li>
-<p>Now, instruct Next.XP where to find the frontend server:</p>
-<div class="paragraph">
-<div class="title">Go to Applications tab in Enonic Cloud and select Next.XP app:</div>
-<p><span class="image"><img src="media/cloud-next-app-edit.png" alt="cloud next app edit" width="937px" title="Select the Next.XP application"></span></p>
-</div>
-<div class="paragraph">
-<div class="title">Press <code>Edit&#8230;&#8203;</code> button in the app context menu and add the URL and secret of the Vercel app you deployed in step 3:</div>
-<p><span class="image"><img src="media/cloud-next-app-config.png" alt="cloud next app config" width="872px" title="Add the Next.XP application to the site."></span></p>
+<p>When completed, your form should look something like this, and you can now press <code>Save</code> in the toolbar.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -637,16 +529,10 @@ It will override the default preview for the content within the site.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-We are overriding default preview configuration for all sites using the Next.XP app. Use a different keyword than <code>default</code> to define multiple front-ends.
+This will leave the item in <code>In progress</code> state, which is ok for now.
 </td>
 </tr>
 </table>
-</div>
-</li>
-<li>
-<p>After saving and going back to Content Studio, the preview should update to show your front-end.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
 </div>
 </li>
 </ol>
@@ -654,26 +540,111 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 </div>
 <div class="sect1">
-<h2 id="how_does_it_work"><a class="link" href="#how_does_it_work">How does it work?</a></h2>
+<h2 id="add_content"><a class="link" href="#add_content">Add content</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Next.XP app acts as a proxy, and forwards the token from the configuration to activate Next.js' preview mode.</p>
+<p>To quickly get some content and structure within the site, let&#8217;s move the Movie DB content into the site.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Select the folders</strong> in the list, and click <code>Move</code> from the toolbar.</p>
+</li>
+<li>
+<p><strong>Selecting the <code>HMDB</code> site</strong> as the target and click <code>Move</code> once more.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-move.png" alt="content studio move" width="1024px" title="Move the folder into the site"></span></p>
+</div>
+</li>
+<li>
+<p>Wrap up by <strong>publishing the changes</strong>. Select the site (root item) in the tree structure, and click <code>Mark as ready&#8230;&#8203;</code> in the top right action button. This will bring up the Publishing Wizard.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-mark-as-ready.png" alt="content studio mark as ready" width="1024px" title="Mark as ready"></span></p>
+</div>
+</li>
+<li>
+<p>To <strong>publish the entire new tree structure</strong> select the hierarchy icon to the left of the site. This will expand to include all items that have been moved as well. Then click <code>Publish Now</code></p>
+<div class="paragraph">
+<p><span class="image"><img src="media/content-studio-publish.png" alt="content studio publish" width="1024px" title="Publish entire tree structure"></span></p>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>Your edits will only be visible in Content Studio, until published.</p>
+<p>Sweet, you should now have a site with content and a basic tree structure.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_site_contextual_queries"><a class="link" href="#task_site_contextual_queries">Task: Site contextual queries</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In GraphQL queries, you may use a so-called "site context". This is activated by passing an HTTP header along with the query.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Specify header</p>
+<div class="paragraph">
+<p>Back in Query Playground, open the <code>Request Headers</code> panel at the bottom, and add the following configuration:</p>
+</div>
+<div class="listingblock">
+<div class="title">Configure HTTP headers</div>
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+  "X-Guillotine-SiteKey": "/hmdb"
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+SiteKey can be either path, or the site&#8217;s unique ID. A benefit of using the ID is that you can change the name and path of the site, without affecting your queries.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Run a query with the site context</p>
+<div class="paragraph">
+<p>One of the new features you get from the site context is the <code>${site}</code> placeholder, which can be used in paths. Update your Query Variables as follows, and run the movie query from the previous chapter once more:</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+    "path": "${site}/movies/se7en"
+}</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Here, <code>${site}</code> will resolve to the path of the site and expand - in this case the full path will be expanded to <code>/hmdb/movies/se7en</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>When publishing changes, Next.XP should automatically trigger revalidation of all pages in the front-end, and the changes will go live.</p>
-</div>
-<div class="paragraph">
-<p>Congratulations, you now have a Next.js site powered by Enonic! 🚀</p>
+<p>Coming up - get your <a href="nextjs-setup.ahtml">your Next.js developer environment</a> up and running.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>

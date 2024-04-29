@@ -5,7 +5,7 @@
             "document": "enonic-setup"
         },
         {
-            "title": "2 - GraphQL API",
+            "title": "2 - Headless API",
             "document": "api-primer"
         },
         {
@@ -53,8 +53,8 @@
             "document": "deployment"
         },
         {
-            "title": "Demo",
-            "document": "demo"
+            "title": "TL;DR",
+            "document": "tldr"
         },
         {
             "title": "Release Notes",

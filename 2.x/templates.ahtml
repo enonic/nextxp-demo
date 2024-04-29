@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.22">
-<title>Deploying to production</title>
+<title>Page templates</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,19 +437,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Deploying to production</h1>
+<h1>Page templates</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#task_sign_up_to_enonic">Task: Sign up to Enonic</a></li>
-<li><a href="#task_install_your_app">Task: Install your app</a></li>
-<li><a href="#task_expose_api_via_route">Task: Expose API via route</a></li>
-<li><a href="#task_add_your_front_end_to_git">Task: Add your front-end to Git</a></li>
-<li><a href="#task_deploy_next_app">Task: Deploy Next app</a></li>
-<li><a href="#task_link_content_studio_to_vercel">Task: Link Content Studio to Vercel</a></li>
-<li><a href="#task_publish_a_page">Task: Publish a page</a></li>
-<li><a href="#summary_and_whats_next">Summary, and whats Next?</a></li>
+<li><a href="#task_movie_details_part">Task: Movie details part</a></li>
+<li><a href="#task_create_template">Task: Create template</a></li>
 </ul>
 </div>
 </div>
@@ -457,342 +450,277 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you will launch cloud instances of both Enonic and Next - link them together, and see the glorious result.</p>
+<p>Thus far, page rendering has been based on mappings, or editorially composing one page at a time. In this chapter you&#8217;ll learn how to make page templates - and reuse them across multiple content items.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<h2 id="task_movie_details_part"><a class="link" href="#task_movie_details_part">Task: Movie details part</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To complete this chapter, you&#8217;ll be using Enonic to host the XP side of things, and Vercel for the front-end - Vercel are the makers of Next.js.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Both Enonic and Next.js are open source software projects and can be deployed more or less anywhere. Have a look at the <a href="https://developer.enonic.com/docs/hosting">Enonic platform hosting page</a> for more details.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_sign_up_to_enonic"><a class="link" href="#task_sign_up_to_enonic">Task: Sign up to Enonic</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Create an account to get a free developer instance of Enonic XP</p>
+<p>To complete this section, we&#8217;ll need one final part for listing movie details. The content type and content for movies already exists in Enonic, so lets get to work.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Sign up</strong> for a <a href="https://enonic.com/sign-up">free developer account</a>.</p>
-</li>
-<li>
-<p><strong>Create a new solution using the <code>CMS essentials</code> template</strong>. This will install applications like <code>Content Studio</code> and <code>Guillotine</code> automatically.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>When the new solution has started, launch <code>Enonic XP Admin</code> to verify that everything is up and running.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_install_your_app"><a class="link" href="#task_install_your_app">Task: Install your app</a></h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Connect Enonic CLI to the cloud</strong> by running this command, and follow the instructions:</p>
+<p><strong>Add the <code>movie-details</code> part to Enonic</strong> - same procedure as before&#8230;&#8203;</p>
 <div class="listingblock">
+<div class="title">src/main/resources/site/parts/movie-details/movie-details.xml</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic cloud login</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;part xmlns="urn:enonic:xp:model:1.0"&gt;
+    &lt;display-name&gt;Movie Details&lt;/display-name&gt;
+    &lt;description&gt;Show details of a movie&lt;/description&gt;
+    &lt;form/&gt;
+&lt;/part&gt;</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p><strong>Install your enonic app</strong> directly from the app folder by running this command:</p>
+<p><strong>Redeploy</strong> the Enonic app.</p>
+</li>
+<li>
+<p><strong>Add the Movie query and view</strong> in Next.</p>
 <div class="listingblock">
+<div class="title">src/components/parts/MovieDetails.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic cloud app install</code></pre>
+<pre class="highlight"><code class="language-JavaScript" data-lang="JavaScript">import React from 'react'
+import {APP_NAME_UNDERSCORED, getUrl, MetaData} from '@enonic/nextjs-adapter';
+import {PartProps} from '@enonic/nextjs-adapter/views/BasePart';
+
+
+export const getMovie = `
+query($path:ID!){
+  guillotine {
+    get(key:$path) {
+      type
+      displayName
+      parent {
+        _path(type: siteRelative)
+      }
+      ... on ${APP_NAME_UNDERSCORED}_Movie {
+        data {
+          subtitle
+          abstract
+          trailer
+          release
+          photos {
+            ... on media_Image {                                             
+              imageUrl: imageUrl(type: absolute, scale: "width(500)")       
+              attachments {                                                 
+                name
+              }
+            }
+          }
+          cast {
+            character
+            actor {
+              ... on ${APP_NAME_UNDERSCORED}_Person {
+                _path(type: siteRelative)
+                displayName
+                data {
+                  photos {
+                    ... on media_Image {                                             
+                      imageUrl: imageUrl(type: absolute, scale: "block(200,200)")       
+                      attachments {                                                 
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+
+// Root component
+const MovieView = (props: PartProps) =&gt; {
+    const data = props.data?.get.data as MovieInfoProps;
+    const meta = props.meta;
+    const {displayName, parent = {}} = props.data.get;
+    return (
+        &lt;&gt;
+            &lt;div&gt;
+                &lt;h2&gt;{displayName}&lt;/h2&gt;
+                {data &amp;&amp; &lt;MovieInfo {...data} meta={meta}/&gt;}
+                {data?.cast &amp;&amp; &lt;Cast cast={data.cast} meta={meta}/&gt;}
+            &lt;/div&gt;
+            &lt;p&gt;
+                &lt;a href={getUrl(parent._path, meta)}&gt;Back to Movies&lt;/a&gt;
+            &lt;/p&gt;
+        &lt;/&gt;
+    );
+};
+
+export default MovieView;
+
+interface MovieInfoProps {
+    meta: MetaData;
+    release: string;
+    subtitle: string;
+    abstract: string;
+    cast: CastMemberProps[],
+    photos: {
+        imageUrl: string;
+    }[];
+}
+
+// Main movie info: release year, poster image and abstract text.
+const MovieInfo = (props: MovieInfoProps) =&gt; {
+    const posterPhoto = (props.photos || [])[0] || {};
+    return (
+        &lt;&gt;
+            {props.release &amp;&amp; (
+                &lt;p&gt;({new Date(props.release).getFullYear()})&lt;/p&gt;
+            )}
+            {posterPhoto.imageUrl &amp;&amp; (
+                &lt;img src={getUrl(posterPhoto.imageUrl, props.meta)}
+                     title={props.subtitle}
+                     alt={props.subtitle}
+                /&gt;
+            )}
+            &lt;p&gt;{props.abstract}&lt;/p&gt;
+        &lt;/&gt;
+    )
+}
+
+interface CastProps {
+    cast: CastMemberProps[];
+    meta: MetaData;
+}
+
+interface CastMemberProps {
+    character: string;
+    actor: {
+        _path: string;
+        displayName: string;
+        data: {
+            photos: {
+                imageUrl: string;
+                attachments: {
+                    name: string
+                }[]
+            }[]
+        }
+    }
+}
+
+// List persons starring in the movie.
+const Cast = (props: CastProps) =&gt; (
+    &lt;div&gt;
+        &lt;h4&gt;Cast&lt;/h4&gt;
+        &lt;ul style={{listStyle: "none", display: "flex", flexFlow: "row wrap"}}&gt;
+            {props.cast.map(
+                (person: CastMemberProps, i: number) =&gt; person &amp;&amp; (
+                    &lt;CastMember key={i} {...person} meta={props.meta}/&gt;
+                )
+            )}
+        &lt;/ul&gt;
+    &lt;/div&gt;
+);
+
+
+const CastMember = (props: CastMemberProps &amp; { meta: MetaData }) =&gt; {
+    const {character, actor, meta} = props;
+    const {displayName, _path, data} = actor;
+    const personPhoto = (data.photos || [])[0] || {};
+
+    return (
+        &lt;li style={{marginRight: "15px"}}&gt;
+            {
+                personPhoto.imageUrl &amp;&amp;
+                &lt;img src={getUrl(personPhoto.imageUrl, meta)}
+                     title={`${displayName} as ${character}`}
+                     alt={`${displayName} as ${character}`}/&gt;
+            }
+            &lt;div&gt;
+                &lt;p&gt;{character}&lt;/p&gt;
+                &lt;p&gt;&lt;a href={getUrl(_path, meta)}&gt;
+                    {displayName}
+                &lt;/a&gt;&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/li&gt;
+    );
+}</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p><strong>Verify that the app was installed</strong> from <code>Solution</code> &#8594; <code>Applications</code> in the Enonic Console.</p>
-</li>
-<li>
-<p>From XP Admin, <strong>open Content Studio</strong> to verify that your app automatically initialized the <code>Intro</code> project and imported content on the server, just like on your local machine.</p>
-</li>
-<li>
-<p>Just like <a href="sites.ahtml">you did it locally</a> , <strong>create a new site</strong> called <code>Hmdb</code> and move all imported content there.</p>
-</li>
-<li>
-<p>Lastly, remember to create a localized version of the site <a href="i18n.ahtml">as you did before</a>.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_expose_api_via_route"><a class="link" href="#task_expose_api_via_route">Task: Expose API via route</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The purpose of routes is to expose APIs and other endpoints in Enonic XP like <code>:8080/site/&lt;project&gt;/&lt;branch&gt;</code> to the internet.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Create a new ingress called "API"</strong> from <code>Solution</code> &#8594; <code>Ingresses</code>.</p>
-<div class="paragraph">
-<p>Use the following settings:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Target path</dt>
-<dd>
-<p><code>/site</code></p>
-</dd>
-<dt class="hdlist1">Public path</dt>
-<dd>
-<p><code>/api</code></p>
-</dd>
-<dt class="hdlist1">ID provider</dt>
-<dd>
-<p>-empty-</p>
-</dd>
-</dl>
-</div>
-</li>
-<li>
-<p><strong>Make a note of the route URL</strong> - you will find it in the route details.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The URL should look something like this: <code><a href="https://account-solution-environment.enonic.net/api" class="bare">https://account-solution-environment.enonic.net/api</a></code>.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_add_your_front_end_to_git"><a class="link" href="#task_add_your_front_end_to_git">Task: Add your front-end to Git</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Vercel (which will be hosting your front-end) will need write access to a Git repo with your code.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Create a new Git repo</strong> - Vercel supports Github, Gitlab and Bitbucket.</p>
-</li>
-<li>
-<p><strong>Commit and push</strong> your Next.js app files to the new repo.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_deploy_next_app"><a class="link" href="#task_deploy_next_app">Task: Deploy Next app</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You are now ready to deploy the the front-end application.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Sign up to Vercel: <a href="https://vercel.com/" class="bare">https://vercel.com/</a></p>
-</li>
-<li>
-<p>Create a new project <code>enonic-tutorial</code> and connect it to the repo you created in the previous step.</p>
-</li>
-<li>
-<p><strong>Add the following environment variables</strong> to the project (name: value):</p>
-<div class="ulist">
-<ul>
-<li>
-<p>ENONIC_APP_NAME: &lt;enonic app name (<code>tutorial.nxp</code> in this guide)&gt;</p>
-</li>
-<li>
-<p>ENONIC_API: &lt;enonic route URL&gt;</p>
-</li>
-<li>
-<p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
-</li>
-<li>
-<p>ENONIC_MAPPINGS: en:intro/hmdb,no:intro-no/hmdb</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Verify the result</strong>.
-The front-page of your app should now display a 404 - as you haven&#8217;t published any content yet.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Make a note of the URL to the Vercel app, you will need it later
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/404.png" alt="404" width="768px" title="Front page rendering before a site has been added to it"></span></p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Check the Vercel function logs if you are not getting the expected result.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="task_link_content_studio_to_vercel"><a class="link" href="#task_link_content_studio_to_vercel">Task: Link Content Studio to Vercel</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>With the front-end running, you can link it to Content Studio to activate the preview, and start building pages once again.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-To save time, you may export content from your local machine and import it to the server using the <a href="https://market.enonic.com/vendors/glenn-ricaud/data-toolbox">Data Toolbox app</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Install the Next.XP app</strong> <code>Solution</code> &#8594; <code>Applications</code> &#8594; <code>Install</code> &#8594; Search for <code>Next.XP</code>, select it an click install</p>
-</li>
-<li>
-<p><strong>Add configuration</strong>.</p>
-<div class="paragraph">
-<p><span class="image"><img src="media/console-configure-app.png" alt="console configure app" width="769px" title="Configure the Next.XP application in the solution console"></span></p>
-</div>
+<p><strong>Update the component mappings</strong>:</p>
 <div class="listingblock">
-<div class="title">Add the following lines to the app config field to override the default values:</div>
+<div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.url = &lt;Vercel application URL&gt;
-nextjs.default.secret = &lt;yourSecret&gt;</code></pre>
+<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">import MovieDetails, {getMovie} from './parts/MovieDetails';
+
+// Part mappings
+ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
+    query: getMovie,
+    view: MovieDetails
+});</code></pre>
 </div>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Remember, you can also create named configurations if needed.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you imported content from your local environment, the following two steps can be skipped
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p><strong>Add the Next.XP app to the site</strong> to activate preview.</p>
-</li>
-<li>
-<p><strong>Save and verify</strong> that the configuration is working by testing the Content Studio preview.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_publish_a_page"><a class="link" href="#task_publish_a_page">Task: Publish a page</a></h2>
+<h2 id="task_create_template"><a class="link" href="#task_create_template">Task: Create template</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It&#8217;s time to test that everything is working.</p>
+<p>With the new component registered, let&#8217;s put it to use.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>If you did not import content, <strong>create the front-page</strong> (once again) by using the page editor. Maybe something like this will do?</p>
+<p>In Content Studio, select and <strong>edit your favorite movie</strong> (or choose "No time to die" if you have no faviorites).</p>
+</li>
+<li>
+<p><strong>Activate the page editor</strong> by pressing <code>Display</code> icon in the top right screen corner, select the "Main page" descriptor and <strong>add the "Movie details" part</strong> to the page.</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/cloud-preview.png" alt="cloud preview" width="1419px" title="Front page as seen from Content Studio"></span></p>
+<p><span class="image"><img src="media/movie-details.png" alt="movie details" width="1440px" title="No time to die, configured with movie-details part"></span></p>
+</div>
+<div class="paragraph">
+<p>We now have a single movie nicely presented, but it would be cumbersome to manually configure each movie like this - page templates to the rescue.</p>
 </div>
 </li>
 <li>
-<p><strong>Go live</strong> by publishing the new page, and verify that your live site gets updated. Voila!</p>
+<p>In the page editor, <strong>select the page (root) component</strong> (for instance by clicking on the header).</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/live.png" alt="live" width="1033px" title="Content rendered on the live server"></span></p>
+<p><span class="image"><img src="media/movie-page.png" alt="movie page" width="1440px" title="With page component selected, save as template appears in right hand panel"></span></p>
 </div>
+</li>
+<li>
+<p>Click <strong>Save as template</strong> from the right hand panel.</p>
+<div class="paragraph">
+<p>This will create a new page template content item, and open it in a new tab for editing.</p>
+</div>
+</li>
+<li>
+<p><strong>Give your template a better name</strong>, such as "Movie details" and save the changes.</p>
+<div class="paragraph">
+<p><span class="image"><img src="media/movie-template.png" alt="movie template" width="1440px" title="Content item of type template, configure to support movie items"></span></p>
+</div>
+</li>
+<li>
+<p>Try visiting other movie items to <strong>verify they now automatically render</strong>.PS!Don&#8217;t forget to publish the changes and the new page template.</p>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="summary_and_whats_next"><a class="link" href="#summary_and_whats_next">Summary, and whats Next?</a></h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>🎉 Congratulations 🥳 - You&#8217;ve reached the end of this tutorial - we hope you enjoyed it!</p>
-</div>
-<div class="paragraph">
-<p>There are other aspects of Enonic and Next.js that will never be covered by this tutorial - to learn more about Enonic check out the following resources:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://developer.enonic.com">Enonic Developer portal</a></p>
-</li>
-<li>
-<p><a href="https://developer.enonic.com/docs/developer-101/stable">Enonic Developer 101</a></p>
-</li>
-</ul>
+<p>With templates sorted out, let&#8217;s dive into  <a href="static.ahtml">production mode and page revalidation</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 08:11:21 UTC
+Last updated 2024-04-29 11:07:45 UTC
 </div>
 </div>
 </body>
