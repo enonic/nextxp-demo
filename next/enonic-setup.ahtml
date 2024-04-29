@@ -484,27 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>-f</code> flag will force using the most recent release of Enonic XP.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Start the sandbox with this command:</p>
-<div class="literalblock">
-<div class="content">
-<pre>enonic sandbox start nxptutorial --dev</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Dev mode optimizes the development process.
+<code>-f</code> forces the use of default values for remaining options
 </td>
 </tr>
 </table>
@@ -535,7 +515,7 @@ Leave the sandbox running in the first terminal window, and open a new terminal 
 <p><strong>Create a new project</strong> using the <code>Introduction</code> app as a starter, by running the following command in your terminal:</p>
 <div class="literalblock">
 <div class="content">
-<pre>enonic create tutorial.nxp -r tutorial-intro --sb nxptutorial -f</pre>
+<pre>enonic create tutorial.nxp -r tutorial-intro --s nxptutorial -f</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -547,13 +527,10 @@ Leave the sandbox running in the first terminal window, and open a new terminal 
 <p>use the GitHub repo <code>github.com/enonic/tutorial-intro</code> as a starter</p>
 </li>
 <li>
-<p>to create an app called <code>tutorial.nxp</code> with version <code>1.0.0</code></p>
+<p>to create an app called <code>tutorial.nxp</code></p>
 </li>
 <li>
-<p>in the directory <code>nxp</code></p>
-</li>
-<li>
-<p>and link it to the <code>nxptutorial</code> sandbox which you created earlier</p>
+<p>and link it to the <code>nxptutorial</code></p>
 </li>
 </ul>
 </div>
@@ -704,7 +681,7 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-18 08:02:45 UTC
+Last updated 2024-04-29 08:11:21 UTC
 </div>
 </div>
 </body>
