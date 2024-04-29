@@ -5,8 +5,8 @@
       "checkout": "7eee6d7840feca4f9dc0667ae5ca49a537cbc903"
     },
     {
-      "label": "next",
-      "checkout": "next3"
+      "label": "2.x",
+      "checkout": "c5953f2f86b57d9d7a1e06bbe49173725ec91db3"
     },
     {
       "label": "stable",
