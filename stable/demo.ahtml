@@ -542,6 +542,9 @@ If you are using Github, simply press the <code>Fork</code> button at the top ri
 <div class="ulist">
 <ul>
 <li>
+<p>ENONIC_APP_NAME: com.enonic.app.hmdb</p>
+</li>
+<li>
 <p>ENONIC_API: &lt;URL to Enonic API&gt;</p>
 </li>
 <li>
@@ -673,7 +676,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-29 11:07:46 UTC
+Last updated 2024-04-30 12:40:56 UTC
 </div>
 </div>
 </body>
