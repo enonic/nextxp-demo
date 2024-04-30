@@ -32,6 +32,7 @@ Vercel are the makers of Next.js, and you'll be using their service to host the 
 . Create a new project i.e. `enonic-demo`, and follow the steps to connect it to the Git repo you created in step 2.
 . **Add environment variables** telling the app where to find the API endpoints, as well as a secret you will need to access preview mode in a later step.
 +
+* ENONIC_APP_NAME: com.enonic.app.hmdb
 * ENONIC_API: <URL to Enonic API>
 * ENONIC_API_TOKEN: <yourSecret>
 * ENONIC_MAPPINGS: en:hmdb/hmdb
