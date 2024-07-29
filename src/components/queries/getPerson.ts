@@ -1,4 +1,4 @@
-import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
+import {APP_NAME_UNDERSCORED, richTextQuery} from '@enonic/nextjs-adapter';
 
 const getPerson = `
 query($path:ID!){
@@ -7,7 +7,7 @@ query($path:ID!){
       displayName
       ... on ${APP_NAME_UNDERSCORED}_Person {
         data {
-          bio
+          ${richTextQuery('bio')}
           dateofbirth
           photos {
            ... on media_Image {
