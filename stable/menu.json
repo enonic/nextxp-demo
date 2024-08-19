@@ -37,19 +37,23 @@
             "document": "layouts"
         },
         {
-            "title": "10 - Page templates",
+            "title": "10 - Rich text",
+            "document": "rich-text"
+        },
+        {
+            "title": "11 - Page templates",
             "document": "templates"
         },
         {
-            "title": "11 - Static pages",
+            "title": "12 - Static pages",
             "document": "static"
         },
         {
-            "title": "12 - Multi language",
+            "title": "13 - Multi language",
             "document": "i18n"
         },
         {
-            "title": "13 - Live deployment",
+            "title": "14 - Live deployment",
             "document": "deployment"
         },
         {
