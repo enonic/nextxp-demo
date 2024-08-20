@@ -1,7 +1,6 @@
 import React from 'react'
 import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
-import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
 
 const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
@@ -12,7 +11,7 @@ const Person = (props: FetchContentResult) => {
         <>
             <div>
                 <h2>{displayName}</h2>
-                <RichTextView data={bio} meta={meta}></RichTextView>
+                <p>{bio}</p>
                 {
                     photos.map((photo: any, i: number) => (
                         <img key={i}
