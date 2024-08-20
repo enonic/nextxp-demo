@@ -493,7 +493,7 @@ The full name of your content type should now be <code>com.example.myproject:per
 <div class="listingblock">
 <div class="title">src/components/queries/getPerson.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED, richTextQuery} from '@enonic/nextjs-adapter';
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
 
 const getPerson = `
 query($path:ID!){
@@ -502,7 +502,7 @@ query($path:ID!){
       displayName
       ... on ${APP_NAME_UNDERSCORED}_Person {
         data {
-          ${richTextQuery('bio')}
+          bio
           dateofbirth
           photos {
            ... on media_Image {
@@ -593,7 +593,6 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react'
 import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
-import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
 
 const Person = (props: FetchContentResult) =&gt; {
     const {displayName, data, parent} = props.data?.get as any;
@@ -604,7 +603,7 @@ const Person = (props: FetchContentResult) =&gt; {
         &lt;&gt;
             &lt;div&gt;
                 &lt;h2&gt;{displayName}&lt;/h2&gt;
-                &lt;RichTextView data={bio} meta={meta}&gt;&lt;/RichTextView&gt;
+                &lt;p&gt;{bio}&lt;/p&gt;
                 {
                     photos.map((photo: any, i: number) =&gt; (
                         &lt;img key={i}
@@ -796,7 +795,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-19 15:23:20 UTC
+Last updated 2024-08-20 09:22:34 UTC
 </div>
 </div>
 </body>
