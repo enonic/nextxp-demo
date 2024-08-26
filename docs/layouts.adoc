@@ -78,4 +78,5 @@ By combining layout, part and text we are starting to see the potential of the p
 
 image:layout-part-text.png[title="Layout combined with part and text components",width=1440px]
 
-In the next chapter we will look into rendering <<rich text#, rich text>> fields and components.
+In the next chapter we will look into <<templates#, page templates>>.
+Page templates allow us to reuse a page definition across multiple content items.
