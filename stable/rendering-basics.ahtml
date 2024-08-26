@@ -502,7 +502,6 @@ query($path:ID!){
       displayName
       ... on ${APP_NAME_UNDERSCORED}_Person {
         data {
-          bio
           dateofbirth
           photos {
            ... on media_Image {
@@ -596,14 +595,13 @@ import Link from 'next/link';
 
 const Person = (props: FetchContentResult) =&gt; {
     const {displayName, data, parent} = props.data?.get as any;
-    const {bio, photos} = data;
+    const {photos} = data;
     const meta = props.meta;
 
     return (
         &lt;&gt;
             &lt;div&gt;
                 &lt;h2&gt;{displayName}&lt;/h2&gt;
-                &lt;p&gt;{bio}&lt;/p&gt;
                 {
                     photos.map((photo: any, i: number) =&gt; (
                         &lt;img key={i}
@@ -795,7 +793,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-20 09:22:34 UTC
+Last updated 2024-08-26 09:13:00 UTC
 </div>
 </div>
 </body>
