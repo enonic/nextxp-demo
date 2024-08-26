@@ -3,22 +3,11 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-Enonic provides a link:https://developer.enonic.com/docs/xp/stable/cms/pages/text[text] component that allows you to create rich text content using a WYSIWYG editor.
-And the good news is, you don't need to configure anything in either XP or Next.js -- it works out of the box.
+In this chapter we'll see how you can render https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[HtmlArea] input type.
 
-But did you know that you can also render custom HtmlArea input fields with rich text component as well ?
+=== Task: Rendering HtmlArea input field
 
-To do it we need to follow 3 simple steps:
-
-1. Set input type to `HtmlArea`
-2. Update the query for that input to fetch all the data for the rich text component
-3. Use RichTextView component to render the rich text field
-
-Let's take `bio` input field from `Person` content type and convert it to a rich text field!
-
-== HtmlArea input type
-
-If we take a look at the `Person` content type, `bio` input field is already of `HtmlArea` type, so we don't need to do anything in the Enonic app.
+Let's take `bio` input field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how to render it.
 
 .src/main/resources/site/content-types/person/person.xml
 [source,xml]
@@ -48,41 +37,35 @@ If we take a look at the `Person` content type, `bio` input field is already of 
 </content-type>
 ----
 
-== Update the query
-
-The main difference of rich text component from the plain text is that it needs certain data fetched from Enonic XP.
-Luckily for us, we don't have to worry about the details, because Next.XP has a nice helper function that takes field name and generates the query for us:
-
-[source,Typescript]
-----
-import { richTextQuery } from '@enonic/nextjs-adapter';
-...
-const htmlAreaFieldQuery = richTextQuery("bio");
-----
-
-Now, let's replace `bio` field in our `getPerson` query with `richTextQuery('bio')`.
-
-This will query all the data needed for the rich text component to be able to render the `bio` field:
-
+1. *Update the query*
++
+The main difference between HtmlArea field and the text field is that it HtmlArea has more data that needs to be queried in order to render it.
++
+Luckily for us, we don't have to worry about the details, because Next.XP provides a `richTextQuery` helper function that takes field name and generates the full query for us.
++
+Let's replace `bio` field in our `getPerson` query with `richTextQuery('bio')` making it look like this:
++
+.src/components/queries/getPerson.ts
 [source,Typescript]
 ----
 include::{sourcedir}/components/queries/getPerson.ts[]
 ----
 
-== Use RichTextView component
-
-Finally, we need to update the `Person` view to render the `bio` field with the rich text component.
-
+2. *Use RichTextView component*
++
+Now we need to update the `Person` view to render the `bio` field with the `RichTextView` react component provided by Next.XP.
++
 Locate the following line in `Person.tsx`:
-
++
 .src/components/views/Person.tsx
 [source,jsx]
 ----
 <p>{bio}</p>
 ----
-
++
 And replace it with the following:
-
++
+.src/components/views/Person.tsx
 [source,jsx]
 ----
 import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
@@ -92,12 +75,13 @@ import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
 <RichTextView data={bio} meta={meta}></RichTextView>
 ----
 
-Congratulations!
-You have successfully converted the `bio` text field to a rich text component!
+3. *Congratulations!*
++
+You rendered `HtmlArea` field!
 
 == Macros
 
-Macros are special tags that can be used to insert dynamic content into the rich text field.
+https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] are special tags that can be used to insert dynamic content into the HtmlArea input.
 
 As long as you have the macro defined in your Enonic XP app, you will be able to insert them in the Html Area editor.
 
@@ -128,5 +112,4 @@ Where `PanelMacro` is a React component that will render the macro content:
 include::{sourcedir}/components/macros/PanelMacro.tsx[]
 ----
 
-In the next chapter we will look into <<templates#, page templates>>.
-Page templates allow us to reuse a page definition across multiple content items.
+In the next chapter we'll make it possible to <<pages#, create pages editorially>>.
