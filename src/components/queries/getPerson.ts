@@ -7,7 +7,6 @@ query($path:ID!){
       displayName
       ... on ${APP_NAME_UNDERSCORED}_Person {
         data {
-          bio
           dateofbirth
           photos {
            ... on media_Image {

@@ -4,14 +4,13 @@ import Link from 'next/link';
 
 const Person = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
-    const {bio, photos} = data;
+    const {photos} = data;
     const meta = props.meta;
 
     return (
         <>
             <div>
                 <h2>{displayName}</h2>
-                <p>{bio}</p>
                 {
                     photos.map((photo: any, i: number) => (
                         <img key={i}
