@@ -1,0 +1,115 @@
+= Rich Text
+:toc: right
+:imagesdir: media/
+:sourcedir: ../src
+
+In this chapter we'll see how you can render https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[HtmlArea] input type.
+
+=== Task: Rendering HtmlArea input field
+
+Let's take `bio` input field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how to render it.
+
+.src/main/resources/site/content-types/person/person.xml
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type xmlns="urn:enonic:xp:model:1.0">
+  <display-name>Person</display-name>
+  <description>Historical or living human</description>
+  <super-type>base:structured</super-type>
+  <form>
+    <input type="ImageSelector" name="photos">
+      <label>Photos</label>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+    <input type="HtmlArea" name="bio">
+      <label>Bio</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <exclude>NumberedList Outdent Indent SpecialChar Anchor Table PasteModeSwitcher</exclude>
+      </config>
+    </input>
+    <input type="Date" name="dateofbirth">
+      <label>Birth Date</label>
+       <occurrences minimum="0" maximum="1"/>
+    </input>
+  </form>
+</content-type>
+----
+
+1. *Update the query*
++
+The main difference between HtmlArea field and the text field is that it HtmlArea has more data that needs to be queried in order to render it.
++
+Luckily for us, we don't have to worry about the details, because Next.XP provides a `richTextQuery` helper function that takes field name and generates the full query for us.
++
+Let's replace `bio` field in our `getPerson` query with `richTextQuery('bio')` making it look like this:
++
+.src/components/queries/getPerson.ts
+[source,Typescript]
+----
+include::{sourcedir}/components/queries/getPerson.ts[]
+----
+
+2. *Use RichTextView component*
++
+Now we need to update the `Person` view to render the `bio` field with the `RichTextView` react component provided by Next.XP.
++
+Locate the following line in `Person.tsx`:
++
+.src/components/views/Person.tsx
+[source,jsx]
+----
+<p>{bio}</p>
+----
++
+And replace it with the following:
++
+.src/components/views/Person.tsx
+[source,jsx]
+----
+import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
+
+...
+
+<RichTextView data={bio} meta={meta}></RichTextView>
+----
+
+3. *Congratulations!*
++
+You rendered `HtmlArea` field!
+
+== Macros
+
+https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] are special tags that can be used to insert dynamic content into the HtmlArea input.
+
+As long as you have the macro defined in your Enonic XP app, you will be able to insert them in the Html Area editor.
+
+But in order for them to be rendered by the Rich Text component in Next.XP, you need to provide the macro implementations.
+
+You do it similarly to any other component by adding it to the `ComponentRegistry` in the `_mappings.ts` file:
+
+.src/components/_mappings.ts
+[source,jsx]
+----
+import { ComponentRegistry } from '@enonic/nextjs-adapter';
+import PanelMacro from './macros/PanelMacro';
+...
+ComponentRegistry.addMacro('com.enonic.app.panelmacros:panel', {
+    view: PanelMacro,
+    configQuery: `{
+                      body
+                      header
+                  }`
+});
+----
+
+Where `PanelMacro` is a React component that will render the macro content:
+
+.src/components/macros/PanelMacro.tsx
+[source,jsx]
+----
+include::{sourcedir}/components/macros/PanelMacro.tsx[]
+----
+
+In the next chapter we'll make it possible to <<pages#, create pages editorially>>.
