@@ -25,31 +25,35 @@
             "document": "preview"
         },
         {
-            "title": "7 - Custom pages",
+            "title": "7 - Rich text",
+            "document": "rich-text"
+        },
+        {
+            "title": "8 - Custom pages",
             "document": "pages"
         },
         {
-            "title": "8 - Parts",
+            "title": "9 - Parts",
             "document": "parts"
         },
         {
-            "title": "9 - Layouts",
+            "title": "10 - Layouts",
             "document": "layouts"
         },
         {
-            "title": "10 - Page templates",
+            "title": "11 - Page templates",
             "document": "templates"
         },
         {
-            "title": "11 - Static pages",
+            "title": "12 - Static pages",
             "document": "static"
         },
         {
-            "title": "12 - Multi language",
+            "title": "13 - Multi language",
             "document": "i18n"
         },
         {
-            "title": "13 - Live deployment",
+            "title": "14 - Live deployment",
             "document": "deployment"
         },
         {
