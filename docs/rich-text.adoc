@@ -50,10 +50,10 @@ Let's add `richTextQuery('bio')` to `getPerson.ts` on line 11 and save it as `ge
 ----
 include::{sourcedir}/components/queries/getPersonWithBio.ts[]
 ----
-
++
 IMPORTANT: Remember to change `const getPerson` from string to function!
 This is needed to make sure `richTextQuery` function inside it is executed after all components are registered!
-
++
 2. *Use RichTextView component*
 +
 Now we need to add `bio` field to the `Person` view.
