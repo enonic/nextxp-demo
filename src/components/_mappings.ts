@@ -5,11 +5,11 @@ import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
 import Heading from './parts/Heading';
 import MovieDetails, {getMovie} from './parts/MovieDetails';
 import {commonQuery, commonVariables} from './queries/common';
-import getPerson from './queries/getPerson';
-import Person from './views/Person';
 // import PanelMacro from './macros/PanelMacro';
 // Remember to import base mappings
 import "@enonic/nextjs-adapter/baseMappings";
+import getPersonWithBio from './queries/getPersonWithBio';
+import PersonWithBio from './views/PersonWithBio';
 
 // You can set common query for all views here
 ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
@@ -45,8 +45,8 @@ ComponentRegistry.addMacro('com.enonic.app.socialmacros:youtube', {
 
 // Content type mappings
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPerson,
-    view: Person
+    query: getPersonWithBio(),
+    view: PersonWithBio
 });
 
 // Page mappings
