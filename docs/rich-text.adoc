@@ -5,7 +5,7 @@
 
 In this chapter we'll see how you can render https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[HtmlArea] input type.
 
-=== Task: Rendering HtmlArea input field
+== Task: Rendering HtmlArea input field
 
 Let's take `bio` input field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how to render it.
 
@@ -39,77 +39,119 @@ Let's take `bio` input field from `Person` https://developer.enonic.com/docs/con
 
 1. *Update the query*
 +
-The main difference between HtmlArea field and the text field is that it HtmlArea has more data that needs to be queried in order to render it.
+HtmlArea field is different from the text field in that it needs some extra data to be able to render.
 +
-Luckily for us, we don't have to worry about the details, because Next.XP provides a `richTextQuery` helper function that takes field name and generates the full query for us.
+Luckily for us, Next.XP provides a `richTextQuery` helper function that takes field name and generates the full query for us.
 +
-Let's replace `bio` field in our `getPerson` query with `richTextQuery('bio')` making it look like this:
+Let's add `richTextQuery('bio')` to `getPerson.ts` on line 11 and save it as `getPersonWithBio.ts` file:
 +
-.src/components/queries/getPerson.ts
-[source,Typescript]
+.src/components/queries/getPersonWithBio.ts
+[source,Typescript,linenums]
 ----
-include::{sourcedir}/components/queries/getPerson.ts[]
+include::{sourcedir}/components/queries/getPersonWithBio.ts[]
 ----
+
+IMPORTANT: Remember to change `const getPerson` from string to function!
+This is needed to make sure `richTextQuery` function inside it is executed after all components are registered!
 
 2. *Use RichTextView component*
 +
-Now we need to update the `Person` view to render the `bio` field with the `RichTextView` react component provided by Next.XP.
+Now we need to add `bio` field to the `Person` view.
 +
-Locate the following line in `Person.tsx`:
+Let's add `RichTextView` component provided by Next.XP on line 17 of `Person.tsx` and save it as `PersonWithBio.tsx`.
 +
-.src/components/views/Person.tsx
-[source,jsx]
+Also note that we now first need to read `bio` field from `data` on line 10 to pass it to `RichTextView`.
++
+.src/components/views/PersonWithBio.tsx
+[source,jsx,linenums]
 ----
-<p>{bio}</p>
+include::{sourcedir}/components/views/PersonWithBio.tsx[]
 ----
 +
-And replace it with the following:
+3. *Update the mappings*
 +
-.src/components/views/Person.tsx
-[source,jsx]
-----
-import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
-
-...
-
-<RichTextView data={bio} meta={meta}></RichTextView>
-----
-
-3. *Congratulations!*
+Finally, we need to update the `_mappings.ts` file to use the new query and view.
 +
+To do that, replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio` so that it looks like this:
++
+.src/components/_mappings.ts
+[source,Typescript,linenums]
+----
+ComponentRegistry.addContentType(`${APP_NAME}:person`, {
+    query: getPersonWithBio(),
+    view: PersonWithBio
+});
+----
++
+And that's it !
 You rendered `HtmlArea` field!
 
 == Macros
 
-https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] are special tags that can be used to insert dynamic content into the HtmlArea input.
+https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] are special tags that can be used to insert dynamic content inside the HtmlArea input.
 
-As long as you have the macro defined in your Enonic XP app, you will be able to insert them in the Html Area editor.
+=== Task: Render a macro
 
-But in order for them to be rendered by the Rich Text component in Next.XP, you need to provide the macro implementations.
+Let's take `Filmography` macro from the `Introduction` app and see how to render it.
 
-You do it similarly to any other component by adding it to the `ComponentRegistry` in the `_mappings.ts` file:
+It has the following structure:
 
+.src/main/resources/site/macros/filmography/filmography.xml
+[source,xml]
+----
+<macro>
+  <display-name>Filmography</display-name>
+  <description>Gallery of actor's movies</description>
+
+  <form>
+    <input name="heading" type="TextLine">
+      <label>Heading</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+  </form>
+</macro>
+----
+
+If you open *Lea Seydoux* in Content Studio now and take a look at the very end of the `bio` Html area you'll notice the `filmography` macro tag:
+
+image::lea-seydoux-macro.png[title="Lea Seydoux bio with filmography macro",width=1005px]
+
+But there is no trace of it in the preview pane.
+That is because we need to create a React component that will render it.
+
+1. *Create Filmography macro component*
++
+This React component will be used by the `RichTextView` to render the macro content whenever it encounters filmography macro tag.
++
+.src/components/macros/FilmographyMacro.tsx
+[source,jsx]
+----
+include::{sourcedir}/components/macros/FilmographyMacro.tsx[]
+----
++
+2. *Register macro in ComponentRegistry*
++
+In order for the `RichTextView` to be aware of your new macro, you need to register it in the `ComponentRegistry` just like any other component:
++
 .src/components/_mappings.ts
 [source,jsx]
 ----
 import { ComponentRegistry } from '@enonic/nextjs-adapter';
-import PanelMacro from './macros/PanelMacro';
+import FilmographyMacro from './macros/FilmographyMacro';
 ...
-ComponentRegistry.addMacro('com.enonic.app.panelmacros:panel', {
-    view: PanelMacro,
-    configQuery: `{
-                      body
-                      header
-                  }`
+ComponentRegistry.addMacro('tutorial.nxp:filmography', {
+    view: FilmographyMacro,
+    configQuery: '{ heading }'
 });
 ----
-
-Where `PanelMacro` is a React component that will render the macro content:
-
-.src/components/macros/PanelMacro.tsx
-[source,jsx]
-----
-include::{sourcedir}/components/macros/PanelMacro.tsx[]
-----
++
+Where `configQuery` is a GraphQL query fragment matching the macro configuration, and `FilmographyMacro` is a React component that will render the macro content:
++
+IMPORTANT: Macro needs to be registered before any component that uses it!
+Best practice is to register it at the top of the `_mappings.ts` file.
++
+3. *Congratulations!*
++
+You should now be able to see text `Lea's Movies` rendered by the macro if you open *Lea Seydoux* in Content Studio or navigate to http://localhost:3000/persons/lea-seydoux[http://localhost:3000/persons/lea-seydoux]!
 
 In the next chapter we'll make it possible to <<pages#, create pages editorially>>.
