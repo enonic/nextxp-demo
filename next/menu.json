@@ -1,0 +1,74 @@
+{
+    "menuItems": [
+        {
+            "title": "1 - Enonic setup",
+            "document": "enonic-setup"
+        },
+        {
+            "title": "2 - GraphQL API",
+            "document": "api-primer"
+        },
+        {
+            "title": "3 - Sites",
+            "document": "sites"
+        },
+        {
+            "title": "4 - Next.js setup",
+            "document": "nextjs-setup"
+        },
+        {
+            "title": "5 - Rendering basics",
+            "document": "rendering-basics"
+        },
+        {
+            "title": "6 - Preview",
+            "document": "preview"
+        },
+        {
+            "title": "7 - Rich text",
+            "document": "rich-text"
+        },
+        {
+            "title": "8 - Custom pages",
+            "document": "pages"
+        },
+        {
+            "title": "9 - Parts",
+            "document": "parts"
+        },
+        {
+            "title": "10 - Layouts",
+            "document": "layouts"
+        },
+        {
+            "title": "11 - Page templates",
+            "document": "templates"
+        },
+        {
+            "title": "12 - Static pages",
+            "document": "static"
+        },
+        {
+            "title": "13 - Multi language",
+            "document": "i18n"
+        },
+        {
+            "title": "14 - Live deployment",
+            "document": "deployment"
+        },
+        {
+            "title": "Demo",
+            "document": "demo"
+        },
+        {
+            "title": "Release Notes",
+            "document": "release",
+            "menuItems": [
+                {
+                    "title": "Upgrade Notes",
+                    "document": "release/upgrade"
+                }
+            ]
+        }
+    ]
+}
