@@ -3,76 +3,59 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-In this chapter we'll see how you can render https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[HtmlArea] input type.
+In this chapter you'll learn how to render rich text content.
 
-== Task: Rendering HtmlArea input field
+== Intro
+
+Enonic boasts a rich text field field type aka https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[HtmlArea]. Unlike basic text fields, rich text may contain more complex concepts such as images, links and custom components (aka macros). Each of these will typically need to be processed during rendering in order to provide a contextually correct URL, ideal image sizes - not to mention rendering of custom components.
+
+
+== Sample content
+
+Luckily, our sample data set contains everyting we need to get going. The Bio field for persons is rich text, and some of the content is even populated with relevant content, like you see below:
+
+image::rich-text-bio.png[title="Lea Seydoux with rich text bio content",width=672px]
+
+
+== Task: Rich text rendering
 
 Let's take `bio` input field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how to render it.
 
-.src/main/resources/site/content-types/person/person.xml
-[source,xml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-<content-type xmlns="urn:enonic:xp:model:1.0">
-  <display-name>Person</display-name>
-  <description>Historical or living human</description>
-  <super-type>base:structured</super-type>
-  <form>
-    <input type="ImageSelector" name="photos">
-      <label>Photos</label>
-      <occurrences minimum="0" maximum="0"/>
-    </input>
-    <input type="HtmlArea" name="bio">
-      <label>Bio</label>
-      <occurrences minimum="1" maximum="1"/>
-      <config>
-        <exclude>NumberedList Outdent Indent SpecialChar Anchor Table PasteModeSwitcher</exclude>
-      </config>
-    </input>
-    <input type="Date" name="dateofbirth">
-      <label>Birth Date</label>
-       <occurrences minimum="0" maximum="1"/>
-    </input>
-  </form>
-</content-type>
-----
-
-1. *Update the query*
+. *Update the Person query*
 +
-HtmlArea field is different from the text field in that it needs some extra data to be able to render.
+To properly render Rich text, we need additional metadata about links and images.
 +
-Luckily for us, Next.XP provides a `richTextQuery` helper function that takes field name and generates the full query for us.
+To simplify things, Next.XP provides a `richTextQuery` helper function that generates the query for us. Also, this way we don't have to repeat the query for every rich text field.
 +
-Let's add `richTextQuery('bio')` to `getPerson.ts` on line 11 and save it as `getPersonWithBio.ts` file:
+*Add a new query* file to your project:
 +
 .src/components/queries/getPersonWithBio.ts
-[source,Typescript,linenums]
+[source,Typescript]
 ----
 include::{sourcedir}/components/queries/getPersonWithBio.ts[]
 ----
 +
-IMPORTANT: Remember to change `const getPerson` from string to function!
-This is needed to make sure `richTextQuery` function inside it is executed after all components are registered!
+NOTE: The difference is this line: `${richTextQuery('bio')}``, and that getPerson must now be a function.
 +
-2. *Use RichTextView component*
+For further insight, visit the https://developer.enonic.com/docs/developer-101/stable/rich-text[rich text chapter] in the Developer 101 tutorial
+
+. *The RichTextView component*
 +
-Now we need to add `bio` field to the `Person` view.
+We also need an updated view component that will render the  `bio`.
 +
-Let's add `RichTextView` component provided by Next.XP on line 17 of `Person.tsx` and save it as `PersonWithBio.tsx`.
-+
-Also note that we now first need to read `bio` field from `data` on line 10 to pass it to `RichTextView`.
+NOTE:  It reads the `bio` data from the query response, and passes it to the `RichTextView` component.
 +
 .src/components/views/PersonWithBio.tsx
-[source,jsx,linenums]
+[source,tsx]
 ----
 include::{sourcedir}/components/views/PersonWithBio.tsx[]
 ----
 +
-3. *Update the mappings*
+. *Update the mapping*
 +
-Finally, we need to update the `_mappings.ts` file to use the new query and view.
+Finally, we need to update the mappings to use the new query and view.
 +
-To do that, replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio` so that it looks like this:
+Simply replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio`. It should look something like this:
 +
 .src/components/_mappings.ts
 [source,Typescript,linenums]
@@ -83,45 +66,35 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 });
 ----
 +
-And that's it !
-You rendered `HtmlArea` field!
+That's it!
+
+The result should look something like this:
+TODO Screenshot
+
 
 == Macros
 
-https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] are special tags that can be used to insert dynamic content inside the HtmlArea input.
+https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] enable you to add custom components inside  your rich text. In order to render in your front-end, every macro need to be to registered as a component.
+
+
+=== Filmography macro
+
+In your Enonic project, a `filmography` macro has been pre-defined. You can find it in `src/main/resources/site/macros/filmography/filmography.xml`
+
+If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet at the end of the bio text:
+
+  [filmography heading="Lea's Movies"/]
+
+This means, an editor has added the `filmography` macro, with a single `heading` parameter to the rich text.
 
 === Task: Render a macro
-
-Let's take `Filmography` macro from the `Introduction` app and see how to render it.
-
-It has the following structure:
-
-.src/main/resources/site/macros/filmography/filmography.xml
-[source,xml]
-----
-<macro>
-  <display-name>Filmography</display-name>
-  <description>Gallery of actor's movies</description>
-
-  <form>
-    <input name="heading" type="TextLine">
-      <label>Heading</label>
-      <occurrences minimum="0" maximum="1"/>
-    </input>
-  </form>
-</macro>
-----
-
-If you open *Lea Seydoux* in Content Studio now and take a look at the very end of the `bio` Html area you'll notice the `filmography` macro tag:
-
-image::lea-seydoux-macro.png[title="Lea Seydoux bio with filmography macro",width=1005px]
 
 But there is no trace of it in the preview pane.
 That is because we need to create a React component that will render it.
 
-1. *Create Filmography macro component*
+. *Add Filmography component*
 +
-This React component will be used by the `RichTextView` to render the macro content whenever it encounters filmography macro tag.
+This React component will automatically be invoked by the `RichTextView` component, if it encounters the filmography macro tag.
 +
 .src/components/macros/FilmographyMacro.tsx
 [source,jsx]
@@ -129,9 +102,9 @@ This React component will be used by the `RichTextView` to render the macro cont
 include::{sourcedir}/components/macros/FilmographyMacro.tsx[]
 ----
 +
-2. *Register macro in ComponentRegistry*
+. *Register macro*
 +
-In order for the `RichTextView` to be aware of your new macro, you need to register it in the `ComponentRegistry` just like any other component:
+In order for the `RichTextView` to be aware of your new macro, you must register it - just like any other component:
 +
 .src/components/_mappings.ts
 [source,jsx]
@@ -139,19 +112,18 @@ In order for the `RichTextView` to be aware of your new macro, you need to regis
 import { ComponentRegistry } from '@enonic/nextjs-adapter';
 import FilmographyMacro from './macros/FilmographyMacro';
 ...
-ComponentRegistry.addMacro('tutorial.nxp:filmography', {
+ComponentRegistry.addMacro(`${APP_NAME}:person`, {
     view: FilmographyMacro,
     configQuery: '{ heading }'
 });
 ----
 +
-Where `configQuery` is a GraphQL query fragment matching the macro configuration, and `FilmographyMacro` is a React component that will render the macro content:
+NOTE: `configQuery` basically lets you ask for configuration values for your component, in this specific case the `heading`.
 +
-IMPORTANT: Macro needs to be registered before any component that uses it!
-Best practice is to register it at the top of the `_mappings.ts` file.
+IMPORTANT: Macro must be registered before any component that uses it! Best practice is to register it at the top of the `_mappings.ts` file.
 +
-3. *Congratulations!*
+. *Congratulations!*
 +
-You should now be able to see text `Lea's Movies` rendered by the macro if you open *Lea Seydoux* in Content Studio or navigate to http://localhost:3000/persons/lea-seydoux[http://localhost:3000/persons/lea-seydoux]!
+You should now be able to see macro render `Lea's Movies` within the rich text: http://localhost:3000/persons/lea-seydoux[http://localhost:3000/persons/lea-seydoux]!
 
 In the next chapter we'll make it possible to <<pages#, create pages editorially>>.
