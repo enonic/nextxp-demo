@@ -10,12 +10,19 @@ import {commonQuery, commonVariables} from './queries/common';
 import "@enonic/nextjs-adapter/baseMappings";
 import getPersonWithBio from './queries/getPersonWithBio';
 import PersonWithBio from './views/PersonWithBio';
+import Filmography from './macros/Filmography';
 
 // You can set common query for all views here
 ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
 
-/*
 // Macro mappings (should come first as may be used in other components)
+
+ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
+    view: Filmography,
+    configQuery: '{ heading }'
+});
+
+/*
 const macroPanelConfig = {
     view: PanelMacro,
     configQuery: `{
