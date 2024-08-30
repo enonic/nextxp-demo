@@ -703,11 +703,11 @@ export default FilmographyMacro;</code></pre>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-jsx" data-lang="jsx">import { ComponentRegistry } from '@enonic/nextjs-adapter';
-import FilmographyMacro from './macros/FilmographyMacro';
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">...
+import Filmography from './macros/Filmography';
 ...
-ComponentRegistry.addMacro(`${APP_NAME}:person`, {
-    view: FilmographyMacro,
+ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
+    view: Filmography,
     configQuery: '{ heading }'
 });</code></pre>
 </div>
@@ -754,7 +754,7 @@ Macro must be registered before any component that uses it! Best practice is to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-30 13:53:04 UTC
+Last updated 2024-08-30 14:30:12 UTC
 </div>
 </div>
 </body>
