@@ -99,7 +99,7 @@ This React component will automatically be invoked by the `RichTextView` compone
 .src/components/macros/FilmographyMacro.tsx
 [source,jsx]
 ----
-include::{sourcedir}/components/macros/FilmographyMacro.tsx[]
+include::{sourcedir}/components/macros/Filmography.tsx[]
 ----
 +
 . *Register macro*
@@ -109,11 +109,11 @@ In order for the `RichTextView` to be aware of your new macro, you must register
 .src/components/_mappings.ts
 [source,jsx]
 ----
-import { ComponentRegistry } from '@enonic/nextjs-adapter';
-import FilmographyMacro from './macros/FilmographyMacro';
 ...
-ComponentRegistry.addMacro(`${APP_NAME}:person`, {
-    view: FilmographyMacro,
+import Filmography from './macros/Filmography';
+...
+ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
+    view: Filmography,
     configQuery: '{ heading }'
 });
 ----
