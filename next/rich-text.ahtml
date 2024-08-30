@@ -441,9 +441,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#task_rendering_htmlarea_input_field">Task: Rendering HtmlArea input field</a></li>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#sample_content">Sample content</a></li>
+<li><a href="#task_rich_text_rendering">Task: Rich text rendering</a></li>
 <li><a href="#macros">Macros</a>
 <ul class="sectlevel2">
+<li><a href="#filmography_macro">Filmography macro</a></li>
 <li><a href="#task_render_a_macro">Task: Render a macro</a></li>
 </ul>
 </li>
@@ -454,56 +457,50 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we&#8217;ll see how you can render <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea">HtmlArea</a> input type.</p>
+<p>In this chapter you&#8217;ll learn how to render rich text content.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="task_rendering_htmlarea_input_field"><a class="link" href="#task_rendering_htmlarea_input_field">Task: Rendering HtmlArea input field</a></h2>
+<h2 id="intro"><a class="link" href="#intro">Intro</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Enonic boasts a rich text field field type aka <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea">HtmlArea</a>. Unlike basic text fields, rich text may contain more complex concepts such as images, links and custom components (aka macros). Each of these will typically need to be processed during rendering in order to provide a contextually correct URL, ideal image sizes - not to mention rendering of custom components.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample_content"><a class="link" href="#sample_content">Sample content</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Luckily, our sample data set contains everyting we need to get going. The Bio field for persons is rich text, and some of the content is even populated with relevant content, like you see below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/rich-text-bio.png" alt="rich text bio" width="672px">
+</div>
+<div class="title">Figure 1. Lea Seydoux with rich text bio content</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="task_rich_text_rendering"><a class="link" href="#task_rich_text_rendering">Task: Rich text rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Let&#8217;s take <code>bio</code> input field from <code>Person</code> <a href="https://developer.enonic.com/docs/content-studio/stable/content-types">content type</a> and see how to render it.</p>
 </div>
-<div class="listingblock">
-<div class="title">src/main/resources/site/content-types/person/person.xml</div>
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;content-type xmlns="urn:enonic:xp:model:1.0"&gt;
-  &lt;display-name&gt;Person&lt;/display-name&gt;
-  &lt;description&gt;Historical or living human&lt;/description&gt;
-  &lt;super-type&gt;base:structured&lt;/super-type&gt;
-  &lt;form&gt;
-    &lt;input type="ImageSelector" name="photos"&gt;
-      &lt;label&gt;Photos&lt;/label&gt;
-      &lt;occurrences minimum="0" maximum="0"/&gt;
-    &lt;/input&gt;
-    &lt;input type="HtmlArea" name="bio"&gt;
-      &lt;label&gt;Bio&lt;/label&gt;
-      &lt;occurrences minimum="1" maximum="1"/&gt;
-      &lt;config&gt;
-        &lt;exclude&gt;NumberedList Outdent Indent SpecialChar Anchor Table PasteModeSwitcher&lt;/exclude&gt;
-      &lt;/config&gt;
-    &lt;/input&gt;
-    &lt;input type="Date" name="dateofbirth"&gt;
-      &lt;label&gt;Birth Date&lt;/label&gt;
-       &lt;occurrences minimum="0" maximum="1"/&gt;
-    &lt;/input&gt;
-  &lt;/form&gt;
-&lt;/content-type&gt;</code></pre>
-</div>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Update the query</strong></p>
+<p><strong>Update the Person query</strong></p>
 <div class="paragraph">
-<p>HtmlArea field is different from the text field in that it needs some extra data to be able to render.</p>
+<p>To properly render Rich text, we need additional metadata about links and images.</p>
 </div>
 <div class="paragraph">
-<p>Luckily for us, Next.XP provides a <code>richTextQuery</code> helper function that takes field name and generates the full query for us.</p>
+<p>To simplify things, Next.XP provides a <code>richTextQuery</code> helper function that generates the query for us. Also, this way we don&#8217;t have to repeat the query for every rich text field.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s add <code>richTextQuery('bio')</code> to <code>getPerson.ts</code> on line 11 and save it as <code>getPersonWithBio.ts</code> file:</p>
+<p><strong>Add a new query</strong> file to your project:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/queries/getPersonWithBio.ts</div>
@@ -539,35 +536,43 @@ query($path:ID!){
 export default getPerson;</code></pre>
 </div>
 </div>
-<div class="admonitionblock important">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Remember to change <code>const getPerson</code> from string to function!
-This is needed to make sure <code>richTextQuery</code> function inside it is executed after all components are registered!
+The difference is this line: <code>${richTextQuery('bio')}`</code>, and that getPerson must now be a function.
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>For further insight, visit the <a href="https://developer.enonic.com/docs/developer-101/stable/rich-text">rich text chapter</a> in the Developer 101 tutorial</p>
+</div>
 </li>
 <li>
-<p><strong>Use RichTextView component</strong></p>
+<p><strong>The RichTextView component</strong></p>
 <div class="paragraph">
-<p>Now we need to add <code>bio</code> field to the <code>Person</code> view.</p>
+<p>We also need an updated view component that will render the  <code>bio</code>.</p>
 </div>
-<div class="paragraph">
-<p>Let&#8217;s add <code>RichTextView</code> component provided by Next.XP on line 17 of <code>Person.tsx</code> and save it as <code>PersonWithBio.tsx</code>.</p>
-</div>
-<div class="paragraph">
-<p>Also note that we now first need to read <code>bio</code> field from <code>data</code> on line 10 to pass it to <code>RichTextView</code>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It reads the <code>bio</code> data from the query response, and passes it to the <code>RichTextView</code> component.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">src/components/views/PersonWithBio.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-jsx" data-lang="jsx">import React from 'react'
+<pre class="highlight"><code class="language-tsx" data-lang="tsx">import React from 'react'
 import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
 import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
@@ -607,12 +612,12 @@ function getTitle(photo: any, displayName: string) {
 </div>
 </li>
 <li>
-<p><strong>Update the mappings</strong></p>
+<p><strong>Update the mapping</strong></p>
 <div class="paragraph">
-<p>Finally, we need to update the <code>_mappings.ts</code> file to use the new query and view.</p>
+<p>Finally, we need to update the mappings to use the new query and view.</p>
 </div>
 <div class="paragraph">
-<p>To do that, replace the <code>getPerson</code> query with <code>getPersonWithBio</code> and <code>Person</code> view with <code>PersonWithBio</code> so that it looks like this:</p>
+<p>Simply replace the <code>getPerson</code> query with <code>getPersonWithBio</code> and <code>Person</code> view with <code>PersonWithBio</code>. It should look something like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
@@ -624,11 +629,14 @@ function getTitle(photo: any, displayName: string) {
 </div>
 </div>
 <div class="paragraph">
-<p>And that&#8217;s it !
-You rendered <code>HtmlArea</code> field!</p>
+<p>That&#8217;s it!</p>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>The result should look something like this:
+TODO Screenshot</p>
 </div>
 </div>
 </div>
@@ -636,41 +644,27 @@ You rendered <code>HtmlArea</code> field!</p>
 <h2 id="macros"><a class="link" href="#macros">Macros</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://developer.enonic.com/docs/xp/stable/cms/macros">Macros</a> are special tags that can be used to insert dynamic content inside the HtmlArea input.</p>
+<p><a href="https://developer.enonic.com/docs/xp/stable/cms/macros">Macros</a> enable you to add custom components inside  your rich text. In order to render in your front-end, every macro need to be to registered as a component.</p>
+</div>
+<div class="sect2">
+<h3 id="filmography_macro"><a class="link" href="#filmography_macro">Filmography macro</a></h3>
+<div class="paragraph">
+<p>In your Enonic project, a <code>filmography</code> macro has been pre-defined. You can find it in <code>src/main/resources/site/macros/filmography/filmography.xml</code></p>
+</div>
+<div class="paragraph">
+<p>If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet at the end of the bio text:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[filmography heading="Lea's Movies"/]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means, an editor has added the <code>filmography</code> macro, with a single <code>heading</code> parameter to the rich text.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="task_render_a_macro"><a class="link" href="#task_render_a_macro">Task: Render a macro</a></h3>
-<div class="paragraph">
-<p>Let&#8217;s take <code>Filmography</code> macro from the <code>Introduction</code> app and see how to render it.</p>
-</div>
-<div class="paragraph">
-<p>It has the following structure:</p>
-</div>
-<div class="listingblock">
-<div class="title">src/main/resources/site/macros/filmography/filmography.xml</div>
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;macro&gt;
-  &lt;display-name&gt;Filmography&lt;/display-name&gt;
-  &lt;description&gt;Gallery of actor's movies&lt;/description&gt;
-
-  &lt;form&gt;
-    &lt;input name="heading" type="TextLine"&gt;
-      &lt;label&gt;Heading&lt;/label&gt;
-      &lt;occurrences minimum="0" maximum="1"/&gt;
-    &lt;/input&gt;
-  &lt;/form&gt;
-&lt;/macro&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you open <strong>Lea Seydoux</strong> in Content Studio now and take a look at the very end of the <code>bio</code> Html area you&#8217;ll notice the <code>filmography</code> macro tag:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="media/lea-seydoux-macro.png" alt="lea seydoux macro" width="1005px">
-</div>
-<div class="title">Figure 1. Lea Seydoux bio with filmography macro</div>
-</div>
 <div class="paragraph">
 <p>But there is no trace of it in the preview pane.
 That is because we need to create a React component that will render it.</p>
@@ -678,9 +672,9 @@ That is because we need to create a React component that will render it.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create Filmography macro component</strong></p>
+<p><strong>Add Filmography component</strong></p>
 <div class="paragraph">
-<p>This React component will be used by the <code>RichTextView</code> to render the macro content whenever it encounters filmography macro tag.</p>
+<p>This React component will automatically be invoked by the <code>RichTextView</code> component, if it encounters the filmography macro tag.</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/macros/FilmographyMacro.tsx</div>
@@ -702,9 +696,9 @@ export default FilmographyMacro;</code></pre>
 </div>
 </li>
 <li>
-<p><strong>Register macro in ComponentRegistry</strong></p>
+<p><strong>Register macro</strong></p>
 <div class="paragraph">
-<p>In order for the <code>RichTextView</code> to be aware of your new macro, you need to register it in the <code>ComponentRegistry</code> just like any other component:</p>
+<p>In order for the <code>RichTextView</code> to be aware of your new macro, you must register it - just like any other component:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
@@ -712,14 +706,23 @@ export default FilmographyMacro;</code></pre>
 <pre class="highlight"><code class="language-jsx" data-lang="jsx">import { ComponentRegistry } from '@enonic/nextjs-adapter';
 import FilmographyMacro from './macros/FilmographyMacro';
 ...
-ComponentRegistry.addMacro('tutorial.nxp:filmography', {
+ComponentRegistry.addMacro(`${APP_NAME}:person`, {
     view: FilmographyMacro,
     configQuery: '{ heading }'
 });</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Where <code>configQuery</code> is a GraphQL query fragment matching the macro configuration, and <code>FilmographyMacro</code> is a React component that will render the macro content:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>configQuery</code> basically lets you ask for configuration values for your component, in this specific case the <code>heading</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -728,8 +731,7 @@ ComponentRegistry.addMacro('tutorial.nxp:filmography', {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Macro needs to be registered before any component that uses it!
-Best practice is to register it at the top of the <code>_mappings.ts</code> file.
+Macro must be registered before any component that uses it! Best practice is to register it at the top of the <code>_mappings.ts</code> file.
 </td>
 </tr>
 </table>
@@ -738,7 +740,7 @@ Best practice is to register it at the top of the <code>_mappings.ts</code> file
 <li>
 <p><strong>Congratulations!</strong></p>
 <div class="paragraph">
-<p>You should now be able to see text <code>Lea&#8217;s Movies</code> rendered by the macro if you open <strong>Lea Seydoux</strong> in Content Studio or navigate to <a href="http://localhost:3000/persons/lea-seydoux">http://localhost:3000/persons/lea-seydoux</a>!</p>
+<p>You should now be able to see macro render <code>Lea&#8217;s Movies</code> within the rich text: <a href="http://localhost:3000/persons/lea-seydoux">http://localhost:3000/persons/lea-seydoux</a>!</p>
 </div>
 </li>
 </ol>
@@ -752,7 +754,7 @@ Best practice is to register it at the top of the <code>_mappings.ts</code> file
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-27 15:02:08 UTC
+Last updated 2024-08-30 13:53:04 UTC
 </div>
 </div>
 </body>
