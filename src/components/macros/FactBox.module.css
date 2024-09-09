@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'icomoon';
+    src: url('/fonts/icomoon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.factbox {
+    background-color: rgb(235, 249, 249);
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+
+    min-height: 24px;
+    line-height: 24px;
+
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #333;
+
+    padding: 10px 20px 10px 44px;
+    width: 75%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.factbox .header {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 0;
+}
+
+.factbox .icon {
+    display: block;
+    position: absolute;
+    font-size: 24px;
+    top: 10px;
+    left: 10px;
+}
+
+.factbox .icon:before {
+    content: "\e0c9";
+    color: #4b93bd;
+}
+
+.factbox .body ul {
+    padding-left: 0;
+}
+
+.factbox .body ul li {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 720px) {
+    .factbox {
+        width: 90%;
+    }
+}
