@@ -1,0 +1,36 @@
+.person,
+.person .bio {
+    font-family: sans-serif;
+}
+
+.person {
+    display: flex;
+    flex-direction: column;
+}
+
+.bio {
+    line-height: 24px;
+}
+
+.bio figcaption {
+    font-size: 12px;
+}
+
+.photos {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 50px;
+    gap: 50px;
+}
+
+.photos img {
+    width: 100%;
+    height: auto; /* Ensures images scale properly */
+}
+
+@media screen and (max-width: 720px) {
+    .bio figure {
+        width: auto !important;
+    }
+}
