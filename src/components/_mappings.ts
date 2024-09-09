@@ -1,37 +1,42 @@
-import {APP_NAME, ComponentRegistry} from '@enonic/nextjs-adapter'
+import {APP_NAME, APP_NAME_UNDERSCORED, ComponentRegistry, richTextQuery} from '@enonic/nextjs-adapter'
 import TwoColumnLayout from './layouts/TwoColumnLayout';
 import MainPage from './pages/Main';
 import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
 import Heading from './parts/Heading';
 import MovieDetails, {getMovie} from './parts/MovieDetails';
 import {commonQuery, commonVariables} from './queries/common';
-// import PanelMacro from './macros/PanelMacro';
+import FactBox from './macros/FactBox';
 // Remember to import base mappings
 import "@enonic/nextjs-adapter/baseMappings";
 import getPersonWithBio from './queries/getPersonWithBio';
 import PersonWithBio from './views/PersonWithBio';
-import Filmography from './macros/Filmography';
 
 // You can set common query for all views here
 ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
 
 // Macro mappings (should come first as may be used in other components)
-
+/*
 ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
     view: Filmography,
-    configQuery: '{ heading }'
-});
-
-/*
-const macroPanelConfig = {
-    view: PanelMacro,
     configQuery: `{
-                      body
-                      header
-                  }`
-}
+        heading
+        movies {
+        ... on ${APP_NAME_UNDERSCORED}_Movie {
+          displayName
+          _path(type: siteRelative)
+        }
+      }
+    }`
+});
+*/
 
-ComponentRegistry.addMacro(`${APP_NAME}:panel2`, macroPanelConfig);
+ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
+    view: FactBox,
+    configQuery: `{
+                      header
+                      ${richTextQuery('body')}
+                  }`
+});/*
 // Following macros come from com.enonic.app.panelmacros app that you need to install separately
 ComponentRegistry.addMacro(`com.enonic.app.panelmacros:panel`, macroPanelConfig);
 ComponentRegistry.addMacro(`com.enonic.app.panelmacros:info`, macroPanelConfig);
