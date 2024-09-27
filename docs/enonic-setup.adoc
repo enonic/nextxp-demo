@@ -40,13 +40,16 @@ To build and run your application, execute these commands:
 
 The last command will build and deploy the app to the sandbox, and then start watching for changes in the code to automatically rebuild as you work on it.
 
-[NOTE]
+[IMPORTANT]
 ====
-Look for the following output to verify that the app has been built:
+In `dev` mode CLI will constantly watch for changes in the code, so the build process will never exit, which is expected behaviour.
+When you see the following output in your terminal then your app has been successfully built/deployed, and you can proceed to the next step:
 
-    BUILD SUCCESSFUL in 6s
-    3 actionable tasks: 3 executed
-    Waiting for changes to input files...
+    [server] CLI Watching for changes in "."
+    [server] CLI Ignoring changes in "**/{.git,node_modules}/**" | "build/resources/main"
+    [browserSync] [Browsersync] Reloading Browsers... (buffered 9 events)
+    <============-> 94% EXECUTING [17m 31s]
+    > :dev
 ====
 
 == Task: Open Admin dashboard
