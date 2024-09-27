@@ -552,21 +552,24 @@ enonic dev</pre>
 <div class="paragraph">
 <p>The last command will build and deploy the app to the sandbox, and then start watching for changes in the code to automatically rebuild as you work on it.</p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Look for the following output to verify that the app has been built:</p>
+<p>In <code>dev</code> mode CLI will constantly watch for changes in the code, so the build process will never exit, which is expected behaviour.
+When you see the following output in your terminal then your app has been successfully built/deployed, and you can proceed to the next step:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>BUILD SUCCESSFUL in 6s
-3 actionable tasks: 3 executed
-Waiting for changes to input files...</pre>
+<pre>[server] CLI Watching for changes in "."
+[server] CLI Ignoring changes in "**/{.git,node_modules}/**" | "build/resources/main"
+[browserSync] [Browsersync] Reloading Browsers... (buffered 9 events)
+&lt;============-&gt; 94% EXECUTING [17m 31s]
+&gt; :dev</pre>
 </div>
 </div>
 </td>
@@ -681,7 +684,7 @@ Some of the content items will have a default preview. That&#8217;s okay for now
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-30 14:30:13 UTC
+Last updated 2024-09-27 14:30:30 UTC
 </div>
 </div>
 </body>

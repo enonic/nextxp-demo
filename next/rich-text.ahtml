@@ -576,6 +576,7 @@ It reads the <code>bio</code> data from the query response, and passes it to the
 import {FetchContentResult, getUrl, I18n} from '@enonic/nextjs-adapter';
 import Link from 'next/link';
 import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
+import styles from './PersonWithBio.module.css';
 
 const Person = (props: FetchContentResult) =&gt; {
     const {displayName, data, parent} = props.data?.get as any;
@@ -584,19 +585,24 @@ const Person = (props: FetchContentResult) =&gt; {
 
     return (
         &lt;&gt;
-            &lt;div&gt;
+            &lt;div className={styles.person}&gt;
                 &lt;h2&gt;{displayName}&lt;/h2&gt;
-                &lt;RichTextView data={bio} meta={meta}&gt;&lt;/RichTextView&gt;
+                &lt;RichTextView className={styles.bio} data={bio} meta={meta}&gt;&lt;/RichTextView&gt;
                 {
-                    photos.map((photo: any, i: number) =&gt; (
-                        &lt;img key={i}
-                             src={getUrl(photo.imageUrl, meta)}
-                             title={getTitle(photo, displayName)}
-                             alt={getTitle(photo, displayName)}
-                             width="500"
-                        /&gt;
-                    ))
+                    photos.length &amp;&amp; &lt;h4 className={styles.photosheader}&gt;Photos&lt;/h4&gt;
                 }
+                &lt;div className={styles.photos}&gt;
+                    {
+                        photos.map((photo: any, i: number) =&gt; (
+                            &lt;img key={i}
+                                 src={getUrl(photo.imageUrl, meta)}
+                                 title={getTitle(photo, displayName)}
+                                 alt={getTitle(photo, displayName)}
+                                 width="500"
+                            /&gt;
+                        ))
+                    }
+                &lt;/div&gt;
             &lt;/div&gt;
             &lt;p&gt;&lt;Link href={getUrl(`/${parent._path}`, meta)}&gt;{I18n.localize('back')}&lt;/Link&gt;&lt;/p&gt;
         &lt;/&gt;
@@ -679,16 +685,27 @@ That is because we need to create a React component that will render it.</p>
 <div class="listingblock">
 <div class="title">src/components/macros/FilmographyMacro.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-jsx" data-lang="jsx">import type {MacroProps} from '@enonic/nextjs-adapter';
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">import {MacroProps} from '@enonic/nextjs-adapter';
 import React from 'react'
+import Link from 'next/link';
 
 const FilmographyMacro = ({name, config, meta}: MacroProps) =&gt; {
-    // macro is used inside a &lt;p&gt; tag so we can't use any dom tags
-    return &lt;&gt;
-        &lt;ins&gt;
-            {[].concat(config.heading).map(val =&gt; &lt;strong key={val}&gt;{val}&lt;/strong&gt;)}
-        &lt;/ins&gt;
-    &lt;/&gt;
+    // macro is used inside a &lt;p&gt; tag so we can't use any block tags
+    const prefix = meta.baseUrl +
+        (meta.locale &amp;&amp; meta.locale !== meta.defaultLocale ? meta.locale + '/' : '');
+    const heading = config.heading || 'Filmography';
+
+    return config.movies.length ?
+        &lt;&gt;
+            &lt;h4 className={"filmography-heading"}&gt;{heading}&lt;/h4&gt;
+            &lt;ul&gt;{
+                config.movies.map((movie: any, i: number) =&gt; (
+                    &lt;li className={"filmography-movie"} key={i}&gt;
+                        &lt;Link href={prefix + movie._path}&gt;{movie.displayName}&lt;/Link&gt;
+                    &lt;/li&gt;
+                ))
+            }&lt;/ul&gt;
+        &lt;/&gt; : null
 };
 
 export default FilmographyMacro;</code></pre>
@@ -754,7 +771,7 @@ Macro must be registered before any component that uses it! Best practice is to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-08-30 14:30:12 UTC
+Last updated 2024-09-27 14:30:29 UTC
 </div>
 </div>
 </body>
