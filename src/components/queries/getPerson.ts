@@ -1,6 +1,6 @@
 import {APP_NAME_UNDERSCORED, richTextQuery} from '@enonic/nextjs-adapter';
 
-const getPerson = `
+const getPerson = () => `
 query($path:ID!){
   guillotine {
     get(key:$path) {
