@@ -16,6 +16,11 @@
     font-size: 12px;
 }
 
+.bio figure > img {
+    width: 100%;
+    height: auto;
+}
+
 .photos {
     padding: 0 20px;
     display: grid;
