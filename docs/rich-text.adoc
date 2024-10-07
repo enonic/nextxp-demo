@@ -12,22 +12,23 @@ Enonic boasts a rich text field field type aka https://developer.enonic.com/docs
 
 == Sample content
 
-Luckily, our sample data set contains everyting we need to get going. The Bio field for persons is rich text, and some of the content is even populated with relevant content, like you see below:
+Luckily, our sample data set contains everyting we need to get going.
+The `Bio` field for persons is rich text, and some of the content is even populated with relevant content, like you see below:
 
-image::rich-text-bio.png[title="Lea Seydoux with rich text bio content",width=672px]
+image::rich-text-bio.png[title="Rich text bio field for Lea Seydoux",width=662px]
 
 
 == Task: Rich text rendering
 
-Let's take `bio` input field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how to render it.
+Let's take this `bio` field from `Person` https://developer.enonic.com/docs/content-studio/stable/content-types[content type] and see how we can render it.
 
 . *Update the Person query*
 +
-To properly render Rich text, we need additional metadata about links and images.
+To properly render Rich text, we need additional metadata about links, images and macros in it.
 +
 To simplify things, Next.XP provides a `richTextQuery` helper function that generates the query for us. Also, this way we don't have to repeat the query for every rich text field.
 +
-*Add a new query* file to your project:
+Add a new query file to your project with the following content:
 +
 .src/components/queries/getPersonWithBio.ts
 [source,Typescript]
@@ -35,22 +36,23 @@ To simplify things, Next.XP provides a `richTextQuery` helper function that gene
 include::{sourcedir}/components/queries/getPersonWithBio.ts[]
 ----
 +
-NOTE: The difference is this line: `${richTextQuery('bio')}``, and that getPerson must now be a function.
+IMPORTANT: Since we use `${richTextQuery('bio')}`` now, that is dependant on registered macros, `getPerson` query must now be a function!
+This guarantees that it is executed when querying for data, and all the macros are already registered.
 +
 For further insight, visit the https://developer.enonic.com/docs/developer-101/stable/rich-text[rich text chapter] in the Developer 101 tutorial
 
 . *The RichTextView component*
 +
-We also need an updated view component that will render the  `bio`.
+Now that we got the data, we need to use `RichTextView` component that knows how to render it.
+All we need to do is pass `bio` data from the query response to the `RichTextView` component.
 +
-NOTE:  It reads the `bio` data from the query response, and passes it to the `RichTextView` component.
+Create new component with the following content:
 +
 .src/components/views/PersonWithBio.tsx
 [source,tsx]
 ----
 include::{sourcedir}/components/views/PersonWithBio.tsx[]
 ----
-+
 . *Update the mapping*
 +
 Finally, we need to update the mappings to use the new query and view.
@@ -58,48 +60,69 @@ Finally, we need to update the mappings to use the new query and view.
 Simply replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio`. It should look something like this:
 +
 .src/components/_mappings.ts
-[source,Typescript,linenums]
+[source,Typescript]
 ----
+import getPersonWithBio from './queries/getPersonWithBio';
+import PersonWithBio from './views/PersonWithBio';
+
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPersonWithBio(),
+    query: getPersonWithBio,
     view: PersonWithBio
 });
 ----
 +
-That's it!
-
-The result should look something like this:
-TODO Screenshot
-
+. *That's it!*
++
+The resulting page for http://localhost:3000/persons/lea-seydoux[Lea Seydoux] should look like this:
++
+image::rich-text-no-macro.png[title="Person content rendered with rich text",width=1080px]
 
 == Macros
 
-https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] enable you to add custom components inside  your rich text. In order to render in your front-end, every macro need to be to registered as a component.
+https://developer.enonic.com/docs/xp/stable/cms/macros[Macros] enable you to add custom components inside your rich text.
 
+As you can see from the image above, the content is rendered, but the `FactBox` macro is not.
+In order to render in your front-end, every macro needs to be registered as a component.`
 
-=== Filmography macro
+=== FactBox macro
 
-In your Enonic project, a `filmography` macro has been pre-defined. You can find it in `src/main/resources/site/macros/filmography/filmography.xml`
+In your Enonic project, a `FactBox` macro has been pre-defined.
+You can find it in `src/main/resources/site/macros/FactBox.xml`
 
-If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet at the end of the bio text:
+If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet in the bio field:
 
-  [filmography heading="Lea's Movies"/]
+----
+[factbox]
+    French actress: Léa Seydoux is a prominent French actress known for her roles in both French and international films.
+    Cannes Film Festival winner: She won the prestigious Palme d'Or at the Cannes Film Festival in 2013 for her role in Blue Is the Warmest Colour.
+    James Bond franchise: Seydoux portrayed Dr. Madeleine Swann in the James Bond films Spectre (2015) and No Time to Die (2021).
+    Family ties to cinema: She comes from a family with strong ties to the French film industry; her grandfather, Jérôme Seydoux, is the chairman of Pathé, a major French film production company.
+    Diverse filmography: Her acting range spans from independent arthouse films like The Lobster (2015) to blockbuster hits like Mission: Impossible – Ghost Protocol (2011).
+[/factbox]
+----
 
-This means, an editor has added the `filmography` macro, with a single `heading` parameter to the rich text.
+This means, an editor has added the `factbox` macro with a body.
 
 === Task: Render a macro
 
-But there is no trace of it in the preview pane.
-That is because we need to create a React component that will render it.
+Let's create a React component that will render the `FactBox` macro.
 
-. *Add Filmography component*
+. *Add FactBox component*
 +
-This React component will automatically be invoked by the `RichTextView` component, if it encounters the filmography macro tag.
+This React component will automatically be invoked by the `RichTextView` component, if it encounters corresponding macro tag.
 +
-.src/components/macros/FilmographyMacro.tsx
+.src/components/macros/FactBox.tsx
 [source,jsx]
 ----
-include::{sourcedir}/components/macros/Filmography.tsx[]
+include::{sourcedir}/components/macros/FactBox.tsx[]
+----
++
+To make it look nice, you also need to add a CSS module accompanying the component:
++
+.src/components/macros/FactBox.module.css
+[source,css]
+----
+include::{sourcedir}/components/macros/FactBox.module.css[]
 ----
 +
 . *Register macro*
@@ -110,10 +133,10 @@ In order for the `RichTextView` to be aware of your new macro, you must register
 [source,jsx]
 ----
 ...
-import Filmography from './macros/Filmography';
+import FactBox from './macros/FactBox';
 ...
-ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
-    view: Filmography,
+ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
+    view: FactBox,
     configQuery: '{ heading }'
 });
 ----
@@ -124,6 +147,8 @@ IMPORTANT: Macro must be registered before any component that uses it! Best prac
 +
 . *Congratulations!*
 +
-You should now be able to see macro render `Lea's Movies` within the rich text: http://localhost:3000/persons/lea-seydoux[http://localhost:3000/persons/lea-seydoux]!
+You should now see http://localhost:3000/persons/lea-seydoux[Lea Seydoux] updated with the `FactBox` macro:
+
+image::rich-text-result.png[title="Person content rendered with rich text and macro",width=1142px]
 
 In the next chapter we'll make it possible to <<pages#, create pages editorially>>.

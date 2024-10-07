@@ -1,4 +1,4 @@
-import {APP_NAME, APP_NAME_UNDERSCORED, ComponentRegistry, richTextQuery} from '@enonic/nextjs-adapter'
+import {APP_NAME, ComponentRegistry} from '@enonic/nextjs-adapter'
 import TwoColumnLayout from './layouts/TwoColumnLayout';
 import MainPage from './pages/Main';
 import ChildList, {childListProcessor, getChildList} from './parts/ChildList';
@@ -15,28 +15,12 @@ import PersonWithBio from './views/PersonWithBio';
 ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
 
 // Macro mappings (should come first as may be used in other components)
-/*
-ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
-    view: Filmography,
-    configQuery: `{
-        heading
-        movies {
-        ... on ${APP_NAME_UNDERSCORED}_Movie {
-          displayName
-          _path(type: siteRelative)
-        }
-      }
-    }`
-});
-*/
-
 ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
     view: FactBox,
-    configQuery: `{
-                      header
-                      ${richTextQuery('body')}
-                  }`
-});/*
+    configQuery: `{ header }`
+});
+
+/*
 // Following macros come from com.enonic.app.panelmacros app that you need to install separately
 ComponentRegistry.addMacro(`com.enonic.app.panelmacros:panel`, macroPanelConfig);
 ComponentRegistry.addMacro(`com.enonic.app.panelmacros:info`, macroPanelConfig);
@@ -57,7 +41,7 @@ ComponentRegistry.addMacro('com.enonic.app.socialmacros:youtube', {
 
 // Content type mappings
 ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPersonWithBio(),
+    query: getPersonWithBio,
     view: PersonWithBio
 });
 
