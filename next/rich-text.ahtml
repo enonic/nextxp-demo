@@ -446,7 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#task_rich_text_rendering">Task: Rich text rendering</a></li>
 <li><a href="#macros">Macros</a>
 <ul class="sectlevel2">
-<li><a href="#filmography_macro">Filmography macro</a></li>
+<li><a href="#factbox_macro">FactBox macro</a></li>
 <li><a href="#task_render_a_macro">Task: Render a macro</a></li>
 </ul>
 </li>
@@ -473,13 +473,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="sample_content"><a class="link" href="#sample_content">Sample content</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Luckily, our sample data set contains everyting we need to get going. The Bio field for persons is rich text, and some of the content is even populated with relevant content, like you see below:</p>
+<p>Luckily, our sample data set contains everyting we need to get going.
+The <code>Bio</code> field for persons is rich text, and some of the content is even populated with relevant content, like you see below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="media/rich-text-bio.png" alt="rich text bio" width="672px">
+<img src="media/rich-text-bio.png" alt="rich text bio" width="662px">
 </div>
-<div class="title">Figure 1. Lea Seydoux with rich text bio content</div>
+<div class="title">Figure 1. Rich text bio field for Lea Seydoux</div>
 </div>
 </div>
 </div>
@@ -487,20 +488,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="task_rich_text_rendering"><a class="link" href="#task_rich_text_rendering">Task: Rich text rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s take <code>bio</code> input field from <code>Person</code> <a href="https://developer.enonic.com/docs/content-studio/stable/content-types">content type</a> and see how to render it.</p>
+<p>Let&#8217;s take this <code>bio</code> field from <code>Person</code> <a href="https://developer.enonic.com/docs/content-studio/stable/content-types">content type</a> and see how we can render it.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><strong>Update the Person query</strong></p>
 <div class="paragraph">
-<p>To properly render Rich text, we need additional metadata about links and images.</p>
+<p>To properly render Rich text, we need additional metadata about links, images and macros in it.</p>
 </div>
 <div class="paragraph">
 <p>To simplify things, Next.XP provides a <code>richTextQuery</code> helper function that generates the query for us. Also, this way we don&#8217;t have to repeat the query for every rich text field.</p>
 </div>
 <div class="paragraph">
-<p><strong>Add a new query</strong> file to your project:</p>
+<p>Add a new query file to your project with the following content:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/queries/getPersonWithBio.ts</div>
@@ -536,14 +537,15 @@ query($path:ID!){
 export default getPerson;</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The difference is this line: <code>${richTextQuery('bio')}`</code>, and that getPerson must now be a function.
+Since we use <code>${richTextQuery('bio')}`</code> now, that is dependant on registered macros, <code>getPerson</code> query must now be a function!
+This guarantees that it is executed when querying for data, and all the macros are already registered.
 </td>
 </tr>
 </table>
@@ -555,19 +557,11 @@ The difference is this line: <code>${richTextQuery('bio')}`</code>, and that get
 <li>
 <p><strong>The RichTextView component</strong></p>
 <div class="paragraph">
-<p>We also need an updated view component that will render the  <code>bio</code>.</p>
+<p>Now that we got the data, we need to use <code>RichTextView</code> component that knows how to render it.
+All we need to do is pass <code>bio</code> data from the query response to the <code>RichTextView</code> component.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It reads the <code>bio</code> data from the query response, and passes it to the <code>RichTextView</code> component.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Create new component with the following content:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/views/PersonWithBio.tsx</div>
@@ -628,21 +622,29 @@ function getTitle(photo: any, displayName: string) {
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-Typescript" data-lang="Typescript">ComponentRegistry.addContentType(`${APP_NAME}:person`, {
-    query: getPersonWithBio(),
+<pre class="highlight"><code class="language-Typescript" data-lang="Typescript">import getPersonWithBio from './queries/getPersonWithBio';
+import PersonWithBio from './views/PersonWithBio';
+
+ComponentRegistry.addContentType(`${APP_NAME}:person`, {
+    query: getPersonWithBio,
     view: PersonWithBio
 });</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p><strong>That&#8217;s it!</strong></p>
 <div class="paragraph">
-<p>That&#8217;s it!</p>
+<p>The resulting page for <a href="http://localhost:3000/persons/lea-seydoux">Lea Seydoux</a> should look like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/rich-text-no-macro.png" alt="rich text no macro" width="1080px">
+</div>
+<div class="title">Figure 2. Person content rendered with rich text</div>
 </div>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>The result should look something like this:
-TODO Screenshot</p>
 </div>
 </div>
 </div>
@@ -650,65 +652,159 @@ TODO Screenshot</p>
 <h2 id="macros"><a class="link" href="#macros">Macros</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://developer.enonic.com/docs/xp/stable/cms/macros">Macros</a> enable you to add custom components inside  your rich text. In order to render in your front-end, every macro need to be to registered as a component.</p>
+<p><a href="https://developer.enonic.com/docs/xp/stable/cms/macros">Macros</a> enable you to add custom components inside your rich text.</p>
+</div>
+<div class="paragraph">
+<p>As you can see from the image above, the content is rendered, but the <code>FactBox</code> macro is not.
+In order to render in your front-end, every macro needs to be registered as a component.`</p>
 </div>
 <div class="sect2">
-<h3 id="filmography_macro"><a class="link" href="#filmography_macro">Filmography macro</a></h3>
+<h3 id="factbox_macro"><a class="link" href="#factbox_macro">FactBox macro</a></h3>
 <div class="paragraph">
-<p>In your Enonic project, a <code>filmography</code> macro has been pre-defined. You can find it in <code>src/main/resources/site/macros/filmography/filmography.xml</code></p>
+<p>In your Enonic project, a <code>FactBox</code> macro has been pre-defined.
+You can find it in <code>src/main/resources/site/macros/FactBox.xml</code></p>
 </div>
 <div class="paragraph">
-<p>If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet at the end of the bio text:</p>
+<p>If you have a closer look at the Léa Seydoux content once more, you should see the following text snippet in the bio field:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>[filmography heading="Lea's Movies"/]</pre>
+<pre>[factbox]
+    French actress: Léa Seydoux is a prominent French actress known for her roles in both French and international films.
+    Cannes Film Festival winner: She won the prestigious Palme d'Or at the Cannes Film Festival in 2013 for her role in Blue Is the Warmest Colour.
+    James Bond franchise: Seydoux portrayed Dr. Madeleine Swann in the James Bond films Spectre (2015) and No Time to Die (2021).
+    Family ties to cinema: She comes from a family with strong ties to the French film industry; her grandfather, Jérôme Seydoux, is the chairman of Pathé, a major French film production company.
+    Diverse filmography: Her acting range spans from independent arthouse films like The Lobster (2015) to blockbuster hits like Mission: Impossible – Ghost Protocol (2011).
+[/factbox]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This means, an editor has added the <code>filmography</code> macro, with a single <code>heading</code> parameter to the rich text.</p>
+<p>This means, an editor has added the <code>factbox</code> macro with a body.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="task_render_a_macro"><a class="link" href="#task_render_a_macro">Task: Render a macro</a></h3>
 <div class="paragraph">
-<p>But there is no trace of it in the preview pane.
-That is because we need to create a React component that will render it.</p>
+<p>Let&#8217;s create a React component that will render the <code>FactBox</code> macro.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add Filmography component</strong></p>
+<p><strong>Add FactBox component</strong></p>
 <div class="paragraph">
-<p>This React component will automatically be invoked by the <code>RichTextView</code> component, if it encounters the filmography macro tag.</p>
+<p>This React component will automatically be invoked by the <code>RichTextView</code> component, if it encounters corresponding macro tag.</p>
 </div>
 <div class="listingblock">
-<div class="title">src/components/macros/FilmographyMacro.tsx</div>
+<div class="title">src/components/macros/FactBox.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-jsx" data-lang="jsx">import {MacroProps} from '@enonic/nextjs-adapter';
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">import type {MacroProps} from '@enonic/nextjs-adapter';
 import React from 'react'
-import Link from 'next/link';
 
-const FilmographyMacro = ({name, config, meta}: MacroProps) =&gt; {
-    // macro is used inside a &lt;p&gt; tag so we can't use any block tags
-    const prefix = meta.baseUrl +
-        (meta.locale &amp;&amp; meta.locale !== meta.defaultLocale ? meta.locale + '/' : '');
-    const heading = config.heading || 'Filmography';
+import styles from './FactBox.module.css';
 
-    return config.movies.length ?
-        &lt;&gt;
-            &lt;h4 className={"filmography-heading"}&gt;{heading}&lt;/h4&gt;
-            &lt;ul&gt;{
-                config.movies.map((movie: any, i: number) =&gt; (
-                    &lt;li className={"filmography-movie"} key={i}&gt;
-                        &lt;Link href={prefix + movie._path}&gt;{movie.displayName}&lt;/Link&gt;
-                    &lt;/li&gt;
-                ))
-            }&lt;/ul&gt;
-        &lt;/&gt; : null
+const FactBox = ({name, children, config, meta}: MacroProps) =&gt; {
+    // macro is used inside a &lt;p&gt; tag so we can't use any dom tags
+    const header = config.header.length ? config.header : 'Fact Box';
+    return &lt;&gt;
+
+        &lt;ins className={styles.factbox}&gt;
+            &lt;i className={styles.icon}/&gt;
+            &lt;strong className={styles.header}&gt;{header}&lt;/strong&gt;
+            {children}
+        &lt;/ins&gt;
+    &lt;/&gt;
 };
 
-export default FilmographyMacro;</code></pre>
+export default FactBox;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make it look nice, you also need to add a CSS module accompanying the component:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/macros/FactBox.module.css</div>
+<div class="content">
+<pre class="highlight"><code class="language-css" data-lang="css">@font-face {
+    font-family: 'icomoon';
+    src: url('/fonts/icomoon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.factbox {
+    background-color: rgb(235, 249, 249);
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    clear: both;
+
+    -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .3);
+
+    min-height: 24px;
+    line-height: 24px;
+
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #333;
+
+    padding: 10px 20px 10px 44px;
+    width: 75%;
+    margin: 20px auto;
+    position: relative;
+}
+
+.factbox .header {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 0;
+}
+
+.factbox .icon {
+    display: block;
+    position: absolute;
+    font-size: 24px;
+    top: 10px;
+    left: 10px;
+}
+
+.factbox .icon:before {
+    content: "\e0c9";
+    color: #4b93bd;
+}
+
+.factbox .body ul {
+    padding-left: 0;
+}
+
+.factbox .body ul li {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 720px) {
+    .factbox {
+        width: 90%;
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -721,10 +817,10 @@ export default FilmographyMacro;</code></pre>
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
 <pre class="highlight"><code class="language-jsx" data-lang="jsx">...
-import Filmography from './macros/Filmography';
+import FactBox from './macros/FactBox';
 ...
-ComponentRegistry.addMacro(`${APP_NAME}:filmography`, {
-    view: Filmography,
+ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
+    view: FactBox,
     configQuery: '{ heading }'
 });</code></pre>
 </div>
@@ -757,10 +853,16 @@ Macro must be registered before any component that uses it! Best practice is to 
 <li>
 <p><strong>Congratulations!</strong></p>
 <div class="paragraph">
-<p>You should now be able to see macro render <code>Lea&#8217;s Movies</code> within the rich text: <a href="http://localhost:3000/persons/lea-seydoux">http://localhost:3000/persons/lea-seydoux</a>!</p>
+<p>You should now see <a href="http://localhost:3000/persons/lea-seydoux">Lea Seydoux</a> updated with the <code>FactBox</code> macro:</p>
 </div>
 </li>
 </ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/rich-text-result.png" alt="rich text result" width="1142px">
+</div>
+<div class="title">Figure 3. Person content rendered with rich text and macro</div>
 </div>
 <div class="paragraph">
 <p>In the next chapter we&#8217;ll make it possible to <a href="pages.ahtml">create pages editorially</a>.</p>
@@ -771,7 +873,7 @@ Macro must be registered before any component that uses it! Best practice is to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-09-27 14:30:29 UTC
+Last updated 2024-10-07 14:56:15 UTC
 </div>
 </div>
 </body>
