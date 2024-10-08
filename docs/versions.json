@@ -10,7 +10,7 @@
     },
     {
       "label": "next",
-      "checkout": "issue-959"
+      "checkout": "next"
     },
     {
       "label": "stable",
