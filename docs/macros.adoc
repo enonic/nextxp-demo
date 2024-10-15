@@ -1,0 +1,65 @@
+= Macros - Custom rich text components
+:toc: right
+:imagesdir: media/
+:sourcedir: ../src
+
+In this chapter you'll learn how to render Macros, which are custom components within rich text.
+
+== Intro
+
+Occationaly, you may require rich components, even within your rich text. This is enabled via a component type called Macros. Macros follow the same pattern as we have seen for other components
+
+== FactBox macro
+
+In your Enonic project, a `FactBox` macro schema is pre-defined. It is located in `src/main/resources/site/macros/FactBox.xml`
+If you take a closer look at the Léa Seydoux bio, you can see how the [factbox] macro is used.
+
+
+
+=== Task: Factbox component
+
+Let's create a React component that will render the `factbox` macro.
+
+. *Create the FactBox component*
++
+This React component will automatically be invoked by the `RichTextView` used in the previous chapter, should it encounter a corresponding macro in the text.
++
+.src/components/macros/FactBox.tsx
+[source,jsx]
+----
+include::{sourcedir}/components/macros/FactBox.tsx[]
+----
++
+Style it by adding a CSS module as well:
++
+.src/components/macros/FactBox.module.css
+[source,css]
+----
+include::{sourcedir}/components/macros/FactBox.module.css[]
+----
++
+. *Register the factbox macro*, just like all other components
++
+.src/components/_mappings.ts
+[source,jsx]
+----
+...
+import FactBox from './macros/FactBox';
+...
+ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
+    view: FactBox,
+    configQuery: '{ heading }'
+});
+----
++
+NOTE: `configQuery` basically lets you ask for configuration values for your component, in this specific case the `heading`.
++
+IMPORTANT: Macro must be registered before any component that uses it! Best practice is to register it at the top of the `_mappings.ts` file.
++
+. *Congratulations!*
++
+You should now see http://localhost:3000/persons/lea-seydoux[Lea Seydoux] updated with the `FactBox` macro:
+
+image::rich-text-result.png[title="Person content rendered with rich text and macro",width=1142px]
+
+In the next chapter we'll make it possible to <<pages#, create landing pages editorially>>.
