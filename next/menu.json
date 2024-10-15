@@ -29,31 +29,35 @@
             "document": "rich-text"
         },
         {
-            "title": "8 - Custom pages",
+            "title": "8 - Macros",
+            "document": "macros"
+        },
+        {
+            "title": "9 - Pages",
             "document": "pages"
         },
         {
-            "title": "9 - Parts",
+            "title": "10 - Parts",
             "document": "parts"
         },
         {
-            "title": "10 - Layouts",
+            "title": "11 - Layouts",
             "document": "layouts"
         },
         {
-            "title": "11 - Page templates",
+            "title": "12 - Page templates",
             "document": "templates"
         },
         {
-            "title": "12 - Static pages",
+            "title": "13 - Static pages",
             "document": "static"
         },
         {
-            "title": "13 - Multi language",
+            "title": "14 - Multi language",
             "document": "i18n"
         },
         {
-            "title": "14 - Live deployment",
+            "title": "15 - Live deployment",
             "document": "deployment"
         },
         {
