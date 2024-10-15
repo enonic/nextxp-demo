@@ -81,6 +81,8 @@ As you may have noticed this component has a query, a view and a processor. Proc
 +
 The Enonic adapter will execute the query, pass the result via the processor, and then to the view which renders the component.
 +
+NOTE: Like macros, all page components support `configQuery`. Here though, if `configQuery` is omitted, the `config` prop will fallback to the raw form values via `configAsJson`.
++
 image:child-list-rendered.png[title="Part rendered with list of persons as seen from Content Studio",width=1440px]
 + 
 Try customizing the part configuration and see what happens.
