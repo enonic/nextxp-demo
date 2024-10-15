@@ -1,4 +1,4 @@
-= Static pages and revalidation
+= Static Site Generation
 :toc: right
 :imagesdir: media/
 :sourcedir: ../src/app/[locale]/[[...contentPath]]/
