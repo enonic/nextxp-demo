@@ -620,7 +620,19 @@ ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>configQuery</code> basically lets you ask for configuration values for your component, in this specific case the <code>heading</code>.
+Macros do not support the regular queries, but you may use <code>configQuery</code>. This specifically operates on the form values for the component, and the result will automatically be available in the React component&#8217;s <code>config</code> prop.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You do not need to ask for the macro body, as this implicitly passed to the Macro component.
 </td>
 </tr>
 </table>
@@ -632,14 +644,14 @@ ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Macro must be registered before any component that uses it! Best practice is to register it at the top of the <code>_mappings.ts</code> file.
+Macros must be registered before any other component that uses RichTextView! Best practice is to register it at the top of the <code>_mappings.ts</code> file.
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p><strong>Congratulations!</strong></p>
+<p><strong>Sweet!</strong></p>
 <div class="paragraph">
 <p>You should now see <a href="http://localhost:3000/persons/lea-seydoux">Lea Seydoux</a> updated with the <code>FactBox</code> macro:</p>
 </div>
@@ -661,7 +673,7 @@ Macro must be registered before any component that uses it! Best practice is to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-15 09:06:11 UTC
+Last updated 2024-10-15 09:25:45 UTC
 </div>
 </div>
 </body>
