@@ -545,7 +545,7 @@ This guarantees that it is executed when querying for data, and all the macros a
 </table>
 </div>
 <div class="paragraph">
-<p>For further insight, visit the <a href="https://developer.enonic.com/docs/developer-101/stable/rich-text">rich text chapter</a> in the Developer 101 tutorial</p>
+<p>For further insight, visit the <a href="https://developer.enonic.com/docs/developer-101/stable/rich-text">rich text chapter</a> in the Developer 101 tutorial, or have a look at the tutorial covering our standard <a href="https://developer.enonic.com/docs/react-spa">react components</a>.</p>
 </div>
 </li>
 <li>
@@ -641,14 +641,14 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 </ol>
 </div>
 <div class="paragraph">
-<p>In the next chapter we&#8217;ll dive even deeper into rich text by exploring <a href="macros.ahtml">Macros</a>.</p>
+<p>As you can see from the above screenshot, there is a missing component. The next chapter addresses this by looking into <a href="macros.ahtml">Macros</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-15 07:14:13 UTC
+Last updated 2024-10-15 07:27:08 UTC
 </div>
 </div>
 </body>
