@@ -39,7 +39,7 @@ include::{sourcedir}/components/queries/getPersonWithBio.ts[]
 IMPORTANT: Since we use `${richTextQuery('bio')}`` now, that is dependant on registered macros, `getPerson` query must now be a function!
 This guarantees that it is executed when querying for data, and all the macros are already registered.
 +
-For further insight, visit the https://developer.enonic.com/docs/developer-101/stable/rich-text[rich text chapter] in the Developer 101 tutorial
+For further insight, visit the https://developer.enonic.com/docs/developer-101/stable/rich-text[rich text chapter] in the Developer 101 tutorial, or have a look at the tutorial covering our standard https://developer.enonic.com/docs/react-spa[react components].
 
 . *The RichTextView component*
 +
@@ -77,4 +77,4 @@ The resulting page for http://localhost:3000/persons/lea-seydoux[Lea Seydoux] sh
 +
 image::rich-text-no-macro.png[title="Person content rendered with rich text",width=1080px]
 
-In the next chapter we'll dive even deeper into rich text by exploring <<macros#, Macros>>.
+As you can see from the above screenshot, there is a missing component. The next chapter addresses this by looking into <<macros#, Macros>>.
