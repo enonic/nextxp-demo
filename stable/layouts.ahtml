@@ -615,14 +615,15 @@ this specific layout does not need any additional data - hence no query or proce
 <p><span class="image"><img src="media/layout-part-text.png" alt="layout part text" width="1440px" title="Layout combined with part and text components"></span></p>
 </div>
 <div class="paragraph">
-<p>In the next chapter we will look into <a href="templates.ahtml">page templates</a>. Page templates allow us to reuse a page definition across multiple content items.</p>
+<p>In the next chapter we will look into <a href="templates.ahtml">page templates</a>.
+Page templates allow us to reuse a page definition across multiple content items.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-16 14:05:17 UTC
+Last updated 2024-10-16 14:08:51 UTC
 </div>
 </div>
 </body>

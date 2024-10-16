@@ -641,6 +641,18 @@ ComponentRegistry.addPart(`${APP_NAME}:child-list`, {
 <div class="paragraph">
 <p>The Enonic adapter will execute the query, pass the result via the processor, and then to the view which renders the component.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Like macros, all page components support <code>configQuery</code>. Here though, if <code>configQuery</code> is omitted, the <code>config</code> prop will fallback to the raw form values via <code>configAsJson</code>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><span class="image"><img src="media/child-list-rendered.png" alt="child list rendered" width="1440px" title="Part rendered with list of persons as seen from Content Studio"></span></p>
 </div>
@@ -735,7 +747,7 @@ ComponentRegistry.addPart(`${APP_NAME}:heading`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-16 14:05:17 UTC
+Last updated 2024-10-16 14:08:51 UTC
 </div>
 </div>
 </body>

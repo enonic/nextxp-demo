@@ -495,7 +495,7 @@ The full name of your content type should now be <code>com.example.myproject:per
 <div class="content">
 <pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {APP_NAME_UNDERSCORED} from '@enonic/nextjs-adapter';
 
-const getPerson = `
+const getPerson = () =&gt; `
 query($path:ID!){
   guillotine {
     get(key:$path) {
@@ -793,7 +793,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-16 14:05:17 UTC
+Last updated 2024-10-16 14:08:51 UTC
 </div>
 </div>
 </body>
