@@ -1,6 +1,6 @@
 {
   "name": "nextxp-demo",
-  "version": "3.3.0",
+  "version": "3.2.0",
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
@@ -11,22 +11,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@enonic/nextjs-adapter": "^3.3.0",
-    "cross-env": "^10.0.0",
-    "html-react-parser": "^5.2.6",
-    "next": "14.2.35",
+    "@enonic/nextjs-adapter": "^3.2.1",
+    "cross-env": "^7.0.3",
+    "html-react-parser": "^5.1.18",
+    "next": "^14.2.23",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "unescape": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "@types/react": "18.3.12",
+    "@types/node": "^22.7.5",
+    "@types/react": "18.3.11",
     "@types/react-dom": "^18.3.1",
-    "@typescript-eslint/parser": "^8.41.0",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.0",
-    "prettier": "^3.6.2",
-    "typescript": "5.9.2"
+    "@typescript-eslint/parser": "^8.11.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
+    "prettier": "^3.3.3",
+    "typescript": "5.6.3"
   }
 }
