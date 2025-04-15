@@ -74,7 +74,7 @@ You are now ready to deploy the the front-end application.
 . **Add the following environment variables** to the project (name: value):
 +
 * ENONIC_APP_NAME: <enonic app name (`tutorial.nxp` in this guide)>
-* ENONIC_API: <enonic route URL>
+* ENONIC_API: <enonic ingress URL>
 * ENONIC_API_TOKEN: <yourSecret>
 * ENONIC_MAPPINGS: en:intro/hmdb,no:intro-no/hmdb
 

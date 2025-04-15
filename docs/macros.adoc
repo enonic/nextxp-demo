@@ -48,7 +48,7 @@ import FactBox from './macros/FactBox';
 ...
 ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
     view: FactBox,
-    configQuery: '{ heading }'
+    configQuery: '{ header }'
 });
 ----
 +

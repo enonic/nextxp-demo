@@ -53,6 +53,14 @@ Create new component with the following content:
 ----
 include::{sourcedir}/components/views/PersonWithBio.tsx[]
 ----
++
+Add styling to the new component:
++
+.src/components/views/PersonWithBio.module.css
+[source,tsx]
+----
+include::{sourcedir}/components/views/PersonWithBio.module.css[]
+----
 . *Update the mapping*
 +
 Finally, we need to update the mappings to use the new query and view.

@@ -36,7 +36,7 @@ With Next.js now running on a different port, Content Studio preview will stop w
 +
 NOTE: The configuration files are located in your sandbox home directory, which can be found in your users home directory as `.enonic/sandboxes/<your-sandbox>/home/config/`. 
 +
-.com.enonic.app.nextxp.cfg
+.add com.enonic.app.nextxp.cfg
 [source,properties]
 ----
 nextjs.default.secret=mySecretKey

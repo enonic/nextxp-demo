@@ -27,7 +27,7 @@ By default Next.XP preview uses the following values:
 * *url*: `http://127.0.0.1:3000`
 * *secret*: `mySecretKey`
 +
-This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <<static#, Static pages>>, and <<deployment#, Deployment>> chapters.
+This matches your setup, so everything should work out of the box. We will get back to tuning these values in the <<static#, Static pages>>, and <<deployment#, Deployment>> chapters.
 +
 . After applying and saving the changes, you should be able to see the live preview in Content Studio.
 +
