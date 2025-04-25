@@ -536,7 +536,7 @@ The configuration files are located in your sandbox home directory, which can be
 </table>
 </div>
 <div class="listingblock">
-<div class="title">com.enonic.app.nextxp.cfg</div>
+<div class="title">add com.enonic.app.nextxp.cfg</div>
 <div class="content">
 <pre class="highlight"><code class="language-properties" data-lang="properties">nextjs.default.secret=mySecretKey
 nextjs.default.url=http://127.0.0.1:4242</code></pre>
@@ -678,7 +678,7 @@ export async function generateStaticParams(props: { params: PageProps }): Promis
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>

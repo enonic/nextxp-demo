@@ -534,7 +534,7 @@ export default getPerson;</code></pre>
 </td>
 <td class="content">
 You may validate the query by copying it to the GraphQL playground. Replace <code>APP_NAME_UNDERSCORED</code> with <code>com_example_myproject</code> and set a query variable, try this for instance:
-  <code>{"path": "/hmdb/persons/brad-pitt"}`</code>
+  <code>{"path": "/hmdb/persons/brad-pitt"}</code>
 </td>
 </tr>
 </table>
@@ -691,6 +691,22 @@ Sample header and footer views are already included in the starter under /<code>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
+<p><strong>Replace first import</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {RENDER_MODE, XP_REQUEST_TYPE, I18n} from '@enonic/nextjs-adapter';</code></pre>
+</div>
+</div>
+</li>
+<li>
 <p><strong>Add these imports</strong></p>
 <div class="listingblock">
 <div class="content">
@@ -714,7 +730,7 @@ import {getAsset} from '@enonic/nextjs-adapter';</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>with this:</p>
+<p>With this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -793,7 +809,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>

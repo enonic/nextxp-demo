@@ -604,6 +604,55 @@ function getTitle(photo: any, displayName: string) {
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Add styling to the new component:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/views/PersonWithBio.module.css</div>
+<div class="content">
+<pre class="highlight"><code class="language-tsx" data-lang="tsx">.person,
+.person .bio {
+    font-family: sans-serif;
+}
+
+.person {
+    display: flex;
+    flex-direction: column;
+}
+
+.bio {
+    line-height: 24px;
+}
+
+.bio figcaption {
+    font-size: 12px;
+}
+
+.bio figure &gt; img {
+    width: 100%;
+    height: auto;
+}
+
+.photos {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 50px;
+    gap: 50px;
+}
+
+.photos img {
+    width: 100%;
+    height: auto; /* Ensures images scale properly */
+}
+
+@media screen and (max-width: 720px) {
+    .bio figure {
+        width: auto !important;
+    }
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p><strong>Update the mapping</strong></p>
@@ -648,7 +697,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>

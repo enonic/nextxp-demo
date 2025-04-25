@@ -497,7 +497,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p><strong>secret</strong>: <code>mySecretKey</code></p>
 <div class="paragraph">
-<p>This accidentally matches your setup, so everything should work out of the box. We will get back to tuning these values in the <a href="static.ahtml">Static pages</a>, and <a href="deployment.ahtml">Deployment</a> chapters.</p>
+<p>This matches your setup, so everything should work out of the box. We will get back to tuning these values in the <a href="static.ahtml">Static pages</a>, and <a href="deployment.ahtml">Deployment</a> chapters.</p>
 </div>
 </li>
 </ul>
@@ -567,7 +567,7 @@ These remaining URLs are the automatically processed by the Next.XP proxy before
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>

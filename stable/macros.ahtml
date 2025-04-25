@@ -609,7 +609,7 @@ import FactBox from './macros/FactBox';
 ...
 ComponentRegistry.addMacro(`${APP_NAME}:factbox`, {
     view: FactBox,
-    configQuery: '{ heading }'
+    configQuery: '{ header }'
 });</code></pre>
 </div>
 </div>
@@ -673,7 +673,7 @@ Macros must be registered before any other component that uses RichTextView! Bes
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>

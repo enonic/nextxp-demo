@@ -628,7 +628,7 @@ The URL should look something like this: <code><a href="https://account-solution
 <p>ENONIC_APP_NAME: &lt;enonic app name (<code>tutorial.nxp</code> in this guide)&gt;</p>
 </li>
 <li>
-<p>ENONIC_API: &lt;enonic route URL&gt;</p>
+<p>ENONIC_API: &lt;enonic ingress URL&gt;</p>
 </li>
 <li>
 <p>ENONIC_API_TOKEN: &lt;yourSecret&gt;</p>
@@ -792,7 +792,7 @@ If you imported content from your local environment, the following two steps can
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-07 15:14:11 UTC
+Last updated 2025-04-25 13:26:32 UTC
 </div>
 </div>
 </body>
