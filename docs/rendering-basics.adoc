@@ -28,7 +28,7 @@ include::{sourcedir}/components/queries/getPerson.ts[]
 This file defines a graphQL query 'getPerson' that will fetch data from the Enonic API. 
 +
 TIP: You may validate the query by copying it to the GraphQL playground. Replace `APP_NAME_UNDERSCORED` with `com_example_myproject` and set a query variable, try this for instance:
-  `{"path": "/hmdb/persons/brad-pitt"}``
+  `{"path": "/hmdb/persons/brad-pitt"}`
 +
 . **Add the following imports** to component mappings file:
 +
@@ -107,6 +107,19 @@ TIP: Sample header and footer views are already included in the starter under /`
 
 Update `src/app/[locale]/[[...contentPath]]/layout.tsx`` with the following changes:
 
+. **Replace first import**
++
+[source,TypeScript]
+----
+import {RENDER_MODE, XP_REQUEST_TYPE} from '@enonic/nextjs-adapter';
+----
++
+With this:
++
+[source,TypeScript]
+----
+import {RENDER_MODE, XP_REQUEST_TYPE, I18n} from '@enonic/nextjs-adapter';
+----
 . **Add these imports**
 +
 [source,TypeScript]
@@ -129,7 +142,7 @@ import {getAsset} from '@enonic/nextjs-adapter';
     )
 ----
 +
-with this:
+With this:
 +
 [source,typescriptjsx]
 ----
