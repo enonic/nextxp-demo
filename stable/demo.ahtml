@@ -484,7 +484,7 @@ Want to learn what is really happening? Head on to the <a href="enonic-setup.aht
 <p><strong>Sign up for a free Enonic account</strong>: on <a href="https://www.enonic.com/sign-up" class="bare">https://www.enonic.com/sign-up</a></p>
 </li>
 <li>
-<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Next.js Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
+<p>After logging in to your account, <strong>create a new solution</strong> from <code>Solutions &#8594; Create &#8594; Headless Movie DB - Demo</code>. This will install all required Enonic apps and setup the routes needed.</p>
 </li>
 <li>
 <p>From your new solution, click <code>Environments</code> - Notice the URL to the <code>API</code> ingress, you will need it later.</p>
@@ -676,7 +676,7 @@ We are overriding default preview configuration for all sites using the Next.XP 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-25 13:26:32 UTC
+Last updated 2025-05-28 13:31:16 UTC
 </div>
 </div>
 </body>
