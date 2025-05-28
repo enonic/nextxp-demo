@@ -12,7 +12,7 @@ TIP: Want to learn what is really happening? Head on to the <<enonic-setup#, fir
 == 1 - Setup Enonic
 
 . **Sign up for a free Enonic account**: on https://www.enonic.com/sign-up
-. After logging in to your account, **create a new solution** from `Solutions -> Create -> Headless Movie DB - Demo`. This will install all required Enonic apps and setup the routes needed. 
+. After logging in to your account, **create a new solution** from `Solutions -> Create -> Headless Movie DB`. This will install all required Enonic apps and setup the routes needed. 
 . From your new solution, click `Environments` - Notice the URL to the `API` ingress, you will need it later.
 
 == 2 - Create Git repo
