@@ -9,12 +9,11 @@ const FactBox = ({name, children, config, meta}: MacroProps) => {
     return <>
 
         <ins className={styles.factbox}>
-            <i className={styles.icon}/>
-            <strong className={styles.header}>{header}</strong>
+            <i className={styles.icon}>💬</i>
+            <strong className={styles.header}> {header}</strong>
             {children}
         </ins>
     </>
 };
 
 export default FactBox;
-
