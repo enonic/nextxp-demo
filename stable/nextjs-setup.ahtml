@@ -461,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will create a front-end application that renders pages based on content in the CMS.</p>
+<p>In this chapter we will create a front-end application that renders content from the Enonic CMS (the app created in the previous chapters).</p>
 </div>
 </div>
 </div>
@@ -478,7 +478,7 @@ Next.js supports both client-side rendering and <a href="https://nextjs.org/docs
 <h2 id="task_create_the_next_js_project"><a class="link" href="#task_create_the_next_js_project">Task: Create the Next.js project</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From an empty folder, run the following command:</p>
+<p>Create an empty folder, go inside and run the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -489,7 +489,7 @@ Next.js supports both client-side rendering and <a href="https://nextjs.org/docs
 <p>The "nextxp-template" is based on <a href="https://nextjs.org/docs/getting-started">Next.js' own introduction app</a>, so if you&#8217;re familiar with that, you&#8217;ll recognize the structure of the files.</p>
 </div>
 <div class="paragraph">
-<p>The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
+<p>The template includes some boilerplate we will customize, and an npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.</p>
 </div>
 <div class="sect2">
 <h3 id="code_overview"><a class="link" href="#code_overview">Code overview</a></h3>
@@ -568,13 +568,10 @@ src/
 <h2 id="task_configure_application"><a class="link" href="#task_configure_application">Task: Configure application</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default, the configuration should work for your setup, but have a look to be sure:</p>
+<p>By default, the configuration should work for your setup, but verify it to be sure.</p>
 </div>
 <div class="paragraph">
-<p>Verify your configuration</p>
-</div>
-<div class="paragraph">
-<p>The following configuration values should match your environment</p>
+<p>The following configuration values should match your environment:</p>
 </div>
 <div class="listingblock">
 <div class="title">.env extract:</div>
@@ -611,7 +608,7 @@ ENONIC_API=http://127.0.0.1:8080/site <i class="conum" data-value="2"></i><b>(2)
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-These configuration values can be overridden later when deplying your app to a live server.
+These configuration values can be overridden later when deploying your app to a live server.
 </td>
 </tr>
 </table>
@@ -622,7 +619,7 @@ These configuration values can be overridden later when deplying your app to a l
 <h2 id="task_boot_the_server"><a class="link" href="#task_boot_the_server">Task: Boot the server</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s fire up Next and see if things are working as planned&#8230;&#8203;</p>
+<p>Let&#8217;s fire up the Next.js server and see if things are working as planned&#8230;&#8203;</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -631,13 +628,13 @@ These configuration values can be overridden later when deplying your app to a l
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app is running on localhost:8080</a> before you continue
+Make sure <a href="enonic-setup.ahtml">Enonic XP and the Movie DB app are running on localhost:8080</a> before you continue
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your next project folder:</p>
+<p>Start Next.js in  <strong>dev mode</strong> by running the following commands from within your Next.js project folder:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -783,7 +780,7 @@ Common:
 <p><strong>That&#8217;s it for the basic Next.js setup.</strong></p>
 </div>
 <div class="paragraph">
-<p>Next, well have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
+<p>Next, we&#8217;ll have a closer look at <a href="rendering-basics.ahtml">how to customize the rendering</a>.</p>
 </div>
 </div>
 </div>
@@ -791,7 +788,7 @@ Common:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-06-04 13:54:14 UTC
+Last updated 2025-08-04 15:00:57 UTC
 </div>
 </div>
 </body>

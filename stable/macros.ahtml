@@ -499,8 +499,8 @@ const FactBox = ({name, children, config, meta}: MacroProps) =&gt; {
     return &lt;&gt;
 
         &lt;ins className={styles.factbox}&gt;
-            &lt;i className={styles.icon}/&gt;
-            &lt;strong className={styles.header}&gt;{header}&lt;/strong&gt;
+            &lt;i className={styles.icon}&gt;💬&lt;/i&gt;
+            &lt;strong className={styles.header}&gt; {header}&lt;/strong&gt;
             {children}
         &lt;/ins&gt;
     &lt;/&gt;
@@ -515,29 +515,7 @@ export default FactBox;</code></pre>
 <div class="listingblock">
 <div class="title">src/components/macros/FactBox.module.css</div>
 <div class="content">
-<pre class="highlight"><code class="language-css" data-lang="css">@font-face {
-    font-family: 'icomoon';
-    src: url('/fonts/icomoon.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.icon {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.factbox {
+<pre class="highlight"><code class="language-css" data-lang="css">.factbox {
     background-color: rgb(235, 249, 249);
     display: block;
     text-decoration: none;
@@ -571,16 +549,11 @@ export default FactBox;</code></pre>
 }
 
 .factbox .icon {
-    display: block;
     position: absolute;
     font-size: 24px;
     top: 10px;
     left: 10px;
-}
-
-.factbox .icon:before {
-    content: "\e0c9";
-    color: #4b93bd;
+    font-style: normal;
 }
 
 .factbox .body ul {
@@ -673,7 +646,7 @@ Macros must be registered before any other component that uses RichTextView! Bes
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-06-04 13:54:14 UTC
+Last updated 2025-08-04 15:00:57 UTC
 </div>
 </div>
 </body>

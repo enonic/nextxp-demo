@@ -453,7 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will look into the basic rendering mechanisms, and add some custom rendering to our app as well.</p>
+<p>In this chapter we will look into the basic rendering mechanisms and add some custom rendering to our app as well.</p>
 </div>
 </div>
 </div>
@@ -461,10 +461,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="dev_mode_rendering"><a class="link" href="#dev_mode_rendering">Dev mode rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As you have seen during the setup of Next, each content item automatically map to a page listing available props. These props are fetched by the so-called Enonic Adapter.</p>
+<p>As you have seen during the setup of Next, each content item automatically maps to a page listing available props. These props are fetched by the so-called Enonic Adapter.</p>
 </div>
 <div class="paragraph">
-<p>By defining custom queries and react components tailored for each content type, we can customise the props passed to the view, and which React template is actually applied.</p>
+<p>By defining custom queries and react components tailored for each content type, we can customize the props passed to the view, and which React template is actually applied.</p>
 </div>
 </div>
 </div>
@@ -472,7 +472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="task_get_person_content"><a class="link" href="#task_get_person_content">Task: Get person content</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s build our first component - starting with rendring of "person" content types:</p>
+<p>Let&#8217;s build our first component, starting with a rendering of the "Person" content type:</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -481,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The full name of your content type should now be <code>com.example.myproject:person</code> If you used a different name when creating the Enonic app, update the <code>.env</code> file in your Next.js app to reflect this.
+The full name of your content type should now be <code>com.example.myproject:person</code>. If you used a different name when creating the Enonic app, update the <code>.env</code> file in your Next.js app to reflect this.
 </td>
 </tr>
 </table>
@@ -489,7 +489,7 @@ The full name of your content type should now be <code>com.example.myproject:per
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add query</strong> by creating the following file in your front-end application</p>
+<p><strong>Add a query</strong> by creating the following file in your front-end application:</p>
 <div class="listingblock">
 <div class="title">src/components/queries/getPerson.ts</div>
 <div class="content">
@@ -541,7 +541,7 @@ You may validate the query by copying it to the GraphQL playground. Replace <cod
 </div>
 </li>
 <li>
-<p><strong>Add the following imports</strong> to component mappings file:</p>
+<p><strong>Add the following imports</strong> to the component mappings file:</p>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
@@ -566,7 +566,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <li>
 <p><strong>Check the result</strong></p>
 <div class="paragraph">
-<p>By visiting a person item - like <code><a href="http://localhost:3000/persons/morgan-freeman" target="_blank" rel="noopener">http://localhost:3000/persons/morgan-freeman</a></code> you should now see data props being listed in the view.</p>
+<p>By visiting a person item (like <code><a href="http://localhost:3000/persons/morgan-freeman" target="_blank" rel="noopener">http://localhost:3000/persons/morgan-freeman</a></code>) you should now see data props listed in the view.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="media/morgan-freeman-props.png" alt="morgan freeman props" width="767px" title="Page showing data props for Morgan Freeman content item"></span></p>
@@ -585,7 +585,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Add view</strong> by creating the following file in your Next.js application</p>
+<p><strong>Add a view</strong> by creating the following file in your Next.js application</p>
 <div class="listingblock">
 <div class="title">src/components/views/Person.tsx</div>
 <div class="content">
@@ -626,11 +626,11 @@ function getTitle(photo: any, displayName: string) {
 </div>
 </div>
 <div class="paragraph">
-<p>This file defines a react view <code>Person</code> that will use the props from the query to render the person.</p>
+<p>This file defines a React view <code>Person</code> that will use the props from the query to render the person.</p>
 </div>
 </li>
 <li>
-<p><strong>Register Person view</strong> by adding the following import to the component mappings:</p>
+<p><strong>Register the Person view</strong> by adding the following import to the component mappings:</p>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
 <div class="content">
@@ -660,7 +660,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 </ol>
 </div>
 <div class="paragraph">
-<p>The content type mapping applies to every <code>person</code> content item in the site, regardless of it&#8217;s location in the hierarchy. Try looking at some other persons, eg. <a href="http://localhost:3000/persons/uma-thurman" target="_blank" rel="noopener">http://localhost:3000/persons/uma-thurman</a></p>
+<p>The content type mapping applies to every <code>person</code> content item in the site, regardless of its location in the hierarchy. Try looking at some other persons, e.g., <a href="http://localhost:3000/persons/uma-thurman" target="_blank" rel="noopener">http://localhost:3000/persons/uma-thurman</a></p>
 </div>
 </div>
 </div>
@@ -668,7 +668,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 <h2 id="task_add_custom_header_and_footer"><a class="link" href="#task_add_custom_header_and_footer">Task: Add custom header and footer</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Adding some styles, a header and a footer will make the site more interesting visually. Next.js provides a handy solution to this problem.</p>
+<p>With some styling applied, the header and the footer will make the site more interesting visually. Next.js provides a handy solution to this problem.</p>
 </div>
 <div class="paragraph">
 <p>The <code>src/app/layout.tsx</code> file is called root layout, and by modifying it we can inject the same header and footer components to all pages generated by Next.</p>
@@ -686,7 +686,7 @@ Sample header and footer views are already included in the starter under /<code>
 </table>
 </div>
 <div class="paragraph">
-<p>Update <code>src/app/[locale]/[[&#8230;&#8203;contentPath]]/layout.tsx`</code> with the following changes:</p>
+<p>Update <code>src/app/[locale]/[[&#8230;&#8203;contentPath]]/layout.tsx</code> with the following changes:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -720,13 +720,13 @@ import {getAsset} from '@enonic/nextjs-adapter';</code></pre>
 <p>And at the bottom of the file <strong>replace the entire return function</strong>:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-typescriptjsx" data-lang="typescriptjsx">    return (
-        &lt;LocaleContextProvider locale={params.locale}&gt;
-            &lt;StaticContent condition={isEdit}&gt;
-                &lt;main&gt;{children}&lt;/main&gt;
-            &lt;/StaticContent&gt;
-        &lt;/LocaleContextProvider&gt;
-    )</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
+    &lt;LocaleContextProvider locale={params.locale}&gt;
+        &lt;StaticContent condition={isEdit}&gt;
+            &lt;main&gt;{children}&lt;/main&gt;
+        &lt;/StaticContent&gt;
+    &lt;/LocaleContextProvider&gt;
+)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -734,15 +734,15 @@ import {getAsset} from '@enonic/nextjs-adapter';</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-typescriptjsx" data-lang="typescriptjsx">    return (
-        &lt;LocaleContextProvider locale={params.locale}&gt;
-            &lt;StaticContent condition={isEdit}&gt;
-                &lt;Header meta={meta} title={I18n.localize('title')} logoUrl={getAsset('/images/xp-shield.svg', meta)}/&gt;
-                &lt;main&gt;{children}&lt;/main&gt;
-                &lt;Footer/&gt;
-            &lt;/StaticContent&gt;
-        &lt;/LocaleContextProvider&gt;
-    )</code></pre>
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">return (
+    &lt;LocaleContextProvider locale={params.locale}&gt;
+        &lt;StaticContent condition={isEdit}&gt;
+            &lt;Header meta={meta} title={I18n.localize('title')} logoUrl={getAsset('/images/xp-shield.svg', meta)}/&gt;
+            &lt;main&gt;{children}&lt;/main&gt;
+            &lt;Footer/&gt;
+        &lt;/StaticContent&gt;
+    &lt;/LocaleContextProvider&gt;
+)</code></pre>
 </div>
 </div>
 </li>
@@ -756,7 +756,7 @@ import {getAsset} from '@enonic/nextjs-adapter';</code></pre>
 </td>
 <td class="content">
 Pay attention to the <code>getAsset()</code> function.
-It ensures that links to assets are working seamlessly in Next.js, as well as in Content Studio preview mode - as you will see later.
+It ensures that links to assets are working seamlessly in Next.js, as well as in Content Studio preview mode, as you will see later.
 </td>
 </tr>
 </table>
@@ -773,7 +773,7 @@ It ensures that links to assets are working seamlessly in Next.js, as well as in
 <h2 id="the_common_query"><a class="link" href="#the_common_query">The common query</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You may have noticed the <code>Common</code> props appearing in the various prop views - these originate from the the following statement in the mappings:</p>
+<p>You may have noticed the <code>Common</code> props appearing in the various prop views - these originate from the following statement in the mappings:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
@@ -787,7 +787,7 @@ ComponentRegistry.setCommonQuery([commonQuery, commonVariables]);
 </div>
 </div>
 <div class="paragraph">
-<p>The result of this query is available across all components on the page, and may be useful if you want to fetch data for the page itself, or to be used across multiple components. Feel free to adapt it to your requirements.</p>
+<p>The result of this query is available across all components on the page, and may be useful if you want to fetch data for the page itself or to be used across multiple components. Feel free to adapt it to your requirements.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -809,7 +809,7 @@ If you do not need any common props, remove it from the mappings to optimize per
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-06-04 13:54:14 UTC
+Last updated 2025-08-04 15:00:57 UTC
 </div>
 </div>
 </body>

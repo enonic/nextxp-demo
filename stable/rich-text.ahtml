@@ -451,7 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter you&#8217;ll learn how to render rich text content.</p>
+<p>In this chapter you&#8217;ll learn how to render Rich Text content.</p>
 </div>
 </div>
 </div>
@@ -459,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="intro"><a class="link" href="#intro">Intro</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic boasts a <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea">rich text input type</a>. Unlike basic text fields, rich text may contain more complex concepts such as tables, images, links and custom components. Each of these will typically need to be processed during rendering in order to provide a contextually correct URL, ideal image sizes etc.</p>
+<p>Enonic boasts a <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea">Rich Text input type</a> which, unlike basic text fields, may contain more complex concepts such as tables, images, links and custom components. Each of these will typically need to be processed during rendering to provide a contextually correct URL, ideal image sizes, etc.</p>
 </div>
 </div>
 </div>
@@ -467,8 +467,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="sample_content"><a class="link" href="#sample_content">Sample content</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Luckily, the sample data set contains everyting we need to get going.
-The <code>Bio</code> field for persons is rich text, and some of the content is even populated with relevant content, like you see below:</p>
+<p>Luckily, the sample data set contains everything we need to get going.
+The <code>Bio</code> field for persons is a Rich Text input, and some Persons' data is even populated with relevant content, like you see below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -482,14 +482,14 @@ The <code>Bio</code> field for persons is rich text, and some of the content is 
 <h2 id="task_rich_text_rendering"><a class="link" href="#task_rich_text_rendering">Task: Rich text rendering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Follow these steps to implement rendering of the bio field in Next.js</p>
+<p>Follow these steps to implement rendering of the Bio field in Next.js:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><strong>Update the Person query</strong></p>
 <div class="paragraph">
-<p>To properly render Rich text, we need access to additional metadata such as links, images within it.</p>
+<p>To properly render Rich text, we need access to additional metadata (such as links and images) within it.</p>
 </div>
 <div class="paragraph">
 <p>To simplify things, Next.XP provides a <code>richTextQuery</code> helper function that generates the query for us. Also, this way we don&#8217;t have to repeat the query for every rich text field.</p>
@@ -552,10 +552,10 @@ This guarantees that it is executed when querying for data, and all the macros a
 <p><strong>The RichTextView component</strong></p>
 <div class="paragraph">
 <p>Now that we got the data, we need to use <code>RichTextView</code> component that knows how to render it.
-All we need to do is pass <code>bio</code> data from the query response to the <code>RichTextView</code> component.</p>
+All we need to do is pass value of the <code>bio</code> field from the query response to the <code>RichTextView</code> component.</p>
 </div>
 <div class="paragraph">
-<p>Create new component with the following content:</p>
+<p>Create a new component with the following content:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/views/PersonWithBio.tsx</div>
@@ -610,7 +610,7 @@ function getTitle(photo: any, displayName: string) {
 <div class="listingblock">
 <div class="title">src/components/views/PersonWithBio.module.css</div>
 <div class="content">
-<pre class="highlight"><code class="language-tsx" data-lang="tsx">.person,
+<pre class="highlight"><code class="language-css" data-lang="css">.person,
 .person .bio {
     font-family: sans-serif;
 }
@@ -660,7 +660,7 @@ function getTitle(photo: any, displayName: string) {
 <p>Finally, we need to update the mappings to use the new query and view.</p>
 </div>
 <div class="paragraph">
-<p>Simply replace the <code>getPerson</code> query with <code>getPersonWithBio</code> and <code>Person</code> view with <code>PersonWithBio</code>. It should look something like this:</p>
+<p>Replace the <code>getPerson</code> query with <code>getPersonWithBio</code> and <code>Person</code> view with <code>PersonWithBio</code>. It should look something like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/components/_mappings.ts</div>
@@ -697,7 +697,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-06-04 13:54:14 UTC
+Last updated 2025-08-04 15:00:57 UTC
 </div>
 </div>
 </body>
