@@ -564,7 +564,7 @@ export default TwoColumnLayout;</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-This is an example of using CSS modules. For more details visit the <a href="https://nextjs.org/docs/basic-features/built-in-css-support">Next.js style documentation</a>
+This is an example of using CSS modules. For more details visit the <a href="https://nextjs.org/docs/pages/getting-started/css">Next.js style documentation</a>
 </td>
 </tr>
 </table>
@@ -623,7 +623,7 @@ Page templates allow us to reuse a page definition across multiple content items
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-04 15:00:57 UTC
+Last updated 2025-08-13 08:14:58 UTC
 </div>
 </div>
 </body>
