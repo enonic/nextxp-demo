@@ -50,7 +50,7 @@ And it's CSS module
 include::{sourcedir}/components/layouts/TwoColumnLayout.module.css[]
 ----
 +
-NOTE: This is an example of using CSS modules. For more details visit the https://nextjs.org/docs/basic-features/built-in-css-support[Next.js style documentation]
+NOTE: This is an example of using CSS modules. For more details visit the https://nextjs.org/docs/pages/getting-started/css[Next.js style documentation]
 +
 . **Register the component** in _mappings.ts:
 +
