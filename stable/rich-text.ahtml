@@ -502,7 +502,7 @@ The <code>Bio</code> field for persons is a Rich Text input, and some Persons' d
 <div class="content">
 <pre class="highlight"><code class="language-Typescript" data-lang="Typescript">import {APP_NAME_UNDERSCORED, richTextQuery} from '@enonic/nextjs-adapter';
 
-const getPerson = () =&gt; `
+const getPersonWithBio = () =&gt; `
 query($path:ID!){
   guillotine {
     get(key:$path) {
@@ -528,7 +528,7 @@ query($path:ID!){
   }
 }`;
 
-export default getPerson;</code></pre>
+export default getPersonWithBio;</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -566,7 +566,7 @@ import Link from 'next/link';
 import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
 import styles from './PersonWithBio.module.css';
 
-const Person = (props: FetchContentResult) =&gt; {
+const PersonWithBio = (props: FetchContentResult) =&gt; {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
@@ -597,7 +597,7 @@ const Person = (props: FetchContentResult) =&gt; {
     )
 }
 
-export default Person;
+export default PersonWithBio;
 
 function getTitle(photo: any, displayName: string) {
     return (photo.attachments || [])[0].name || displayName;
@@ -697,7 +697,7 @@ ComponentRegistry.addContentType(`${APP_NAME}:person`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-13 08:14:58 UTC
+Last updated 2025-08-25 12:27:21 UTC
 </div>
 </div>
 </body>
