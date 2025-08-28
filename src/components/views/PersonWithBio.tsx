@@ -4,7 +4,7 @@ import Link from 'next/link';
 import RichTextView from '@enonic/nextjs-adapter/views/RichTextView';
 import styles from './PersonWithBio.module.css';
 
-const Person = (props: FetchContentResult) => {
+const PersonWithBio = (props: FetchContentResult) => {
     const {displayName, data, parent} = props.data?.get as any;
     const {bio, photos} = data;
     const meta = props.meta;
@@ -35,7 +35,7 @@ const Person = (props: FetchContentResult) => {
     )
 }
 
-export default Person;
+export default PersonWithBio;
 
 function getTitle(photo: any, displayName: string) {
     return (photo.attachments || [])[0].name || displayName;

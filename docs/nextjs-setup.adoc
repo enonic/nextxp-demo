@@ -3,7 +3,7 @@
 :toclevels: 3
 :imagesdir: media/
 
-In this chapter we will create a front-end application that renders pages based on content in the CMS.
+In this chapter we will create a front-end application that renders content from the Enonic CMS (the app created in the previous chapters).
 
 == Next.js at a glance
 
@@ -12,7 +12,7 @@ Next.js supports both client-side rendering and link:https://nextjs.org/docs/pag
 
 == Task: Create the Next.js project
 
-From an empty folder, run the following command:
+Create an empty folder, go inside and run the following command:
 
 [source,bash,options="nowrap"]
 ----
@@ -21,7 +21,7 @@ npx degit git@github.com:enonic/nextxp-template.git
 
 The "nextxp-template" is based on link:https://nextjs.org/docs/getting-started[Next.js' own introduction app], so if you're familiar with that, you'll recognize the structure of the files.
 
-The template includes some boilerplate we will customize, and a npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.
+The template includes some boilerplate we will customize, and an npm dependency aka ´The Enonic Adapter` that facilitates and simplifies integration with Enonic.
 
 === Code overview
 
@@ -65,11 +65,9 @@ src/
 
 == Task: Configure application
 
-By default, the configuration should work for your setup, but have a look to be sure:
+By default, the configuration should work for your setup, but verify it to be sure.
 
-Verify your configuration
-
-The following configuration values should match your environment
+The following configuration values should match your environment:
 
 ..env extract:
 [source,files]
@@ -90,15 +88,15 @@ ENONIC_API=http://127.0.0.1:8080/site <2>
 <1> Mapping an XP project (intro) and site (/hmdb) to the Next.js router.
 <2> Base URL of the Guillotine API, but without project and branch.
 
-TIP: These configuration values can be overridden later when deplying your app to a live server.
+TIP: These configuration values can be overridden later when deploying your app to a live server.
 
 == Task: Boot the server
 
-Let's fire up Next and see if things are working as planned...
+Let's fire up the Next.js server and see if things are working as planned...
 
-NOTE: Make sure <<enonic-setup#, Enonic XP and the Movie DB app is running on localhost:8080>> before you continue
+NOTE: Make sure <<enonic-setup#, Enonic XP and the Movie DB app are running on localhost:8080>> before you continue
 
-Start Next.js in  **dev mode** by running the following commands from within your next project folder:
+Start Next.js in  **dev mode** by running the following commands from within your Next.js project folder:
 
     npm install
     npm run dev
@@ -142,7 +140,7 @@ For more details on booting Next, check out the link:https://nextjs.org/docs/api
 
 The URL structure of your front-end will mirror the structure of the content in the CMS. http://localhost:3000/[http://localhost:3000/^] will be mounted to the site root, which in our case has the internal path `/hmdb`.
 
-Using the Movie Se7en as an example: 
+Using the Movie Se7en as an example:
 
 .Result when visiting http://localhost:3000/movies/se7en[http://localhost:3000/movies/se7en^]
 [source]
@@ -211,4 +209,4 @@ Give the default rendering a spin by trying out some other URLs, for example: +
 
 **That's it for the basic Next.js setup.**
 
-Next, well have a closer look at <<rendering-basics#, how to customize the rendering>>.
+Next, we'll have a closer look at <<rendering-basics#, how to customize the rendering>>.

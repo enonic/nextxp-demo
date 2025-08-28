@@ -3,28 +3,28 @@
 :imagesdir: media/
 :sourcedir: ../src
 
-In this chapter you'll learn how to render rich text content.
+In this chapter you'll learn how to render Rich Text content.
 
 == Intro
 
-Enonic boasts a https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[rich text input type]. Unlike basic text fields, rich text may contain more complex concepts such as tables, images, links and custom components. Each of these will typically need to be processed during rendering in order to provide a contextually correct URL, ideal image sizes etc.
+Enonic boasts a https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[Rich Text input type] which, unlike basic text fields, may contain more complex concepts such as tables, images, links and custom components. Each of these will typically need to be processed during rendering to provide a contextually correct URL, ideal image sizes, etc.
 
 
 == Sample content
 
-Luckily, the sample data set contains everyting we need to get going.
-The `Bio` field for persons is rich text, and some of the content is even populated with relevant content, like you see below:
+Luckily, the sample data set contains everything we need to get going.
+The `Bio` field for persons is a Rich Text input, and some Persons' data is even populated with relevant content, like you see below:
 
 image::rich-text-bio.png[title="Rich text bio field for Lea Seydoux",width=662px]
 
 
 == Task: Rich text rendering
 
-Follow these steps to implement rendering of the bio field in Next.js
+Follow these steps to implement rendering of the Bio field in Next.js:
 
 . *Update the Person query*
 +
-To properly render Rich text, we need access to additional metadata such as links, images within it.
+To properly render Rich text, we need access to additional metadata (such as links and images) within it.
 +
 To simplify things, Next.XP provides a `richTextQuery` helper function that generates the query for us. Also, this way we don't have to repeat the query for every rich text field.
 +
@@ -44,20 +44,28 @@ For further insight, visit the https://developer.enonic.com/docs/developer-101/s
 . *The RichTextView component*
 +
 Now that we got the data, we need to use `RichTextView` component that knows how to render it.
-All we need to do is pass `bio` data from the query response to the `RichTextView` component.
+All we need to do is pass value of the `bio` field from the query response to the `RichTextView` component.
 +
-Create new component with the following content:
+Create a new component with the following content:
 +
 .src/components/views/PersonWithBio.tsx
 [source,tsx]
 ----
 include::{sourcedir}/components/views/PersonWithBio.tsx[]
 ----
++
+Add styling to the new component:
++
+.src/components/views/PersonWithBio.module.css
+[source,css]
+----
+include::{sourcedir}/components/views/PersonWithBio.module.css[]
+----
 . *Update the mapping*
 +
 Finally, we need to update the mappings to use the new query and view.
 +
-Simply replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio`. It should look something like this:
+Replace the `getPerson` query with `getPersonWithBio` and `Person` view with `PersonWithBio`. It should look something like this:
 +
 .src/components/_mappings.ts
 [source,Typescript]
