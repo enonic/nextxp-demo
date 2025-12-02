@@ -43,7 +43,7 @@ export const getChildList = {
                 }
                 get(key:$path) {
                   displayName
-                  children(sort: $order) {
+                  children(sort: $order, first: 50) {
                       _path(type: siteRelative)
                       _id
                       displayName
