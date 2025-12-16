@@ -9,7 +9,7 @@ function getEnonicWebpackConfig(config, {buildId, dev, isServer, defaultLoaders,
     }
     config.resolve.alias = {
         ...config.resolve.alias,
-        "@phrases": path.resolve(__dirname, "./src/phrases"),
+        "@phrases": path.resolve(__dirname, "src", "phrases"),
     }
     return config;
 }
