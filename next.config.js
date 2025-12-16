@@ -36,7 +36,7 @@ const config = {
     webpack: getEnonicWebpackConfig,
     turbopack: {
         resolveAlias: {
-            "@phrases": "./src/phrases",
+            "@phrases": path.resolve(__dirname, "src", "phrases"),
         }
     },
     headers: getEnonicHeaders,
