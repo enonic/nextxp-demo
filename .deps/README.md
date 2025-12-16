@@ -31,4 +31,15 @@ npm install
 ## Future
 
 Once the nextjs-adapter branch is merged and published to npm, this workaround 
-can be removed and the dependency can be updated to the published version.
+can be removed by:
+
+1. Removing the `.deps` directory
+2. Removing the `scripts/setup-adapter.sh` script
+3. Updating `package.json` to use the published version:
+   ```json
+   "@enonic/nextjs-adapter": "^4.0.0"
+   ```
+4. Running `npm install` normally
+
+The temporary local file dependency approach was chosen because npm cannot properly 
+handle nested file: dependencies when installing directly from GitHub branches.

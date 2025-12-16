@@ -14,6 +14,8 @@ import React from 'react';
 // This means using the revalidate option with runtime = 'edge' will not work.
 export const revalidate = 3600
 
+// PageProps type matches the Next.js route [[...contentPath]]
+// where contentPath is optional (can be undefined for root paths)
 export type PageProps = {
     locale: string,
     contentPath?: string[],
