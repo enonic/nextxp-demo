@@ -13,9 +13,14 @@ Follow the TLDR; instructions listed on the front-page of the tutorial reference
 
 ```bash
 npx degit git@github.com:enonic/nextxp-demo.git
-npm install
+./scripts/setup-adapter.sh
 npm run dev
 ```
+
+**Note:** This version uses Next.js 16 and React 19 with the nextjs-adapter from the 
+`copilot/upgrade-react-components-next-16` branch. Due to npm limitations with nested file 
+dependencies, a setup script is required for first-time installation. See `.deps/README.md` 
+for more details.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -11,13 +11,17 @@ import Header from '../../../components/views/Header';
 import {PageProps} from './page';
 
 type LayoutProps = {
-    params: PageProps
+    params: Promise<PageProps>
     children: ReactNode
 }
 
 export default async function PageLayout({params, children}: LayoutProps) {
 
-    const {meta} = await fetchContent(params);
+    const resolvedParams = await params;
+    const {meta} = await fetchContent({
+        ...resolvedParams,
+        contentPath: resolvedParams.contentPath || []
+    });
 
     const isEdit = meta?.renderMode === RENDER_MODE.EDIT;
 
@@ -30,14 +34,14 @@ export default async function PageLayout({params, children}: LayoutProps) {
             <details data-single-component-output="true">{children}</details>
 
         return (
-            <LocaleContextProvider locale={params.locale}>
+            <LocaleContextProvider locale={resolvedParams.locale}>
                 <StaticContent condition={isEdit}>{content}</StaticContent>
             </LocaleContextProvider>
         );
     }
 
     return (
-        <LocaleContextProvider locale={params.locale}>
+        <LocaleContextProvider locale={resolvedParams.locale}>
             <StaticContent condition={isEdit}>
                 <Header meta={meta} title={I18n.localize('title')} logoUrl={getAsset('/images/xp-shield.svg', meta)}/>
                 <main>{children}</main>
