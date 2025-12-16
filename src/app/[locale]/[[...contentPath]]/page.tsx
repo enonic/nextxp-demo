@@ -16,15 +16,19 @@ export const revalidate = 3600
 
 export type PageProps = {
     locale: string,
-    contentPath: string[],
+    contentPath?: string[],
 }
 
-export default async function Page({params}: { params: PageProps }) {
-    const {isEnabled: draft} = draftMode();
-    console.info(`Accessing page${draft ? ' (draft)' : ''}`, params);
+export default async function Page({params}: { params: Promise<PageProps> }) {
+    const {isEnabled: draft} = await draftMode();
+    const resolvedParams = await params;
+    console.info(`Accessing page${draft ? ' (draft)' : ''}`, resolvedParams);
 
     const start = Date.now();
-    const data: FetchContentResult = await fetchContent(params);
+    const data: FetchContentResult = await fetchContent({
+        ...resolvedParams,
+        contentPath: resolvedParams.contentPath || []
+    });
     const duration = Date.now() - start;
 
     console.info(`Page fetch took ${duration} ms`);
@@ -36,8 +40,12 @@ export default async function Page({params}: { params: PageProps }) {
     )
 };
 
-export async function generateMetadata({params}: { params: PageProps }): Promise<Metadata> {
-    const {common} = await fetchContent(params);
+export async function generateMetadata({params}: { params: Promise<PageProps> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const {common} = await fetchContent({
+        ...resolvedParams,
+        contentPath: resolvedParams.contentPath || []
+    });
     return {
         title: common?.get?.displayName || 'Not found',
     };

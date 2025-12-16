@@ -34,6 +34,11 @@ const config = {
     trailingSlash: false,
     transpilePackages: ['@enonic/nextjs-adapter'],
     webpack: getEnonicWebpackConfig,
+    turbopack: {
+        resolveAlias: {
+            "@phrases": "./src/phrases",
+        }
+    },
     headers: getEnonicHeaders,
 };
 
