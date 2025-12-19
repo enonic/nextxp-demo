@@ -77,4 +77,4 @@ This folder should contain static translations for every language from `ENONIC_M
     src/phrases/no.json
 
 . Middleware file has been updated to support new i18n config.
-If you have custom middleware, you need to update it to support new i18n config.
+If you have custom proxy, you need to update it to support new i18n config.

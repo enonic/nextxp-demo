@@ -32,7 +32,7 @@ The following file structure should now exist within your new project folder:
 ----
 .env                                // <1>
 src/
-    middleware.ts                   // <2>
+    proxy.ts                   // <2>
     components/                     // <3>
     phrases/                        // <4>
         en.json
