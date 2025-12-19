@@ -24,18 +24,15 @@ export type PageProps = {
 export default async function Page({params}: { params: Promise<PageProps> }) {
     const {isEnabled: draft} = await draftMode();
     const resolvedParams = await params;
-    console.info(`Accessing page${draft ? ' (draft)' : ''}`, resolvedParams);
 
-    const start = Date.now();
     const data: FetchContentResult = await fetchContent({
         ...resolvedParams,
         contentPath: resolvedParams.contentPath || []
     });
-    const duration = Date.now() - start;
-
-    console.info(`Page fetch took ${duration} ms`);
 
     validateData(data);
+
+    console.debug(`Rendered ${draft ? 'draft ' : ''}page at [/${data.meta.locale}/${data.meta.path}]`);
 
     return (
         <MainView {...data}/>
