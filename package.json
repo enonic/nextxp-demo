@@ -8,7 +8,7 @@
     "prod": "npm run build && npm run start",
     "start": "next start -p 4242",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "npx eslint"
   },
   "dependencies": {
     "@enonic/nextjs-adapter": "3.4.0-A2",
