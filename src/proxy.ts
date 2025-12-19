@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from 'next/server'
 import {getRequestLocaleInfo} from '@enonic/nextjs-adapter'
 
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
 
     const pathname = req.nextUrl.pathname;
     const {locale, locales} = getRequestLocaleInfo({

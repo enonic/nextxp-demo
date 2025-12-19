@@ -5,7 +5,7 @@
     flex-wrap: wrap;
 }
 
-.row :global(> div) {
+.row :global(div) {
     flex: 1;
     min-width: 200px;
 }
