@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "next dev",
     "prod": "npm run build && npm run start",
-    "start": "next start -p 4242",
+    "start": "next start",
     "prebuild": "npm run lint",
     "build": "next build",
     "lint": "npx eslint"
   },
   "dependencies": {
-    "@enonic/nextjs-adapter": "3.4.0-A2",
+    "@enonic/nextjs-adapter": "^4.0.0",
     "cross-env": "^10.0.0",
     "html-react-parser": "^5.2.6",
     "next": "^16.0.10",
