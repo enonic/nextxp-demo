@@ -4,17 +4,16 @@ import RegionsView from '@enonic/nextjs-adapter/views/Region';
 
 const MainPage = (props: PageProps) => {
     const page = props.page;
-    if (!page.regions || !Object.keys(page.regions).length) {
-        page.regions = {
-            main: {
-                name: 'main',
-                components: [],
-            }
+    const regions = (!page.regions || !Object.keys(page.regions).length) ? {
+        main: {
+            name: 'main',
+            components: [],
         }
-    }
+    } : page.regions;
+    
     return (
         <>
-            <RegionsView {...props} name="main"/>
+            <RegionsView {...props} page={{...page, regions}} name="main"/>
         </>
     );
 };
