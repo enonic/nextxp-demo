@@ -45,8 +45,8 @@ image:content-studio-filmdb.png[title="Film DB project",width=1024px]
 
 Next, let's turn on multi-language support in Next.js.
 
-. This template comes with middleware configured to do language detection and redirection.
-Feel free to study the code in `src/middleware.ts` to get a better understanding of how it works.
+. This template comes with proxy configured to do language detection and redirection.
+Feel free to study the code in `src/proxy.ts` to get a better understanding of how it works.
 +
 . But you need to *configure the Enonic adapter*, by specifying which content project to use for each locale:
 +
