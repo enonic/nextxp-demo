@@ -586,7 +586,7 @@ src/phrases/no.json</pre>
 </li>
 <li>
 <p>Middleware file has been updated to support new i18n config.
-If you have custom middleware, you need to update it to support new i18n config.</p>
+If you have custom proxy, you need to update it to support new i18n config.</p>
 </li>
 </ol>
 </div>
@@ -595,7 +595,7 @@ If you have custom middleware, you need to update it to support new i18n config.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 10:58:43 UTC
+Last updated 2026-01-12 11:05:33 UTC
 </div>
 </div>
 </body>

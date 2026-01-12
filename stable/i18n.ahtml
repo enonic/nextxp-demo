@@ -540,8 +540,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>This template comes with middleware configured to do language detection and redirection.
-Feel free to study the code in <code>src/middleware.ts</code> to get a better understanding of how it works.</p>
+<p>This template comes with proxy configured to do language detection and redirection.
+Feel free to study the code in <code>src/proxy.ts</code> to get a better understanding of how it works.</p>
 </li>
 <li>
 <p>But you need to <strong>configure the Enonic adapter</strong>, by specifying which content project to use for each locale:</p>
@@ -819,7 +819,7 @@ export default function ServerSideComponent() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 10:58:43 UTC
+Last updated 2026-01-12 11:05:33 UTC
 </div>
 </div>
 </body>

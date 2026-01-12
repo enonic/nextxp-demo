@@ -501,7 +501,7 @@ Next.js supports both client-side rendering and <a href="https://nextjs.org/docs
 <div class="content">
 <pre class="highlight"><code class="language-files" data-lang="files">.env                                <i class="conum" data-value="1"></i><b>(1)</b>
 src/
-    middleware.ts                   <i class="conum" data-value="2"></i><b>(2)</b>
+    proxy.ts                   <i class="conum" data-value="2"></i><b>(2)</b>
     components/                     <i class="conum" data-value="3"></i><b>(3)</b>
     phrases/                        <i class="conum" data-value="4"></i><b>(4)</b>
         en.json
@@ -788,7 +788,7 @@ Common:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 10:58:43 UTC
+Last updated 2026-01-12 11:05:33 UTC
 </div>
 </div>
 </body>

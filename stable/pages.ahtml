@@ -556,17 +556,16 @@ import RegionsView from '@enonic/nextjs-adapter/views/Region';
 
 const MainPage = (props: PageProps) =&gt; {
     const page = props.page;
-    if (!page.regions || !Object.keys(page.regions).length) {
-        page.regions = {
-            main: {
-                name: 'main',
-                components: [],
-            }
+    const regions = (!page.regions || !Object.keys(page.regions).length) ? {
+        main: {
+            name: 'main',
+            components: [],
         }
-    }
+    } : page.regions;
+    
     return (
         &lt;&gt;
-            &lt;RegionsView {...props} name="main"/&gt;
+            &lt;RegionsView {...props} page={{...page, regions}} name="main"/&gt;
         &lt;/&gt;
     );
 };
@@ -696,7 +695,7 @@ ComponentRegistry.addPage(`${APP_NAME}:main`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 10:58:43 UTC
+Last updated 2026-01-12 11:05:33 UTC
 </div>
 </div>
 </body>
