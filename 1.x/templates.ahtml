@@ -720,7 +720,7 @@ ComponentRegistry.addPart(`${APP_NAME}:movie-details`, {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-09 13:45:12 UTC
+Last updated 2026-01-12 10:58:18 UTC
 </div>
 </div>
 </body>
