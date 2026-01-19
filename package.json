@@ -26,7 +26,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.53.1",
     "eslint": "^9",
-    "eslint-config-next": "^16.1.1",
+    "eslint-config-next": "^16.1.4",
     "prettier": "^3.7.4",
     "typescript": "5.9.3"
   }
