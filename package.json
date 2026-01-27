@@ -16,13 +16,13 @@
     "cross-env": "^10.1.0",
     "html-react-parser": "^5.2.12",
     "next": "^16.0.10",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "react-dom": "^19.2.3",
     "unescape": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^25.0.9",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.53.1",
     "eslint": "^9",
